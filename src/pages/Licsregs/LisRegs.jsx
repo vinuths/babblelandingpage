@@ -470,14 +470,14 @@ const LiseRegs = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <ul className="nav nav-pills mb-3 bg-light rounded overflow-hidden" id="pills-tab" role="tablist">
-                                <li className="nav-item col-md-6 col-lg-6 col-12 border-end border-md-bottom" role="presentation">
-                                    <button className="nav-link w-100 rounded-0 text-dark active"  id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={createnew}> <ContentPasteIcon /> New </button>
+                                {/* <li className="nav-item col-md-12 col-lg-12 col-12 border-end border-md-bottom" role="presentation">
+                                    <button className="nav-link w-100 rounded-0 text-dark active"  id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={createnew}> <ContentPasteIcon /> View All</button>
+                                </li> */}
+                                <li className="nav-item col-12 border-end" role="presentation">
+                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={callinghistory}><ContentPasteIcon /> License and Resgistrations</button>
                                 </li>
-                                <li className="nav-item col-md-6 col-lg-6 col-12 border-end" role="presentation">
-                                    <button className="nav-link w-100 rounded-0 text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={callinghistory}><ContentPasteIcon /> History</button>
-                                </li>
-                            </ul>
-                            <div className="tab-content" id="pills-tabContent">
+                            </ul> 
+                            {/* <div className="tab-content" id="pills-tabContent">
                                 <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                     <div className="row">
                                         <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3" style={{ display:'none' }}>
@@ -488,16 +488,16 @@ const LiseRegs = () => {
                                                 )};
                                             </select>
                                             {/* <Spanning id="companies"></Spanning> */}
-                                        </div>
+                                        {/* </div>
                                         <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3" style={{ display:'none' }}>
                                             <select className="form-select" aria-label="Default select example" id="state" name="state" value={state} onChange={(e)=>setState(e.target.value)} required>
                                                 <option value="">Select State</option>
                                             {stateInfo != 'undefind' && stateInfo?.length > 0 && stateInfo.map(item => 
                                                 <option value={item._id}>{item.name}</option>
                                             )};
-                                            </select>
+                                            </select> */}
                                         {/* <Spanning id="states"></Spanning> */}
-                                        </div>
+                                        {/* </div>
                                         <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3" style={{ display:'none' }}>
                                             <select className="form-select" aria-label="Default select example" id="branch" name="branch" onChange={(e)=>setBranch(e.target.value)} value={branch} required>
                                                 <option value="">Select Branch</option>
@@ -505,30 +505,30 @@ const LiseRegs = () => {
                                                     <option value={item._id}>{item.name}</option>
                                                 )};
                                                 
-                                            </select>
+                                            </select> */}
                                             {/* <Spanning id="branchs"></Spanning> */}
-                                        </div>
+                                        {/* </div>
                                         <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3" style={{ display:'none' }} >
                                             <select className="form-select" aria-label="Default select example" id="executive" name="executive" onChange={(e)=>setExecutive(e.target.value)} value={executive} required>
                                                 <option value="">Select Executive</option>
                                                 {usersInfo != 'undefind' && usersInfo?.length > 0 && usersInfo.map(item => 
                                                     <option value={item._id}>{item.userName}</option>
                                                 )};
-                                            </select>
+                                            </select> */}
                                             {/* <Spanning id="executives"></Spanning> */}
-                                        </div>
+                                        {/* </div>
                                         <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3" style={{ display:'none' }} >
                                         <input type="date" className="form-control" ss
                                             name="dates" 
                                             value={date.toLocaleDateString('en-CA')} 
                                             onChange={onSetDate}
                                         />
-                                        </div>
-                                        <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
+                                        </div> */} 
+                                        {/* <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
                                             <button type="submit" className="w-100 btn btn-primary"  onClick={saveandapprove}>Save And Apporove</button>
-                                        </div>
+                                        </div> */}
                                         {/* inner tab start here */}
-                                        <div className="col-12 col-lg-12">
+                                        {/* <div className="col-12 col-lg-12">
                                             <div className="card">
                                                 <div className="row">
                                                     <div className="col-lg-12">
@@ -570,8 +570,8 @@ const LiseRegs = () => {
                                                                                                 <input type="text" class="form-control" name="regNo" id="regNo" value={regNo} onChange={(e)=>setRn(e.target.value)} required/>
                                                                                             </div>
                                                                                         </td>
-                                                                                    </tr>
-                                                                                    <tr>
+                                                                                    </tr> */}
+                                                                                    {/* <tr>
                                                                                         <th scope="row" className='bg-light w-lg-20'>Rate</th>
                                                                                         <td>
                                                                                             <div class="col-12 col-lg-12 col-md-12 mb-2">
@@ -579,8 +579,8 @@ const LiseRegs = () => {
                                                                                                 <input type="number" step="2.2" class="form-control" name="rate" id="rate" value={rate} onChange={(e)=>setRate(e.target.value)} required/>
                                                                                             </div>
                                                                                         </td>
-                                                                                    </tr>
-                                                                                    <tr>
+                                                                                    </tr> */}
+                                                                                    {/* <tr>
                                                                                         <td colspan="2" >
                                                                                             <div class="col-3 col-lg-3 col-md-3 mb-2" >
                                                                                                 <button type="submit" variant="contained" class="w-100 btn btn-primary" disabled={isDisabled} >Next</button>
@@ -774,8 +774,8 @@ const LiseRegs = () => {
                                                                                             </div>
                                                                                             </div>
                                                                                         </td>
-                                                                                    </tr>
-                                                                                    <tr>
+                                                                                    </tr> */}
+                                                                                    {/* <tr>
                                                                                         <th scope="row" className='bg-light w-lg-25'>Direct Expenses</th>
                                                                                         <td>
                                                                                             <div className="col-lg-4 col-md-4">
@@ -798,8 +798,8 @@ const LiseRegs = () => {
                                                                                                 <input type="number" step="2.2"  class="form-control" placeholder='type here' value={challanTotDExpense} onChange={(e) => {setChallanTotDExpense(e.target.value)}} required/>
                                                                                             </div>
                                                                                         </td>
-                                                                                    </tr>
-                                                                                    <tr>
+                                                                                    </tr> */}
+                                                                                    {/* <tr>
                                                                                         <td colspan="2" >
                                                                                             <div class="col-3 col-lg-3 col-md-3 mb-2" >
                                                                                                 <button type="submit" variant="contained" class="w-100 btn btn-primary" disabled={isDisabled}>Next</button>
@@ -1016,16 +1016,16 @@ const LiseRegs = () => {
                                             </div>
                                         </div>
                                         {/* inner tab stop here */}
-                                    </div>
+                                     {/* </div> */}
                                 </div>
-                                <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div className="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                     <div className="row">
                                         <LisRegsTables />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </div>  
+                        {/* </div> */}
+                    {/* </div> */}
                 </div>
             </div>
         </React.Fragment>

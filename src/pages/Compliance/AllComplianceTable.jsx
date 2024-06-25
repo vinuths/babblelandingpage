@@ -38,8 +38,10 @@ const AllComplianceTable = () =>{
     const [date, setDate] = useState('');
     const getComplianceall = useSelector((state) => state.getComplianceall);
     const { loadingu,complianceInfoAll } = getComplianceall; 
-     console.log(complianceInfoAll)
+     console.log("all data",complianceInfoAll)
     const complianceByIdUpdate = useSelector((state) => state.complianceByIdUpdate);
+    console.log("all ID data",complianceByIdUpdate)
+
     const { loadingupdate,complianceInfoUpdateId } = complianceByIdUpdate; 
     const userLogin = useSelector(state=>state.userLogin);
     const {userInfo} = userLogin;
@@ -47,7 +49,7 @@ const AllComplianceTable = () =>{
     const { loadings,stateInfo } = getState;  
     const userGet = useSelector((state) => state.userGet);
     const { usersInfo } = userGet;  
-    console.log(usersInfo)
+    console.log("user id",usersInfo)
     const getCompney = useSelector((state) => state.getCompney);
     const { companyInfo } = getCompney; 
   
@@ -118,12 +120,43 @@ const AllComplianceTable = () =>{
                 id: item._id,
                 state:item.state,
                 act: item.act,
-                rule:<div className='new-line'>{item.rule}</div>,
+                // rule:<div className='new-line'>{item.rule}</div>,
+                rules: <div className='new-line' style={{border:"2px solid grey",textAlign:"center",padding:'10px',borderRadius:'10px'}}>
+                  {item.rules.map((item1, r) => (
+                    <div style={{border:"2px solid #013879",textAlign:"left", marginTop:'10px', padding:'10px', marginBottom:'10px',
+                       borderRadius:'10px',fontWeight:'normal ', backgroundColor:'#e9f0f7',minWidth:'fitContent !important',fontSize:'14px',maxWidth:'500px !important',minHeight:'150px',gap:'20px',color:'black'}}>
+                        <div style={{borderTop:'1px solid grey',fontSize:'20px,back',backgroundColor:'#edeef0',padding:'5px'}} key={r}><span style={{fontWeight:'bold'}}>Rule-{r +1}: </span>{item1.rule} 
+                          <div style={{paddingBottom:'20px'}}><a href={item1.docFile} target="_blank">Document Rule {r + 1}</a></div>
+                      <>
+                      {item1.questions.map((item2, i) => (<><div style={{border:'1px solid grey',padding:'10px',borderRadius:'10px'}}>
+                        <div key={i}><span style={{fontWeight:'bold'}}>Question-{i+1}: </span>{item2.question}</div>
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}} >Description-{r +1}: </span> {item2.description}</div>
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Compliance Activity-{r +1}: </span> {item2.compliancetype}</div>
+
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Consequences-{r +1}: </span> {item2.consequences}</div>
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Frequency-{r +1}: </span> {item2.frequency}</div>
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Catageory-{r +1}: </span> {item2.categorycomp}</div>
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Risk-{r +1}: </span> {item2.risk}</div>
+
+                        <div style={{borderBottom:'1px solid grey', paddingLeft:'10px'}}><span style={{fontWeight:'bold'}}>Due Date-{r +1}: </span> {item2.dueDate}</div>
+
+                        <div style={{ paddingLeft:'10px'}}><a href={item2.docattachment} target="_blank">Document Question {i +1}</a></div>
+                        </div>
+</>
+                        ))}
+                        </>
+                        {/* <br/> */}
+                      </div>
+                      </div>
+                  ))}
+                  </div>,
                 category:item.category,
                 question:<div className='new-line'>{item.question}</div>,
                 description:<div className='new-line'>{item.description}</div>,
                 form:<a href={item.form} target="_blank">Form</a>,
-                docattachment:<a href={item.docattachment} target="_blank">Document</a>,
+                // docattachment:<a href={item.document} target="_blank">Act Document</a>,
+                document:<a href={item.document} target="_blank">Document</a>,
+
                 compliancetype:item.compliancetype,
                 recurrence:item.frequency,
                 risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'red' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
@@ -156,7 +189,7 @@ const AllComplianceTable = () =>{
                 question:<div className='new-line'>{item.question}</div>,
                 description:<div className='new-line'>{item.description}</div>,
                 form:<a href={item.form} target="_blank">Form</a>,
-                docattachment:<a href={item.docattachment} target="_blank">Document</a>,
+                document:<a href={item.document} target="_blank">Document</a>,
                 compliancetype:item.compliancetype,
                 recurrence:item.frequency,
                 risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
@@ -346,7 +379,7 @@ const AllComplianceTable = () =>{
           title: 'Sr. No.',
           dataIndex: 'key',
           key: 'key',
-          width: 70,
+          width: 40,
          // ...getColumnSearchProps('key'),
          // sorter: (a, b) => a.key.length - b.key.length,
          // sortDirections: ['descend', 'ascend']
@@ -355,33 +388,33 @@ const AllComplianceTable = () =>{
             title: 'State',
             dataIndex: 'state',
             key: 'state',
-            width: 100,
+            width: 60,
             ...getColumnSearchProps('state'),
             sorter: (a, b) => a.state.length - b.state.length,
             sortDirections: ['descend', 'ascend']
         },
         {
-            title: 'URL/Link',
-            dataIndex: 'docattachment',
-            key: 'docattachment',
+            title: 'Act Document',
+            dataIndex: 'document',
+            key: 'document',
             width: 80,
            // ...getColumnSearchProps('documents'),
            // sorter: (a, b) => a.image.length - b.image.length,
            // sortDirections: ['descend', 'ascend']
         },
+        // {
+        //     title: 'Last Updated Date',
+        //     dataIndex: 'updated_at',
+        //     key: 'updated_at',
+        //     width: 100,
+        //     // ...getColumnSearchProps('createdAt'),
+        //     // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // }, 
         {
-            title: 'Last Updated Date',
-            dataIndex: 'updated_at',
-            key: 'updated_at',
-            width: 100,
-            // ...getColumnSearchProps('createdAt'),
-            // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
-            // sortDirections: ['descend', 'ascend']
-        }, 
-        {
-            title: 'Executive',
-            dataIndex: 'executive',
-            key: 'executive',
+            title: 'Act',
+            dataIndex: 'act',
+            key: 'act',
             width: 100,
             // ...getColumnSearchProps('executive'),
             // sorter: (a, b) => a.executive.length - b.executive.length,
@@ -395,7 +428,7 @@ const AllComplianceTable = () =>{
                 //console.log(JSON.stringify(record))
               return (
                 <> <Link className='text-white btn btn-dark text-decoration-none' onClick={toggleTables}> View <VisibilityOffIcon fontSize='mediam' /></Link>
-                  <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link>
+                  {/* <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link> */}
                   {/* <DeleteOutlined
                     onClick={(e) => {
                       onDeleteUer(record);
@@ -412,7 +445,7 @@ const AllComplianceTable = () =>{
         title: 'Sr. No.',
         dataIndex: 'key',
         key: 'key',
-        width: 70,
+        width: '20px',
        // ...getColumnSearchProps('key'),
        // sorter: (a, b) => a.key.length - b.key.length,
        // sortDirections: ['descend', 'ascend']
@@ -421,144 +454,145 @@ const AllComplianceTable = () =>{
           title: 'State',
           dataIndex: 'state',
           key: 'state',
-          width: 150,
+          width: '20px',
           // ...getColumnSearchProps('state'),
           // sorter: (a, b) => a.state.length - b.state.length,
           // sortDirections: ['descend', 'ascend']
       },
       {
+        title: 'Category',
+        dataIndex: 'category',
+        key: 'category',
+        width: "30px",
+        // ...getColumnSearchProps('category'),
+        // sorter: (a, b) => a.category.length - b.category.length,
+        // sortDirections: ['descend', 'ascend']
+    },
+      {
           title: 'Act',
           dataIndex: 'act',
           key: 'act',
-          width: 100,
+          width: "20px",
           // ...getColumnSearchProps('act'),
           // sorter: (a, b) => a.act.length - b.act.length,
           // sortDirections: ['descend', 'ascend']
       },
       {
-          title: <div style={{ textAlign: 'left' }}>Rule</div>,
-          dataIndex: 'rule',
-          key: 'rule',
-          width: 300,
+        title: 'Act Document',
+        dataIndex: 'document',
+        key: 'document',
+        width: "30px",
+       // ...getColumnSearchProps('documents'),
+       // sorter: (a, b) => a.image.length - b.image.length,
+       // sortDirections: ['descend', 'ascend']
+    },
+      {
+          title: <div style={{ textAlign: 'left' }}>Rules</div>,
+          dataIndex: 'rules',
+          key: 'rules',
+          width: "80px",
           // ...getColumnSearchProps('rule'),
           // sorter: (a, b) => a.rule.length - b.rule.length,
           // sortDirections: ['descend', 'ascend']
       },
-      {
-          title: 'Category',
-          dataIndex: 'category',
-          key: 'category',
-          width: 100,
-          // ...getColumnSearchProps('category'),
-          // sorter: (a, b) => a.category.length - b.category.length,
-          // sortDirections: ['descend', 'ascend']
-      },
-      {
-          title: <div style={{ textAlign: 'left' }}>Question</div>,
-          dataIndex: 'question',
-          key: 'question',
-          width: 300,
-          // ...getColumnSearchProps('question'),
-          // sorter: (a, b) => a.question.length - b.question.length,
-          // sortDirections: ['descend', 'ascend']
-      },
-      {
-          title: <div style={{ textAlign: 'left' }}>Description</div>,
-          dataIndex: 'description',
-          key: 'description',
-          width: 300,
-          // ...getColumnSearchProps('question'),
-          // sorter: (a, b) => a.question.length - b.question.length,
-          // sortDirections: ['descend', 'ascend']
-      },
-      {
-          title: 'Form',
-          dataIndex: 'form',
-          key: 'form',
-          width: 100,
-      //    ...getColumnSearchProps('image'),
-       //   sorter: (a, b) => a.image.length - b.image.length,
-       //   sortDirections: ['descend', 'ascend']
-      },
-      {
-          title: 'Document',
-          dataIndex: 'docattachment',
-          key: 'docattachment',
-          width: 100,
-         // ...getColumnSearchProps('documents'),
-         // sorter: (a, b) => a.image.length - b.image.length,
-         // sortDirections: ['descend', 'ascend']
-      },
-      {
-          title: 'Compliance Type',
-          dataIndex: 'compliancetype',
-          key: 'compliancetype',
-          width: 70,
-         // ...getColumnSearchProps('documents'),
-         // sorter: (a, b) => a.image.length - b.image.length,
-         // sortDirections: ['descend', 'ascend']
-      },      
-      {
-          title: 'Recurrence',
-          dataIndex: 'recurrence',
-          key: 'recurrence',
-          width: 70,
-         // ...getColumnSearchProps('documents'),
-         // sorter: (a, b) => a.image.length - b.image.length,
-         // sortDirections: ['descend', 'ascend']
-      },     
-      {
-          title: 'Risk',
-          dataIndex: 'risk',
-          key: 'risk',
-          width: 70,
-         ...getColumnSearchProps('risk'),
-         sorter: (a, b) => a.risk.length - b.risk.length,
-         sortDirections: ['descend', 'ascend']
-      },   
-      {
-        title: 'Executive',
-        dataIndex: 'executive',
-        key: 'executive',
-        width: 100,
-        // ...getColumnSearchProps('executive'),
-        // sorter: (a, b) => a.executive.length - b.executive.length,
-        // sortDirections: ['descend', 'ascend']
-    }, 
-      {
-          title: 'Due Date',
-          dataIndex: 'duedate',
-          key: 'duedate',
-          width: 100,
-          // ...getColumnSearchProps('createdAt'),
-          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
-          // sortDirections: ['descend', 'ascend']
-      },
-      { 
-          key: "action", 
-          title: "Actions", 
-          width: 100,
-          render: (record) => { 
-              //console.log(JSON.stringify(record))
-            return (
-              <>
-              <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link>
-                {/* <EditOutlined
-                  onClick={() => openInPopupForUpdate(record)}
-                  // onClick={() => {
-                  // //   onEditUser(record);
-                  // }}
-                /> */}
-                {/* <DeleteOutlined
-                  onClick={(e) => {
-                  //   onDeleteUer(record);
-                  }}
-                  style={{ color: "red", marginLeft: 12 }}
-                /> */}
-              </>
-            );
-          }, 
-      },
+      
+      // {
+      //     title: <div style={{ textAlign: 'left' }}>Question</div>,
+      //     dataIndex: 'question',
+      //     key: 'question',
+      //     width: 300,
+      //     // ...getColumnSearchProps('question'),
+      //     // sorter: (a, b) => a.question.length - b.question.length,
+      //     // sortDirections: ['descend', 'ascend']
+      // },
+      // {
+      //     title: <div style={{ textAlign: 'left' }}>Description</div>,
+      //     dataIndex: 'description',
+      //     key: 'description',
+      //     width: 300,
+      //     // ...getColumnSearchProps('question'),
+      //     // sorter: (a, b) => a.question.length - b.question.length,
+      //     // sortDirections: ['descend', 'ascend']
+      // },
+      // {
+      //     title: 'Form',
+      //     dataIndex: 'form',
+      //     key: 'form',
+      //     width: 100,
+      // //    ...getColumnSearchProps('image'),
+      //  //   sorter: (a, b) => a.image.length - b.image.length,
+      //  //   sortDirections: ['descend', 'ascend']
+      // },
+      
+      // {
+      //     title: 'Compliance Type',
+      //     dataIndex: 'compliancetype',
+      //     key: 'compliancetype',
+      //     width: 70,
+      //    // ...getColumnSearchProps('documents'),
+      //    // sorter: (a, b) => a.image.length - b.image.length,
+      //    // sortDirections: ['descend', 'ascend']
+      // },      
+      // {
+      //     title: 'Recurrence',
+      //     dataIndex: 'recurrence',
+      //     key: 'recurrence',
+      //     width: 70,
+      //    // ...getColumnSearchProps('documents'),
+      //    // sorter: (a, b) => a.image.length - b.image.length,
+      //    // sortDirections: ['descend', 'ascend']
+      // },     
+      // {
+      //     title: 'Risk',
+      //     dataIndex: 'risk',
+      //     key: 'risk',
+      //     width: 70,
+      //    ...getColumnSearchProps('risk'),
+      //    sorter: (a, b) => a.risk.length - b.risk.length,
+      //    sortDirections: ['descend', 'ascend']
+      // },   
+    //   {
+    //     title: 'Executive',
+    //     dataIndex: 'executive',
+    //     key: 'executive',
+    //     width: "30px",
+    //     // ...getColumnSearchProps('executive'),
+    //     // sorter: (a, b) => a.executive.length - b.executive.length,
+    //     // sortDirections: ['descend', 'ascend']
+    // }, 
+      // {
+      //     title: 'Due Date',
+      //     dataIndex: 'duedate',
+      //     key: 'duedate',
+      //     width: 100,
+      //     // ...getColumnSearchProps('createdAt'),
+      //     // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+      //     // sortDirections: ['descend', 'ascend']
+      // },
+      // { 
+      //     key: "action", 
+      //     title: "Actions", 
+      //     width: "30px",
+      //     render: (record) => { 
+      //         //console.log(JSON.stringify(record))
+      //       return (
+      //         <>
+      //         <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link> */}
+      //            <EditOutlined
+      //             onClick={() => openInPopupForUpdate(record)}
+      //             // onClick={() => {
+      //             // //   onEditUser(record);
+      //             // }}
+      //           />  <DeleteOutlined
+      //             onClick={(e) => {
+      //             //   onDeleteUer(record);
+      //             }}
+      //             style={{ color: "red", marginLeft: 12 }}
+      //           />
+      //         </>
+      //       );
+      //     }, 
+      // },
     ];  
 
     return (

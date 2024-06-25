@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import Point from './Point.css'
 import {styled} from '@mui/material';
 import Menu from '@mui/icons-material/Menu';
 import { makeStyles } from "@material-ui/core/styles";
@@ -39,6 +40,8 @@ import logo from '../../../src/logo.svg'
 import Checklist from '../../../src/Checklist.png'
 import Lisereg from '../../../src/Lisereg.png'
 import { Modal } from 'antd';
+import Logo1 from '../../../src/Logo1.jpeg'
+
 const drawerWidth = 200;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -138,16 +141,19 @@ const itemsListNotLoggedIn = [
     {
         text: "Dashboard",
         icon: <HomeIcon onClick={(e) => onDashboard(e)}/>,
+        className: "pointer-cursor",
         onClick: (e) => onDashboard(e)
     },
-    {
-        text: "Compliances",
-        icon: <ListAltIcon onClick={(e) => onCompliances(e)}/>,
-        onClick: (e) => onCompliances(e)
-    },
+    // {
+    //     text: "Compliances",
+    //     icon: <ListAltIcon onClick={(e) => onCompliances(e)}/>,
+    //     className: "pointer-cursor",
+    //     onClick: (e) => onCompliances(e)
+    // },
     {
         text: "Checklist",
         icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{paddingTop:'2px'}}/>,
+        className: "pointer-cursor",
         // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
         onClick: (e) => onChecklist(e)
     },
@@ -174,17 +180,20 @@ const itemsListNotLoggedIn = [
     {
         text: "E-Library",
         icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)}/>,
+        className: "pointer-cursor",
         onClick: (e) => onElibrary(e)
     },
     {
         text: "Notification",
         icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)}/>,
+        className: "pointer-cursor",
         onClick: (e) => onNotification(e)
     }
     ,
     {
         text: "Lise/Regs",
         icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
+        className: "pointer-cursor",
         onClick: (e) => onLisereg(e)
     }
 ];
@@ -306,13 +315,15 @@ const itemsListNotLoggedIn = [
         </AppBar>
     {userId ?  <Drawer variant="permanent" open={open}>
             <DrawerHeader>
-            <img src={logo} alt="My Image" style={{ marginRight:'40px' }}/>
+            {/* <img src={logo} alt="My Image" style={{ marginRight:'40px' }}/> */}
+            <img src={Logo1} alt="My Image" style={{marginLeft:'5px',marginTop:'-5px',width:'100px',height:'100px'}}/>
+
             <IconButton onClick={handleDrawerClose}>
                 {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
             </DrawerHeader>
             <Divider />
-            <List>
+            <List>                                                                                                                                                                     
             {userId && itemsListNotLoggedIn.map((item, index) => {
                  const { text, icon, onClick } = item;
                  return (<><ListItem key={text}  onClick={(e) => {onClick(e);}} style={{ width:'190px',paddingTop:'0px',paddingBottom:'0px'}}>

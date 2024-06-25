@@ -134,7 +134,31 @@ const LisRegsTables = () => {
                       branchname:item.branch,
                       executive:item.executive,
                       regNo: item.regNo,
-                      status:item.status ===1 ? <a href="#" className='text-white btn btn-success text-decoration-none mx-2' >Approved</a>:<a onClick={(e)=>{toggleTables(e);editPage(item._id)}}><Link className='text-white btn btn-danger text-decoration-none mx-2' >Pending</Link></a>,
+                      docReqDate: formatDate(item.docReqDate),
+                      documents:<a href={item.documents} target="_blank">Document</a>,
+                      docReviewDate:formatDate(item.docReviewDate),
+                      docReqFollow:formatDate(item.docReqFollow),
+                      docStatus:item.docStatus,
+                      docRemark:item.docRemark,
+                      appliedDate:formatDate(item.appliedDate),
+                      applicationStatus:item.applicationStatus,
+                      applicationRemark:item.applicationRemark,
+                      acknowledge:<a href={item.acknowledge} target="_blank">Acknowledge Document</a>,
+                      challlanFees:item.challlanFees,
+                      challanNumber:item.challanNumber,
+                      challanDate:formatDate(item.challanDate),
+                      challanUpload:<a href={item.challanUpload} target="_blank">Challan Document</a>,
+                      dateOfIssue:formatDate(item.dateOfIssue),
+                      renewalDate:formatDate(item.renewalDate),
+                      expireDate:formatDate(item.expireDate),
+                      licenseUpload:<a href={item.licenseUpload} target="_blank">License Document</a>,
+                      invoiceType:item.invoiceType,
+                      invoiceDate:formatDate(item.invoiceDate),
+                      invoiceNumber:item.invoiceNumber,
+                      submissionDate:formatDate(item.submissionDate),
+                      // documents:<a href={item.documents} target="_blank">Document</a>,
+
+                      status:item.status ===1 ? <span className='text-white btn btn-success text-decoration-none mx-2' >Approved</span>:<span ><Link className='text-white btn btn-danger text-decoration-none mx-2' >Pending</Link></span>,
                     //   created_at:formatDate(item.created_at),
                     //   updated_at:item.updated_at!==undefined?formatDate(item.updated_at):item.updated_at,
                       approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
@@ -172,7 +196,29 @@ const LisRegsTables = () => {
                       branchname:item.branch,
                       executive:item.executive,
                       regNo: item.regNo,
-                      status:item.status ===1 ? <a href="#" className='text-white btn btn-success text-decoration-none mx-2' disabled>Approved</a>:<a onClick={(e)=>{toggleTables(e);editPage(item._id)}} disabled={false}><Link className='text-white btn btn-danger text-decoration-none mx-2' >Pending</Link></a>,
+                      docReqDate: formatDate(item.docReqDate),
+                      documents:<a href={item.documents} target="_blank">Document</a>,
+                      docReviewDate:formatDate(item.docReviewDate),
+                      docReqFollow:formatDate(item.docReqFollow),
+                      docStatus:item.docStatus,
+                      docRemark:item.docRemark,
+                      appliedDate:formatDate(item.appliedDate),
+                      applicationStatus:item.applicationStatus,
+                      applicationRemark:item.applicationRemark,
+                      acknowledge:formatDate(item.acknowledge),
+                      challlanFees:item.challlanFees.$numberDecimal,
+                      challanNumber:item.challanNumber,
+                      challanDate:formatDate(item.challanDate),
+                      challanUpload:<a href={item.challanUpload} target="_blank">Challan Document</a>,
+                      dateOfIssue:formatDate(item.dateOfIssue),
+                      renewalDate:formatDate(item.renewalDate),
+                      expireDate:formatDate(item.expireDate),
+                      licenseUpload:<a href={item.licenseUpload} target="_blank">License Document</a>,
+                      invoiceType:item.invoiceType,
+                      invoiceDate:formatDate(item.invoiceDate),
+                      invoiceNumber:item.invoiceNumber,
+                      submissionDate:formatDate(item.submissionDate),
+                      status:item.status ===1 ? <span className='text-white btn btn-success text-decoration-none mx-2' disabled>Approved</span>:<span  disabled={false}><Link className='text-white btn btn-danger text-decoration-none mx-2' >Pending</Link></span>,
                     //   created_at:formatDate(item.created_at),
                     //   updated_at:item.updated_at!==undefined?formatDate(item.updated_at):item.updated_at,
                       approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
@@ -206,7 +252,7 @@ const LisRegsTables = () => {
             state: elementstate.value,
             company: elementcompany.value,
             branch:elementbranch.value,
-            executive: elementuser.value
+            executive: elementuser.value,
         }
         dispatch(liseregAllFilter(postBody));
     }  
@@ -318,7 +364,7 @@ const LisRegsTables = () => {
           title: 'Sr. No.',
           dataIndex: 'key',
           key: 'key',
-          width: 40,
+          width: 70,
          // ...getColumnSearchProps('key'),
          // sorter: (a, b) => a.key.length - b.key.length,
          // sortDirections: ['descend', 'ascend']
@@ -327,7 +373,7 @@ const LisRegsTables = () => {
           title: 'Company',
           dataIndex: 'company',
           key: 'company',
-          width: 70,
+          width: 100,
         //   ...getColumnSearchProps('act'),
         //   sorter: (a, b) => a.act.length - b.act.length,
         //   sortDirections: ['descend', 'ascend']
@@ -336,7 +382,7 @@ const LisRegsTables = () => {
             title: 'State',
             dataIndex: 'state',
             key: 'state',
-            width: 80,
+            width: 200,
             ...getColumnSearchProps('state'),
             sorter: (a, b) => a.state.length - b.state.length,
             sortDirections: ['descend', 'ascend']
@@ -345,7 +391,7 @@ const LisRegsTables = () => {
             title: 'Branch Name',
             dataIndex: 'branchname',
             key: 'branchname',
-            width: 70,
+            width: 200,
             // ...getColumnSearchProps('branchname'),
             sorter: (a, b) => a.branchname.length - b.branchname.length,
             sortDirections: ['descend', 'ascend']
@@ -363,7 +409,7 @@ const LisRegsTables = () => {
             title: 'Executive',
             dataIndex: 'executive',
             key: 'executive',
-            width: 70,
+            width: 300,
             // ...getColumnSearchProps('executive'),
             sorter: (a, b) => a.executive.length - b.executive.length,
             sortDirections: ['descend', 'ascend']
@@ -372,29 +418,236 @@ const LisRegsTables = () => {
             title: 'License/Registration Name',
             dataIndex: 'regNo',
             key: 'regNo',
-            width: 100,
+            width: 300,
             // ...getColumnSearchProps('question'),
             sorter: (a, b) => a.regNo.length - b.regNo.length,
             sortDirections: ['descend', 'ascend']
         },
         {
-            title: 'Recieved Date',
-            dataIndex: 'documents',
-            key: 'documents',
-            width: 80,
-           // ...getColumnSearchProps('documents'),
-           // sorter: (a, b) => a.image.length - b.image.length,
-           // sortDirections: ['descend', 'ascend']
+          title: 'License/Registration Document',
+          dataIndex: 'documents',
+          key: 'documents',
+          width: 300,
+          // ...getColumnSearchProps('question'),
+          // sorter: (a, b) => a..length - b..length,
+          sortDirections: ['descend', 'ascend']
         },
         {
-            title: 'Approval Status',
-            dataIndex: 'status',
-            key: 'status',
-            width: 70,
-           // ...getColumnSearchProps('frequency'),
-           sorter: (a, b) => a.status.length - b.status.length,
+          title: 'Document Request Date ',
+          dataIndex: 'docReqDate',
+          key: 'docReqDate',
+          width: 200,
+          // ...getColumnSearchProps('question'),
+          sorter: (a, b) => a.docReqDate.length - b.docReqDate.length,
+          sortDirections: ['descend', 'ascend']
+        },
+        {
+            title: 'Document Recieved Date',
+            dataIndex: 'docReviewDate',
+            key: 'docReviewDate',
+            width: 200,
+           // ...getColumnSearchProps('documents'),
+           sorter: (a, b) => a.docReviewDate.length - b.docReviewDate.length,
            sortDirections: ['descend', 'ascend']
         },
+        {
+          title: 'Document Request Folllow',
+          dataIndex: 'docReqFollow',
+          key: 'docReqFollow',
+          width: 300,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.docReqFollow.length - b.docReqFollow.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Status',
+          dataIndex: 'docStatus',
+          key: 'docStatus',
+          width: 150,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.docStatus.length - b.docStatus.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Remark',
+          dataIndex: 'docRemark',
+          key: 'docRemark',
+          width: 300,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.docRemark.length - b.docRemark.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Applied Date',
+          dataIndex: 'appliedDate',
+          key: 'appliedDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.appliedDate.length - b.appliedDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Application Status',
+          dataIndex: 'applicationStatus',
+          key: 'applicationStatus',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.applicationStatus.length - b.applicationStatus.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Remark',
+          dataIndex: 'applicationRemark',
+          key: 'applicationRemark',
+          width: 300,
+         // ...getColumnSearchProps('frequency'),
+        //  sorter: (a, b) => a..length - b..length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Acknowledege',
+          dataIndex: 'acknowledge',
+          key: 'acknowledge',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.applicationRemark.length - b.applicationRemark.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Challan Fee in ₹',
+          dataIndex: 'challlanFees',
+          key: 'challlanFees',
+          width: 170,
+         ...getColumnSearchProps('challlanFees'),
+         sorter: (a, b) => a.challlanFees.length - b.challlanFees.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Challan Number',
+          dataIndex: 'challanNumber',
+          key: 'challanNumber',
+          width: 200,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.challanNumber.length - b.challanNumber.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Challan Date',
+          dataIndex: 'challanDate',
+          key: 'challanDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.challanDate.length - b.challanDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Challan Upload',
+          dataIndex: 'challanUpload',
+          key: 'challanUpload',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.challanUpload.length - b.challanUpload.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Licence Number',
+          dataIndex: 'regNo',
+          key: 'regNo',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.regNo.length - b.regNo.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        {
+          title: 'Licence Date Of Issue',
+          dataIndex: 'dateOfIssue',
+          key: 'dateOfIssue',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.dateOfIssue.length - b.dateOfIssue.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Licence Renewal Date',
+          dataIndex: 'renewalDate',
+          key: 'renewalDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.renewalDate.length - b.renewalDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Licence Expire Date',
+          dataIndex: 'expireDate',
+          key: 'expireDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.expireDate.length - b.expireDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'License Document',
+          dataIndex: 'licenseUpload',
+          key: 'licenseUpload',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.licenseUpload.length - b.licenseUpload.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Invoice Type',
+          dataIndex: 'invoiceType',
+          key: 'invoiceType',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.invoiceType.length - b.invoiceType.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Invoice Date',
+          dataIndex: 'invoiceDate',
+          key: 'invoiceDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.invoiceDate.length - b.invoiceDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Invoice number',
+          dataIndex: 'invoiceNumber',
+          key: 'invoiceNumber',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.invoiceNumber.length - b.invoiceNumber.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Invoice submission date',
+          dataIndex: 'submissionDate',
+          key: 'submissionDate',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.submissionDate.length - b.submissionDate.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
+        {
+          title: 'Approval Status',
+          dataIndex: 'status',
+          key: 'status',
+          width: 170,
+         // ...getColumnSearchProps('frequency'),
+         sorter: (a, b) => a.status.length - b.status.length,
+         sortDirections: ['descend', 'ascend']
+        },
+        
         // {
         //     title: 'Create Date',
         //     dataIndex: 'created_at',
@@ -409,11 +662,13 @@ const LisRegsTables = () => {
             title: 'Approved Date',
             dataIndex: 'approvedate',
             key: 'approvedate',
-            width: 80,
+            width: 170,
+            
             // ...getColumnSearchProps('approvedate'),
             // sorter: (a, b) => a.approvedate.length - b.approvedate.length,
             // sortDirections: ['descend', 'ascend']
         }, 
+        
         // {
         //     title: 'Share',
         //     dataIndex: 'risk',
