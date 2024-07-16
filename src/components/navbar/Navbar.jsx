@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Point from './Point.css'
 import {styled} from '@mui/material';
+import Point from './Point.css'
+import {getNotification , fetchNotifications} from "../../store/actions/otherActions";
+
 import Menu from '@mui/icons-material/Menu';
 import { makeStyles } from "@material-ui/core/styles";
 import HomeIcon from '@mui/icons-material/Home';
@@ -37,10 +39,13 @@ import '../../hide.css';
 import { useDispatch,useSelector } from 'react-redux';
 import {logoutUser} from '../../store/actions/authActions';
 import logo from '../../../src/logo.svg'
+import Logo11 from '../../../src/Logo11.jpeg'
+
 import Checklist from '../../../src/Checklist.png'
 import Lisereg from '../../../src/Lisereg.png'
 import { Modal } from 'antd';
-import Logo1 from '../../../src/Logo1.jpeg'
+import { Button, Input, Space, Table ,Form} from 'antd';
+// import NotificationList from './NotificationList';
 
 const drawerWidth = 200;
 const openedMixin = (theme) => ({
@@ -51,6 +56,20 @@ const openedMixin = (theme) => ({
   }),
   overflowX: 'hidden',
 });
+
+
+const formatDate = (currentDate) => {
+  const dates = new Date(currentDate);
+  const year = dates.getFullYear();
+  const month = String(dates.getMonth() + 1).padStart(2, '0');
+  const date = String(dates.getDate()).padStart(2, '0');
+  const hours = String(dates.getHours()).padStart(2, '0');
+  const minutes = String(dates.getMinutes()).padStart(2, '0');
+  const seconds = String(dates.getSeconds()).padStart(2, '0');
+  const formattedDateTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+  return (formattedDateTime);
+}
+
 
 const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
@@ -120,8 +139,17 @@ const Navbar = () => {
   const {userInfo} = userLogin;
   const [name, setName] = useState('');
   const [userId, setUserid] = useState('');
+  const getttingNotification = useSelector((state) => state.getttingNotification);
+  const { loading, notificationInfo,error } = getttingNotification;
+  console.log(notificationInfo);
   const [username, setUsername] = useState('');
   const [selectedDiv, setSelectedDiv] = useState(null);
+  const notificationList = useSelector((state) => state.notificationList);
+  const { loading1, notificationInfos,error1 } = notificationList;
+  // const { loading1, notificationInfos,error1 } = notificationList;
+  // console.log("notificationList",notificationList);
+  console.log("notificationInfos",notificationInfos);
+
   const badgeNotification = {
       backgroundColor:'white'
   }
@@ -136,66 +164,138 @@ const Navbar = () => {
     setSelectedDiv(id);
   };
   
+
+  const [dataSource, setDataSource] = useState();
+  const [dataSource1, setDataSource1] = useState();
+
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const toggleDialog = () => {
+    setIsDialogVisible(!isDialogVisible);
+    };
+    const notificationInfoCount11 = notificationInfos?.length ? notificationInfos?.length : 0;
+
+    const isLoggedIn = useSelector(state => state.userLogin); // Replace with your actual selector for login state
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchNotifications());
+      console.log("dispatch", dispatch);
+    }
+  }, [dispatch, isLoggedIn]);
+
+  useEffect(() => {
+    const lomo = notificationInfos;
+    console.log("lomo", lomo);
+
+    if (lomo?.length > 0) {
+      let notificationArr1 = [];
+      lomo.forEach((item, index) => {
+        console.log("item", item); // Add this log to check each item
+        notificationArr1.push({
+          key: index + 1,
+          id: item._id,
+          title: item.title,
+          act: item.act,
+          rule: item.rule,
+          question: item.question,
+          daysLeft: item.daysLeft,
+          startDate: new Date(item.startDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            }),
+              dueDate: new Date(item.dueDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              }),
+              // questionDoc: (
+          //   <a
+          //     href={item.questionDoc}
+          //     target="_blank"
+          //     rel="noopener noreferrer"
+          //   >
+          //     Document
+          //   </a>
+          // ),
+          // docattachment: (
+          //   <a
+          //     href={item.docattachment}
+          //     target="_blank"
+          //     rel="noopener noreferrer"
+          //   >
+          //     File
+          //   </a>
+          // ),
+        });
+      });
+      console.log("notificationArr1", notificationArr1);
+      setDataSource1(notificationArr1);
+    }
+  }, [notificationInfos]);
 ///side bar drawer code start
+
+
+
 const itemsListNotLoggedIn = [
-    {
-        text: "Dashboard",
-        icon: <HomeIcon onClick={(e) => onDashboard(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onDashboard(e)
-    },
-    // {
-    //     text: "Compliances",
-    //     icon: <ListAltIcon onClick={(e) => onCompliances(e)}/>,
-    //     className: "pointer-cursor",
-    //     onClick: (e) => onCompliances(e)
-    // },
-    {
-        text: "Checklist",
-        icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{paddingTop:'2px'}}/>,
-        className: "pointer-cursor",
-        // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
-        onClick: (e) => onChecklist(e)
-    },
-    // {
-    //     text: "Audit",
-    //     icon: <ManageAccountsIcon onClick={(e) => onAudit(e)}/>,
-    //     onClick: (e) => onAudit(e)
-    // },
-    // {
-    //     text: "Companies",
-    //     icon: <BusinessIcon onClick={(e) => onCompany(e)}/>,
-    //     onClick: (e) => onCompany(e)
-    // },
-    // {
-    //     text: "Users",
-    //     icon: <PeopleAltIcon onClick={(e) => onUserRegister(e)}/>,
-    //     onClick: (e) => onUserRegister(e)
-    // },
-    // {
-    //     text: "Category",
-    //     icon: <CategoryIcon onClick={(e) => onCategory(e)}/>,
-    //     onClick: (e) => onCategory(e)
-    // },
-    {
-        text: "E-Library",
-        icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onElibrary(e)
-    },
-    {
-        text: "Notification",
-        icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onNotification(e)
-    }
-    ,
-    {
-        text: "Lise/Regs",
-        icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
-        className: "pointer-cursor",
-        onClick: (e) => onLisereg(e)
-    }
+  {
+      text: "Dashboard",
+      icon: <HomeIcon onClick={(e) => onDashboard(e)}/>,
+      className: "pointer-cursor",
+      onClick: (e) => onDashboard(e)
+  },
+  // {
+  //     text: "Compliances",
+  //     icon: <ListAltIcon onClick={(e) => onCompliances(e)}/>,
+  //     className: "pointer-cursor",
+  //     onClick: (e) => onCompliances(e)
+  // },
+  {
+      text: "Compliances",
+      icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{paddingTop:'2px'}}/>,
+      className: "pointer-cursor",
+      // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
+      onClick: (e) => onChecklist(e)
+  },
+  // {
+  //     text: "Audit",
+  //     icon: <ManageAccountsIcon onClick={(e) => onAudit(e)}/>,
+  //     onClick: (e) => onAudit(e)
+  // },
+  // {
+  //     text: "Companies",
+  //     icon: <BusinessIcon onClick={(e) => onCompany(e)}/>,
+  //     onClick: (e) => onCompany(e)
+  // },
+  // {
+  //     text: "Users",
+  //     icon: <PeopleAltIcon onClick={(e) => onUserRegister(e)}/>,
+  //     onClick: (e) => onUserRegister(e)
+  // },
+  // {
+  //     text: "Category",
+  //     icon: <CategoryIcon onClick={(e) => onCategory(e)}/>,
+  //     onClick: (e) => onCategory(e)
+  // },
+  {
+      text: "E-Library",
+      icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)}/>,
+      className: "pointer-cursor",
+      onClick: (e) => onElibrary(e)
+  },
+  {
+      text: "Notification",
+      icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)}/>,
+      className: "pointer-cursor",
+      onClick: (e) => onNotification(e)
+  }
+  ,
+  {
+      text: "Lise/Regs",
+      icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onLisereg(e)
+  }
 ];
 
     const onLogin = (e) => {
@@ -256,6 +356,26 @@ const itemsListNotLoggedIn = [
           }
         });
     }
+
+
+    const notificationInfoCount = notificationInfo?.length?notificationInfo?.length:0;
+  // useEffect(()=>{
+  //   dispatch(getNotification());
+  // },[dispatch])
+  // useEffect(()=>{
+  //   let notificationArr = [];
+  //   if (notificationInfo?.length > 0) {
+  //       notificationInfo.map((item, index) => {
+  //           notificationArr.push({
+  //           key: index+1,
+  //           id: item._id,
+  //           label: item.label,
+  //           dates:formatDate(item.dates)
+  //         })
+  //     });
+  //   }
+  //   setDataSource(notificationArr); 
+  // },[notificationInfo])
     useEffect(() => {
         const saved = localStorage.getItem("userInfo");
         //setting up values to hide all navbar urls which are not necessory after login
@@ -281,7 +401,99 @@ const itemsListNotLoggedIn = [
             navigate("/");
     }
     },[userInfo])
+
+    const columns = [
+      {
+      title: <div style={{ fontWeight:'bold',textAlign:'left' }}>Notifications({notificationInfoCount11})</div>,
+      children: [
+          // {
+          // // title: 'Label',
+          // dataIndex: 'Id',
+          // key: 'id',
+          // dataIndex: 'id',
+
+          // width: 30,
+          // // ...getColumnSearchProps('label'),
+          // // sorter: (a, b) => a.label.length - b.label.length,
+          // // sortDirections: ['descend', 'ascend']
+          // },
+          {
+              title: 'Audit Title',
+              dataIndex: 'title',
+              key: 'title',
+              width: 40,
+              // ...getColumnSearchProps('createdAt'),
+              // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+              // sortDirections: ['descend', 'ascend']
+          }, 
+          {
+            title: 'Act',
+            dataIndex: 'act',
+            key: 'act',
+            width: 40,
+            // ...getColumnSearchProps('createdAt'),
+            // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+            // sortDirections: ['descend', 'ascend']
+        }, 
+        {
+          title: 'Rule',
+          dataIndex: 'rule',
+          key: 'rule',
+          width: 40,
+          // ...getColumnSearchProps('createdAt'),
+          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+          // sortDirections: ['descend', 'ascend']
+      }, 
+        {
+          title: 'Question',
+          dataIndex: 'question',
+          key: 'question',
+          width: 40,
+          // ...getColumnSearchProps('createdAt'),
+          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+          // sortDirections: ['descend', 'ascend']
+      }, 
+        {
+          title: 'Days Left',
+          dataIndex: 'daysLeft',
+          key: 'daysLeft',
+          width: 40,
+          // ...getColumnSearchProps('createdAt'),
+          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+          // sortDirections: ['descend', 'ascend']
+      }, 
+        {
+          title: 'Start Date',
+          dataIndex: 'startDate',
+          key: 'startDate',
+          width: 40,
+          // ...getColumnSearchProps('createdAt'),
+          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+          // sortDirections: ['descend', 'ascend']
+      }, 
+        {
+          title: 'Due Date',
+          dataIndex: 'dueDate',
+          key: 'dueDate',
+          width: 40,
+          // ...getColumnSearchProps('createdAt'),
+          // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+          // sortDirections: ['descend', 'ascend']
+      }, 
+          // {
+          //     title: 'Reset Date',
+          //     dataIndex: 'updatedAt',
+          //     key: 'updatedAt',
+          //     width: 70,
+          //     ...getColumnSearchProps('updatedAt'),
+          //     sorter: (a, b) => a.updatedAt.length - b.updatedAt.length,
+          //     sortDirections: ['descend', 'ascend']
+          // }
+          ],
+      },
+    ];
     return (
+      
         <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="fixed" open={open} style={{ backgroundColor:'white',color:'#000'}}>
@@ -301,12 +513,63 @@ const itemsListNotLoggedIn = [
             </IconButton>
             {/* <Typography variant='h5' component="div" sx={{ flexGrow: 1 }} style={{ backgroundColor:'white',color:'#000' }}>MES</Typography>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
             
-                    <NavLink >
-                        <button type="button" class="icon-button" style={{ marginLeft: '1000px',position: 'fixed'}}>
-                            <span class="material-icons">notifications</span>
-                            <span class="icon-button__badge">2</span>
-                        </button>
-                    </NavLink>
+            <NavLink>
+        <button
+          type="button"
+          className="icon-button"
+          style={{ marginLeft: '1000px', position: 'fixed' }}
+          onClick={toggleDialog}
+        >
+          <span className="material-icons">notifications</span>
+          <span className="icon-button__badge">{notificationInfoCount11}</span>
+        </button>
+      </NavLink>
+      <Modal
+        title=""
+        visible={isDialogVisible}
+        onCancel={toggleDialog}
+        width={1200}
+        style={{
+          position:'relative',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-65%, -50%)',
+          // height: '456px',
+        }}
+        footer={[
+          <Button key="close" onClick={toggleDialog}>
+            Close
+          </Button>,
+        ]}
+      >
+        <React.Fragment>
+      <Table columns={columns} dataSource={dataSource1} style={{ overflow:'-moz-hidden-unscrollable' }} pagination={{ pageSize: 10, showSizeChanger: false,position: ["bottomCenter"] }}  scroll={{ x: 1000}} />
+      {/* Notification Count: {notificationInfoCount11} */}
+      {/* {dataSource1.map((notification) => (
+      <div className="notification-box">
+        <div className="notification-item" key={notification.id}>
+          <h4>{notification.title}</h4>
+          <p>Act: {notification.act}</p>
+          <p>Rule: {notification.rule}</p>
+          <p>Question: {notification.question}</p>
+          <p>Days Left: {notification.daysLeft}</p>
+          <p>Start Date: {notification.startDate}</p>
+          <p>Due Date: {notification.dueDate}</p>
+          Uncomment and use these if needed
+          <p>
+            Question Doc: <a href={notification.questionDoc} target="_blank" rel="noopener noreferrer">Document</a>
+          </p>
+          <p>
+            Attachment: <a href={notification.docattachment} target="_blank" rel="noopener noreferrer">File</a>
+          </p>
+         
+        </div>
+    </div>
+      ))} */}
+  </React.Fragment>
+   
+        
+      </Modal>
                     <NavLink position="fixed" style={{ color: '#000', marginLeft: '1030px',position: 'fixed' }} onClick={(e) => onLogout(e)} className={`${!userId ? "mystyle" : ""}`} ><button type="button" class="logout-button" style={{ marginLeft: '1000px',position: 'fixed'}}><LogoutIcon /></button></NavLink>
                     
                     <NavLink style={{ color: '#000' }} to="/" className={`${userId ? "mystyle" : ""}`} ><button type="button" class="login-button" style={{ marginLeft: '1000px',position: 'fixed'}}><LoginIcon /></button></NavLink>
@@ -315,15 +578,13 @@ const itemsListNotLoggedIn = [
         </AppBar>
     {userId ?  <Drawer variant="permanent" open={open}>
             <DrawerHeader>
-            {/* <img src={logo} alt="My Image" style={{ marginRight:'40px' }}/> */}
-            <img src={Logo1} alt="My Image" style={{marginLeft:'5px',marginTop:'-5px',width:'100px',height:'100px'}}/>
-
+            <img src={Logo11} alt="My Image" style={{marginLeft:'5px',marginTop:'-5px',width:'100px',height:'100px'}}/>
             <IconButton onClick={handleDrawerClose}>
                 {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
             </DrawerHeader>
             <Divider />
-            <List>                                                                                                                                                                     
+            <List>
             {userId && itemsListNotLoggedIn.map((item, index) => {
                  const { text, icon, onClick } = item;
                  return (<><ListItem key={text}  onClick={(e) => {onClick(e);}} style={{ width:'190px',paddingTop:'0px',paddingBottom:'0px'}}>

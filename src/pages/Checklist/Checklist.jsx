@@ -801,7 +801,7 @@ const Checklist = () => {
                         <div className="col-lg-12">
                             <ul className="nav nav-pills mb-3 bg-light rounded overflow-hidden" id="pills-tab" role="tablist">
                                 <li className="nav-item col-md-12 col-lg-12 col-12 border-end border-md-bottom" role="presentation">
-                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}> <ContentPasteIcon /> All Checklist</button>
+                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}> <ContentPasteIcon /> All Compliances</button>
                                 </li>
                                 {/* <li className="nav-item col-md-6 col-lg-3 col-12 border-end" role="presentation">
                                     <button className="nav-link w-100 rounded-0 text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={callingapprove}><ContentPasteIcon /> Approve Checklist</button>

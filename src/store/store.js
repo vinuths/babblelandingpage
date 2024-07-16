@@ -7,6 +7,7 @@ import {
 } from './reducers/authReducers';  // imporeting auth user reducers
 
 import {
+        auditReducer,
         auditorReducer,
         executiveReducer,
         auditorOnCreateReducer,
@@ -24,6 +25,7 @@ import {
         notificationCreateReducer,
         userCreateReducer,
         userEditReducer,
+        userDeleteReducer,
         branchGetReducer,
         companyGetReducer,
         complianceGetReducer,
@@ -116,11 +118,18 @@ import {
         companyAssignGetOnCreateReducer,
         companyLFilterReducer,
         companyViewAllAssignFilterReducer,
-        companyAssignFilterReducer
+        companyAssignFilterReducer,
+        checklistReducer1,
+        fileUploadReducer,
+        notificationReducer, 
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
+        notificationList: notificationReducer,
+        auditfileupload: fileUploadReducer,
+        checklist: checklistReducer1,
         getAuditor:auditorReducer,
+        auditUpload:auditReducer,
         getExecutive:executiveReducer,
         createOnAudit:auditorOnCreateReducer,
         auditFilterChecklist:auditorChecklistFilterReducer,
@@ -138,6 +147,7 @@ const reducer = combineReducers({
         notificationCreate:notificationCreateReducer,
         userCreate:userCreateReducer,
         userEdits:userEditReducer,
+        userDeletes:userDeleteReducer,
         checklist:checklistReducer,
         checklistGet:checklistGetReducer,
         getBranch:branchGetReducer,

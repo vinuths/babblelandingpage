@@ -2,7 +2,8 @@ import axios from 'axios';
 import {getToken} from '../utils/localStorage'
 const URL = 'http://localhost:8000/api/admin'; 
 
-//const URL = 'http://103.160.107.21:8000/api/admin'; 
+// const URL = 'https://matrixhrtech.com/api/admin';
+
 axios.defaults.withCredentials = true;  
 ///api of users starts
 export const login = async(data) => {
@@ -125,6 +126,7 @@ export const editUser = async(data,id) => {
     return await axios.put(`${URL}/editUser/${id}`,data,config);
 }
 export const userDelete = async(id) => {  //all users except logged in user
+    // alert(id);return;
     return await axios.delete(`${URL}/deleteUser/${id}`);
 }
 
@@ -709,11 +711,11 @@ export const elibrarySaveandApprove = async(data) => {
     const config = {
         headers: {
             "Content-Type":"application/json",
-            Authorization : `Bearer ${getToken()}`,
-            'content-Type': 'multipart/form-data'
+            Authorization : `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/elibrarySaveandApprove`,data,config);
+    // alert(JSON.stringify(data)); return;
+    return await axios.patch(`${URL}/elibrarySaveandApprove`,data,config);
 }
 export const createCompany = async(data) => {
 
@@ -775,11 +777,10 @@ export const companySaveandApprove = async(data) => {
     const config = {
         headers: {
             "Content-Type":"application/json",
-            Authorization : `Bearer ${getToken()}`,
-            'content-Type': 'multipart/form-data'
+            Authorization : `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/companySaveandApprove`,data,config);
+    return await axios.put(`${URL}/companySaveandApprove`,data,config);
 }
 export const companyLcreate = async(data) => {
 
@@ -1121,3 +1122,49 @@ export const assignedCompanyFilter = async(data) => {
     return await axios.post(`${URL}/assignedCompanyFilter`,data,config);
 }
 ///api of users endcomplianceReject
+export const checklistAddInAudit = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+    return await axios.post(`${URL}/checklistAddInAudit`, data, config);
+};
+export const fileUploadInAuditQuestion = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data'
+        }
+    };
+    return await axios.put(`${URL}/fileUploadInAuditQuestion`, data, config);
+};
+
+export const AuditUploadStatusValue = async(data) => {
+
+    const config = {
+        headers: {
+            "Content-Type":"application/json",
+            Authorization : `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data'
+
+        }
+    }
+    //alert('JSON.stringify(data)'); return;
+    return await axios.post(`${URL}/AuditUploadStatusValue`,data,config);
+}
+export const DueDaysNotification = async(notifications) => {
+
+    const config = {
+        headers: {
+            "Content-Type":"application/json",
+            Authorization : `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data'
+
+        }
+    }
+    //alert('JSON.stringify(data)'); return;
+    return await axios.get(`${URL}/gettingDueNotifications `,notifications,config);
+}
