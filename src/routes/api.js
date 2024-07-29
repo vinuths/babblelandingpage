@@ -1155,16 +1155,22 @@ export const AuditUploadStatusValue = async(data) => {
     //alert('JSON.stringify(data)'); return;
     return await axios.post(`${URL}/AuditUploadStatusValue`,data,config);
 }
-export const DueDaysNotification = async(notifications) => {
-
+export const DueDaysNotification = async (notifications) => {
     const config = {
         headers: {
-            "Content-Type":"application/json",
-            Authorization : `Bearer ${getToken()}`,
-            // 'content-Type': 'multipart/form-data'
+            "Content-Type": "application/json",
+            // "Authorization": `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWQ0ZjI2MDljOTkyM2M5ZTdiOGY3MiIsImlhdCI6MTcyMTkwNzAzMywiZXhwIjoxNzIyMDc5ODMzfQ.Uc0ExXY4id5oEtIniSyYtcUbyfVZ31PgfFO4eioUjZo`
+             Authorization : `Bearer ${getToken()}`,
 
-        }
+        },
+        params: notifications
+    };
+
+    try {
+        const response = await axios.get(`${URL}/gettingDueNotifications`, config);
+        return response;
+    } catch (error) {
+        console.error('Error fetching due notifications:', error);
+        throw error;
     }
-    //alert('JSON.stringify(data)'); return;
-    return await axios.get(`${URL}/gettingDueNotifications `,notifications,config);
-}
+};

@@ -150,6 +150,10 @@ const AllChecklistTable = () =>{
                               <p className='card-text'><strong>Category:</strong> {item2.categorycomp}</p><hr />
                               <p className='card-text'><strong>Risk:</strong> {item2.risk}</p><hr />
                               <p className='card-text'><strong>Due Date:</strong> {item2.dueDate}</p><hr />
+                              <p className='card-text'><strong>Delay in Days:</strong> {item2.DelayinDays}</p><hr />
+                              <p className='card-text'><strong>Date of Completion:</strong> {item2.DateofCompletion}</p><hr />
+                              <p className='card-text'><strong>Complied Status:</strong> {item2.CompliedStatus}</p><hr />
+                              <p className='card-text'><strong>Remarks Status:</strong> {item2.RemarksStatus}</p><hr />
                               <div>
                                 <a href={item2.docattachment} target="_blank" rel="noopener noreferrer">Document Question {i + 1}</a>
                               </div>
@@ -226,6 +230,10 @@ const AllChecklistTable = () =>{
                               <p className='card-text'><strong>Category:</strong> {item2.categorycomp}</p><hr />
                               <p className='card-text'><strong>Risk:</strong> {item2.risk}</p><hr />
                               <p className='card-text'><strong>Due Date:</strong> {item2.dueDate}</p><hr />
+                              <p className='card-text'><strong>Delay in Days:</strong> {item2.DelayinDays}</p><hr />
+                              <p className='card-text'><strong>Date of Completion:</strong> {item2.DateofCompletion}</p><hr />
+                              <p className='card-text'><strong>Complied Status:</strong> {item2.CompliedStatus}</p><hr />
+                              <p className='card-text'><strong>Remarks Status:</strong> {item2.RemarksStatus}</p><hr />
                               <div>
                                 <a href={item2.docattachment} target="_blank" rel="noopener noreferrer">Document Question {i + 1}</a>
                               </div>
