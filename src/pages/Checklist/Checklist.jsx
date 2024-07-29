@@ -251,24 +251,53 @@ const Checklist = () => {
                 //   dispatch(getComplianceBycandsId(item.category._id,item.state._id))
                 // }
                 checklistOnCreateArr.push({
-                  key:index+1,
-                  id: item._id,
-                  company:item.company,
-                  state:item.state.name,
-                  compliance: item.compliance,
-                  rule:<div className='new-line'>{item.rule}</div>,
-                  category:item.category.name,
-                  question:<div className='new-line'>{item.question}</div>,
-                  description:<div className='new-line'>{item.description}</div>,
-                  image:<a href={item.image} target="_blank">Form</a>,
-                  documents:<a href={item.documents} target="_blank">Document</a>,
-                  frequency:item.frequency,
-                  branchname:item.branchname,
-                  risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
-                  created_at:formatDate(item.created_at),
-                  approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
-                  duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
-                  executive:item.executive,
+//                   key:index+1,
+//                   id: item._id,
+//                   company:item.company,
+//                   state:item.state.name,
+//                   compliance: item.compliance,
+//                   // rule:<div className='new-line'>{item.rule}</div>,
+//                   rules: <div className='new-line' style={{border:"2px solid grey",textAlign:"center",padding:'10px',borderRadius:'10px'}}>
+//                   {item.complianceRule.map((item1, r) => (
+//                     <div style={{border:"2px solid #013879",textAlign:"left", marginTop:'10px', padding:'10px', marginBottom:'10px',
+//                        borderRadius:'10px',fontWeight:'normal ', backgroundColor:'#e9f0f7',minWidth:'fitContent !important',fontSize:'14px',maxWidth:'500px !important',minHeight:'150px',gap:'20px',color:'black'}}>
+//                     <div style={{borderTop:'1px solid grey',fontWeight:'bold',fontSize:'20px,back',backgroundColor:'#edeef0',padding:'5px'}} key={r}>Rule-{r +1}: {item1.rule} <div style={{paddingBottom:'20px'}}><a href={item1.docFile} target="_blank">Document Rule {r + 1}</a></div>
+//                       <>
+//                       {item1.questions.map((item2, i) => (<><div style={{border:'1px solid grey',padding:'10px',borderRadius:'10px'}}>
+//                         <div key={i}>Question-{i+1}: {item2.question}</div>
+//                         <div>Description-{r +1}:  {item2.description}</div>
+//                         <div>Compliance Activity-{r +1}:  {item2.compliancetype}</div>
+
+//                         <div>Consequences-{r +1}:  {item2.consequences}</div>
+//                         <div>Frequency-{r +1}:  {item2.frequency}</div>
+//                         <div>Catageory-{r +1}:  {item2.categorycomp}</div>
+//                         <div>Risk-{r +1}:  {item2.risk}</div>
+
+//                         <div>Due Date-{r +1}:  {item2.dueDate}</div>
+
+//                         <div><a href={item2.docattachment} target="_blank">Document Question {i +1}</a></div>
+//                         </div>
+// </>
+//                         ))}
+//                         </>
+//                         {/* <br/> */}
+//                       </div>
+//                       </div>
+//                   ))}
+//                   </div>,
+//                   cname:<div className='new-line'>{item.cname}</div>,
+//                   category:item.category.name,
+//                   question:<div className='new-line'>{item.question}</div>,
+//                   description:<div className='new-line'>{item.description}</div>,
+//                   image:<a href={item.image} target="_blank">Form</a>,
+//                   documents:<a href={item.documents} target="_blank">Document</a>,
+//                   frequency:item.frequency,
+//                   branchname:item.branchname,
+//                   risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
+//                   created_at:formatDate(item.created_at),
+//                   approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
+//                   duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
+//                   executive:item.executive,
                 })
             });
           }
@@ -323,24 +352,24 @@ const Checklist = () => {
                   document = <a href={item.docattachment} target="_blank">Document</a>
                 }
                 checklistOnCreateFilterArr.push({
-                  key:index+1,
-                  id: item._id,
-                  company:item.company,
-                  state:item.state.name,
-                  compliance: acts,
-                  rule:<div className='new-line'>{item.rule}</div>,
-                  category:item.category.name,
-                  question:<div className='new-line'>{item.question}</div>,
-                  description:<div className='new-line'>{item.description}</div>,
-                  image:images,
-                  documents:document,
-                  frequency:item.frequency,
-                  branchname:item.branchname,
-                  risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
-                  created_at:formatDate(item.created_at),
-                  approvedate:(item.approvedate)!==undefined?formatDate(item.approvedate):(item.approvedate),
-                  duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
-                  executive:executives,
+                  // key:index+1,
+                  // id: item._id,
+                  // company:item.company,
+                  // state:item.state.name,
+                  // compliance: acts,
+                  // rule:<div className='new-line'>{item.rule}</div>,
+                  // category:item.category.name,
+                  // question:<div className='new-line'>{item.question}</div>,
+                  // description:<div className='new-line'>{item.description}</div>,
+                  // image:images,
+                  // documents:document,
+                  // frequency:item.frequency,
+                  // branchname:item.branchname,
+                  // risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
+                  // created_at:formatDate(item.created_at),
+                  // approvedate:(item.approvedate)!==undefined?formatDate(item.approvedate):(item.approvedate),
+                  // duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
+                  // executive:executives,
                 })
             });
           }
@@ -556,12 +585,12 @@ const Checklist = () => {
         //   sortDirections: ['descend', 'ascend']
         },
         {
-            title: <div style={{ textAlign: 'left' }}>Rule</div>,
-            dataIndex: 'rule',
-            key: 'rule',
+            title: <div style={{ textAlign: 'left' }}>Rules</div>,
+            dataIndex: 'rules',
+            key: 'rules',
             width: 300,
-            ...getColumnSearchProps('rule'),
-            sorter: (a, b) => a.rule.length - b.rule.length,
+            ...getColumnSearchProps('rules'),
+            sorter: (a, b) => a.rules.length - b.rules.length,
             sortDirections: ['descend', 'ascend']
         },
         {
@@ -573,33 +602,33 @@ const Checklist = () => {
             sorter: (a, b) => a.category.length - b.category.length,
             sortDirections: ['descend', 'ascend']
         },
-        {
-            title: <div style={{ textAlign: 'left' }}>Question</div>,
-            dataIndex: 'question',
-            key: 'question',
-            width: 200,
-            // ...getColumnSearchProps('question'),
-            // sorter: (a, b) => a.question.length - b.question.length,
-            // sortDirections: ['descend', 'ascend']
-        },
-        {
-          title: <div style={{ textAlign: 'left' }}>Description</div>,
-            dataIndex: 'description',
-            key: 'description',
-            width: 200,
-            // ...getColumnSearchProps('question'),
-            // sorter: (a, b) => a.question.length - b.question.length,
-            // sortDirections: ['descend', 'ascend']
-        },
-        {
-            title: 'Form',
-            dataIndex: 'image',
-            key: 'image',
-            width: 100,
-        //    ...getColumnSearchProps('image'),
-         //   sorter: (a, b) => a.image.length - b.image.length,
-         //   sortDirections: ['descend', 'ascend']
-        },
+        // {
+        //     title: <div style={{ textAlign: 'left' }}>Question</div>,
+        //     dataIndex: 'question',
+        //     key: 'question',
+        //     width: 200,
+        //     // ...getColumnSearchProps('question'),
+        //     // sorter: (a, b) => a.question.length - b.question.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // },
+        // {
+        //   title: <div style={{ textAlign: 'left' }}>Description</div>,
+        //     dataIndex: 'description',
+        //     key: 'description',
+        //     width: 200,
+        //     // ...getColumnSearchProps('question'),
+        //     // sorter: (a, b) => a.question.length - b.question.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // },
+        // {
+        //     title: 'Form',
+        //     dataIndex: 'image',
+        //     key: 'image',
+        //     width: 100,
+        // //    ...getColumnSearchProps('image'),
+        //  //   sorter: (a, b) => a.image.length - b.image.length,
+        //  //   sortDirections: ['descend', 'ascend']
+        // },
         {
             title: 'Document',
             dataIndex: 'documents',
@@ -771,8 +800,8 @@ const Checklist = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <ul className="nav nav-pills mb-3 bg-light rounded overflow-hidden" id="pills-tab" role="tablist">
-                                <li className="nav-item col-md-6 col-lg-3 col-12 border-end border-md-bottom" role="presentation">
-                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}> <ContentPasteIcon /> All Checklist</button>
+                                <li className="nav-item col-md-12 col-lg-12 col-12 border-end border-md-bottom" role="presentation">
+                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}> <ContentPasteIcon /> All Compliances</button>
                                 </li>
                                 {/* <li className="nav-item col-md-6 col-lg-3 col-12 border-end" role="presentation">
                                     <button className="nav-link w-100 rounded-0 text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={callingapprove}><ContentPasteIcon /> Approve Checklist</button>

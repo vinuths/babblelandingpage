@@ -1,10 +1,7 @@
 import {
     AUDITOR_REQUEST_GET,
     AUDITOR_SUCCESS_GET,
-    AUDITOR_GET_FAIL,  
-    COMPANYLOGIN_REQUEST_GET,
-    COMPANYLOGIN_SUCCESS_GET,
-    COMPANYLOGIN_GET_FAIL,  
+    AUDITOR_GET_FAIL,   
     EXECUTIVE_REQUEST_GET,
     EXECUTIVE_SUCCESS_GET,
     EXECUTIVE_GET_FAIL, 
@@ -56,6 +53,9 @@ import {
     USER_REQUEST_EDIT,
     USER_SUCCESS_EDIT,
     USER_EDIT_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_DELETE_FAIL,
     CHECKLIST_CREATE_REQUEST,
     CHECKLIST_CREATE_SUCCESS,
     CHECKLIST_CREATE_FAIL,
@@ -337,7 +337,19 @@ import {
     COMPANY_ASSIGN_GET_FAIL_FILTER,
     COMPANY_ASSIGNA_REQUEST_GET_FILTER,
     COMPANY_ASSIGNA_SUCCESS_GET_FILTER,
-    COMPANY_ASSIGNA_GET_FAIL_FILTER
+    COMPANY_ASSIGNA_GET_FAIL_FILTER,
+    CHECKLIST_ADD_IN_AUDIT_REQUEST,
+    CHECKLIST_ADD_IN_AUDIT_SUCCESS,
+    CHECKLIST_ADD_IN_AUDIT_FAILURE,
+    FILE_UPLOADS_REQUEST, 
+    FILE_UPLOADS_SUCCESS, 
+    FILE_UPLOADS_FAIL,
+    AUDIT_UPLOAD_STATUS_REQUEST,
+    AUDIT_UPLOAD_STATUS_SUCCESS,
+    AUDIT_UPLOAD_STATUS_FAILURE,
+    NOTIFICATION_REQUEST,
+    NOTIFICATION_SUCCESS,
+    NOTIFICATION_FAILURE,
     } from "../actiontypes/otherConstants";
 export const auditorReducer = (state= {}, action) => {
         switch(action.type) {
@@ -354,7 +366,7 @@ export const executiveReducer = (state= {}, action) => {
         case EXECUTIVE_GET_FAIL: return { loadingexecutive:false, error: action.payload };
         default: return state;
         }
-}   
+}    
 export const auditorOnCreateReducer = (state= {}, action) => {
         switch(action.type) {
         case AUDIT_REQUEST_CREATE: return { loading:true };
@@ -488,7 +500,14 @@ export const userEditReducer = (state= {}, action) => {
                 default: return state;
         }
 }
-
+export const userDeleteReducer = (state= {}, action) => {
+        switch(action.type) {
+                case USER_DELETE_REQUEST: return { loading:true };
+                case USER_DELETE_SUCCESS: return { loading:false, userDeleteInfo: action.payload };
+                case USER_DELETE_FAIL: return { loading:false, error: action.payload };
+                default: return state;
+        }
+}
 export const branchGetReducer = (state= {}, action) => {
         switch(action.type) {
                 case BRANCH_REQUEST_GET: return { loadingu:true };
@@ -1087,7 +1106,7 @@ export const complianceGetttingByCSIDReducer = (state= {}, action) => { /////get
 export const companyinteractionCreaeteReducer = (state= {}, action) => { 
         switch(action.type) {
                 case COMPANY_INERACTION_CREATE_REQUEST: return { loadingcic:true };
-                case COMPANY_INERACTION_CREATE_SUCCESS: return { loadingcic:false, companyinteractionCreateInfo: action.payload };
+                case COMPANY_INERACTION_CREATE_SUCCESS: return { loadingcic:false, companyinteractionCreate: action.payload };
                 case COMPANY_INERACTION_CREATE_FAIL: return { loadingcic:false, error: action.payload };
                 default: return state;
         }
@@ -1246,16 +1265,64 @@ export const companyAssignFilterReducer = (state= {}, action) => {
 
 
 
+const initialState = {
+        loading: false,
+        data: null,
+        error: null,
+      };
+      
+      export const checklistReducer1 = (state = initialState, action) => {
+        switch (action.type) {
+          case CHECKLIST_ADD_IN_AUDIT_REQUEST:
+            return { ...state, loading: true, error: null };
+          case CHECKLIST_ADD_IN_AUDIT_SUCCESS:
+            return { ...state, loading: false, data: action.payload, error: null };
+          case CHECKLIST_ADD_IN_AUDIT_FAILURE:
+            return { ...state, loading: false, data: null, error: action.payload };
+          default:
+            return state;
+        }
+      };
 
 
 
+      export const fileUploadReducer = (state = initialState, action) => {
+        switch (action.type) {
+          case FILE_UPLOADS_REQUEST:
+            return { ...state, loading: true, error: null };
+          case FILE_UPLOADS_SUCCESS:
+            return { ...state, loading: false, data: action.payload };
+          case FILE_UPLOADS_FAIL:
+            return { ...state, loading: false, error: action.payload };
+          default:
+            return state;
+        }
+      };
 
 
+      export const auditReducer = (state = initialState, action) => {
+        switch (action.type) {
+            case AUDIT_UPLOAD_STATUS_REQUEST:
+                return { ...state, loading: true, error: null };
+            case AUDIT_UPLOAD_STATUS_SUCCESS:
+                return { ...state, loading: false, audit: action.payload, error: null };
+            case AUDIT_UPLOAD_STATUS_FAILURE:
+                return { ...state, loading: false, error: action.payload };
+            default:
+                return state;
+        }
+    };
 
-
-
-
-
+   
+    export const notificationReducer = (state= {}, action) => {
+        switch(action.type) {
+                case NOTIFICATION_REQUEST: return { loadingu:true };
+                case NOTIFICATION_SUCCESS: return { loadingu:false, notificationInfos: action.payload };
+                case NOTIFICATION_FAILURE: return { loadingu:false, error: action.payload };
+                default: return state;
+        }
+}
+    
     
 
 

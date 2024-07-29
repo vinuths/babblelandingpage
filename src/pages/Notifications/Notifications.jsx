@@ -159,7 +159,7 @@ function Notification() {
                     <div className="row">
                         <div className="col-lg-12">
                             <ul className="nav nav-pills mb-3 bg-light rounded overflow-hidden" id="pills-tab" role="tablist">
-                                <li className="nav-item col-md-6 col-lg-6 col-12 border-end border-md-bottom" role="presentation">
+                                <li className="nav-item col-md-12 col-lg-12 col-12 border-end border-md-bottom" role="presentation">
                                     <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}> View All </button>
                                 </li>
                                 {/* <li className="nav-item col-md-6 col-lg-6 col-12 border-end" role="presentation">

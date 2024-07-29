@@ -1,0 +1,15 @@
+.MuiDialogTitle-root+.css-o1kxqj-MuiDialogContent-root{
+    width: auto !important;
+}
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+    width: auto !important;
+    text-align: center !important;
+
+}
+/* hr{
+    height: 10vh !important;
+} */
+.desc{
+    width: 615% !important;
+    min-height: 70px !important;
+}

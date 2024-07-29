@@ -123,24 +123,60 @@ const AllChecklistTable = () =>{
             //alert(categoryInfo?.length);
             checklistInfoAll.map((item, index) => {
                 checklistArrAll.push({
-                    key:index+1,
-                    id: item._id,
-                    state:item.state,
-                    compliance: item.compliance,
-                    rule:<div className='new-line'>{item.rule}</div>,
-                    category:item.category,
-                    question:<div className='new-line'>{item.question}</div>,
-                    description:<div className='new-line'>{item.description}</div>,
-                    image:<a href={item.image} target="_blank">Form</a>,
-                    documents:<a href={item.documents} target="_blank">Document</a>,
-                    frequency:item.frequency,
-                    branchname:item.branchname,
-                    company:item.company,
-                    risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
-                    created_at:formatDate(item.created_at),
-                    updated_at:item.updated_at!==undefined?formatDate(item.updated_at):item.updated_at,
-                    approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
-                    executive:item.executive,
+                  key:index+1,
+                  id: item._id,
+                  // company:item.company,
+                  state:item.state,
+                  act:item.act,
+                  // compliance: item.compliance,
+                  rules: <div className='container my-4'>
+                  {item.rules.map((item1, r) => (
+                    <div className='card mb-3' key={r}>
+                      <div className='card-header text-white' style={{backgroundColor:'#013879'}}>
+                        <h5 className='mb-0'>Rule-{r + 1}: {item1.rule}</h5>
+                      </div>
+                      <div className='card-body bg-light'>
+                        <div className='mb-2'>
+                          <a href={item1.docFile} target="_blank" rel="noopener noreferrer">Document Rule {r + 1}</a>
+                        </div>
+                        {item1.questions.map((item2, i) => (
+                          <div className='card mb-3' key={i}>
+                            <div className='card-body'>
+                              <h6 className='card-title'><strong>Question-{i + 1}:</strong> {item2.question}</h6><hr />
+                              <p className='card-text'><strong>Description:</strong> {item2.description}</p><hr />
+                              <p className='card-text'><strong>Compliance Activity:</strong> {item2.compliancetype}</p><hr />
+                              <p className='card-text'><strong>Consequences:</strong> {item2.consequences}</p><hr />
+                              <p className='card-text'><strong>Frequency:</strong> {item2.frequency}</p><hr />
+                              <p className='card-text'><strong>Category:</strong> {item2.categorycomp}</p><hr />
+                              <p className='card-text'><strong>Risk:</strong> {item2.risk}</p><hr />
+                              <p className='card-text'><strong>Due Date:</strong> {item2.dueDate}</p><hr />
+                              <p className='card-text'><strong>Delay in Days:</strong> {item2.DelayinDays}</p><hr />
+                              <p className='card-text'><strong>Date of Completion:</strong> {item2.DateofCompletion}</p><hr />
+                              <p className='card-text'><strong>Complied Status:</strong> {item2.CompliedStatus}</p><hr />
+                              <p className='card-text'><strong>Remarks Status:</strong> {item2.RemarksStatus}</p><hr />
+                              <div>
+                                <a href={item2.docattachment} target="_blank" rel="noopener noreferrer">Document Question {i + 1}</a>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>,
+                  // cname:<div className='new-line'>{item.cname}</div>,
+                  category:item.category,
+                  // question:<div className='new-line'>{item.question}</div>,
+                  // description:<div className='new-line'>{item.description}</div>,
+                  // image:<a href={item.image} target="_blank">Form</a>,
+                  document:<a href={item.document} target="_blank">Document</a>,
+                  // frequency:item.frequency,
+                  // branchname:item.branchname,
+                  // risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
+                  created_at:formatDate(item.created_at),
+                  approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
+                  duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
+                  executive:item.executive,
               })
           });
         }
@@ -167,24 +203,60 @@ const AllChecklistTable = () =>{
               //alert(categoryInfo?.length);
               checklistAllFilter.map((item, index) => {
                 checklistArrAllFilter.push({
-                      key:index+1,
-                      id: item._id,
-                      state:item.state,
-                      compliance: item.compliance,
-                      rule:<div className='new-line'>{item.rule}</div>,
-                      category:item.category,
-                      question:<div className='new-line'>{item.question}</div>,
-                      description:<div className='new-line'>{item.description}</div>,
-                      image:<a href={item.image} target="_blank">Form</a>,
-                      documents:<a href={item.documents} target="_blank">Document</a>,
-                      frequency:item.frequency,
-                      branchname:item.branchname,
-                      risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
-                      company:item.company,
-                      created_at:formatDate(item.created_at),
-                      updated_at:item.updated_at!==undefined?formatDate(item.updated_at):item.updated_at,
-                      approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
-                      executive:item.executive,
+                  key:index+1,
+                  id: item._id,
+                  // company:item.company,
+                  state:item.state,
+                  act:item.act,
+                  // compliance: item.compliance,
+                  rules: <div className='container my-4'>
+                  {item.rules.map((item1, r) => (
+                    <div className='card mb-3' key={r}>
+                      <div className='card-header text-white' style={{backgroundColor:'#013879'}}>
+                        <h5 className='mb-0'>Rule-{r + 1}: {item1.rule}</h5>
+                      </div>
+                      <div className='card-body bg-light'>
+                        <div className='mb-2'>
+                          <a href={item1.docFile} target="_blank" rel="noopener noreferrer">Document Rule {r + 1}</a>
+                        </div>
+                        {item1.questions.map((item2, i) => (
+                          <div className='card mb-3' key={i}>
+                            <div className='card-body'>
+                              <h6 className='card-title'><strong>Question-{i + 1}:</strong> {item2.question}</h6><hr />
+                              <p className='card-text'><strong>Description:</strong> {item2.description}</p><hr />
+                              <p className='card-text'><strong>Compliance Activity:</strong> {item2.compliancetype}</p><hr />
+                              <p className='card-text'><strong>Consequences:</strong> {item2.consequences}</p><hr />
+                              <p className='card-text'><strong>Frequency:</strong> {item2.frequency}</p><hr />
+                              <p className='card-text'><strong>Category:</strong> {item2.categorycomp}</p><hr />
+                              <p className='card-text'><strong>Risk:</strong> {item2.risk}</p><hr />
+                              <p className='card-text'><strong>Due Date:</strong> {item2.dueDate}</p><hr />
+                              <p className='card-text'><strong>Delay in Days:</strong> {item2.DelayinDays}</p><hr />
+                              <p className='card-text'><strong>Date of Completion:</strong> {item2.DateofCompletion}</p><hr />
+                              <p className='card-text'><strong>Complied Status:</strong> {item2.CompliedStatus}</p><hr />
+                              <p className='card-text'><strong>Remarks Status:</strong> {item2.RemarksStatus}</p><hr />
+                              <div>
+                                <a href={item2.docattachment} target="_blank" rel="noopener noreferrer">Document Question {i + 1}</a>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>,
+                  // cname:<div className='new-line'>{item.cname}</div>,
+                  category:item.category,
+                  // question:<div className='new-line'>{item.question}</div>,
+                  // description:<div className='new-line'>{item.description}</div>,
+                  // image:<a href={item.image} target="_blank">Form</a>,
+                  document:<a href={item.document} target="_blank">Document</a>,
+                  // frequency:item.frequency,
+                  // branchname:item.branchname,
+                  // risk:item.risk=='Low'?<div style={{ color:'#34953D' }}>{item.risk}</div>:item.risk=='High'?<div style={{ color:'#DF8787' }}>{item.risk}</div>:item.risk=='Medium'?<div style={{ color:'#D89D13' }}>{item.risk}</div>:item.risk=='Very High'?<div style={{ color:'red' }}>{item.risk}</div>:<div style={{ color:'red' }}>{item.risk}</div>,
+                  created_at:formatDate(item.created_at),
+                  approvedate:(item.approvedate)?formatDate(item.approvedate):(item.approvedate),
+                  duedate:(item.duedate)!==undefined?formatDate(item.duedate):(item.duedate),
+                  executive:item.executive,
                 })
             });
           }
@@ -319,33 +391,34 @@ const AllChecklistTable = () =>{
          // sortDirections: ['descend', 'ascend']
         },
         {
-          title: 'Company',
-          dataIndex: 'company',
-          key: 'company',
-          width: 50,
-          // ...getColumnSearchProps('company'),
-          sorter: (a, b) => a.company.length - b.company.length,
+          title: 'State',
+          dataIndex: 'state',
+          key: 'state',
+          width: 100,
+          ...getColumnSearchProps('state'),
+          sorter: (a, b) => a.state.length - b.state.length,
           sortDirections: ['descend', 'ascend']
         },
         {
-            title: 'State',
-            dataIndex: 'state',
-            key: 'state',
-            width: 100,
-            ...getColumnSearchProps('state'),
-            sorter: (a, b) => a.state.length - b.state.length,
-            sortDirections: ['descend', 'ascend']
-          },
-
-        {
-            title: 'Branch Name',
-            dataIndex: 'branchname',
-            key: 'branchname',
-            width: 100,
-            // ...getColumnSearchProps('branchname'),
-            sorter: (a, b) => a.branchname.length - b.branchname.length,
-            sortDirections: ['descend', 'ascend']
+          title: 'Act',
+          dataIndex: 'act',
+          key: 'act',
+          width: 100,
+          // ...getColumnSearchProps('company'),
+          sorter: (a, b) => a.act.length - b.act.length,
+          sortDirections: ['descend', 'ascend']
         },
+        
+
+        // {
+        //     title: 'Branch Name',
+        //     dataIndex: 'branchname',
+        //     key: 'branchname',
+        //     width: 100,
+        //     // ...getColumnSearchProps('branchname'),
+        //     sorter: (a, b) => a.branchname.length - b.branchname.length,
+        //     sortDirections: ['descend', 'ascend']
+        // },
         {
             title: 'Create Date',
             dataIndex: 'created_at',
@@ -382,7 +455,7 @@ const AllChecklistTable = () =>{
               return (
                 <>
                <Link className='text-white btn btn-dark text-decoration-none' onClick={toggleTables}> View <VisibilityOffIcon fontSize='mediam' /></Link>
-                  {/* <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link> */}
+                  <Link className='text-white btn btn-primary text-decoration-none mx-2' onClick={() => openInPopupForUpdate(record)}> Edit <EditIcon fontSize='mediam' /> </Link>
                   {/* <DeleteOutlined
                     onClick={(e) => {
                       onDeleteUer(record);
@@ -404,15 +477,7 @@ const AllChecklistTable = () =>{
          // sorter: (a, b) => a.key.length - b.key.length,
          // sortDirections: ['descend', 'ascend']
         },
-        {
-          title: 'Company',
-          dataIndex: 'company',
-          key: 'company',
-          width: 50,
-          // ...getColumnSearchProps('company'),
-          sorter: (a, b) => a.company.length - b.company.length,
-          sortDirections: ['descend', 'ascend']
-        },
+        
         {
             title: 'State',
             dataIndex: 'state',
@@ -422,24 +487,34 @@ const AllChecklistTable = () =>{
             sorter: (a, b) => a.state.length - b.state.length,
             sortDirections: ['descend', 'ascend']
           },
+          
         {
           title: 'Act',
-          dataIndex: 'compliance',
-          key: 'compliance',
+          dataIndex: 'act',
+          key: 'act',
           width: 100,
         //   ...getColumnSearchProps('act'),
         //   sorter: (a, b) => a.act.length - b.act.length,
         //   sortDirections: ['descend', 'ascend']
         },
         {
-            title: <div style={{ textAlign: 'left' }}>Rule</div>,
-            dataIndex: 'rule',
-            key: 'rule',
-            width: 300,
-            ...getColumnSearchProps('rule'),
-            sorter: (a, b) => a.rule.length - b.rule.length,
-            sortDirections: ['descend', 'ascend']
+          title: 'Rules',
+          dataIndex: 'rules',
+          key: 'rules',
+          width: 400,
+        //   ...getColumnSearchProps('act'),
+        //   sorter: (a, b) => a.act.length - b.act.length,
+        //   sortDirections: ['descend', 'ascend']
         },
+        // {
+        //     title: <div style={{ textAlign: 'left' }}>Check-List Name</div>,
+        //     dataIndex: 'cname',
+        //     key: 'cname',
+        //     width: 150,
+        //     ...getColumnSearchProps('cname'),
+        //     sorter: (a, b) => a.cname.length - b.cname.length,
+        //     sortDirections: ['descend', 'ascend']
+        // },
         {
             title: 'Category',
             dataIndex: 'category',
@@ -449,51 +524,51 @@ const AllChecklistTable = () =>{
             sorter: (a, b) => a.category.length - b.category.length,
             sortDirections: ['descend', 'ascend']
         },
-        {
-            title: <div style={{ textAlign: 'left' }}>Question</div>,
-            dataIndex: 'question',
-            key: 'question',
-            width: 300,
-            // ...getColumnSearchProps('question'),
-            // sorter: (a, b) => a.question.length - b.question.length,
-            // sortDirections: ['descend', 'ascend']
-        },
-        {
-            title: <div style={{ textAlign: 'left' }}>Description</div>,
-            dataIndex: 'description',
-            key: 'description',
-            width: 300,
-            // ...getColumnSearchProps('question'),
-            // sorter: (a, b) => a.question.length - b.question.length,
-            // sortDirections: ['descend', 'ascend']
-        },
-        {
-            title: 'Form',
-            dataIndex: 'image',
-            key: 'image',
-            width: 100,
-        //    ...getColumnSearchProps('image'),
-         //   sorter: (a, b) => a.image.length - b.image.length,
-         //   sortDirections: ['descend', 'ascend']
-        },
+        // {
+        //     title: <div style={{ textAlign: 'left' }}>Question</div>,
+        //     dataIndex: 'question',
+        //     key: 'question',
+        //     width: 300,
+        //     // ...getColumnSearchProps('question'),
+        //     // sorter: (a, b) => a.question.length - b.question.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // },
+        // {
+        //     title: <div style={{ textAlign: 'left' }}>Description</div>,
+        //     dataIndex: 'description',
+        //     key: 'description',
+        //     width: 300,
+        //     // ...getColumnSearchProps('question'),
+        //     // sorter: (a, b) => a.question.length - b.question.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // },
+        // {
+        //     title: 'Form',
+        //     dataIndex: 'image',
+        //     key: 'image',
+        //     width: 100,
+        // //    ...getColumnSearchProps('image'),
+        //  //   sorter: (a, b) => a.image.length - b.image.length,
+        //  //   sortDirections: ['descend', 'ascend']
+        // },
         {
             title: 'Document',
-            dataIndex: 'documents',
-            key: 'documents',
+            dataIndex: 'document',
+            key: 'document',
             width: 100,
            // ...getColumnSearchProps('documents'),
            // sorter: (a, b) => a.image.length - b.image.length,
            // sortDirections: ['descend', 'ascend']
         },
-        {
-            title: 'Branch Name',
-            dataIndex: 'branchname',
-            key: 'branchname',
-            width: 70,
-            // ...getColumnSearchProps('branchname'),
-            // sorter: (a, b) => a.branchname.length - b.branchname.length,
-            // sortDirections: ['descend', 'ascend']
-        },
+        // {
+        //     title: 'Branch Name',
+        //     dataIndex: 'branchname',
+        //     key: 'branchname',
+        //     width: 70,
+        //     // ...getColumnSearchProps('branchname'),
+        //     // sorter: (a, b) => a.branchname.length - b.branchname.length,
+        //     // sortDirections: ['descend', 'ascend']
+        // },
         {
             title: 'Create Date',
             dataIndex: 'created_at',
@@ -503,15 +578,15 @@ const AllChecklistTable = () =>{
             // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
             // sortDirections: ['descend', 'ascend']
         }, 
-        {
-            title: 'Recurrence',
-            dataIndex: 'frequency',
-            key: 'frequency',
-            width: 70,
-           // ...getColumnSearchProps('frequency'),
-           // sorter: (a, b) => a.frequency.length - b.frequency.length,
-           // sortDirections: ['descend', 'ascend']
-        },    
+        // {
+        //     title: 'Recurrence',
+        //     dataIndex: 'frequency',
+        //     key: 'frequency',
+        //     width: 70,
+        //    // ...getColumnSearchProps('frequency'),
+        //    // sorter: (a, b) => a.frequency.length - b.frequency.length,
+        //    // sortDirections: ['descend', 'ascend']
+        // },    
         {
             title: 'Approve Date',
             dataIndex: 'approvedate',
@@ -530,15 +605,15 @@ const AllChecklistTable = () =>{
             // sorter: (a, b) => a.executive.length - b.executive.length,
             // sortDirections: ['descend', 'ascend']
         },            
-        {
-            title: 'Risk',
-            dataIndex: 'risk',
-            key: 'risk',
-            width: 100,
-            // ...getColumnSearchProps('executive'),
-            sorter: (a, b) => a.risk.length - b.risk.length,
-            sortDirections: ['descend', 'ascend']
-        }, 
+        // {
+        //     title: 'Risk',
+        //     dataIndex: 'risk',
+        //     key: 'risk',
+        //     width: 100,
+        //     // ...getColumnSearchProps('executive'),
+        //     sorter: (a, b) => a.risk.length - b.risk.length,
+        //     sortDirections: ['descend', 'ascend']
+        // }, 
         { 
             key: "action", 
             title: "Actions", 
@@ -619,7 +694,7 @@ const AllChecklistTable = () =>{
                         {showTable1 ? (
                               <Table columns={columns} dataSource={dataSource}  pagination={{ pageSize: 4, showSizeChanger: false, position: ["bottomCenter"],}}  scroll={{ x: 1250 }} sticky={true}/>
                           ) : (
-                              <Table dataSource={dataSource} columns={columns1} pagination={{ pageSize: 4, showSizeChanger: false, position: ["bottomCenter"],}}  scroll={{ x: 3500 }} sticky={true}/>
+                              <Table dataSource={dataSource} columns={columns1} pagination={{ pageSize: 4, showSizeChanger: false, position: ["bottomCenter"],}}  scroll={{ x: 2500 }} sticky={true}/>
                           )} 
                         </div>
                     </div>

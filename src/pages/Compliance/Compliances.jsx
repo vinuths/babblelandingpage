@@ -534,8 +534,8 @@ const Compliances = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <ul className="nav nav-pills mb-3 bg-light rounded overflow-hidden" id="pills-tab" role="tablist">
-                                <li className="nav-item col-md-3 col-12 border-end" role="presentation">
-                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling} > <ContentPasteIcon /> All Compliances</button>
+                                <li className="nav-item col-md-12 col-12 border-end" role="presentation" >
+                                    <button className="nav-link w-100 rounded-0 text-dark active" id="pills-home-tab" style={{width:'1200px !important'}} data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling} > <ContentPasteIcon /> All Compliances</button>
                                 </li>
                                 {/* <li className="nav-item col-md-3 col-12 border-end" role="presentation">
                                     {/* <button className="nav-link w-100 rounded-0 text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" onClick={callingapprove}><ContentPasteIcon /> Compliances Approve</button> */}
