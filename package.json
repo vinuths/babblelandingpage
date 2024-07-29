@@ -51,7 +51,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+   "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -62,7 +62,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "/companyLogin",
+  "homepage": "http://matrixhrtech.com/company" ,
   "build:companyLogin": "react-scripts build --output-path=build/companyLogin --base-url=/companyLogin",
   "browserslist": {
     "production": [
