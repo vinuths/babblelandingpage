@@ -104,6 +104,10 @@ import {
   assignedCompanyFilter,
   AuditUploadStatusValue,
   DueDaysNotification,
+  fetchCompiledStatusCount,
+  CalenderChecklistGet,
+  FetchRegCount,
+  FetchCompliedCount,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as 
 } from "../../routes/api";
@@ -465,6 +469,18 @@ import {
     NOTIFICATION_REQUEST,
     NOTIFICATION_SUCCESS,
     NOTIFICATION_FAILURE,
+    AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL,
+    AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+    AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+    CHECKLIST_CALENDER_REQUEST_GET_ALL,
+    CHECKLIST_CALENDER_SUCCESS_GET_ALL,
+    CHECKLIST_CALENDER_GET_FAIL_ALL,
+    AUDIT_REG_COUNT_REQUEST_All_DETAIL,
+    AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
+    AUDIT_REG_COUNT_FAIL_All_DETAIL,
+    AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
+    AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
+    AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -5575,3 +5591,172 @@ export const fetchNotifications = () => async (dispatch) => {
       });
     });
 };
+
+// export const auditCompiledStatusAll = (postBody) => async (dispatch) => {
+//   dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
+
+//   try {
+//     const response = await fetchCompiledStatusCount(postBody);
+//     if (response.status === 200) {
+//       // Check if response.data is an array
+//       if (Array.isArray(response.data)) {
+//         dispatch({ type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL, payload: response.data });
+//       } else {
+//         dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: 'Unexpected data format' });
+//       }
+//     } else {
+//       dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: response.data });
+//     }
+//   } catch (error) {
+//     dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: error.message });
+//   }
+// };
+
+// actions/auditActions.js
+// actions/auditActions.js
+export const auditCompiledStatusAll = (postBody = {}) => async (dispatch) => {
+  dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
+
+  try {
+      // Call the backend API
+      const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
+      if (response.status === 200) {
+          const { statewiseCounts, auditData = [], branches = [] } = response.data; // Safely destructure auditData and branches with default values
+
+          dispatch({
+            type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+            payload: statewiseCounts,
+            payload1: auditData, // Dispatch auditData as payload1
+            branches, // Dispatch branches directly
+          });
+      } else {
+          dispatch({
+              type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+              payload: 'Unexpected response status',
+          });
+      }
+  } catch (error) {
+      dispatch({
+          type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+          payload: error.message,
+      });
+  }
+};
+
+
+export const auditRegCountAll = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_REG_COUNT_REQUEST_All_DETAIL });
+
+  try {
+      const response = await FetchRegCount(postBody);
+      if (response.status === 200) {
+          const { statewiseCounts, auditData = [], branches = [] } = response.data; // Extract statewiseCounts from response data
+          dispatch({
+            type: AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
+            payload: statewiseCounts,
+            payload1: auditData, // Dispatch auditData as payload1
+            branches,
+          });
+      } else {
+          dispatch({
+              type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
+              payload: 'Unexpected response status'
+          });
+      }
+  } catch (error) {
+      dispatch({
+          type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
+          payload: error.message
+      });
+  }
+};
+
+export const checklistCalenderGet = () => async (dispatch) => {
+  dispatch({ type: CHECKLIST_CALENDER_REQUEST_GET_ALL });
+
+  await CalenderChecklistGet()
+    .then((response) => {
+      // alert(JSON.stringify(response.data))
+      console.log('API Response:', response.data);
+      dispatch({ type: CHECKLIST_CALENDER_SUCCESS_GET_ALL, payload: response.data });
+      if (response.status === 201) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+        /*swal({
+                        title: "Successful!",
+                        text: 'User Addes Successfully !',
+                        icon: "success",
+                        button: "OK!",
+                });*/
+      } else {
+        dispatch({
+          type: CHECKLIST_CALENDER_GET_FAIL_ALL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+        // document.getElementById("submitting").innerText = "Save";
+        // document.getElementById("submitting").disabled  = false;
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: CHECKLIST_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      // document.getElementById("submitting").innerText = "Save";
+      // document.getElementById("submitting").disabled  = false;
+    });
+};
+
+export const auditCompiledCountAll = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL });
+
+  try {
+    const response = await FetchCompliedCount(postBody); // Call the API
+    console.log("count",response.data); // Log the response to verify the data structure
+
+    if (response.status === 200) {
+      const { statewiseCounts, auditData, branches } = response.data; // Ensure this matches your backend response
+
+      if (statewiseCounts) {
+        dispatch({
+          type: AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
+          payload: {
+            statewiseCounts,
+            auditData,
+            branches,
+          },
+        });
+      } else {
+        throw new Error("Unexpected data format: statewiseCounts missing");
+      }
+    } else {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+      payload: error.message,
+    });
+  }
+};
+
+
+
+

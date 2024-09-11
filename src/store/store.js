@@ -122,6 +122,10 @@ import {
         checklistReducer1,
         fileUploadReducer,
         notificationReducer, 
+        auditReducer111,
+        auditorChecklistCalenderAuditReducer,
+        auditReducerRegCount,
+        auditCompCountReducer
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -240,8 +244,11 @@ const reducer = combineReducers({
         companyaissiguById:companyAssignUpdateByIdReducer,
         companyGetAssignOnCreate:companyAssignGetOnCreateReducer,
         compamyVAAFilter:companyViewAllAssignFilterReducer,
-        companyAssignF:companyAssignFilterReducer
-        
+        companyAssignF:companyAssignFilterReducer,
+        auditCompiledStatusAll11:auditReducer111,
+        regCountReducer:auditReducerRegCount,
+        ChecklistInfoCalender: auditorChecklistCalenderAuditReducer,
+        CompCountReducer:auditCompCountReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) :"";
