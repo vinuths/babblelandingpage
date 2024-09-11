@@ -1176,3 +1176,56 @@ export const DueDaysNotification = async (notifications) => {
         throw error;
     }
 };
+
+export const fetchCompiledStatusCount = async(postBody) => {
+    const config = {
+        headers: {
+            "Content-Type":"application/json",
+            Authorization : `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data'
+        }
+    }
+    //alert(JSON.stringify(postBody));return;
+   // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
+    return await axios.post(`${URL}/CompiledStatusCountGet`,postBody,config);
+}
+export const FetchRegCount = async(postBody) => {
+    const config = {
+        headers: {
+            "Content-Type":"application/json",
+            Authorization : `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data'
+        }
+    }
+    //alert(JSON.stringify(postBody));return;
+   // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
+    return await axios.post(`${URL}/CompiledStatusCountRegGet`,postBody,config);
+}
+export const FetchCompliedCount = async(postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    };
+    try {
+        const response = await axios.post(`${URL}/CompiledStatusCountCompGet`,postBody, config );
+        // console.log('API Response:', response.data); // Log response data
+        return response;
+    } catch (error) {
+        // console.error('API Error:', error); // Log error
+        throw error;
+    }
+};
+
+
+
+export const CalenderChecklistGet = async() => {
+    const config = {
+        headers: {
+            "Content-Type":"application/json",
+            Authorization : `Bearer ${getToken()}`
+        }
+    }
+    return await axios.get(`${URL}/CalenderChecklistgetting`,config);
+}

@@ -350,6 +350,18 @@ import {
     NOTIFICATION_REQUEST,
     NOTIFICATION_SUCCESS,
     NOTIFICATION_FAILURE,
+    AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL,
+    AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+    AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+    CHECKLIST_CALENDER_REQUEST_GET_ALL,
+    CHECKLIST_CALENDER_SUCCESS_GET_ALL,
+    CHECKLIST_CALENDER_GET_FAIL_ALL,
+    AUDIT_REG_COUNT_REQUEST_All_DETAIL,
+    AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
+    AUDIT_REG_COUNT_FAIL_All_DETAIL,
+    AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
+    AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
+    AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
     } from "../actiontypes/otherConstants";
 export const auditorReducer = (state= {}, action) => {
         switch(action.type) {
@@ -1325,12 +1337,148 @@ const initialState = {
     
     
 
+const initialState33= {
+        auditData1: [], // Ensure this is initialized as an array
+        loadingcompstatus: false,
+        error: null
+      };
+      
+//      export const auditReducer111 = (state = initialState33, action) => {
+//         switch (action.type) {
+//           case AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL:
+//             return {
+//               ...state,
+//               loadingcompstatus: true
+//             };
+//           case AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL:
+//             return {
+//               ...state,
+//               auditData1: Array.isArray(action.payload) ? action.payload : [], // Ensure payload is an array
+//               loadingcompstatus: false
+//             };
+//           case AUDIT_COMPILED_STATUS_FAIL_All_DETAIL:
+//             return {
+//               ...state,
+//               error: action.payload,
+//               loadingcompstatus: false
+//             };
+//           default:
+//             return state;
+//         }
+//       };
+      
+//       export default auditReducer;
+export const auditReducer111  = (state = initialState, action) => {
+    switch (action.type) {
+        case AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL:
+            return {
+                ...state,
+                loadingcompstatus: true,
+                error: null
+            };
+        case AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL:
+            return {
+                ...state,
+                auditData1: action.payload || {}, // Statewise counts
+                auditData2: action.payload1 || {}, // Audit data
+                branches: action.branches || [], // Set branches
+                loadingcompstatus: false
+            };
+        case AUDIT_COMPILED_STATUS_FAIL_All_DETAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loadingcompstatus: false
+            };
+        default:
+            return state;
+    }
+};
+    
+export const auditReducerRegCount = (state = initialState, action) => {
+        switch (action.type) {
+            case AUDIT_REG_COUNT_REQUEST_All_DETAIL:
+                return {
+                    ...state,
+                    loadingRegCount: true
+                };
+            case AUDIT_REG_COUNT_SUCCESS_All_DETAIL:
+                return {
+                    ...state,
+                    auditData1: action.payload || {}, // Statewise counts
+                        auditData2: action.payload1 || {}, // Audit data
+                        branches: action.branches || [], // Set branches
+                        loadingcompstatus: false
+                        };
+            case AUDIT_REG_COUNT_FAIL_All_DETAIL:
+                return {
+                    ...state,
+                    error: action.payload,
+                    loadingRegCount: false
+                };
+            default:
+                return state;
+        }
+    };
 
 
-
-
-
-
-
-
-
+ // Reducer
+export const auditorChecklistCalenderAuditReducer = (state = {}, action) => {
+        switch (action.type) {
+          case CHECKLIST_CALENDER_REQUEST_GET_ALL:
+            return { loadingCal: true };
+          case CHECKLIST_CALENDER_SUCCESS_GET_ALL:
+            return { loadingCal: false, calendercheck: action.payload };
+          case CHECKLIST_CALENDER_GET_FAIL_ALL:
+            return { loadingCal: false, error: action.payload };
+          default:
+            return state;
+        }
+      };
+      
+      
+      // Initial state with additional complied and not complied counts
+      const initialStateComp = {
+        stateWiseCounts: {}, // Make sure this is initialized as an empty object
+        auditDataComp: [],
+        branches: [],
+        loadingcompCount: false,
+        error: null,
+      };
+      
+      export const auditCompCountReducer = (state = initialStateComp, action) => {
+        switch (action.type) {
+          case AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL:
+            return {
+              ...state,
+              loadingcompCount: true,
+              error: null,
+            };
+          case AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL:
+            const newState = {
+              ...state,
+              stateWiseCounts: action.payload.statewiseCounts || {}, // Ensure fallback to empty object
+              auditDataComp: action.payload.auditData,
+              branches: action.payload.branches,
+              loadingcompCount: false,
+              error: null,
+            };
+            console.log("stateWiseCounts", newState.stateWiseCounts); // Logging after update
+            return newState;
+          case AUDIT_COMPILED_COUNT_FAIL_All_DETAIL:
+            return {
+              ...state,
+              error: action.payload,
+              loadingcompCount: false,
+            };
+          default:
+            return state;
+        }
+      };
+      
+      
+      
+      
+    
+    
+      
