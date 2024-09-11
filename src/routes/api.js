@@ -422,7 +422,7 @@ export const gettingchecklistById = async(id) => {  //all users except logged in
             Authorization : `Bearer ${getToken()}`
         }
     }
-   // alert(JSON.stringify(id)); return;
+  // alert(JSON.stringify(id)); return;
     return await axios.get(`${URL}/gettingchecklistById/${id}`,config);
 }
 export const checklistAllgetting = async() => {
@@ -815,7 +815,7 @@ export const companyLById = async(id) => {
     }
     return await axios.get(`${URL}/companyLById/${id}`,config);
 }
-Bexport const companyLUpdateById = async(data,id) => {
+export const companyLUpdateById = async(data,id) => {
 
     const config = {
         headers: {
@@ -830,7 +830,7 @@ export const apporveCompanyL = async(data) => {
 
     const config = {
         headers: {
- B           "Content-Type":"application/json",
+            "Content-Type":"application/json",
             Authorization : `Bearer ${getToken()}`
         }
     }
@@ -861,7 +861,7 @@ export const companytab2 = async(data) => {
 
     const config = {
         headers: {
-  B          "Content-Type":"application/json",
+            "Content-Type":"application/json",
             Authorization : `Bearer ${getToken()}`,
             'content-Type': 'multipart/form-data'
         }
@@ -908,7 +908,7 @@ export const companytab6 = async(data) => {
             "Content-Type":"application/json",
             Authorization : `Bearer ${getToken()}`,
             'content-Type': 'multipart/form-data'
-   B     }
+        }
     }
     return await axios.post(`${URL}/companytab6`,data,config);
 }  
@@ -923,7 +923,7 @@ export const companytab7 = async(data) => {
     }
     return await axios.post(`${URL}/companytab7`,data,config);
 }  
-expoBrt const createcompanyinteraction = async(data) => {
+export const createcompanyinteraction = async(data) => {
 
     const config = {
         headers: {
@@ -1129,7 +1129,7 @@ export const checklistAddInAudit = async (data) => {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`
-     B   }
+        }
     };
     return await axios.post(`${URL}/checklistAddInAudit`, data, config);
 };
@@ -1144,7 +1144,7 @@ export const fileUploadInAuditQuestion = async (data) => {
     return await axios.put(`${URL}/fileUploadInAuditQuestion`, data, config);
 };
 
-exportB const AuditUploadStatusValue = async(data) => {
+export const AuditUploadStatusValue = async(data) => {
 
     const config = {
         headers: {
