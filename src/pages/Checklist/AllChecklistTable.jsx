@@ -404,7 +404,7 @@ const AllChecklistTable = () =>{
           dataIndex: 'act',
           key: 'act',
           width: 100,
-          // ...getColumnSearchProps('company'),
+          ...getColumnSearchProps('act'),
           sorter: (a, b) => a.act.length - b.act.length,
           sortDirections: ['descend', 'ascend']
         },
@@ -652,8 +652,8 @@ const AllChecklistTable = () =>{
     return (
         <React.Fragment>
             <div className="row">
-                <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
-                    <select className="form-select" ref={myElementRefCompany} aria-label="Default select example" id="company" name="company" value={company} onChange={(e)=>{setCompany(e.target.value);filter();getBbranch(e.target.value)}} required>
+                <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3 ">
+                    <select className="form-select" ref={myElementRefCompany} aria-label="Default select example" id="company" name="company" value={company} onChange={(e)=>{setCompany(e.target.value);filter();getBbranch(e.target.value)}} hidden>
                         <option value="">Select Company</option>
                         {companyGetTableInfo != 'undefind' && companyGetTableInfo?.length > 0 && companyGetTableInfo.map(item => 
                           <option value={item._id}>{item.companyname}</option>
@@ -661,7 +661,7 @@ const AllChecklistTable = () =>{
                     </select>
                 </div>   
                 <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
-                    <select className="form-select" ref={myElementRefState} aria-label="Default select example" id="state" name="state" value={state} onChange={(e)=>{setState(e.target.value);filter();}}>
+                    <select className="form-select" ref={myElementRefState} aria-label="Default select example" id="state" name="state" value={state} onChange={(e)=>{setState(e.target.value);filter();}} hidden>
                             <option value="">Select State</option>
                         {stateInfo != 'undefind' && stateInfo?.length > 0 && stateInfo.map(item => 
                             <option value={item._id}>{item.name}</option>
@@ -669,7 +669,7 @@ const AllChecklistTable = () =>{
                     </select>
                 </div>
                 <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
-                    <select className="form-select" ref={myElementRefUser} aria-label="Default select example" id="executives" name="executive"  value={user} onChange={(e) => {setUser(e.target.value);filter()}} >
+                    <select className="form-select" ref={myElementRefUser} aria-label="Default select example" id="executives" name="executive"  value={user} onChange={(e) => {setUser(e.target.value);filter()}} hidden>
                             <option value="">Select Executive</option>
                         {usersInfo != 'undefind' && usersInfo?.length > 0 && usersInfo.map(item => 
                             <option value={item._id}>{item.userName}</option>
@@ -677,7 +677,7 @@ const AllChecklistTable = () =>{
                     </select>
                 </div>
                 <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
-                            <select className="form-select" ref={myElementRefBranch} aria-label="Default select example" id="branch" name="branch" onChange= {(e)=>{setBranch(e.target.value);filter();}} value={branch} required>
+                            <select className="form-select" ref={myElementRefBranch} aria-label="Default select example" id="branch" name="branch" onChange= {(e)=>{setBranch(e.target.value);filter();}} value={branch} hidden>
                             <option value="">Select Branch</option>
                             {branchInfo != 'undefind' && branchInfo?.length > 0 && branchInfo.map(item => 
                             <option value={item.id}>{item.name}</option>
@@ -685,7 +685,7 @@ const AllChecklistTable = () =>{
                             </select>
                 </div> 
                 <div className="col-md-4 col-lg-15 mb-2 mb-lg-3 mb-md-3">
-                    <input type="date" className="form-control" id="dates" ref={myElementRefDate} placeholder='Date' value={date} onChange={(e) => {setDate(e.target.value);filter();}} />
+                    <input type="date" className="form-control" id="dates" ref={myElementRefDate} placeholder='Date' value={date} onChange={(e) => {setDate(e.target.value);filter();}} hidden />
                 </div>
                 <div className="col-12 col-lg-12">
                     <div className="card p-3 ">

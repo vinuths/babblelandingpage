@@ -46,6 +46,8 @@ const Audit = () => {
     const { loadings,stateInfo } = getState;  
     const getBranch = useSelector((state) => state.getBranch);
     const { branchInfo } = getBranch; 
+    console.log("branchInfo",branchInfo);
+    
     const getCompanyTable = useSelector(state => state.getCompanyTable)
     const {loadingcompanytable, companyGetTableInfo } = getCompanyTable;
     const createOnAudit = useSelector((state) => state.createOnAudit);
@@ -518,7 +520,7 @@ const Audit = () => {
                                                 <select className="form-select"  onChange={(e)=>{setBranch(e.target.value);}} value={branch}  required>
                                                     <option value="">Select Branch</option>
                                                     {branchInfo != 'undefind' && branchInfo?.length > 0 && branchInfo.map(item => 
-                                                    <option value={item._id}>{item.name}</option>
+                                                    <option value={item.id}>{item.name}</option>
                                                     )};
                                                 </select>
                                                 <Spanning ref={myElementRefBranch}></Spanning>

@@ -108,6 +108,7 @@ import {
   CalenderChecklistGet,
   FetchRegCount,
   FetchCompliedCount,
+  CompanyBranchesGetting
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as 
 } from "../../routes/api";
@@ -481,6 +482,9 @@ import {
     AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
     AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
     AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+    COMPANY_BRANCHES_GET_REQUEST,
+COMPANY_BRANCHES_GET_SUCCESS,
+COMPANY_BRANCHES_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -5584,11 +5588,11 @@ export const fetchNotifications = () => async (dispatch) => {
         payload: error.message,
       });
 
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
+      // toast.error(error.message, {
+      //   position: "bottom-right",
+      //   hideProgressBar: false,
+      //   progress: undefined,
+      // });
     });
 };
 
@@ -5757,6 +5761,41 @@ export const auditCompiledCountAll = (postBody) => async (dispatch) => {
   }
 };
 
+export const CompanyBranchesGet = () => async (dispatch) => {
+  dispatch({ type: COMPANY_BRANCHES_GET_REQUEST });
+  await CompanyBranchesGetting()
+    .then((response) => {
+      dispatch({ type: COMPANY_BRANCHES_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: COMPANY_BRANCHES_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMPANY_BRANCHES_GET_FAIL,
+        payload: error.message,
+      });
 
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
 
 

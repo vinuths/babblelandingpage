@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { auditRegCountAll } from '../../store/actions/otherActions';
+import { auditRegCountAll,CompanyBranchesGet } from '../../store/actions/otherActions';
 import './Graph.css';
 
-const Barchart = () => {
+const Barchart = ({branchesCompany}) => {
     const dispatch = useDispatch();
     
     // Fetch data from Redux store
@@ -17,7 +17,10 @@ const Barchart = () => {
     // State for selected filters
     const [selectedState, setSelectedState] = useState('');
     const [selectedBranch, setSelectedBranch] = useState('');
-
+useEffect(() =>{
+    dispatch(CompanyBranchesGet());
+}
+,[CompanyBranchesGet])
     // Fetch data on component mount or when filters change
     useEffect(() => {
         const postBody = {
@@ -65,15 +68,20 @@ const Barchart = () => {
                 </div>
 
                 {/* Branch Filter */}
-                <div className="filter-item">
-                    <label htmlFor="branchFilter">Filter by Branch:</label>
-                    <select id="branchFilter" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
-                        <option value="">All Branches</option>
-                        {branches.map(branch => (
-                            <option key={branch} value={branch}>{branch}</option>
-                        ))}
-                    </select>
-                </div>
+                <div className="filter-container">
+            {/* State Filter */}
+            <div className="filter-item">
+                <label htmlFor="branchFilter">Filter by Branch:</label>
+                <select id="branchFilter">
+                    <option value="">All Branches</option>
+                    {branchesCompany?.map(branch => (
+                        <option key={branch._id} value={branch.name}>
+                            {branch.name} {/* Display the name of the branch */}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </div>
                 {/* Start Date Filter */}
                 <div className="filter-item">
                     <label htmlFor="startDate">Start Date:</label>

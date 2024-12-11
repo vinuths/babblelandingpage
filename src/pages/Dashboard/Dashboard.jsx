@@ -4,7 +4,7 @@ import { FormLabel, styled } from '@mui/material';
 import Highlighter from 'react-highlight-words';
 import { Button, Input, Space, Table, Modal, Form, message } from 'antd';
 import { CloudUploadOutlined, UploadOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { usersGet, companyTableGet, auditorGet,auditCompiledCountAll,auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
+import { usersGet, companyTableGet, auditorGet,auditCompiledCountAll,CompanyBranchesGet,auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
 import { useDispatch, useSelector } from 'react-redux';
 import DashboardTableAudit from "./DashboardTableAudit";
 import DashboardTableCompany from "./DashboardTableCompany";
@@ -32,6 +32,8 @@ const Dashboard = () => {
     const overDueAudit = useSelector((state) => state.overDueAudit);
     const { auditOverdueInfos } = overDueAudit;
 
+    const { CompanyBranchesInfo, loadingBranch, error } = useSelector((state) => state.CompanyBranchesGetRed);
+    // console.log("CompanyBranchesInfo",CompanyBranchesInfo);
 
     const companyCount = companyGetTableInfo?.length ? companyGetTableInfo?.length : 0;
     const executiveCount = usersInfo?.length ? usersInfo?.length : 0;
@@ -53,6 +55,8 @@ const Dashboard = () => {
         dispatch(auditRegCountAll());
         dispatch(checklistCalenderGet());
         dispatch(auditCompiledCountAll());
+        dispatch(CompanyBranchesGet());
+        
 
     }, [dispatch]);
     
@@ -67,21 +71,21 @@ const Dashboard = () => {
                 <div className="row">
                     <div className="col-sm-6 ">
                     
-                        <BarChart1 />
+                        <BarChart1 branchesCompany={CompanyBranchesInfo}/>
                     
                     </div>
-                    <div className="col-sm-6"><BarChartReg /></div>
-                    {/* <div className="col-sm-4"></div> */}
+                    <div className="col-sm-6"><BarChartReg branchesCompany={CompanyBranchesInfo} /></div>
+                    <div className="col-sm-4"></div>
                 
                 
                 </div>
                 <div className="row">
                     <div className="col-sm-6">
-                        <ComplianceBarChart />
+                        <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
                     </div>
                     <div className="col-sm-6">
 
-                <CalendarComponent />
+                <CalendarComponent branchesCompany={CompanyBranchesInfo}/>
                     </div>
                 </div>
                 </div>

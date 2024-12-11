@@ -125,7 +125,8 @@ import {
         auditReducer111,
         auditorChecklistCalenderAuditReducer,
         auditReducerRegCount,
-        auditCompCountReducer
+        auditCompCountReducer,
+        CompanyBranchesGetReducer
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -249,6 +250,7 @@ const reducer = combineReducers({
         regCountReducer:auditReducerRegCount,
         ChecklistInfoCalender: auditorChecklistCalenderAuditReducer,
         CompCountReducer:auditCompCountReducer,
+        CompanyBranchesGetRed:CompanyBranchesGetReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) :"";

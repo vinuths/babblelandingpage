@@ -362,6 +362,9 @@ import {
     AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
     AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
     AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+    COMPANY_BRANCHES_GET_REQUEST,
+    COMPANY_BRANCHES_GET_SUCCESS,
+    COMPANY_BRANCHES_GET_FAIL,
     } from "../actiontypes/otherConstants";
 export const auditorReducer = (state= {}, action) => {
         switch(action.type) {
@@ -1482,3 +1485,20 @@ export const auditorChecklistCalenderAuditReducer = (state = {}, action) => {
     
     
       
+      const initialStateCompanyBranch = {
+        loadingBranch: false,
+        CompanyBranchesInfo: [],
+    };
+    
+    export const CompanyBranchesGetReducer = (state = initialStateCompanyBranch, action) => {
+        switch (action.type) {
+            case COMPANY_BRANCHES_GET_REQUEST:
+                return { ...state, loadingBranch: true };
+            case COMPANY_BRANCHES_GET_SUCCESS:
+                return { loadingBranch: false, CompanyBranchesInfo: action.payload };
+            case COMPANY_BRANCHES_GET_FAIL:
+                return { loadingBranch: false, error: action.payload };
+            default:
+                return state;
+        }
+    };
