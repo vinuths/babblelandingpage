@@ -1229,3 +1229,12 @@ export const CalenderChecklistGet = async() => {
     }
     return await axios.get(`${URL}/CalenderChecklistgetting`,config);
 }
+export const CompanyBranchesGetting = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/gettingBranchesForCompany`, config); // Removed `postBody`
+};

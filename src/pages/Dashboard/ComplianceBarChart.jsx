@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { auditCompiledCountAll } from '../../store/actions/otherActions'; // Adjust based on your project structure
 import './Graph.css'; // Add your CSS here
 
-const ComplianceBarChart = () => {
+const ComplianceBarChart = ({ branchesCompany }) => {
     const dispatch = useDispatch();
 
     // Fetch data from Redux store
@@ -15,7 +15,7 @@ const ComplianceBarChart = () => {
 
     useEffect(() => {
         console.log("Updated statewiseCounts:", statewiseCounts);
-      }, [statewiseCounts]); // Runs whenever statewiseCounts changes
+    }, [statewiseCounts]); // Runs whenever statewiseCounts changes
 
     // State for selected filters
     const [selectedState, setSelectedState] = useState('');
@@ -38,7 +38,7 @@ const ComplianceBarChart = () => {
     const compliedPercentage = selectedState && statewiseCounts[selectedState]
         ? (statewiseCounts[selectedState].complied / statewiseCounts[selectedState].total) * 100
         : (Object.values(statewiseCounts).reduce((sum, state) => sum + (state.complied || 0), 0) /
-           Object.values(statewiseCounts).reduce((sum, state) => sum + (state.total || 0), 0)) * 100;
+            Object.values(statewiseCounts).reduce((sum, state) => sum + (state.total || 0), 0)) * 100;
 
     // Prepare data for Recharts
     const data = [
@@ -65,7 +65,7 @@ const ComplianceBarChart = () => {
                 </div>
 
                 {/* Branch Filter */}
-                <div className="filter-item">
+                {/* <div className="filter-item">
                     <label htmlFor="branchFilter">Filter by Branch:</label>
                     <select id="branchFilter" value={selectedBranch} onChange={(e) => setSelectedBranch(e.target.value)}>
                         <option value="">All Branches</option>
@@ -73,6 +73,21 @@ const ComplianceBarChart = () => {
                             <option key={branch} value={branch}>{branch}</option>
                         ))}
                     </select>
+                </div> */}
+
+                <div className="filter-container">
+                    {/* State Filter */}
+                    <div className="filter-item">
+                        <label htmlFor="branchFilter">Filter by Branch:</label>
+                        <select id="branchFilter">
+                            <option value="">All Branches</option>
+                            {branchesCompany.map(branch => (
+                                <option key={branch._id} value={branch.name}>
+                                    {branch.name} {/* Display the name of the branch */}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
                 {/* Start Date Filter */}
