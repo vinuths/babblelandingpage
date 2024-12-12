@@ -30,7 +30,7 @@ import 'react-tabs/style/react-tabs.css';
 
 function App() {
   return (
-    <Router  basename="/company">
+    <Router basename="/company">
       <Navbar />
           <Routes>
               <Route exact path="/" element={<Login />} />
