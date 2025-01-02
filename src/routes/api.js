@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {getToken} from '../utils/localStorage'
-// const URL = 'http://localhost:8000/api/admin'; 
+const URL = 'http://localhost:8000/api/admin'; 
 
-const URL = 'https://backend.matrixhrtech.com/api/admin';
+// const URL = 'https://backend.matrixhrtech.com/api/admin';
 
 axios.defaults.withCredentials = true;  
 ///api of users starts
@@ -420,7 +420,7 @@ export const gettingchecklistById = async(id) => {  //all users except logged in
             Authorization : `Bearer ${getToken()}`
         }
     }
-  // alert(JSON.stringify(id)); return;
+   // alert(JSON.stringify(id)); return;
     return await axios.get(`${URL}/gettingchecklistById/${id}`,config);
 }
 export const checklistAllgetting = async() => {
@@ -1238,20 +1238,39 @@ export const CompanyBranchesGetting = async () => {
 };
 
 
+// export const RegionWiseDataGetting = async (region, fieldName) => {
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${getToken()}`,
+//       },
+//     };
+  
+//     const url = `${URL}/getRegionsData?region=${encodeURIComponent(region)}&fieldName=${encodeURIComponent(fieldName)}`;
+  
+//     return await axios.post(url, config); // Send the parameters in the query string
+//   };
+
+
 export const RegionWiseDataGetting = async (region, fieldName) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${getToken()}`, // Assuming the token is stored in localStorage or some other method
       },
     };
   
-    const url = `${URL}/getRegionsData?region=${encodeURIComponent(region)}&fieldName=${encodeURIComponent(fieldName)}`;
+    const url = `${URL}/getRegionsData`; // No need to append parameters to the URL anymore
   
-    return await axios.post(url, config); // Send the parameters in the query string
+    // Send the parameters in the request body as JSON
+    const body = {
+      region: region,
+      fieldName: fieldName,
+    };
+  
+    return await axios.post(url, body, config); // Send as POST request with the body data
   };
-
-
+  
 
   export const DashboardBranchGetting = async (state, fieldName, license) => {
     const config = {

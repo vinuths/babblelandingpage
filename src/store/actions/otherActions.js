@@ -5827,6 +5827,7 @@ export const RegionWiseDataGet = (region, fieldName) => async (dispatch) => {
       });
     });
 };
+
 // export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
 //   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
 //   try {
