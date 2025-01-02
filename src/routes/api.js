@@ -1248,8 +1248,9 @@ export const RegionWiseDataGetting = async (region, fieldName) => {
   
     const url = `${URL}/getRegionsData?region=${encodeURIComponent(region)}&fieldName=${encodeURIComponent(fieldName)}`;
   
-    return await axios.get(url, config); // Send the parameters in the query string
+    return await axios.post(url, config); // Send the parameters in the query string
   };
+
 
 
   export const DashboardBranchGetting = async (state, fieldName, license) => {
