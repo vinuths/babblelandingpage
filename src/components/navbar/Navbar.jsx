@@ -182,7 +182,7 @@ const Navbar = () => {
   // const { userInfo } = userLogin;
   const calling = () => {
     dispatch(fetchNotifications());
-}
+  }
   useEffect(() => {
     if (userInfo) {
       dispatch(fetchNotifications());
@@ -244,10 +244,10 @@ const Navbar = () => {
 
   const itemsListNotLoggedIn = [
     {
-        text: "Dashboard",
-        icon: <HomeIcon onClick={(e) => onDashboard(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onDashboard(e)
+      text: "Dashboard",
+      icon: <HomeIcon onClick={(e) => onDashboard(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onDashboard(e)
     },
     // {
     //     text: "Compliances",
@@ -256,11 +256,11 @@ const Navbar = () => {
     //     onClick: (e) => onCompliances(e)
     // },
     {
-        text: "Compliances",
-        icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{paddingTop:'2px'}}/>,
-        className: "pointer-cursor",
-        // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
-        onClick: (e) => onChecklist(e)
+      text: "Compliances",
+      icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{ paddingTop: '2px' }} />,
+      className: "pointer-cursor",
+      // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
+      onClick: (e) => onChecklist(e)
     },
     // {
     //     text: "Audit",
@@ -283,23 +283,23 @@ const Navbar = () => {
     //     onClick: (e) => onCategory(e)
     // },
     {
-        text: "E-Library",
-        icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onElibrary(e)
+      text: "E-Library",
+      icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onElibrary(e)
     },
     {
-        text: "Notification",
-        icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)}/>,
-        className: "pointer-cursor",
-        onClick: (e) => onNotification(e)
+      text: "Notification",
+      icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onNotification(e)
     }
     ,
     {
-        text: "Lise/Regs",
-        icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
-        className: "pointer-cursor",
-        onClick: (e) => onLisereg(e)
+      text: "Lise/Regs",
+      icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onLisereg(e)
     }
   ];
   const onLogin = (e) => {
@@ -509,71 +509,71 @@ const Navbar = () => {
         style={{ backgroundColor: "white", color: "#000" }}
       >
         {userId ? (
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            // edge="start"
-            style={{
-              pointerEvents: `${!userId ? "none" : ""}`,
-              cursor: `${!userId ? "not-allowed" : ""}`,
-            }}
-            sx={{
-              marginRight: 0,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon disabled="disabled" />
-          </IconButton>
-          {/* <Typography variant='h5' component="div" sx={{ flexGrow: 1 }} style={{ backgroundColor:'white',color:'#000' }}>MES</Typography>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-
-          <NavLink>
-            <button
-              type="button"
-              className="icon-button"
-              style={{ marginLeft: "1000px", position: "fixed" }}
-              onClick={toggleDialog}
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              // edge="start"
+              style={{
+                pointerEvents: `${!userId ? "none" : ""}`,
+                cursor: `${!userId ? "not-allowed" : ""}`,
+              }}
+              sx={{
+                marginRight: 0,
+                ...(open && { display: "none" }),
+              }}
             >
-              <span className="material-icons">notifications</span>
-              <span className="icon-button__badge">
-                {notificationInfoCount11}
-              </span>
-            </button>
-          </NavLink>
-          <Modal
-            title=""
-            visible={isDialogVisible}
-            onCancel={toggleDialog}
-            width={1000}
-            style={{
-              // position: "relative",
-              // top: "50%",
-              // left: "50%",
-              // transform: "translate(-65%, -50%)",
-              // height: '456px',
-            }}
-            class="col-sm-12 col-md-10 col-lg-8 col-xl-6"
-            footer={[
-              <Button key="close" onClick={toggleDialog}>
-                Close
-              </Button>,
-            ]}
-          >
-            <React.Fragment>
-              <Table
-                columns={columns}
-                dataSource={dataSource1}
-                style={{ overflow: "-moz-hidden-unscrollable" }}
-                pagination={{
-                  pageSize: 5,
-                  showSizeChanger: false,
-                  position: ["bottomCenter"],
-                }}
-                scroll={{ x: 1000 }}
-              />
-              {/* Notification Count: {notificationInfoCount11} */}
-              {/* {dataSource1.map((notification) => (
+              <MenuIcon disabled="disabled" />
+            </IconButton>
+            {/* <Typography variant='h5' component="div" sx={{ flexGrow: 1 }} style={{ backgroundColor:'white',color:'#000' }}>MES</Typography>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+
+            <NavLink>
+              <button
+                type="button"
+                className="icon-button"
+                style={{ marginLeft: "1000px", position: "fixed" }}
+                onClick={toggleDialog}
+              >
+                <span className="material-icons">notifications</span>
+                <span className="icon-button__badge">
+                  {notificationInfoCount11}
+                </span>
+              </button>
+            </NavLink>
+            <Modal
+              title=""
+              visible={isDialogVisible}
+              onCancel={toggleDialog}
+              width={1000}
+              style={{
+                // position: "relative",
+                // top: "50%",
+                // left: "50%",
+                // transform: "translate(-65%, -50%)",
+                // height: '456px',
+              }}
+              class="col-sm-12 col-md-10 col-lg-8 col-xl-6"
+              footer={[
+                <Button key="close" onClick={toggleDialog}>
+                  Close
+                </Button>,
+              ]}
+            >
+              <React.Fragment>
+                <Table
+                  columns={columns}
+                  dataSource={dataSource1}
+                  style={{ overflow: "-moz-hidden-unscrollable" }}
+                  pagination={{
+                    pageSize: 5,
+                    showSizeChanger: false,
+                    position: ["bottomCenter"],
+                  }}
+                  scroll={{ x: 1000 }}
+                />
+                {/* Notification Count: {notificationInfoCount11} */}
+                {/* {dataSource1.map((notification) => (
       <div className="notification-box">
         <div className="notification-item" key={notification.id}>
           <h4>{notification.title}</h4>
@@ -594,38 +594,38 @@ const Navbar = () => {
         </div>
     </div>
       ))} */}
-            </React.Fragment>
-          </Modal>
-          <NavLink
-            position="fixed"
-            style={{ color: "#000", marginLeft: "1030px", position: "fixed" }}
-            onClick={(e) => onLogout(e)}
-            className={`${!userId ? "mystyle" : ""}`}
-          >
-            <button
-              type="button"
-              class="logout-button"
-              style={{ marginLeft: "1000px", position: "fixed" }}
+              </React.Fragment>
+            </Modal>
+            <NavLink
+              position="fixed"
+              style={{ color: "#000", marginLeft: "1030px", position: "fixed" }}
+              onClick={(e) => onLogout(e)}
+              className={`${!userId ? "mystyle" : ""}`}
             >
-              <LogoutIcon />
-            </button>
-          </NavLink>
+              <button
+                type="button"
+                class="logout-button"
+                style={{ marginLeft: "1000px", position: "fixed" }}
+              >
+                <LogoutIcon />
+              </button>
+            </NavLink>
 
-          <NavLink
-            style={{ color: "#000" }}
-            to="/"
-            className={`${userId ? "mystyle" : ""}`}
-          >
-            <button
-              type="button"
-              class="login-button"
-              style={{ marginLeft: "1000px", position: "fixed" }}
+            <NavLink
+              style={{ color: "#000" }}
+              to="/"
+              className={`${userId ? "mystyle" : ""}`}
             >
-              <LoginIcon />
-            </button>
-          </NavLink>
-          {/* <NavLink style={{ color: 'white' }} to="/register" className={`${userId ? "mystyle" : ""}`} >Register</NavLink> */}
-        </Toolbar>
+              <button
+                type="button"
+                class="login-button"
+                style={{ marginLeft: "1000px", position: "fixed" }}
+              >
+                <LoginIcon />
+              </button>
+            </NavLink>
+            {/* <NavLink style={{ color: 'white' }} to="/register" className={`${userId ? "mystyle" : ""}`} >Register</NavLink> */}
+          </Toolbar>
         ) : (
           ""
         )}
@@ -633,7 +633,7 @@ const Navbar = () => {
       {userId ? (
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-          <img
+            <img
               src={Logo}
               alt="My Image"
               style={{
@@ -667,6 +667,8 @@ const Navbar = () => {
                         width: "190px",
                         paddingTop: "0px",
                         paddingBottom: "0px",
+                        cursor: "pointer",
+
                       }}
                     >
                       {icon && (
@@ -680,6 +682,8 @@ const Navbar = () => {
                             width: "10px",
                             paddingTop: "5px",
                             paddingBottom: "5px",
+                            cursor: "pointer",
+
                             color: selectedDiv === index + 1 ? "white" : "#000",
                             backgroundColor:
                               selectedDiv === index + 1 ? "#013879" : "white",
@@ -710,6 +714,7 @@ const Navbar = () => {
                           paddingLeft: "15px",
                           paddingTop: "5px",
                           paddingBottom: "5px",
+                          cursor: "pointer",
                           color: selectedDiv === index + 1 ? "white" : "#000",
                           backgroundColor:
                             selectedDiv === index + 1 ? "#013879" : "white",
@@ -728,6 +733,7 @@ const Navbar = () => {
                             paddingBottom: "5px",
                             width: "120px",
                             marginLeft: "-20px",
+                            cursor: "pointer",
                             backgroundColor:
                               selectedDiv === index + 1 ? "#013879" : "white",
                             color: selectedDiv === index + 1 ? "white" : "#000",

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FormLabel, styled } from '@mui/material';
-import Highlighter from 'react-highlight-words';
-import { Button, Input, Space, Table, Modal, Form, message } from 'antd';
-import { CloudUploadOutlined, UploadOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { usersGet, companyTableGet, auditorGet,auditCompiledCountAll,CompanyBranchesGet,auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
+// import { Link, NavLink, useNavigate } from 'react-router-dom';
+// import { FormLabel, styled } from '@mui/material';
+// import Highlighter from 'react-highlight-words';
+// import { Button, Input, Space, Table, Modal, Form, message } from 'antd';
+// import { CloudUploadOutlined, UploadOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { usersGet, companyTableGet, auditorGet, auditCompiledCountAll, CompanyBranchesGet, auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
 import { useDispatch, useSelector } from 'react-redux';
+import DashboardTableBranchCount from "./DashboardTableBranchCount";
 import DashboardTableAudit from "./DashboardTableAudit";
-import DashboardTableCompany from "./DashboardTableCompany";
-import DashboardTableNotification from "./DashboardTableNotification";
+// import DashboardTableCompany from "./DashboardTableCompany";
+// import DashboardTableNotification from "./DashboardTableNotification";
 // import { BarChart1, Bar, XAxis, YAxis,LabelList, Tooltip, CartesianGrid, Legend } from 'recharts';
 import ComplianceBarChart from './ComplianceBarChart';
 import BarChart1 from './BarChart';
@@ -56,38 +57,50 @@ const Dashboard = () => {
         dispatch(checklistCalenderGet());
         dispatch(auditCompiledCountAll());
         dispatch(CompanyBranchesGet());
-        
+
 
     }, [dispatch]);
-    
+
     // Sample data for bar charts
 
 
     return (
         <React.Fragment>
-            <div className='dashboard_wrapper'>
-                <div className="container">
-                {/* <ComplianceBarChart /> */}
-                <div className="row">
-                    <div className="col-sm-6 ">
-                    
-                        <BarChart1 branchesCompany={CompanyBranchesInfo}/>
-                    
-                    </div>
-                    <div className="col-sm-6"><BarChartReg branchesCompany={CompanyBranchesInfo} /></div>
-                    <div className="col-sm-4"></div>
-                
-                
-                </div>
-                <div className="row">
-                    <div className="col-sm-6">
-                        <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
-                    </div>
-                    <div className="col-sm-6">
+            <div className='dashboard_wrapper' style={{ height: "200px" }}>
+                <div className="container" >
+                    {/* <ComplianceBarChart /> */}
+                    <div className="row">
 
-                <CalendarComponent branchesCompany={CompanyBranchesInfo}/>
+                        <div className="col-sm-12">
+
+                            {/* <CalendarComponent branchesCompany={CompanyBranchesInfo} /> */}
+
+                            {/* <h4>Registrations/Licenses/Permissions</h4> */}
+                            <DashboardTableBranchCount branchesCompany={CompanyBranchesInfo} />
+                        </div>
                     </div>
-                </div>
+                    <br/>
+                    <div className="row">
+                        <div className="col-sm-4" >
+
+                            <BarChart1 branchesCompany={CompanyBranchesInfo} />
+
+                        </div>
+                        {/* <div className="col-sm-3"><BarChartReg branchesCompany={CompanyBranchesInfo} /></div> */}
+                        <div className="col-sm-4">
+                            <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
+
+                        </div>
+                        <div className="col-sm-4">
+                            <CalendarComponent branchesCompany={CompanyBranchesInfo} />
+
+                        </div>
+
+
+                    </div>
+
+                    {/* <DashboardTableAudit /> */}
+
                 </div>
             </div>
         </React.Fragment>

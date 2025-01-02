@@ -8,7 +8,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { Paper, Typography, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { checklistCalenderGet } from '../../store/actions/otherActions';
-import './Graph.css';
+import './Calendar.css';
 
 function ServerDay(props) {
   const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -82,7 +82,7 @@ export default function DateCalendarServerRequest() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className='chart-container' style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-        <h2 className='chart-heading'>Due Date Calender :</h2>
+        <h2 className='chart-heading' >Due Date Calender :</h2>
         <br/>
         <DateCalendar
           value={selectedDate}
