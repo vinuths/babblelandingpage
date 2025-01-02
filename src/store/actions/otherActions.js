@@ -108,7 +108,9 @@ import {
   CalenderChecklistGet,
   FetchRegCount,
   FetchCompliedCount,
-  CompanyBranchesGetting
+  CompanyBranchesGetting,
+  RegionWiseDataGetting,
+  DashboardBranchGetting,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as 
 } from "../../routes/api";
@@ -461,30 +463,36 @@ import {
   CHECKLIST_ADD_IN_AUDIT_REQUEST,
   CHECKLIST_ADD_IN_AUDIT_SUCCESS,
   CHECKLIST_ADD_IN_AUDIT_FAILURE,
-  FILE_UPLOADS_REQUEST, 
-  FILE_UPLOADS_SUCCESS, 
+  FILE_UPLOADS_REQUEST,
+  FILE_UPLOADS_SUCCESS,
   FILE_UPLOADS_FAIL,
   AUDIT_UPLOAD_STATUS_REQUEST,
-    AUDIT_UPLOAD_STATUS_SUCCESS,
-    AUDIT_UPLOAD_STATUS_FAILURE,
-    NOTIFICATION_REQUEST,
-    NOTIFICATION_SUCCESS,
-    NOTIFICATION_FAILURE,
-    AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL,
-    AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
-    AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-    CHECKLIST_CALENDER_REQUEST_GET_ALL,
-    CHECKLIST_CALENDER_SUCCESS_GET_ALL,
-    CHECKLIST_CALENDER_GET_FAIL_ALL,
-    AUDIT_REG_COUNT_REQUEST_All_DETAIL,
-    AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
-    AUDIT_REG_COUNT_FAIL_All_DETAIL,
-    AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
-    AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
-    AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-    COMPANY_BRANCHES_GET_REQUEST,
-COMPANY_BRANCHES_GET_SUCCESS,
-COMPANY_BRANCHES_GET_FAIL,
+  AUDIT_UPLOAD_STATUS_SUCCESS,
+  AUDIT_UPLOAD_STATUS_FAILURE,
+  NOTIFICATION_REQUEST,
+  NOTIFICATION_SUCCESS,
+  NOTIFICATION_FAILURE,
+  AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+  CHECKLIST_CALENDER_REQUEST_GET_ALL,
+  CHECKLIST_CALENDER_SUCCESS_GET_ALL,
+  CHECKLIST_CALENDER_GET_FAIL_ALL,
+  AUDIT_REG_COUNT_REQUEST_All_DETAIL,
+  AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
+  AUDIT_REG_COUNT_FAIL_All_DETAIL,
+  AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+  COMPANY_BRANCHES_GET_REQUEST,
+  COMPANY_BRANCHES_GET_SUCCESS,
+  COMPANY_BRANCHES_GET_FAIL,
+  REGION_WISE_DATA_GET_REQUEST,
+  REGION_WISE_DATA_GET_SUCCESS,
+  REGION_WISE_DATA_GET_FAIL,
+  DASH_STATE_WISE_DATA_GET_REQUEST,
+  DASH_STATE_WISE_DATA_GET_SUCCESS,
+  DASH_STATE_WISE_DATA_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -5443,77 +5451,77 @@ export const checklistAddInAudit = (data) => async (dispatch) => {
 // };
 // actions.js
 export const fileUploadInAuditQuestion = (formData) => async (dispatch) => {
-  dispatch({ type: FILE_UPLOADS_REQUEST }); 
+  dispatch({ type: FILE_UPLOADS_REQUEST });
 
   try {
-      const response = await fileUploadInAuditQuestions(formData);
+    const response = await fileUploadInAuditQuestions(formData);
 
-      if (response.status === 200 && response.data !== 409) {
-          dispatch({ type: FILE_UPLOADS_SUCCESS, payload: response.data });
-          toast.success('File uploaded successfully!', {
-              position: 'bottom-right',
-              hideProgressBar: false,
-              progress: undefined,
-          });
-      } else if (response.data === 409) {
-          dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
-          toast.error(response.data.message || 'File upload failed', {
-              position: 'bottom-right',
-              hideProgressBar: false,
-              progress: undefined,
-          });
-      } else {
-          dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
-          toast.error(response.data, {
-              position: 'bottom-right',
-              hideProgressBar: false,
-              progress: undefined,
-          });
-      }
-  } catch (error) {
-      dispatch({ type: FILE_UPLOADS_FAIL, payload: error.message });
-      toast.error(error.message, {
-          position: 'bottom-right',
-          hideProgressBar: false,
-          progress: undefined,
+    if (response.status === 200 && response.data !== 409) {
+      dispatch({ type: FILE_UPLOADS_SUCCESS, payload: response.data });
+      toast.success('File uploaded successfully!', {
+        position: 'bottom-right',
+        hideProgressBar: false,
+        progress: undefined,
       });
+    } else if (response.data === 409) {
+      dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
+      toast.error(response.data.message || 'File upload failed', {
+        position: 'bottom-right',
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
+      toast.error(response.data, {
+        position: 'bottom-right',
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: FILE_UPLOADS_FAIL, payload: error.message });
+    toast.error(error.message, {
+      position: 'bottom-right',
+      hideProgressBar: false,
+      progress: undefined,
+    });
   }
 };
 export const auditUploadStatusValue = (data) => async (dispatch) => {
   dispatch({ type: AUDIT_UPLOAD_STATUS_REQUEST });
 
   try {
-      const response = await AuditUploadStatusValue(data);
-      dispatch({ type: AUDIT_UPLOAD_STATUS_SUCCESS, payload: response.data });
+    const response = await AuditUploadStatusValue(data);
+    dispatch({ type: AUDIT_UPLOAD_STATUS_SUCCESS, payload: response.data });
 
-      if (response.status === 201) {
-          toast.success("Audit status updated successfully!", {
-              position: "bottom-right",
-              hideProgressBar: false,
-              progress: undefined,
-          });
-      } else {
-          dispatch({
-              type: AUDIT_UPLOAD_STATUS_FAILURE,
-              payload: response.data,
-          });
-          toast.error(response.data, {
-              position: "bottom-right",
-              hideProgressBar: false,
-              progress: undefined,
-          });
-      }
-  } catch (error) {
+    if (response.status === 201) {
+      toast.success("Audit status updated successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
       dispatch({
-          type: AUDIT_UPLOAD_STATUS_FAILURE,
-          payload: error.message,
+        type: AUDIT_UPLOAD_STATUS_FAILURE,
+        payload: response.data,
       });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_UPLOAD_STATUS_FAILURE,
+      payload: error.message,
+    });
 
-      toast.error(error.message, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-      });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
   }
 };
 // export const fetchNotifications = (notifications) => async (dispatch) => {
@@ -5622,28 +5630,28 @@ export const auditCompiledStatusAll = (postBody = {}) => async (dispatch) => {
   dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
 
   try {
-      // Call the backend API
-      const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
-      if (response.status === 200) {
-          const { statewiseCounts, auditData = [], branches = [] } = response.data; // Safely destructure auditData and branches with default values
+    // Call the backend API
+    const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
+    if (response.status === 200) {
+      const { statewiseCounts, auditData = [], branches = [] } = response.data; // Safely destructure auditData and branches with default values
 
-          dispatch({
-            type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
-            payload: statewiseCounts,
-            payload1: auditData, // Dispatch auditData as payload1
-            branches, // Dispatch branches directly
-          });
-      } else {
-          dispatch({
-              type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-              payload: 'Unexpected response status',
-          });
-      }
-  } catch (error) {
       dispatch({
-          type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-          payload: error.message,
+        type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+        payload: statewiseCounts,
+        payload1: auditData, // Dispatch auditData as payload1
+        branches, // Dispatch branches directly
       });
+    } else {
+      dispatch({
+        type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+        payload: 'Unexpected response status',
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+      payload: error.message,
+    });
   }
 };
 
@@ -5652,26 +5660,26 @@ export const auditRegCountAll = (postBody) => async (dispatch) => {
   dispatch({ type: AUDIT_REG_COUNT_REQUEST_All_DETAIL });
 
   try {
-      const response = await FetchRegCount(postBody);
-      if (response.status === 200) {
-          const { statewiseCounts, auditData = [], branches = [] } = response.data; // Extract statewiseCounts from response data
-          dispatch({
-            type: AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
-            payload: statewiseCounts,
-            payload1: auditData, // Dispatch auditData as payload1
-            branches,
-          });
-      } else {
-          dispatch({
-              type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
-              payload: 'Unexpected response status'
-          });
-      }
-  } catch (error) {
+    const response = await FetchRegCount(postBody);
+    if (response.status === 200) {
+      const { statewiseCounts, auditData = [], branches = [] } = response.data; // Extract statewiseCounts from response data
       dispatch({
-          type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
-          payload: error.message
+        type: AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
+        payload: statewiseCounts,
+        payload1: auditData, // Dispatch auditData as payload1
+        branches,
       });
+    } else {
+      dispatch({
+        type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
+        payload: 'Unexpected response status'
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
+      payload: error.message
+    });
   }
 };
 
@@ -5681,7 +5689,7 @@ export const checklistCalenderGet = () => async (dispatch) => {
   await CalenderChecklistGet()
     .then((response) => {
       // alert(JSON.stringify(response.data))
-      console.log('API Response:', response.data);
+      // console.log('API Response:', response.data);
       dispatch({ type: CHECKLIST_CALENDER_SUCCESS_GET_ALL, payload: response.data });
       if (response.status === 201) {
         // toast.success('Category is Added Successfully!', {
@@ -5730,7 +5738,7 @@ export const auditCompiledCountAll = (postBody) => async (dispatch) => {
 
   try {
     const response = await FetchCompliedCount(postBody); // Call the API
-    console.log("count",response.data); // Log the response to verify the data structure
+    console.log("count", response.data); // Log the response to verify the data structure
 
     if (response.status === 200) {
       const { statewiseCounts, auditData, branches } = response.data; // Ensure this matches your backend response
@@ -5798,4 +5806,69 @@ export const CompanyBranchesGet = () => async (dispatch) => {
     });
 };
 
+export const RegionWiseDataGet = (region, fieldName) => async (dispatch) => {
+  dispatch({ type: REGION_WISE_DATA_GET_REQUEST });
+  await RegionWiseDataGetting(region, fieldName)
+    .then((response) => {
+      dispatch({ type: REGION_WISE_DATA_GET_SUCCESS, payload: response.data });
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGION_WISE_DATA_GET_FAIL,
+        payload: error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+// export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
+//   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
+//   try {
+//     const response = await DashboardBranchGetting(state, fieldName, license);
+//     // console.log("API Response:", response.data);  // Log the API response
+//     dispatch({ type: DASH_STATE_WISE_DATA_GET_SUCCESS, payload: response.data });
+//   } catch (error) {
+//     dispatch({
+//       type: DASH_STATE_WISE_DATA_GET_FAIL,
+//       payload: error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message,
+//     });
+//     toast.error(error.message, {
+//       position: "bottom-right",
+//       hideProgressBar: false,
+//       progress: undefined,
+//     });
+//   }
+// };
+
+export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
+  dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
+
+  try {
+    const fetchedData = await DashboardBranchGetting(state, fieldName, license); // Get data from API
+    // console.log("Fetched Data from Action:", fetchedData); // Log it to verify
+    dispatch({ type: DASH_STATE_WISE_DATA_GET_SUCCESS, payload: fetchedData });
+    return fetchedData; // Return data to be passed to the modal
+  } catch (error) {
+    dispatch({
+      type: DASH_STATE_WISE_DATA_GET_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+    throw error; // Throw error to be caught in handleCellClick
+  }
+};
 

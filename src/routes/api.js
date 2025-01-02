@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {getToken} from '../utils/localStorage'
-const URL = 'http://localhost:8000/api/admin'; 
+const URL = 'http://192.168.0.29:8000/api/admin'; 
+// const URL = 'http://localhost:8000/api/admin'; 
 
-// const URL = 'https://matrixhrtech.com/api/admin';
+// const URL = 'https://backend.matrixhrtech.com/api/admin';
 
 axios.defaults.withCredentials = true;  
 ///api of users starts
@@ -1236,3 +1237,39 @@ export const CompanyBranchesGetting = async () => {
     };
     return await axios.get(`${URL}/gettingBranchesForCompany`, config); // Removed `postBody`
 };
+
+
+export const RegionWiseDataGetting = async (region, fieldName) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+  
+    const url = `${URL}/getRegionsData?region=${encodeURIComponent(region)}&fieldName=${encodeURIComponent(fieldName)}`;
+  
+    return await axios.get(url, config); // Send the parameters in the query string
+  };
+
+
+  export const DashboardBranchGetting = async (state, fieldName, license) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+  
+    const url = `${URL}/getDashBranchData?state=${encodeURIComponent(state)}&fieldName=${encodeURIComponent(fieldName)}&license=${encodeURIComponent(license)}`;
+  
+    try {
+      const response = await axios.get(url, config);
+    //   console.log("API Response:", response.data); // Log the response to verify
+      return response.data; // Ensure it returns the correct data
+    } catch (error) {
+      console.error("API Error:", error);
+      throw error; // Ensure any errors are thrown so they can be caught in the action
+    }
+  };
+  

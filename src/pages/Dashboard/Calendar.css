@@ -65,4 +65,9 @@
   .react-tooltip {
     z-index: 1000;
   }
-  
+  .chart-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: #013879;
+  }

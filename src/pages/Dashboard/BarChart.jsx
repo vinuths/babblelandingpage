@@ -28,7 +28,7 @@ const Barchart1 = ({ branchesCompany }) => {
             endDate: endDate || '',
         };
         dispatch(auditCompiledStatusAll(postBody));
-    }, [dispatch, selectedState, selectedBranch,startDate, endDate]);
+    }, [dispatch, selectedState, selectedBranch, startDate, endDate]);
 
     // Prepare dynamic data for Recharts
     const totalQuestions = selectedState && statewiseCounts[selectedState]
@@ -49,75 +49,89 @@ const Barchart1 = ({ branchesCompany }) => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="chart-container">
-            {/* Heading */}
-            <h2 className="chart-heading">Notice/Inspections</h2>
+        <div>
+            <div className='chart-container' style={{ height: '500px' }}>
+                <h2 style={{ marginBottom: '20px', textAlign: 'center', color: '#013879' }}>Notice/Inspections</h2>
+                <div>
+                    <div className="filters" style={{ width: "100%", }}>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <div className="filter-item" >
 
-            <div className="filter-container">
-                {/* State Filter */}
-                <div className="filter-item">
-                    <label htmlFor="stateFilter">Filter by State:</label>
-                    <select id="stateFilter" value={selectedState} onChange={(e) => setSelectedState(e.target.value)}>
-                        <option value="">All States</option>
-                        {Object.keys(statewiseCounts).map(state => (
-                            <option key={state} value={state}>{state}</option>
-                        ))}
-                    </select>
+                                    <label htmlFor="stateFilter">Filter by State:</label>
+                                    <select
+                                        id="stateFilter"
+                                        value={selectedState}
+                                        onChange={(e) => setSelectedState(e.target.value)}
+                                    >
+                                        <option value="">All States</option>
+                                        {Object.keys(statewiseCounts).map(state => (
+                                            <option key={state} value={state}>{state}</option>
+                                        ))}
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="filter-item" >
+
+                                    <label htmlFor="branchFilter">Filter by Branch:</label>
+                                    <select id="branchFilter">
+                                        <option value="">All Branches</option>
+                                        {branchesCompany?.map(branch => (
+                                            <option key={branch._id} value={branch.name}>
+                                                {branch.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <label htmlFor="startDate">Date Range:</label>
+                            <div className="col-sm-6">
+                                <div className="filter-item">
+                                    {/* <label htmlFor="startDate">Start Date:</label> */}
+                                    <input
+                                        type="date"
+                                        id="startDate"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="filter-item">
+                                    {/* <label htmlFor="endDate">End Date:</label> */}
+                                    <input
+                                        type="date"
+                                        id="endDate"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                {/* Branch Filter */}
-                <div className="filter-container">
-            {/* State Filter */}
-            <div className="filter-item">
-                <label htmlFor="branchFilter">Filter by Branch:</label>
-                <select id="branchFilter">
-                    <option value="">All Branches</option>
-                    {branchesCompany?.map(branch => (
-                        <option key={branch._id} value={branch.name}>
-                            {branch.name} {/* Display the name of the branch */}
-                        </option>
-                    ))}
-                </select>
-            </div>
-        </div>
-                <div className="filter-item">
-                    <label htmlFor="startDate">Start Date:</label>
-                    <input
-                        type="date"
-                        id="startDate"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
+                <div>
+                    <div className="chart-wrapper">
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart
+                                data={data}
+                                barSize={30}
+                                margin={{ top: 20, right: 0, left: -10, bottom: 20 }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis tickCount={10} />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="value" fill="#013879" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
-
-                {/* End Date Filter */}
-                <div className="filter-item">
-                    <label htmlFor="endDate">End Date:</label>
-                    <input
-                        type="date"
-                        id="endDate"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
-                </div>
-            </div>
-
-            {/* Responsive Bar Chart */}
-            <div className="chart-wrapper">
-                <ResponsiveContainer width="100%" height={400}>
-                    <BarChart
-                        data={data}
-                        barSize={30} // Adjusted bar size for better spacing
-                        margin={{ top: 20, right: 30, left: 0, bottom: 20 }} // Adjusted margins for better layout
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis tickCount={10} /> {/* Increase Y-axis ticks */}
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="value" fill="#013879" /> {/* Set bar color */}
-                    </BarChart>
-                </ResponsiveContainer>
             </div>
         </div>
     );
