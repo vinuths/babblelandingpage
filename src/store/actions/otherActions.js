@@ -5853,8 +5853,9 @@ export const DashboardBranchGet = (state, fieldName, license) => async (dispatch
   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
 
   try {
-    const fetchedData = await DashboardBranchGetting(state, fieldName, license); // Get data from API
-    // console.log("Fetched Data from Action:", fetchedData); // Log it to verify
+    // Updated to send data using the modified DashboardBranchGetting
+    const fetchedData = await DashboardBranchGetting(state, fieldName, license); // Pass arguments as before
+
     dispatch({ type: DASH_STATE_WISE_DATA_GET_SUCCESS, payload: fetchedData });
     return fetchedData; // Return data to be passed to the modal
   } catch (error) {
@@ -5872,4 +5873,5 @@ export const DashboardBranchGet = (state, fieldName, license) => async (dispatch
     throw error; // Throw error to be caught in handleCellClick
   }
 };
+
 
