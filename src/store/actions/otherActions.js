@@ -5849,12 +5849,12 @@ export const RegionWiseDataGet = (region, fieldName) => async (dispatch) => {
 //   }
 // };
 
-export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
+export const DashboardBranchGet = (state, fieldName, license, region) => async (dispatch) => {
   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
 
   try {
     // Updated to send data using the modified DashboardBranchGetting
-    const fetchedData = await DashboardBranchGetting(state, fieldName, license); // Pass arguments as before
+    const fetchedData = await DashboardBranchGetting(state, fieldName, license, region); // Pass arguments as before
 
     dispatch({ type: DASH_STATE_WISE_DATA_GET_SUCCESS, payload: fetchedData });
     return fetchedData; // Return data to be passed to the modal

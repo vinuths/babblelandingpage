@@ -28,6 +28,9 @@ const DashboardTableBranchCount = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisibleAFR, setModalVisibleAFR] = useState(false);
+  const [modalVisibleTBA, setModalVisibleTBA] = useState(false);
   const [modalPayload, setModalPayload] = useState(null);
 
 
@@ -37,7 +40,7 @@ const DashboardTableBranchCount = () => {
   const { loadingRegionWiseData, RegionWiseDataInfo, error } = RegionWiseDataGetRed;
   const DashStateWiseDataRed = useSelector((state) => state.DashStateWiseDataRed);
   const { loadingDashStateWiseData, DashStateWiseDataInfo, errorDBB } = DashStateWiseDataRed;
-  console.log("DashStateWiseDataInfo", "");
+  console.log("DashStateWiseDataInfo", DashStateWiseDataRed);
 
   // useEffect(() => {
   //   dispatch(RegionWiseDataGet({
@@ -132,6 +135,7 @@ const DashboardTableBranchCount = () => {
           // id: item._id,
           state: item.state,
           license: item.license,
+          region: item.region,
           branchdistrict: item.branchdistrict,
           total_count: item.total_count,
           not_applicable: item.not_applicable,
@@ -235,6 +239,27 @@ const DashboardTableBranchCount = () => {
     setModalVisible1(true); // Open the modal
     setFetchedData(fetchedData)
   };
+  const openModal2 = (payload, fetchedData) => {
+    setModalPayload(payload); // Save the payload to state
+    console.log("setModalPayload", payload);
+
+    setModalVisible2(true); // Open the modal
+    setFetchedData(fetchedData)
+  };
+  const openModalAFR = (payload, fetchedData) => {
+    setModalPayload(payload); // Save the payload to state
+    console.log("setModalPayload", payload);
+
+    setModalVisibleAFR(true); // Open the modal
+    setFetchedData(fetchedData)
+  };
+  const openModalTBA = (payload, fetchedData) => {
+    setModalPayload(payload); // Save the payload to state
+    console.log("setModalPayload", payload);
+
+    setModalVisibleTBA(true); // Open the modal
+    setFetchedData(fetchedData)
+  };
 
   // Close the modal
   const closeModal = () => {
@@ -246,9 +271,419 @@ const DashboardTableBranchCount = () => {
     setModalVisible1(false);
     setModalPayload(null); // Clear payload after modal close
   };
+  const closeModal2 = () => {
+    setModalVisible2(false);
+    setModalPayload(null); // Clear payload after modal close
+  };
+  const closeModalAFR = () => {
+    setModalVisibleAFR(false);
+    setModalPayload(null); // Clear payload after modal close
+  };
+  const closeModalTBA = () => {
+    setModalVisibleTBA(false);
+    setModalPayload(null); // Clear payload after modal close
+  };
 
-  // Modal content
-  // Modal content with Ant Design table
+
+  const renderModalContentTBA = () => {
+    // Default columns for the table
+    let columns = [
+      {
+        title: 'Branch Name',
+        dataIndex: 'name',
+        key: 'name',
+        ...getColumnSearchProps("name"),
+      },
+      {
+        title: 'Branch State',
+        dataIndex: ['branchstate', 'name'], // Access nested object property
+        key: 'branchstate',
+        ...getColumnSearchProps("branchstate"),
+
+      },
+      {
+        title: 'Branch District',
+        dataIndex: 'branchdistrict',
+        key: 'branchdistrict',
+        ...getColumnSearchProps("branchdistrict"),
+
+      },
+    ];
+
+    
+
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremarkTL',
+        key: 'issuingauthremarkTL',
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremarkNSP',
+        key: 'issuingauthremarkNSP',
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremarkOTP',
+        key: 'issuingauthremarkOTP',
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremarkWOE',
+        key: 'issuingauthremarkWOE',
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremark1',
+        key: 'issuingauthremark1',
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'Reason',
+        dataIndex: 'issuingauthremark',
+        key: 'issuingauthremark',
+      });
+    }
+
+   
+    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    if (!fetchedData || fetchedData.length === 0) {
+      return <p>No data available.</p>;
+    }
+
+    return (
+      <Table
+        columns={columns}
+        dataSource={fetchedData.map((item) => ({
+          ...item,
+          key: item._id, // Set the unique key for each row
+        }))}
+        pagination={{ pageSize: 5 }} // Enable pagination with 5 rows per page
+        scroll={{ y: 500, x: 800 }}
+      />
+    );
+  };
+  const renderModalContentAFR = () => {
+    // Default columns for the table
+    let columns = [
+      {
+        title: 'Branch Name',
+        dataIndex: 'name',
+        key: 'name',
+        ...getColumnSearchProps("name"),
+      },
+      {
+        title: 'Branch State',
+        dataIndex: ['branchstate', 'name'], // Access nested object property
+        key: 'branchstate',
+        ...getColumnSearchProps("branchstate"),
+
+      },
+      {
+        title: 'Branch District',
+        dataIndex: 'branchdistrict',
+        key: 'branchdistrict',
+        ...getColumnSearchProps("branchdistrict"),
+
+      },
+    ];
+
+    // Dynamic column mapping based on the selected field name
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'View Trade Acknowlegement',
+        dataIndex: 'issuingauthimageTL', // This will contain the file URL or path
+        key: 'issuingauthimageTL',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Trade Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'View NightShift Acknowlegement',
+        dataIndex: 'issuingauthimageNSP',
+        key: 'issuingauthimageNSP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View NightShift Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'View OT Acknowlegement',
+        dataIndex: 'issuingauthimageOTP',
+        key: 'issuingauthimageOTP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View OT Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'View Weekly Off Acknowlegement',
+        dataIndex: 'issuingauthimageWOE',
+        key: 'issuingauthimageWOE',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Weekly Off Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'View Factory Acknowlegement',
+        dataIndex: 'issuingauthimage1',
+        key: 'issuingauthimage1',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E Acknowlegement',
+        dataIndex: 'issuingauthimage',
+        key: 'issuingauthimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    }
+
+
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'DOE Trade License',
+        dataIndex: 'doeTL',
+        key: 'doeTL',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeTL ? new Date(a.doeTL).getTime() : 0;
+          const dateB = b.doeTL ? new Date(b.doeTL).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'DOE NightShift Permission',
+        dataIndex: 'doeNSP',
+        key: 'doeNSP',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeNSP ? new Date(a.doeNSP).getTime() : 0;
+          const dateB = b.doeNSP ? new Date(b.doeNSP).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'DOE OT Permission',
+        dataIndex: 'doeOTP',
+        key: 'doeOTP',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeOTP ? new Date(a.doeOTP).getTime() : 0;
+          const dateB = b.doeOTP ? new Date(b.doeOTP).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'DOE Weekly Off Exemption',
+        dataIndex: '',
+        key: 'doeWOE',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeWOE ? new Date(a.doeWOE).getTime() : 0;
+          const dateB = b.doeWOE ? new Date(b.doeWOE).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'DOE Factory License',
+        dataIndex: 'doe1',
+        key: 'doe1',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doe1 ? new Date(a.doe1).getTime() : 0;
+          const dateB = b.doe1 ? new Date(b.doe1).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'DOE S&E License',
+        dataIndex: 'doe',
+        key: 'doe',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doe ? new Date(a.doe).getTime() : 0;
+          const dateB = b.doe ? new Date(b.doe).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    }
+
+   
+    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    if (!fetchedData || fetchedData.length === 0) {
+      return <p>No data available.</p>;
+    }
+
+    return (
+      <Table
+        columns={columns}
+        dataSource={fetchedData.map((item) => ({
+          ...item,
+          key: item._id, // Set the unique key for each row
+        }))}
+        pagination={{ pageSize: 5 }} // Enable pagination with 5 rows per page
+        scroll={{ y: 500, x: 800 }}
+      />
+    );
+  };
+
+  const renderModalContent2 = () => {
+    // Default columns for the table
+    let columns = [
+      {
+        title: 'Branch Name',
+        dataIndex: 'name',
+        key: 'name',
+        ...getColumnSearchProps("name"),
+      },
+      {
+        title: 'Branch State',
+        dataIndex: ['branchstate', 'name'], // Access nested object property
+        key: 'branchstate',
+        ...getColumnSearchProps("branchstate"),
+
+      },
+      {
+        title: 'Branch District',
+        dataIndex: 'branchdistrict',
+        key: 'branchdistrict',
+        ...getColumnSearchProps("branchdistrict"),
+
+      },
+    ];
+
+    // Dynamic column mapping based on the selected field name
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'View Trade Acknowlegement',
+        dataIndex: 'issuingauthimageTL', // This will contain the file URL or path
+        key: 'issuingauthimageTL',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Trade Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'View NightShift Acknowlegement',
+        dataIndex: 'issuingauthimageNSP',
+        key: 'issuingauthimageNSP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View NightShift Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'View OT Acknowlegement',
+        dataIndex: 'issuingauthimageOTP',
+        key: 'issuingauthimageOTP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View OT Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'View Weekly Off Acknowlegement',
+        dataIndex: 'issuingauthimageWOE',
+        key: 'issuingauthimageWOE',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Weekly Off Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'View Factory Acknowlegement',
+        dataIndex: 'issuingauthimage1',
+        key: 'issuingauthimage1',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E Acknowlegement',
+        dataIndex: 'issuingauthimage',
+        key: 'issuingauthimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    }
+
+
+    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    if (!fetchedData || fetchedData.length === 0) {
+      return <p>No data available.</p>;
+    }
+
+    return (
+      <Table
+        columns={columns}
+        dataSource={fetchedData.map((item) => ({
+          ...item,
+          key: item._id, // Set the unique key for each row
+        }))}
+        pagination={{ pageSize: 5 }} // Enable pagination with 5 rows per page
+        scroll={{ y: 500, x: 800 }}
+      />
+    );
+  };
+
+  const renderModalContent1 = () => {
+    // Define a default set of columns
+    let columns = [
+      {
+        title: 'Branch Name',
+        dataIndex: 'name',
+        key: 'name',
+        ...getColumnSearchProps("name"),
+
+      },
+    ];
+
+
+
+    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    if (!fetchedData || fetchedData.length === 0) {
+      return <p>No data available.</p>;
+    }
+
+    return (
+      <Table
+        columns={columns}
+        dataSource={fetchedData.map((item) => ({
+          ...item,
+          key: item._id, // Set the unique key for each row
+        }))}
+        pagination={false} // Enable pagination with 5 rows per page
+      // scroll={{ y: 500, x: 800 }}
+      />
+    );
+  };
+
+
   const renderModalContent = () => {
     // Default columns for the table
     let columns = [
@@ -278,8 +713,8 @@ const DashboardTableBranchCount = () => {
     if (selectedFieldName === 'isTradeLicense') {
       columns.push({
         title: 'View Trade License',
-        dataIndex: 'issuingauthimageTL', // This will contain the file URL or path
-        key: 'issuingauthimageTL',
+        dataIndex: 'licenseimageTL', // This will contain the file URL or path
+        key: 'licenseimageTL',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Trade License</a> : 'Not Uploaded'
         ),
@@ -287,8 +722,8 @@ const DashboardTableBranchCount = () => {
     } else if (selectedFieldName === 'isNightShiftPermission') {
       columns.push({
         title: 'View NightShift Permission',
-        dataIndex: 'issuingauthimageNSP',
-        key: 'issuingauthimageNSP',
+        dataIndex: 'licenseimageNSP',
+        key: 'licenseimageNSP',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View NightShift Permission</a> : 'Not Uploaded'
         ),
@@ -296,8 +731,8 @@ const DashboardTableBranchCount = () => {
     } else if (selectedFieldName === 'isOTPermission') {
       columns.push({
         title: 'View OT Permission',
-        dataIndex: 'issuingauthimageOTP',
-        key: 'issuingauthimageOTP',
+        dataIndex: 'licenseimageOTP',
+        key: 'licenseimageOTP',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View OT Permission</a> : 'Not Uploaded'
         ),
@@ -305,8 +740,8 @@ const DashboardTableBranchCount = () => {
     } else if (selectedFieldName === 'isWeeklyOffExemption') {
       columns.push({
         title: 'View Weekly Off Exemption',
-        dataIndex: 'issuingauthimageWOE',
-        key: 'issuingauthimageWOE',
+        dataIndex: 'licenseimageWOE',
+        key: 'licenseimageWOE',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Weekly Off Exemption</a> : 'Not Uploaded'
         ),
@@ -314,8 +749,8 @@ const DashboardTableBranchCount = () => {
     } else if (selectedFieldName === 'Factory') {
       columns.push({
         title: 'View Factory License',
-        dataIndex: 'issuingauthimage1',
-        key: 'issuingauthimage1',
+        dataIndex: 'licenseimage1',
+        key: 'licenseimage1',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory License</a> : 'Not Uploaded'
         ),
@@ -323,8 +758,8 @@ const DashboardTableBranchCount = () => {
     } else if (selectedFieldName === 'SE') {
       columns.push({
         title: 'View S&E License',
-        dataIndex: 'issuingauthimage',
-        key: 'issuingauthimage',
+        dataIndex: 'licenseimage',
+        key: 'licenseimage',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E License</a> : 'Not Uploaded'
         ),
@@ -441,58 +876,94 @@ const DashboardTableBranchCount = () => {
     );
   };
 
-  const renderModalContent1 = () => {
-    // Define a default set of columns
-    let columns = [
-      {
-        title: 'Branch Name',
-        dataIndex: 'name',
-        key: 'name',
-        ...getColumnSearchProps("name"),
-
-      },
-    ];
 
 
 
-    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
-    if (!fetchedData || fetchedData.length === 0) {
-      return <p>No data available.</p>;
-    }
-
-    return (
-      <Table
-        columns={columns}
-        dataSource={fetchedData.map((item) => ({
-          ...item,
-          key: item._id, // Set the unique key for each row
-        }))}
-        pagination={false} // Enable pagination with 5 rows per page
-      // scroll={{ y: 500, x: 800 }}
-      />
-    );
-  };
-
-
-
-
-
-
-
-  const handleCellClick1 = (record, column) => {
+  const handleCellClickTBA = (record, column) => {
     console.log("record", record);
-    const { state, license } = record;
+    const { state, license, region } = record;
 
     const payload = {
       state: state,
       fieldName: column,
       license: license,
+      region: region,
+    };
+    dispatch(DashboardBranchGet(state, column, license, region))
+      .then((fetchedData) => {
+        openModalTBA(fetchedData, payload); // Pass the fetched data to openModal
+        console.log("Fetched Data:", fetchedData);
+        setFetchedData(fetchedData, payload)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    openModalTBA(dataSource1);
+    console.log("Initial Payload", payload);
+  };
+  const handleCellClickAFR = (record, column) => {
+    console.log("record", record);
+    const { state, license, region} = record;
+
+    const payload = {
+      state: state,
+      fieldName: column,
+      license: license,
+      region: region,
+    };
+    dispatch(DashboardBranchGet(state, column, license, region))
+      .then((fetchedData) => {
+        openModalAFR(fetchedData, payload); // Pass the fetched data to openModal
+        console.log("Fetched Data:", fetchedData);
+        setFetchedData(fetchedData, payload)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    openModalAFR(dataSource1);
+    console.log("Initial Payload", payload);
+  };
+
+  const handleCellClick2 = (record, column) => {
+    console.log("record", record);
+    const { state, license, region } = record;
+
+    const payload = {
+      state: state,
+      fieldName: column,
+      license: license,
+      region: region,
+
+    };
+    dispatch(DashboardBranchGet(state, column, license, region))
+      .then((fetchedData) => {
+        openModal2(fetchedData, payload); // Pass the fetched data to openModal
+        console.log("Fetched Data:", fetchedData);
+        setFetchedData(fetchedData, payload)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    openModal2(dataSource1);
+    console.log("Initial Payload", payload);
+  };
+
+  const handleCellClick1 = (record, column) => {
+    console.log("record", record);
+    const { state, license, region } = record;
+
+    const payload = {
+      state: state,
+      fieldName: column,
+      license: license,
+      region: region,
+
     };
 
     // const dispatch = useDispatch();
 
     // Dispatch the action to fetch data and then open modal with the fetched data
-    dispatch(DashboardBranchGet(state, column, license))
+    dispatch(DashboardBranchGet(state, column, license,region))
       .then((fetchedData) => {
         // openModal(fetchedData, payload); // Pass the fetched data to openModal
         openModal1(fetchedData, payload); // Pass the fetched data to openModal
@@ -510,18 +981,20 @@ const DashboardTableBranchCount = () => {
   };
   const handleCellClick = (record, column) => {
     console.log("record", record);
-    const { state, license } = record;
+    const { state, license ,region } = record;
 
     const payload = {
       state: state,
       fieldName: column,
       license: license,
+      region: region,
+
     };
 
     // const dispatch = useDispatch();
 
     // Dispatch the action to fetch data and then open modal with the fetched data
-    dispatch(DashboardBranchGet(state, column, license))
+    dispatch(DashboardBranchGet(state, column, license, region))
       .then((fetchedData) => {
         openModal(fetchedData, payload); // Pass the fetched data to openModal
         setFetchedData(fetchedData, payload)
@@ -643,7 +1116,7 @@ const DashboardTableBranchCount = () => {
       key: 'new_license_applied',
       align: 'center',
       onCell: (record) => ({
-        onClick: () => handleCellClick1(record, 'new_license_applied'),
+        onClick: () => handleCellClick2(record, 'new_license_applied'),
         className: 'clickable-cell', // Styling for pointer cursor and clickable effect
       }),
     },
@@ -655,7 +1128,7 @@ const DashboardTableBranchCount = () => {
       key: 'license_applied_for_renewal',
       align: 'center',
       onCell: (record) => ({
-        onClick: () => handleCellClick(record, 'license_applied_for_renewal'),
+        onClick: () => handleCellClickAFR(record, 'license_applied_for_renewal'),
         className: 'clickable-cell', // Styling for pointer cursor and clickable effect
       }),
     },
@@ -667,7 +1140,7 @@ const DashboardTableBranchCount = () => {
       key: 'license_to_be_applied',
       align: 'center',
       onCell: (record) => ({
-        onClick: () => handleCellClick(record, 'license_to_be_applied'),
+        onClick: () => handleCellClickTBA(record, 'license_to_be_applied'),
         className: 'clickable-cell', // Styling for pointer cursor and clickable effect
       }),
     },
@@ -837,6 +1310,39 @@ const DashboardTableBranchCount = () => {
                 bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
               >
                 {renderModalContent1()}
+              </Modal>
+              <Modal
+                className="dashboard_wrapper container"
+                title="Branch Details"
+                visible={modalVisible2}
+                onCancel={closeModal2}
+                footer={null}
+                width={900}
+                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+              >
+                {renderModalContent2()}
+              </Modal>
+              <Modal
+                className="dashboard_wrapper container"
+                title="Branch Details"
+                visible={modalVisibleAFR}
+                onCancel={closeModalAFR}
+                footer={null}
+                width={900}
+                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+              >
+                {renderModalContentAFR()}
+              </Modal>
+              <Modal
+                className="dashboard_wrapper container"
+                title="Branch Details"
+                visible={modalVisibleTBA}
+                onCancel={closeModalTBA}
+                footer={null}
+                width={900}
+                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+              >
+                {renderModalContentTBA()}
               </Modal>
 
             </div>

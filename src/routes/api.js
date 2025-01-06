@@ -1272,7 +1272,7 @@ export const RegionWiseDataGetting = async (region, fieldName) => {
 };
 
 
-export const DashboardBranchGetting = async (state, fieldName, license) => {
+export const DashboardBranchGetting = async (state, fieldName, license,region) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -1286,6 +1286,7 @@ export const DashboardBranchGetting = async (state, fieldName, license) => {
         state,
         fieldName,
         license,
+        region,
     };
 
     try {
