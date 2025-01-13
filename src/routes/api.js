@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { getToken } from '../utils/localStorage'
-// const URL = 'http://localhost:8000/api/admin';
+import {getToken} from '../utils/localStorage'
+const URL = 'https://backend.matrixhrtech.com/api/admin'; 
 
-const URL = 'https://backend.matrixhrtech.com/api/admin';
+// const URL = 'https://matrixhrtech.com/api/admin'; 
+// const URL = 'https://matrixhrtech.com/api/admin';
 
 axios.defaults.withCredentials = true;
 ///api of users starts
@@ -1272,7 +1273,7 @@ export const RegionWiseDataGetting = async (region, fieldName) => {
 };
 
 
-export const DashboardBranchGetting = async (state, fieldName, license,region) => {
+export const DashboardBranchGetting = async (state, fieldName, license, region) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -1298,4 +1299,72 @@ export const DashboardBranchGetting = async (state, fieldName, license,region) =
         throw error; // Ensure any errors are thrown so they can be caught in the action
     }
 };
+export const AllBranchesGetting = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/getAllBranches`, config); // Removed `postBody`
+};
+export const BranchesGettingByCompany = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/gettingBranchesByCompany`, data, config); // Removed `postBody`
+};
+export const NoticeCreate = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data',
 
+        },
+    };
+    return await axios.post(`${URL}/createNotice`, data, config);
+};
+
+export const TableNoticesGetting = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/getTableNotice`, config);
+};
+
+export const NoticeGetById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/getNoticeById/${id}`, config); // Removed `postBody`
+};
+
+export const NoticeUpdateById = async (data, id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+    };
+    return await axios.put(`${URL}/updateNoticeById/${id}`, data, config);
+};
+
+export const NoticeDeleteById = async (id) => {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.delete(`${URL}/deleteNoticeById/${id}`, config);
+};

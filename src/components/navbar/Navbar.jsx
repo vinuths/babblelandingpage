@@ -262,6 +262,12 @@ const Navbar = () => {
       // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
       onClick: (e) => onChecklist(e)
     },
+    {
+      text: "Notice/Inspection",
+      icon: <BusinessIcon onClick={(e) => onNotice(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onNotice(e),
+    },
     // {
     //     text: "Audit",
     //     icon: <ManageAccountsIcon onClick={(e) => onAudit(e)}/>,
@@ -316,6 +322,10 @@ const Navbar = () => {
   };
   const onElibrary = (e) => {
     navigate("/elibrary");
+    // handleDrawerClose();
+  };
+  const onNotice = (e) => {
+    navigate("/notice");
     // handleDrawerClose();
   };
   const onNotification = (e) => {

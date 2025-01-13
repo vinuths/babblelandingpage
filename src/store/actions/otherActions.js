@@ -109,8 +109,16 @@ import {
   FetchRegCount,
   FetchCompliedCount,
   CompanyBranchesGetting,
+  AllBranchesGetting,
   RegionWiseDataGetting,
   DashboardBranchGetting,
+  BranchesGettingByCompany,
+  NoticeCreate,
+  TableNoticesGetting,
+  NoticeGetById,
+  NoticeUpdateById,
+  NoticeDeleteById,
+
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as 
 } from "../../routes/api";
@@ -493,6 +501,27 @@ import {
   DASH_STATE_WISE_DATA_GET_REQUEST,
   DASH_STATE_WISE_DATA_GET_SUCCESS,
   DASH_STATE_WISE_DATA_GET_FAIL,
+  COMPANY_BRANCHES_BY_CREATE_REQUEST,
+  COMPANY_BRANCHES_BY_CREATE_SUCCESS,
+  COMPANY_BRANCHES_BY_CREATE_FAIL,
+  BRANCHES_GET_REQUEST,
+  BRANCHES_GET_SUCCESS,
+  BRANCHES_GET_FAIL,
+  NOTICE_ADD_REQUEST,
+  NOTICE_ADD_SUCCESS,
+  NOTICE_ADD_FAILURE,
+  NOTICES_TABLE_GET_REQUEST,
+  NOTICES_TABLE_GET_SUCCESS,
+  NOTICES_TABLE_GET_FAIL,
+  NOTICES_EDIT_REQUEST,
+  NOTICES_EDIT_SUCCESS,
+  NOTICES_EDIT_FAILURE,
+  NOTICES_GET_BY_ID_REQUEST,
+  NOTICES_GET_BY_ID_SUCCESS,
+  NOTICES_GET_BY_ID_FAILURE,
+  NOTICES_DELETE_REQUEST,
+  NOTICES_DELETE_SUCCESS,
+  NOTICES_DELETE_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -5875,3 +5904,300 @@ export const DashboardBranchGet = (state, fieldName, license, region) => async (
 };
 
 
+
+
+
+export const BranchesGetByCompany =
+  (postbody) => async (dispatch) => {
+    dispatch({ type: COMPANY_BRANCHES_BY_CREATE_REQUEST });
+
+    await BranchesGettingByCompany(postbody)
+      .then((response) => {
+        dispatch({
+          type: COMPANY_BRANCHES_BY_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        if (response.status === 200) {
+          // toast.success("Company Ineraction License is created Successfully!", {
+          //   position: "bottom-right",
+          //   hideProgressBar: false,
+          //   progress: undefined,
+          // });
+        } else {
+          dispatch({
+            type: COMPANY_BRANCHES_BY_CREATE_FAIL,
+            payload: response.data,
+          });
+          toast.error(response.data, {
+            position: "bottom-right",
+            hideProgressBar: false,
+            progress: undefined,
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: COMPANY_BRANCHES_BY_CREATE_FAIL,
+          payload: error.message,
+        });
+
+        toast.error(error.message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      });
+  };
+
+
+export const CreatingNotice = (data) => async (dispatch) => {
+  dispatch({ type: NOTICE_ADD_REQUEST });
+
+  await NoticeCreate(data)
+    .then((response) => {
+      dispatch({
+        type: NOTICE_ADD_SUCCESS,
+        payload: response.data,
+      });
+
+      if (response.status === 201) {
+        toast.success("Notice Created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: NOTICE_ADD_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data.message || "Failed to add branch", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      let errorMessage = error.message;
+
+      // Handle duplicate key error from MongoDB
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message.includes("E11000 duplicate key error")
+      ) {
+        errorMessage = "Branch with the same name already exists.";
+      }
+
+      dispatch({
+        type: NOTICE_ADD_FAILURE,
+        payload: errorMessage,
+      });
+
+      toast.error(errorMessage, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const TableNoticesGet = () => async (dispatch) => {
+  dispatch({ type: NOTICES_TABLE_GET_REQUEST });
+  await TableNoticesGetting()
+    .then((response) => {
+      dispatch({ type: NOTICES_TABLE_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: NOTICES_TABLE_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: NOTICES_TABLE_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const NoticeNewGetById = (id) => async (dispatch) => {
+  dispatch({ type: NOTICES_GET_BY_ID_REQUEST });
+  // console.log("id",id);
+
+  await NoticeGetById(id)
+    .then((response) => {
+      dispatch({ type: NOTICES_GET_BY_ID_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: NOTICES_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: NOTICES_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const NoticesUpdateById = (postbody, id) => async (dispatch) => {
+  dispatch({ type: NOTICES_EDIT_REQUEST });
+
+  try {
+    const response = await NoticeUpdateById(postbody, id);
+
+    dispatch({
+      type: NOTICES_EDIT_SUCCESS,
+      payload: response.data,
+    });
+
+    if (response.status === 200) {
+      toast.success("Notice is Updated Successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({
+        type: NOTICES_EDIT_FAILURE,
+        payload: response.data.message || "Failed to update the branch.",
+      });
+
+      toast.error(response.data.message || "Failed to update the branch.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: NOTICES_EDIT_FAILURE,
+      payload: error.message,
+    });
+
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const NoticesDeleteById = (id) => async (dispatch) => {
+  dispatch({ type: NOTICES_DELETE_REQUEST });
+
+  try {
+    const response = await NoticeDeleteById(id);
+
+    dispatch({
+      type: NOTICES_DELETE_SUCCESS,
+      payload: response.data,
+    });
+
+    if (response.status === 201) {
+      toast.success("Notice is Deleted Successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({
+        type: NOTICES_DELETE_FAILURE,
+        payload: response.data.message || "Failed to update the branch.",
+      });
+
+      toast.error(response.data.message || "Failed to update the branch.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: NOTICES_DELETE_FAILURE,
+      payload: error.message,
+    });
+
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const AllbranchesGet = () => async (dispatch) => {
+  dispatch({ type: BRANCHES_GET_REQUEST });
+  await AllBranchesGetting()
+    .then((response) => {
+      dispatch({ type: BRANCHES_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: BRANCHES_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: BRANCHES_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};

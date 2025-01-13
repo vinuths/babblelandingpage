@@ -146,9 +146,9 @@ import {
         COMPLIANCE_SUCCESS_GET_ALL_FILTER,
         COMPLIANCE_REQUEST_GET_ALL_FILTER,
         COMPLIANCE_GET_FAIL_ALL_FILTER,
-        BRANCH_CREATE_REQUEST,
-        BRANCH_CREATE_SUCCESS,
-        BRANCH_CREATE_FAIL,
+        BRANCHES_GET_REQUEST,
+        BRANCHES_GET_SUCCESS,
+        BRANCHES_GET_FAIL,
         COMPANY_CREATE_REQUEST,
         COMPANY_CREATE_SUCCESS,
         COMPANY_CREATE_FAIL,
@@ -371,6 +371,24 @@ import {
         DASH_STATE_WISE_DATA_GET_REQUEST,
         DASH_STATE_WISE_DATA_GET_SUCCESS,
         DASH_STATE_WISE_DATA_GET_FAIL,
+        COMPANY_BRANCHES_BY_CREATE_REQUEST,
+        COMPANY_BRANCHES_BY_CREATE_SUCCESS,
+        COMPANY_BRANCHES_BY_CREATE_FAIL,
+        NOTICE_ADD_REQUEST,
+        NOTICE_ADD_SUCCESS,
+        NOTICE_ADD_FAILURE,
+        NOTICES_TABLE_GET_REQUEST,
+        NOTICES_TABLE_GET_SUCCESS,
+        NOTICES_TABLE_GET_FAIL,
+        NOTICES_EDIT_REQUEST,
+        NOTICES_EDIT_SUCCESS,
+        NOTICES_EDIT_FAILURE,
+        NOTICES_GET_BY_ID_REQUEST,
+        NOTICES_GET_BY_ID_SUCCESS,
+        NOTICES_GET_BY_ID_FAILURE,
+        NOTICES_DELETE_REQUEST,
+        NOTICES_DELETE_SUCCESS,
+        NOTICES_DELETE_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
         switch (action.type) {
@@ -1344,39 +1362,6 @@ export const notificationReducer = (state = {}, action) => {
         }
 }
 
-
-
-const initialState33 = {
-        auditData1: [], // Ensure this is initialized as an array
-        loadingcompstatus: false,
-        error: null
-};
-
-//      export const auditReducer111 = (state = initialState33, action) => {
-//         switch (action.type) {
-//           case AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL:
-//             return {
-//               ...state,
-//               loadingcompstatus: true
-//             };
-//           case AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL:
-//             return {
-//               ...state,
-//               auditData1: Array.isArray(action.payload) ? action.payload : [], // Ensure payload is an array
-//               loadingcompstatus: false
-//             };
-//           case AUDIT_COMPILED_STATUS_FAIL_All_DETAIL:
-//             return {
-//               ...state,
-//               error: action.payload,
-//               loadingcompstatus: false
-//             };
-//           default:
-//             return state;
-//         }
-//       };
-
-//       export default auditReducer;
 export const auditReducer111 = (state = initialState, action) => {
         switch (action.type) {
                 case AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL:
@@ -1485,29 +1470,6 @@ export const auditCompCountReducer = (state = initialStateComp, action) => {
         }
 };
 
-
-
-
-
-
-
-const initialStateCompanyBranch = {
-        loadingBranch: false,
-        CompanyBranchesInfo: [],
-};
-
-export const CompanyBranchesGetReducer = (state = initialStateCompanyBranch, action) => {
-        switch (action.type) {
-                case COMPANY_BRANCHES_GET_REQUEST:
-                        return { ...state, loadingBranch: true };
-                case COMPANY_BRANCHES_GET_SUCCESS:
-                        return { loadingBranch: false, CompanyBranchesInfo: action.payload };
-                case COMPANY_BRANCHES_GET_FAIL:
-                        return { loadingBranch: false, error: action.payload };
-                default:
-                        return state;
-        }
-};
 const initialRegionWiseData = {
         loadingRegionWiseData: false,
         error: null, // Added error property in the initial state
@@ -1562,3 +1524,118 @@ export const dashStateWiseDataReducer = (state = initialDashStateWiseData, actio
                         return state;
         }
 };
+
+const initialStateCompanyBranch = {
+        loadingBranch: false,
+        CompanyBranchesInfo: [],
+};
+
+export const CompanyBranchesGetReducer = (state = initialStateCompanyBranch, action) => {
+        switch (action.type) {
+                case COMPANY_BRANCHES_GET_REQUEST:
+                        return { ...state, loadingBranch: true };
+                case COMPANY_BRANCHES_GET_SUCCESS:
+                        return { loadingBranch: false, CompanyBranchesInfo: action.payload };
+                case COMPANY_BRANCHES_GET_FAIL:
+                        return { loadingBranch: false, error: action.payload };
+                default:
+                        return state;
+        }
+};
+
+const initialStateBranch = {
+        loadingBranch: false,
+        allBranchesInfo: [],
+};
+
+export const AllbranchesGetReducer = (state = initialStateBranch, action) => {
+        switch (action.type) {
+                case BRANCHES_GET_REQUEST:
+                        return { ...state, loadingBranch: true };
+                case BRANCHES_GET_SUCCESS:
+                        return { loadingBranch: false, allBranchesInfo: action.payload };
+                case BRANCHES_GET_FAIL:
+                        return { loadingBranch: false, error: action.payload };
+                default:
+                        return state;
+        }
+};
+
+const initialStateBranchByCompany = {
+        loadingBranchByC: false,
+        BranchesByCompanyInfo: [],
+};
+
+export const BranchesByCompanyGetReducer = (state = initialStateBranchByCompany, action) => {
+        switch (action.type) {
+                case COMPANY_BRANCHES_BY_CREATE_REQUEST: return { loadingBranchByC: true };
+                case COMPANY_BRANCHES_BY_CREATE_SUCCESS: return { loadingBranchByC: false, BranchesByCompanyInfo: action.payload };
+                case COMPANY_BRANCHES_BY_CREATE_FAIL: return { loadingBranchByC: false, error1: action.payload };
+                default: return state;
+        }
+}
+
+
+export const NoticeAddReducer = (state = {}, action) => {
+        switch (action.type) {
+                case NOTICE_ADD_REQUEST: return { loadingNotice: true };
+                case NOTICE_ADD_SUCCESS: return { loadingNotice: false, noticeAddInfo: action.payload };
+                case NOTICE_ADD_FAILURE: return { loadingNotice: false, error: action.payload };
+                default: return state;
+        }
+}
+
+// const initialNoticeState = {
+//         tableNoticesInfo: []  // or {} depending on what you expect
+//       };
+// export const TableNoticesGetReducer = (state = {initialNoticeState}, action) => {
+//         switch (action.type) {
+//                 case NOTICES_TABLE_GET_REQUEST: return { ...state, loadingNoticesTable: true };
+//                 case NOTICES_TABLE_GET_SUCCESS: return { loadingNoticesTable: false, tableNoticesInfo: action.payload };
+//                 case NOTICES_TABLE_GET_FAIL: return { loadingNoticesTable: false, error: action.payload };
+//                 default:
+//                         return state;
+//         }
+// };
+
+
+
+export const TableNoticesGetReducer = (state = { tableNoticesInfo: [] }, action) => {
+        switch (action.type) {
+                case NOTICES_TABLE_GET_REQUEST:
+                        return { ...state, loadingNoticesTable: true };
+                case NOTICES_TABLE_GET_SUCCESS:
+                        return { ...state, loadingNoticesTable: false, tableNoticesInfo: action.payload };
+                case NOTICES_TABLE_GET_FAIL:
+                        return { ...state, loadingNoticesTable: false, error: action.payload };
+                default:
+                        return state;
+        }
+};
+
+export const NoticesGetByIDReducer = (state = {}, action) => {
+        switch (action.type) {
+                case NOTICES_GET_BY_ID_REQUEST: return { loadingNotices: true };
+                case NOTICES_GET_BY_ID_SUCCESS: return { loadingNotices: false, noticeByIDInfo: action.payload };
+                case NOTICES_GET_BY_ID_FAILURE: return { loadingNotices: false, error: action.payload };
+                default: return state;
+        }
+};
+export const NoticesUpdateByIDReducer = (state = {}, action) => {
+        switch (action.type) {
+                case NOTICES_EDIT_REQUEST: return { loadingUpNotices: true };
+                case NOTICES_EDIT_SUCCESS: return { loadingUpNotices: false, noticeUpdateByIDInfo: action.payload };
+                case NOTICES_EDIT_FAILURE: return { loadingUpNotices: false, error: action.payload };
+                default: return state;
+        }
+};
+
+export const NoticesDeleteByIDReducer = (state = {}, action) => {
+        switch (action.type) {
+                case NOTICES_DELETE_REQUEST: return { loadingDeleteNotice: true };
+                case NOTICES_DELETE_SUCCESS: return { loadingDeleteNotice: false, noticeDeleteInfo: action.payload };
+                case NOTICES_DELETE_FAILURE: return { loadingDeleteNotice: false, error: action.payload };
+                default: return state;
+        }
+}
+

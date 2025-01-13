@@ -127,8 +127,15 @@ import {
         auditReducerRegCount,
         auditCompCountReducer,
         CompanyBranchesGetReducer,
+        AllbranchesGetReducer,
         regionWiseDataReducer,
-        dashStateWiseDataReducer
+        dashStateWiseDataReducer,
+        BranchesByCompanyGetReducer,
+        NoticeAddReducer,
+        TableNoticesGetReducer,
+        NoticesGetByIDReducer,
+        NoticesUpdateByIDReducer,
+        NoticesDeleteByIDReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -252,9 +259,17 @@ const reducer = combineReducers({
         regCountReducer:auditReducerRegCount,
         ChecklistInfoCalender: auditorChecklistCalenderAuditReducer,
         CompCountReducer:auditCompCountReducer,
+        AllbranchesGetReducer: AllbranchesGetReducer,
         CompanyBranchesGetRed:CompanyBranchesGetReducer,
         RegionWiseDataGetRed:regionWiseDataReducer,
         DashStateWiseDataRed:dashStateWiseDataReducer,
+        BranchesByCompanyGetRed: BranchesByCompanyGetReducer,
+        NoticeAddRed: NoticeAddReducer,
+        TableNoticesGetRed: TableNoticesGetReducer,
+        NoticesGetByIDRed: NoticesGetByIDReducer,
+        NoticesUpdateByIDRed: NoticesUpdateByIDReducer,
+        NoticesDeleteByIDRed: NoticesDeleteByIDReducer,
+
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) :"";

@@ -26,6 +26,7 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-tabs/style/react-tabs.css';
+import Notice from "./pages/Notice/Notice";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route path="/dashboard" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
               {/* <Route path="/replicate" element={<Replicate />} />  */}
+              <Route path="/notice" element={<PrivateRoutes><Notice /></PrivateRoutes>} />
               
               {/* <Route path="/dashbordTables" element={<PrivateRoutes><DashbordTables /></PrivateRoutes>} /> */}
               <Route path="/logout" element={<PrivateRoutes><Logout /></PrivateRoutes>} />
