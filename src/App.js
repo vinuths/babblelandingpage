@@ -44,7 +44,7 @@ function App() {
               <Route path="/compliances" element={<PrivateRoutes><Compliance /></PrivateRoutes>} />
               <Route path="/audit" element={<PrivateRoutes><Audit /></PrivateRoutes>} />
               <Route path="/checklist" element={<PrivateRoutes><Checklist /></PrivateRoutes>} />
-              <Route path="/company" element={<PrivateRoutes><Companies /></PrivateRoutes>} />
+              <Route path="/companies" element={<PrivateRoutes><Companies /></PrivateRoutes>} />
               <Route path="/notification" element={<PrivateRoutes><Notifications /></PrivateRoutes>} />
               <Route path="/elibrary" element={<PrivateRoutes><ELibrary /></PrivateRoutes>} />
               {/* <Route path="/companies" element={<PrivateRoutes><ELibrary /></PrivateRoutes>} /> */}

@@ -315,7 +315,8 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                         <td colSpan="3">
                             <>
                                 <label>Select Branch</label>
-                                <select
+                                <input type="text" name="branch" class="form-control" value={formData.branch?.name || ''} disabled />
+                                {/* <select
                                     className="form-control"
                                     value={formData.branch?._id || ''}
                                     disabled // Entire dropdown is disabled
@@ -327,7 +328,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                                             {branch.name}
                                         </option>
                                     ))}
-                                </select>
+                                </select> */}
                             </>
                         </td>
 

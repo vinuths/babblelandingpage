@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 // import { Link, NavLink, useNavigate } from 'react-router-dom';
 // import { FormLabel, styled } from '@mui/material';
 // import Highlighter from 'react-highlight-words';
@@ -7,14 +7,16 @@ import React, { useState, useEffect } from 'react';
 import { usersGet, companyTableGet, auditorGet, auditCompiledCountAll, CompanyBranchesGet, auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
 import { useDispatch, useSelector } from 'react-redux';
 import DashboardTableBranchCount from "./DashboardTableBranchCount";
-import DashboardTableAudit from "./DashboardTableAudit";
+import NoticeTableCount from "./NoticeTableCount";
+// import DashboardTableAudit from "./DashboardTableAudit";
 // import DashboardTableCompany from "./DashboardTableCompany";
 // import DashboardTableNotification from "./DashboardTableNotification";
 // import { BarChart1, Bar, XAxis, YAxis,LabelList, Tooltip, CartesianGrid, Legend } from 'recharts';
 import ComplianceBarChart from './ComplianceBarChart';
-import BarChart1 from './BarChart';
+// import BarChart1 from './BarChart';
 import CalendarComponent from './CalendarComponent';
-import BarChartReg from './BarchartReg';
+// import BarChartReg from './BarchartReg';
+// import ExcelDownload from './ExcelDownload';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -68,39 +70,34 @@ const Dashboard = () => {
         <React.Fragment>
             <div className='dashboard_wrapper' style={{ height: "200px" }}>
                 <div className="container" >
-                    {/* <ComplianceBarChart /> */}
                     <div className="row">
-
                         <div className="col-sm-12">
-
-                            {/* <CalendarComponent branchesCompany={CompanyBranchesInfo} /> */}
-
-                            {/* <h4>Registrations/Licenses/Permissions</h4> */}
                             <DashboardTableBranchCount branchesCompany={CompanyBranchesInfo} />
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div className="row">
-                        <div className="col-sm-4" >
-
-                            <BarChart1 branchesCompany={CompanyBranchesInfo} />
-
+                        <div className="col-sm-6" >
                         </div>
-                        {/* <div className="col-sm-3"><BarChartReg branchesCompany={CompanyBranchesInfo} /></div> */}
-                        <div className="col-sm-4">
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-12">
                             <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
 
                         </div>
-                        <div className="col-sm-4">
-                            <CalendarComponent branchesCompany={CompanyBranchesInfo} />
-
-                        </div>
-
-
                     </div>
-
-                    {/* <DashboardTableAudit /> */}
-
+                    <br />
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <NoticeTableCount branchesCompany={CompanyBranchesInfo} />
+                        </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <CalendarComponent branchesCompany={CompanyBranchesInfo} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </React.Fragment>

@@ -60,6 +60,11 @@ body{
   margin-left: 200px;
   /* padding-left: 17rem; */
 }
+.dashboard_wrapper11 {
+  margin-top: 50px !important;
+  margin-left: 250px !important;
+  /* padding-left: 17rem; */
+}
 .user_dashboard_box.active{
   background: linear-gradient(107deg, #00387A 0%, #64ABFF 100%);
 }

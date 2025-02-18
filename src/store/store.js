@@ -136,6 +136,11 @@ import {
         NoticesGetByIDReducer,
         NoticesUpdateByIDReducer,
         NoticesDeleteByIDReducer,
+        branchByStateGetReducer,
+        noticeWiseDataReducer,
+        dashStateWiseNoticeReducer,
+        noticeDownloadReducer,
+        auditCompCountDataReducer
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -269,7 +274,11 @@ const reducer = combineReducers({
         NoticesGetByIDRed: NoticesGetByIDReducer,
         NoticesUpdateByIDRed: NoticesUpdateByIDReducer,
         NoticesDeleteByIDRed: NoticesDeleteByIDReducer,
-
+        getBranchByState: branchByStateGetReducer,
+        noticeWiseDataRed: noticeWiseDataReducer,
+        dashStateWiseNoticeRed: dashStateWiseNoticeReducer,
+        noticeDownloadRed:noticeDownloadReducer,
+        auditCompCountDataRed:auditCompCountDataReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) :"";

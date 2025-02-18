@@ -6,6 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import './Region.css';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/layout/Loading';
 
 const DashboardTableBranchCount = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const DashboardTableBranchCount = () => {
   const navigate = useNavigate();
 
   const [selectedRegion, setSelectedRegion] = useState('AllRegions');
-  const [selectedFieldName, setSelectedFieldName] = useState('isTradeLicense');
+  const [selectedFieldName, setSelectedFieldName] = useState('isNightShiftPermission');
 
   const [selectedState, setSelectedState] = useState('Andhra Pradesh');
   const [selectedLicense, setSelectedLicense] = useState('isTradeLicense');
@@ -40,32 +41,6 @@ const DashboardTableBranchCount = () => {
   const { loadingRegionWiseData, RegionWiseDataInfo, error } = RegionWiseDataGetRed;
   const DashStateWiseDataRed = useSelector((state) => state.DashStateWiseDataRed);
   const { loadingDashStateWiseData, DashStateWiseDataInfo, errorDBB } = DashStateWiseDataRed;
-  console.log("DashStateWiseDataInfo", DashStateWiseDataRed);
-
-  // useEffect(() => {
-  //   dispatch(RegionWiseDataGet({
-  //     selectedRegion: 'SouthRegion',
-  //     selectedFieldName: 'isTradeLicense',
-  //   }));
-  // }, [dispatch]);
-
-
-  // useEffect(() => {
-  //   if (selectedState && selectedFieldName1 && selectedLicense) {
-  //     console.log("Dispatching DashboardBranchGet with:");
-  //     console.log("Selected State:", selectedState);
-  //     console.log("Selected Field Name:", selectedFieldName1);
-  //     console.log("Selected License:", selectedLicense);
-
-  //     dispatch(DashboardBranchGet(selectedState, selectedFieldName1, selectedLicense));
-  //   } else {
-  //     console.log("One or more dependencies are missing:");
-  //     console.log("Selected State:", selectedState);
-  //     console.log("Selected Field Name:", selectedFieldName1);
-  //     console.log("Selected License:", selectedLicense);
-  //   }
-  // }, [dispatch, selectedState, selectedFieldName1, selectedLicense]);
-
 
   useEffect(() => {
     if (selectedRegion && selectedFieldName) {
@@ -73,58 +48,12 @@ const DashboardTableBranchCount = () => {
     }
   }, [dispatch, selectedRegion, selectedFieldName]);
 
-  // Mapping regionKey to their full region names
   const regionNames = {
     SouthRegion: "South Region",
     NorthRegion: "North Region",
     EastRegion: "East Region",
     WestRegion: "West Region",
-    // Add more mappings as needed
   };
-
-  //   useEffect(() => {
-  //     let allRegionArr = [];
-
-  //     if (typeof (RegionWiseDataInfo) !== 'undefined') {
-  //         RegionWiseDataInfo.map((regionItem, index) => {
-  //             const regionData = {
-  //                 key: index + 1,
-  //                 region: regionItem.region,
-  //                 branches_total_count: regionItem.totals.branches_total_count,
-  //                 branches_not_applicable: regionItem.totals.branches_not_applicable,
-  //                 branches_license_not_in_scope: regionItem.totals.branches_license_not_in_scope,
-  //                 branches_applicable: regionItem.totals.branches_applicable,
-  //                 branches_license_obtained: regionItem.totals.branches_license_obtained,
-  //                 branches_new_license_applied: regionItem.totals.branches_new_license_applied,
-  //                 branches_license_applied_for_renewal: regionItem.totals.branches_license_applied_for_renewal,
-  //                 branches_license_to_be_applied: regionItem.totals.branches_license_to_be_applied,
-  //                 statewiseData: regionItem.statewiseData.map((stateItem, stateIndex) => ({
-  //                     key: `state-${index + 1}-${stateIndex + 1}`,
-  //                     state: stateItem.state,
-  //                     total_count: stateItem.total_count,
-  //                     not_applicable: stateItem.not_applicable,
-  //                     license_not_in_scope: stateItem.license_not_in_scope,
-  //                     applicable: stateItem.applicable,
-  //                     license_obtained: stateItem.license_obtained,
-  //                     new_license_applied: stateItem.new_license_applied,
-  //                     license_applied_for_renewal: stateItem.license_applied_for_renewal,
-  //                     license_to_be_applied: stateItem.license_to_be_applied,
-  //                     per_completed: stateItem.per_completed,
-  //                     remarks: stateItem.remarks,
-  //                 }))
-  //             };
-
-  //             // Add the region data to the allRegionArr
-  //             allRegionArr.push(regionData);
-  //         });
-  //     }
-
-  //     // Set the dataSource after processing the region and statewise data
-  //     setDataSource(allRegionArr);
-  // }, [RegionWiseDataInfo]);
-  ; // Ensure this dependency is correct
-
-
 
   useEffect(() => {
     let allRegionArr = [];
@@ -286,7 +215,6 @@ const DashboardTableBranchCount = () => {
 
 
   const renderModalContentTBA = () => {
-    // Default columns for the table
     let columns = [
       {
         title: 'Branch Name',
@@ -299,18 +227,14 @@ const DashboardTableBranchCount = () => {
         dataIndex: ['branchstate', 'name'], // Access nested object property
         key: 'branchstate',
         ...getColumnSearchProps("branchstate"),
-
       },
       {
         title: 'Branch District',
         dataIndex: 'branchdistrict',
         key: 'branchdistrict',
         ...getColumnSearchProps("branchdistrict"),
-
       },
     ];
-
-    
 
     if (selectedFieldName === 'isTradeLicense') {
       columns.push({
@@ -350,8 +274,12 @@ const DashboardTableBranchCount = () => {
       });
     }
 
-   
-    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    // Show loading spinner if data is being fetched
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
+
+    // Show "No data available" if no data is present after loading
     if (!fetchedData || fetchedData.length === 0) {
       return <p>No data available.</p>;
     }
@@ -368,6 +296,7 @@ const DashboardTableBranchCount = () => {
       />
     );
   };
+
   const renderModalContentAFR = () => {
     // Default columns for the table
     let columns = [
@@ -530,8 +459,10 @@ const DashboardTableBranchCount = () => {
         sortDirections: ["descend", "ascend"],
       });
     }
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
 
-   
     // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
     if (!fetchedData || fetchedData.length === 0) {
       return <p>No data available.</p>;
@@ -631,7 +562,9 @@ const DashboardTableBranchCount = () => {
         ),
       });
     }
-
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
 
     // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
     if (!fetchedData || fetchedData.length === 0) {
@@ -663,7 +596,9 @@ const DashboardTableBranchCount = () => {
       },
     ];
 
-
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
 
     // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
     if (!fetchedData || fetchedData.length === 0) {
@@ -858,6 +793,10 @@ const DashboardTableBranchCount = () => {
       ];
     }
 
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
+
     // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
     if (!fetchedData || fetchedData.length === 0) {
       return <p>No data available.</p>;
@@ -903,7 +842,7 @@ const DashboardTableBranchCount = () => {
   };
   const handleCellClickAFR = (record, column) => {
     console.log("record", record);
-    const { state, license, region} = record;
+    const { state, license, region } = record;
 
     const payload = {
       state: state,
@@ -963,7 +902,7 @@ const DashboardTableBranchCount = () => {
     // const dispatch = useDispatch();
 
     // Dispatch the action to fetch data and then open modal with the fetched data
-    dispatch(DashboardBranchGet(state, column, license,region))
+    dispatch(DashboardBranchGet(state, column, license, region))
       .then((fetchedData) => {
         // openModal(fetchedData, payload); // Pass the fetched data to openModal
         openModal1(fetchedData, payload); // Pass the fetched data to openModal
@@ -981,7 +920,7 @@ const DashboardTableBranchCount = () => {
   };
   const handleCellClick = (record, column) => {
     console.log("record", record);
-    const { state, license ,region } = record;
+    const { state, license, region } = record;
 
     const payload = {
       state: state,
@@ -1231,122 +1170,117 @@ const DashboardTableBranchCount = () => {
 
         {/* Data Table Section */}
         <div className="data-section">
-          {loadingRegionWiseData ? (
-            <div className="loading-indicator">Loading...</div>
-          ) : error ? (
-            <div className="error-message">Error: {error}</div>
-          ) : (
-            <div className="table-wrapper">
-              <Table
-                columns={columns}
-                // columns={columns.map(col => ({
-                //   ...col,
-                //   onCell: (record) => ({
-                //     onClick: () => handleCellClick(record, col.dataIndex), // Handle cell click
-                //   }),
-                // }))}
-                dataSource={dataSource}
-                pagination={false}
-                position={["center"]}
-                scroll={{ y: 500, x: 1000 }}
-                className="data-table"
-                summary={() => {
-                  const totalApplicable = dataSource.reduce((sum, row) => sum + row.applicable, 0); //
-                  const totalCount = dataSource.reduce((sum, row) => sum + row.total_count, 0);
-                  const totalObtained = dataSource.reduce((sum, row) => sum + row.license_obtained, 0); //
-                  const totalRenewal = dataSource.reduce((sum, row) => sum + row.license_applied_for_renewal, 0); // 
-                  const totalNotInScope = dataSource.reduce((sum, row) => sum + row.license_not_in_scope, 0); //
-                  const totalToBeApplied = dataSource.reduce((sum, row) => sum + row.license_to_be_applied, 0);    // 
-                  const totalNewApplied = dataSource.reduce((sum, row) => sum + row.new_license_applied, 0);  //
-                  const totalNotApplicable = dataSource.reduce((sum, row) => sum + row.not_applicable, 0);
-                  const licenseDueForRenewal = dataSource.reduce((sum, row) => sum + row.license_due_for_renewal, 0);
-                  const licenseExperied = dataSource.reduce((sum, row) => sum + row.license_experied, 0);
-                  const totalPercentageCompleted = dataSource.reduce(
-                    (sum, row) => sum + parseFloat(row.per_completed || 0),
-                    0
-                  );
-                  const averagePerCompleted = (totalPercentageCompleted / dataSource.length || 0).toFixed(2);
+          {loadingRegionWiseData && <Loading />}
+          <div className="table-wrapper">
+            <Table
+              columns={columns}
+              // columns={columns.map(col => ({
+              //   ...col,
+              //   onCell: (record) => ({
+              //     onClick: () => handleCellClick(record, col.dataIndex), // Handle cell click
+              //   }),
+              // }))}
+              dataSource={dataSource}
+              pagination={false}
+              position={["center"]}
+              scroll={{ y: 500, x: 1000 }}
+              className="data-table"
+              summary={() => {
+                const totalApplicable = dataSource.reduce((sum, row) => sum + row.applicable, 0); //
+                const totalCount = dataSource.reduce((sum, row) => sum + row.total_count, 0);
+                const totalObtained = dataSource.reduce((sum, row) => sum + row.license_obtained, 0); //
+                const totalRenewal = dataSource.reduce((sum, row) => sum + row.license_applied_for_renewal, 0); // 
+                const totalNotInScope = dataSource.reduce((sum, row) => sum + row.license_not_in_scope, 0); //
+                const totalToBeApplied = dataSource.reduce((sum, row) => sum + row.license_to_be_applied, 0);    // 
+                const totalNewApplied = dataSource.reduce((sum, row) => sum + row.new_license_applied, 0);  //
+                const totalNotApplicable = dataSource.reduce((sum, row) => sum + row.not_applicable, 0);
+                const licenseDueForRenewal = dataSource.reduce((sum, row) => sum + row.license_due_for_renewal, 0);
+                const licenseExperied = dataSource.reduce((sum, row) => sum + row.license_experied, 0);
+                const totalPercentageCompleted = dataSource.reduce(
+                  (sum, row) => sum + parseFloat(row.per_completed || 0),
+                  0
+                );
+                const averagePerCompleted = ((totalObtained / totalApplicable) *100  || 0).toFixed(2);
 
-                  return (
-                    <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: 'lightGrey', textAlign: 'center', fontSize: 'small' }}>
-                      <Table.Summary.Cell index={0} >Total</Table.Summary.Cell>
-                      <Table.Summary.Cell index={1} >{totalCount}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={7} >{totalNotApplicable}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={4} >{totalNotInScope}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={1} >{totalApplicable}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={2} >{totalObtained}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={6} >{totalNewApplied}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={3} >{totalRenewal}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={5} >{totalToBeApplied}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={8} >{licenseDueForRenewal}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={9} >{licenseExperied}</Table.Summary.Cell>
-                      <Table.Summary.Cell index={10}>
-                        {averagePerCompleted + '%'}
-                      </Table.Summary.Cell>
+                return (
+                  <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: 'lightGrey', textAlign: 'center', fontSize: 'small' }}>
+                    <Table.Summary.Cell className='centered-cell' index={0} >Total</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={1} >{totalCount}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={7} >{totalNotApplicable}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={4} >{totalNotInScope}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={1} >{totalApplicable}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={2} >{totalObtained}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={6} >{totalNewApplied}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={3} >{totalRenewal}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={5} >{totalToBeApplied}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={8} >{licenseDueForRenewal}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={9} >{licenseExperied}</Table.Summary.Cell>
+                    <Table.Summary.Cell className='centered-cell' index={10}>
+                      {averagePerCompleted + '%'}
+                    </Table.Summary.Cell>
 
 
 
-                    </Table.Summary.Row>
-                  );
-                }}
-              />
-              <Modal
-                className='dashboard_wrapper container'
-                title="Branch Details"
-                visible={modalVisible}
-                onCancel={closeModal}
-                footer={null}
-                width={900}
-              >
-                {renderModalContent()}
-              </Modal>
-              <Modal
-                className="dashboard_wrapper container"
-                title="Branch Details"
-                visible={modalVisible1}
-                onCancel={closeModal1}
-                footer={null}
-                width={400}
-                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
-              >
-                {renderModalContent1()}
-              </Modal>
-              <Modal
-                className="dashboard_wrapper container"
-                title="Branch Details"
-                visible={modalVisible2}
-                onCancel={closeModal2}
-                footer={null}
-                width={900}
-                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
-              >
-                {renderModalContent2()}
-              </Modal>
-              <Modal
-                className="dashboard_wrapper container"
-                title="Branch Details"
-                visible={modalVisibleAFR}
-                onCancel={closeModalAFR}
-                footer={null}
-                width={900}
-                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
-              >
-                {renderModalContentAFR()}
-              </Modal>
-              <Modal
-                className="dashboard_wrapper container"
-                title="Branch Details"
-                visible={modalVisibleTBA}
-                onCancel={closeModalTBA}
-                footer={null}
-                width={900}
-                bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
-              >
-                {renderModalContentTBA()}
-              </Modal>
+                  </Table.Summary.Row>
+                );
+              }}
+            />
+            <Modal
+              className='dashboard_wrapper container'
+              title="Branch Details"
+              visible={modalVisible}
+              onCancel={closeModal}
+              footer={null}
+              width={900}
+            >
+              {renderModalContent()}
+            </Modal>
+            <Modal
+              className="dashboard_wrapper container"
+              title="Branch Details"
+              visible={modalVisible1}
+              onCancel={closeModal1}
+              footer={null}
+              width={400}
+              bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+            >
+              {renderModalContent1()}
+            </Modal>
+            <Modal
+              className="dashboard_wrapper container"
+              title="Branch Details"
+              visible={modalVisible2}
+              onCancel={closeModal2}
+              footer={null}
+              width={900}
+              bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+            >
+              {renderModalContent2()}
+            </Modal>
+            <Modal
+              className="dashboard_wrapper container"
+              title="Branch Details"
+              visible={modalVisibleAFR}
+              onCancel={closeModalAFR}
+              footer={null}
+              width={900}
+              bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+            >
+              {renderModalContentAFR()}
+            </Modal>
+            <Modal
+              className="dashboard_wrapper container"
+              title="Branch Details"
+              visible={modalVisibleTBA}
+              onCancel={closeModalTBA}
+              footer={null}
+              width={900}
+              bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+            >
+              {renderModalContentTBA()}
+            </Modal>
 
-            </div>
-          )}
+          </div>
 
         </div>
       </div>

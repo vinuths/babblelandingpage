@@ -213,7 +213,7 @@ const Navbar = () => {
         // handleDrawerClose(); 
     }
     const onCompany = (e) => {
-        navigate('/company');
+        navigate('/companies');
         // handleDrawerClose(); onCompany
     }
     const onChecklist = (e) => {
