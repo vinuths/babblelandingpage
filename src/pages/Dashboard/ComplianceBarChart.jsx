@@ -81,8 +81,8 @@ const ComplianceBarChart = () => {
 
     }, [dispatch, selectedState, selectedBranch, startDate, endDate, risk]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    // if (loading) return <p>Loading...</p>;
+    // if (error) return <p>Error: {error}</p>;
 
 
     const handleCellClick = (record, column) => {
