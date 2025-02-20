@@ -15,7 +15,7 @@ const DashboardTableBranchCount = () => {
   const navigate = useNavigate();
 
   const [selectedRegion, setSelectedRegion] = useState('AllRegions');
-  const [selectedFieldName, setSelectedFieldName] = useState('isNightShiftPermission');
+  const [selectedFieldName, setSelectedFieldName] = useState('SE');
 
   const [selectedState, setSelectedState] = useState('Andhra Pradesh');
   const [selectedLicense, setSelectedLicense] = useState('isTradeLicense');
@@ -1158,12 +1158,12 @@ const DashboardTableBranchCount = () => {
               value={selectedFieldName}
               onChange={handleFieldNameChange}
             >
+              <option value="SE">S&E License</option>
+              <option value="Factory">Factory License</option>
+              <option value="isTradeLicense">Trade License</option>
               <option value="isNightShiftPermission">Night Shift Permission</option>
               <option value="isOTPermission">OT Permission</option>
               <option value="isWeeklyOffExemption">Weekly Off Permission</option>
-              <option value="isTradeLicense">Trade License</option>
-              <option value="Factory">Factory License</option>
-              <option value="SE">S&E License</option>
             </select>
           </div>
         </div>
@@ -1229,6 +1229,7 @@ const DashboardTableBranchCount = () => {
               className='dashboard_wrapper container'
               title="Branch Details"
               visible={modalVisible}
+              pageSize
               onCancel={closeModal}
               footer={null}
               width={900}

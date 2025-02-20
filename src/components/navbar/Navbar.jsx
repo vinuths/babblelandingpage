@@ -255,13 +255,13 @@ const Navbar = () => {
     //     className: "pointer-cursor",
     //     onClick: (e) => onCompliances(e)
     // },
-    {
-      text: "Compliances",
-      icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{ paddingTop: '2px' }} />,
-      className: "pointer-cursor",
-      // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
-      onClick: (e) => onChecklist(e)
-    },
+    // {
+    //   text: "Compliances",
+    //   icon: <img src={Checklist} alt="My Image" onClick={(e) => onChecklist(e)} style={{ paddingTop: '2px' }} />,
+    //   className: "pointer-cursor",
+    //   // <CollectionsBookmarkIcon onClick={(e) => onChecklist(e)}/>,
+    //   onClick: (e) => onChecklist(e)
+    // },
     {
       text: "Notice/Inspection",
       icon: <BusinessIcon onClick={(e) => onNotice(e)} />,
@@ -301,12 +301,12 @@ const Navbar = () => {
       onClick: (e) => onNotification(e)
     }
     ,
-    {
-      text: "Lise/Regs",
-      icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
-      className: "pointer-cursor",
-      onClick: (e) => onLisereg(e)
-    }
+    // {
+    //   text: "Lise/Regs",
+    //   icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
+    //   className: "pointer-cursor",
+    //   onClick: (e) => onLisereg(e)
+    // }
   ];
   const onLogin = (e) => {
     navigate("/login");
