@@ -1,50 +1,35 @@
-import React, { useEffect } from 'react';
-// import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import { FormLabel, styled } from '@mui/material';
-// import Highlighter from 'react-highlight-words';
-// import { Button, Input, Space, Table, Modal, Form, message } from 'antd';
-// import { CloudUploadOutlined, UploadOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { usersGet, companyTableGet, auditorGet, auditCompiledCountAll, CompanyBranchesGet, auditRegCountAll, checklistCalenderGet, checklistGetonCreateAudit, auditGetDataAll, ongoingAudits, gettingAuditorOverdueDashboard, auditCompiledStatusAll } from "../../store/actions/otherActions";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    usersGet,
+    companyTableGet,
+    auditGetDataAll,
+    auditorGet,
+    checklistGetonCreateAudit,
+    ongoingAudits,
+    gettingAuditorOverdueDashboard,
+    auditCompiledStatusAll,
+    auditRegCountAll,
+    checklistCalenderGet,
+    auditCompiledCountAll,
+    CompanyBranchesGet,
+} from "../../store/actions/otherActions";
 import DashboardTableBranchCount from "./DashboardTableBranchCount";
 import NoticeTableCount from "./NoticeTableCount";
-// import DashboardTableAudit from "./DashboardTableAudit";
-// import DashboardTableCompany from "./DashboardTableCompany";
-// import DashboardTableNotification from "./DashboardTableNotification";
-// import { BarChart1, Bar, XAxis, YAxis,LabelList, Tooltip, CartesianGrid, Legend } from 'recharts';
-import ComplianceBarChart from './ComplianceBarChart';
-// import BarChart1 from './BarChart';
-import CalendarComponent from './CalendarComponent';
-// import BarChartReg from './BarchartReg';
-// import ExcelDownload from './ExcelDownload';
+import ComplianceBarChart from "./ComplianceBarChart";
+import CalendarComponent from "./CalendarComponent";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const userGet = useSelector((state) => state.userGet);
-    const { usersInfo } = userGet;
-    const getCompanyTable = useSelector(state => state.getCompanyTable);
-    const { loadingcompanytable, companyGetTableInfo } = getCompanyTable;
-    const allAuditGet = useSelector((state) => state.allAuditGet);
-    const { getAllAudit } = allAuditGet;
-    const getAuditor = useSelector((state) => state.getAuditor);
-    const { auditorInfo } = getAuditor;
-    const onCreateChecklistAudit = useSelector((state) => state.onCreateChecklistAudit);
-    const { auditorChecklistInfoOncreate } = onCreateChecklistAudit;
-    const onGoingAudit = useSelector((state) => state.onGoingAudit);
-    const { auditOnGoingInfo } = onGoingAudit;
-    const overDueAudit = useSelector((state) => state.overDueAudit);
-    const { auditOverdueInfos } = overDueAudit;
 
-    const { CompanyBranchesInfo, loadingBranch, error } = useSelector((state) => state.CompanyBranchesGetRed);
-    // console.log("CompanyBranchesInfo",CompanyBranchesInfo);
+    // Retrieve users from Redux
+    const { usersInfo } = useSelector((state) => state.userGet);
+    const CompanyBranchesInfo = useSelector(
+        (state) => state.CompanyBranchesGetRed.CompanyBranchesInfo
+    );
 
-    const companyCount = companyGetTableInfo?.length ? companyGetTableInfo?.length : 0;
-    const executiveCount = usersInfo?.length ? usersInfo?.length : 0;
-    const auditorCount = auditorInfo?.length ? auditorInfo?.length : 0;
-    const auditTotalCount = getAllAudit?.length ? getAllAudit?.length : 0;
-    const checklistCount = auditorChecklistInfoOncreate?.length ? auditorChecklistInfoOncreate?.length : 0;
-    const auditOnGoingCount = auditOnGoingInfo?.length ? auditOnGoingInfo?.length : 0;
-    const auditOverDueCount = auditOverdueInfos ? auditOverdueInfos : 0;
+    // Get logged-in user ID from localStorage
+    const loggedInUserId = JSON.parse(localStorage.getItem("userInfo"))?._id;
 
     useEffect(() => {
         dispatch(usersGet());
@@ -59,49 +44,50 @@ const Dashboard = () => {
         dispatch(checklistCalenderGet());
         dispatch(auditCompiledCountAll());
         dispatch(CompanyBranchesGet());
-
-
     }, [dispatch]);
 
-    // Sample data for bar charts
-
+    // Find the logged-in user by ID
+    const loggedInUser = usersInfo?.find((user) => user._id === loggedInUserId);
 
     return (
         <React.Fragment>
-            <div className='dashboard_wrapper' style={{ height: "200px" }}>
-                <div className="container" >
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <DashboardTableBranchCount branchesCompany={CompanyBranchesInfo} />
+            <div className="dashboard_wrapper">
+                <div className="container">
+                    {loggedInUser?.regLisStatus && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <DashboardTableBranchCount branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-sm-6" >
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
+                    )}
 
+                    {loggedInUser?.compileStatus && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <ComplianceBarChart branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <NoticeTableCount branchesCompany={CompanyBranchesInfo} />
+                    )}
+
+                    {loggedInUser?.inspectLisStatus && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <NoticeTableCount branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <CalendarComponent branchesCompany={CompanyBranchesInfo} />
+                    )}
+
+                    {loggedInUser?.dueDateStatus && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <CalendarComponent branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </React.Fragment>
     );
-}
+};
 
 export default Dashboard;
