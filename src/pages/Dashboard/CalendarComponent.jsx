@@ -140,9 +140,9 @@ const DateCalendarServerRequest = () => {
                         <Typography variant="body2">
                           <strong>Compliance:</strong> {event.compliance}
                         </Typography>
-                        <Typography variant="body2">
+                        {/* <Typography variant="body2">
                           <strong>Form:</strong> {event.formType}
-                        </Typography>
+                        </Typography> */}
                         {index !== selectedEvents.length - 1 && (
                           // <Divider sx={{ backgroundColor: 'white', margin: '10px 0' }} />
                           <hr />

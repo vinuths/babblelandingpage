@@ -60,6 +60,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     )}
+                    <br />
 
                     {loggedInUser?.compileStatus && (
                         <div className="row">
@@ -68,6 +69,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     )}
+                    <br />
 
                     {loggedInUser?.inspectLisStatus && (
                         <div className="row">
@@ -76,7 +78,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     )}
-
+                    <br />
                     {loggedInUser?.dueDateStatus && (
                         <div className="row">
                             <div className="col-sm-12">
