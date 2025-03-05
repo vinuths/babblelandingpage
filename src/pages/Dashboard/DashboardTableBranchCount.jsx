@@ -8,11 +8,19 @@ import './Region.css';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/layout/Loading';
 
-const DashboardTableBranchCount = () => {
+const DashboardTableBranchCount = ({usersInfo}) => {
   const dispatch = useDispatch();
   const { Option } = Select;
   const searchInput = useRef(null); // Define the useRef hook here
   const navigate = useNavigate();
+
+
+  console.log("new-usersInfo", usersInfo);
+      const loggedInUserId = JSON.parse(localStorage.getItem("userInfo"))?._id;
+
+  const loggedInUser = usersInfo?.find((user) => user._id === loggedInUserId);
+
+
 
   const [selectedRegion, setSelectedRegion] = useState('AllRegions');
   const [selectedFieldName, setSelectedFieldName] = useState('SE');
@@ -1158,12 +1166,54 @@ const DashboardTableBranchCount = () => {
               value={selectedFieldName}
               onChange={handleFieldNameChange}
             >
+              {loggedInUser?.isSEStatus && (
               <option value="SE">S&E License</option>
+            )}
+              {loggedInUser?.isFactoryStatus && (
               <option value="Factory">Factory License</option>
-              <option value="isTradeLicense">Trade License</option>
+            )}
+              {loggedInUser?.isNightShiftPermissionStatus && (
               <option value="isNightShiftPermission">Night Shift Permission</option>
+            )}
+              {loggedInUser?.isOTPermissionStatus && (
               <option value="isOTPermission">OT Permission</option>
+            )}
+              {loggedInUser?.isWeeklyOffExemptionStatus && (
               <option value="isWeeklyOffExemption">Weekly Off Permission</option>
+            )}
+              {loggedInUser?.isTradeLicenseStatus && (
+              <option value="isTradeLicense">Trade License</option>
+              )}
+              {loggedInUser?.isPFStatus && (
+              <option value="isPF">P F</option>
+              )}
+              {loggedInUser?.isESIStatus && (
+              <option value="isESI">E S I</option>
+              )}
+              {loggedInUser?.isLFWStatus && (
+              <option value="isESI">E S I</option>
+              )}
+              {loggedInUser?.isPTRStatus && (
+              <option value="isPTR">P T R</option>
+              )}
+              {loggedInUser?.isPTEStatus && (
+              <option value="isPTE">P T E</option>
+              )}
+              {loggedInUser?.isMSMEStatus && (
+              <option value="isMSME">MSME</option>
+              )}
+              {loggedInUser?.isBOCWStatus && (
+              <option value="isBOCW">BOCW</option>
+              )}
+              {loggedInUser?.isISMWStatus && (
+              <option value="isISMW">ISMW</option>
+              )}
+              {loggedInUser?.isFASSAIStatus && (
+              <option value="isFASSAI">FASSAI</option>
+              )}
+              {loggedInUser?.isSBStatus && (
+              <option value="isSB">S B</option>
+              )}
             </select>
           </div>
         </div>
@@ -1200,7 +1250,7 @@ const DashboardTableBranchCount = () => {
                   (sum, row) => sum + parseFloat(row.per_completed || 0),
                   0
                 );
-                const averagePerCompleted = ((totalObtained / totalApplicable) *100  || 0).toFixed(2);
+                const averagePerCompleted = ((totalObtained / totalApplicable) * 100 || 0).toFixed(2);
 
                 return (
                   <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: 'lightGrey', textAlign: 'center', fontSize: 'small' }}>

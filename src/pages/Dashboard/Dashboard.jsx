@@ -56,7 +56,7 @@ const Dashboard = () => {
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
-                                <DashboardTableBranchCount branchesCompany={CompanyBranchesInfo} />
+                                <DashboardTableBranchCount  usersInfo={usersInfo} />
                             </div>
                         </div>
                     )}
