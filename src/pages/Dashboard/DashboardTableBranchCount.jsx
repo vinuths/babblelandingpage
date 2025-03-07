@@ -8,15 +8,15 @@ import './Region.css';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/layout/Loading';
 
-const DashboardTableBranchCount = ({usersInfo}) => {
+const DashboardTableBranchCount = ({ usersInfo }) => {
   const dispatch = useDispatch();
   const { Option } = Select;
   const searchInput = useRef(null); // Define the useRef hook here
   const navigate = useNavigate();
 
 
-  console.log("new-usersInfo", usersInfo);
-      const loggedInUserId = JSON.parse(localStorage.getItem("userInfo"))?._id;
+  // console.log("new-usersInfo", usersInfo);
+  const loggedInUserId = JSON.parse(localStorage.getItem("userInfo"))?._id;
 
   const loggedInUser = usersInfo?.find((user) => user._id === loggedInUserId);
 
@@ -164,35 +164,37 @@ const DashboardTableBranchCount = ({usersInfo}) => {
   // Open modal and set payload
   const openModal = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
-    console.log("setModalPayload", payload);
+    // console.log("setModalPayload", payload);
 
     setModalVisible(true); // Open the modal
     setFetchedData(fetchedData)
+    // console.log("fetchedData", fetchedData);
+
   };
   const openModal1 = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
-    console.log("setModalPayload", payload);
+    // console.log("setModalPayload", payload);
 
     setModalVisible1(true); // Open the modal
     setFetchedData(fetchedData)
   };
   const openModal2 = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
-    console.log("setModalPayload", payload);
+    // console.log("setModalPayload", payload);
 
     setModalVisible2(true); // Open the modal
     setFetchedData(fetchedData)
   };
   const openModalAFR = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
-    console.log("setModalPayload", payload);
+    // console.log("setModalPayload", payload);
 
     setModalVisibleAFR(true); // Open the modal
     setFetchedData(fetchedData)
   };
   const openModalTBA = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
-    console.log("setModalPayload", payload);
+    // console.log("setModalPayload", payload);
 
     setModalVisibleTBA(true); // Open the modal
     setFetchedData(fetchedData)
@@ -385,7 +387,43 @@ const DashboardTableBranchCount = ({usersInfo}) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Acknowlegement</a> : 'Not Uploaded'
         ),
       });
-    }
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'View BOCW Acknowlegement',
+        dataIndex: 'ackFileBOCW',
+        key: 'ackFileBOCW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View BOCW Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isISMW') {
+      columns.push({
+        title: 'View ISMW Acknowlegement',
+        dataIndex: 'ackFileISMW',
+        key: 'ackFileISMW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View ISMW Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'View FASSAI License',
+        dataIndex: 'ackFileFASSAI',
+        key: 'ackFileFASSAI',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View FASSAI Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'View SB License',
+        dataIndex: 'ackFileSB',
+        key: 'ackFileSB',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } 
 
 
     if (selectedFieldName === 'isTradeLicense') {
@@ -466,7 +504,59 @@ const DashboardTableBranchCount = ({usersInfo}) => {
         },
         sortDirections: ["descend", "ascend"],
       });
-    }
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'DOE BOCW License',
+        dataIndex: 'doeBOCW',
+        key: 'doeBOCW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeBOCW ? new Date(a.doeBOCW).getTime() : 0;
+          const dateB = b.doeBOCW ? new Date(b.doeBOCW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'ISMW') {
+      columns.push({
+        title: 'DOE ISMW License',
+        dataIndex: 'doeISMW',
+        key: 'doeISMW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeISMW ? new Date(a.doeISMW).getTime() : 0;
+          const dateB = b.doeISMW ? new Date(b.doeISMW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'DOE FASSAI License',
+        dataIndex: 'doeFASSAI',
+        key: 'doeFASSAI',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeFASSAI ? new Date(a.doeFASSAI).getTime() : 0;
+          const dateB = b.doeFASSAI ? new Date(b.doeFASSAI).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'DOE SB License',
+        dataIndex: 'doeSB',
+        key: 'doeSB',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeSB ? new Date(a.doeSB).getTime() : 0;
+          const dateB = b.doeSB ? new Date(b.doeSB).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } 
     if (loadingDashStateWiseData) {
       return <Loading />; // Show loading spinner while data is being fetched
     }
@@ -569,7 +659,43 @@ const DashboardTableBranchCount = ({usersInfo}) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Acknowlegement</a> : 'Not Uploaded'
         ),
       });
-    }
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'View BOCW Acknowlegement',
+        dataIndex: 'ackFileBOCW',
+        key: 'ackFileBOCW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View BOCW Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isISMW') {
+      columns.push({
+        title: 'View ISMW Acknowlegement',
+        dataIndex: 'ackFileISMW',
+        key: 'ackFileISMW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View ISMW Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'View FASSAI License',
+        dataIndex: 'ackFileFASSAI',
+        key: 'ackFileFASSAI',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View FASSAI Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'View SB License',
+        dataIndex: 'ackFileSB',
+        key: 'ackFileSB',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB Acknowlegement</a> : 'Not Uploaded'
+        ),
+      });
+    } 
     if (loadingDashStateWiseData) {
       return <Loading />; // Show loading spinner while data is being fetched
     }
@@ -698,16 +824,43 @@ const DashboardTableBranchCount = ({usersInfo}) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory License</a> : 'Not Uploaded'
         ),
       });
-    } else if (selectedFieldName === 'SE') {
+    } else if (selectedFieldName === 'isBOCW') {
       columns.push({
-        title: 'View S&E License',
-        dataIndex: 'licenseimage',
-        key: 'licenseimage',
+        title: 'View BOCW License',
+        dataIndex: 'licenseimageBOCW',
+        key: 'licenseimageBOCW',
         render: (file) => (
-          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E License</a> : 'Not Uploaded'
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View BOCW License</a> : 'Not Uploaded'
         ),
       });
-    }
+    } else if (selectedFieldName === 'isISMW') {
+      columns.push({
+        title: 'View ISMW License',
+        dataIndex: 'licenseimageISMW',
+        key: 'licenseimageISMW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View ISMW License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'View FASSAI License',
+        dataIndex: 'licenseimageFASSAI',
+        key: 'licenseimageFASSAI',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View FASSAI License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'View SB License',
+        dataIndex: 'licenseimageSB',
+        key: 'licenseimageSB',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB License</a> : 'Not Uploaded'
+        ),
+      });
+    } 
 
 
     if (selectedFieldName === 'isTradeLicense') {
@@ -788,7 +941,59 @@ const DashboardTableBranchCount = ({usersInfo}) => {
         },
         sortDirections: ["descend", "ascend"],
       });
-    }
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'DOE BOCW License',
+        dataIndex: 'doeBOCW',
+        key: 'doeBOCW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeBOCW ? new Date(a.doeBOCW).getTime() : 0;
+          const dateB = b.doeBOCW ? new Date(b.doeBOCW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'ISMW') {
+      columns.push({
+        title: 'DOE ISMW License',
+        dataIndex: 'doeISMW',
+        key: 'doeISMW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeISMW ? new Date(a.doeISMW).getTime() : 0;
+          const dateB = b.doeISMW ? new Date(b.doeISMW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'DOE FASSAI License',
+        dataIndex: 'doeFASSAI',
+        key: 'doeFASSAI',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeFASSAI ? new Date(a.doeFASSAI).getTime() : 0;
+          const dateB = b.doeFASSAI ? new Date(b.doeFASSAI).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'DOE SB License',
+        dataIndex: 'doeSB',
+        key: 'doeSB',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeSB ? new Date(a.doeSB).getTime() : 0;
+          const dateB = b.doeSB ? new Date(b.doeSB).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } 
 
     // Adjust columns if the payload fieldName is 'total_count'
     if (modalPayload && modalPayload.fieldName === 'total_count') {
@@ -984,154 +1189,120 @@ const DashboardTableBranchCount = ({usersInfo}) => {
 
   const columns = [
     {
-      title: (
-        <Tooltip title="State of the data">State</Tooltip>
-      ),
-      dataIndex: 'state',
-      key: 'state',
+      title: <Tooltip title="State of the data">State</Tooltip>,
+      dataIndex: "state",
+      key: "state",
       width: 100,
-      align: 'center',
-      // onCell: (record) => ({
-      //   onClick: () => handleCellClick(record, 'state'),
-      // }),
+      align: "center",
     },
     {
-      title: (
-        <Tooltip title="Total count of records">T C</Tooltip>
-      ),
-      dataIndex: 'total_count',
-      key: 'total_count',
-      align: 'center',
+      title: <Tooltip title="Total count of records">T C</Tooltip>,
+      dataIndex: "total_count",
+      key: "total_count",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick1(record, 'total_count'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.total_count && record.total_count !== "0" ? () => handleCellClick1(record, "total_count") : undefined,
+        className: record.total_count && record.total_count !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records that are not applicable">N A</Tooltip>
-      ),
-      dataIndex: 'not_applicable',
-      key: 'not_applicable',
-      align: 'center',
+      title: <Tooltip title="Records that are not applicable">N A</Tooltip>,
+      dataIndex: "not_applicable",
+      key: "not_applicable",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick1(record, 'not_applicable'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.not_applicable && record.not_applicable !== "0" ? () => handleCellClick1(record, "not_applicable") : undefined,
+        className: record.not_applicable && record.not_applicable !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records that are not in scope">N I S</Tooltip>
-      ),
-      dataIndex: 'license_not_in_scope',
-      key: 'license_not_in_scope',
-      align: 'center',
+      title: <Tooltip title="Records that are not in scope">N I S</Tooltip>,
+      dataIndex: "license_not_in_scope",
+      key: "license_not_in_scope",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick1(record, 'license_not_in_scope'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_not_in_scope && record.license_not_in_scope !== "0" ? () => handleCellClick1(record, "license_not_in_scope") : undefined,
+        className: record.license_not_in_scope && record.license_not_in_scope !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Applicable records for licensing">App.</Tooltip>
-      ),
-      dataIndex: 'applicable',
-      key: 'applicable',
-      align: 'center',
+      title: <Tooltip title="Applicable records for licensing">App.</Tooltip>,
+      dataIndex: "applicable",
+      key: "applicable",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick1(record, 'applicable'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.applicable && record.applicable !== "0" ? () => handleCellClick1(record, "applicable") : undefined,
+        className: record.applicable && record.applicable !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records with obtained licenses">OB</Tooltip>
-      ),
-      dataIndex: 'license_obtained',
-      key: 'license_obtained',
-      align: 'center',
+      title: <Tooltip title="Records with obtained licenses">OB</Tooltip>,
+      dataIndex: "license_obtained",
+      key: "license_obtained",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick(record, 'license_obtained'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_obtained && record.license_obtained !== "0" ? () => handleCellClick(record, "license_obtained") : undefined,
+        className: record.license_obtained && record.license_obtained !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records with new licenses applied">New</Tooltip>
-      ),
-      dataIndex: 'new_license_applied',
-      key: 'new_license_applied',
-      align: 'center',
+      title: <Tooltip title="Records with new licenses applied">New</Tooltip>,
+      dataIndex: "new_license_applied",
+      key: "new_license_applied",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick2(record, 'new_license_applied'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.new_license_applied && record.new_license_applied !== "0" ? () => handleCellClick2(record, "new_license_applied") : undefined,
+        className: record.new_license_applied && record.new_license_applied !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records that are applied for renewal">A F R</Tooltip>
-      ),
-      dataIndex: 'license_applied_for_renewal',
-      key: 'license_applied_for_renewal',
-      align: 'center',
+      title: <Tooltip title="Records that are applied for renewal">A F R</Tooltip>,
+      dataIndex: "license_applied_for_renewal",
+      key: "license_applied_for_renewal",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClickAFR(record, 'license_applied_for_renewal'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_applied_for_renewal && record.license_applied_for_renewal !== "0" ? () => handleCellClickAFR(record, "license_applied_for_renewal") : undefined,
+        className: record.license_applied_for_renewal && record.license_applied_for_renewal !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records that are to be applied for license">TB App</Tooltip>
-      ),
-      dataIndex: 'license_to_be_applied',
-      key: 'license_to_be_applied',
-      align: 'center',
+      title: <Tooltip title="Records that are to be applied for license">TB App</Tooltip>,
+      dataIndex: "license_to_be_applied",
+      key: "license_to_be_applied",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClickTBA(record, 'license_to_be_applied'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_to_be_applied && record.license_to_be_applied !== "0" ? () => handleCellClickTBA(record, "license_to_be_applied") : undefined,
+        className: record.license_to_be_applied && record.license_to_be_applied !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Records due for renewal">R D</Tooltip>
-      ),
-      dataIndex: 'license_due_for_renewal',
-      key: 'license_due_for_renewal',
-      align: 'center',
+      title: <Tooltip title="Records due for renewal">R D</Tooltip>,
+      dataIndex: "license_due_for_renewal",
+      key: "license_due_for_renewal",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick(record, 'license_due_for_renewal'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_due_for_renewal && record.license_due_for_renewal !== "0" ? () => handleCellClick(record, "license_due_for_renewal") : undefined,
+        className: record.license_due_for_renewal && record.license_due_for_renewal !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Expired licenses">Exp.</Tooltip>
-      ),
-      dataIndex: 'license_experied',
-      key: 'license_experied',
-      align: 'center',
+      title: <Tooltip title="Expired licenses">Exp.</Tooltip>,
+      dataIndex: "license_experied",
+      key: "license_experied",
+      align: "center",
       onCell: (record) => ({
-        onClick: () => handleCellClick(record, 'license_experied'),
-        className: 'clickable-cell', // Styling for pointer cursor and clickable effect
+        onClick: record.license_experied && record.license_experied !== "0" ? () => handleCellClick(record, "license_experied") : undefined,
+        className: record.license_experied && record.license_experied !== "0" ? "clickable-cell" : "",
       }),
     },
     {
-      title: (
-        <Tooltip title="Percentage of completion">Comp</Tooltip>
-      ),
-      dataIndex: 'per_completed',
-      key: 'per_completed',
-      align: 'center',
-      // onCell: (record) => ({
-      //   onClick: () => handleCellClick(record, 'per_completed'),
-      // }),
+      title: <Tooltip title="Percentage of completion">Comp</Tooltip>,
+      dataIndex: "per_completed",
+      key: "per_completed",
+      align: "center",
     },
   ];
-
-
-
-
-
+  
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -1167,52 +1338,52 @@ const DashboardTableBranchCount = ({usersInfo}) => {
               onChange={handleFieldNameChange}
             >
               {loggedInUser?.isSEStatus && (
-              <option value="SE">S&E License</option>
-            )}
+                <option value="SE">S&E License</option>
+              )}
               {loggedInUser?.isFactoryStatus && (
-              <option value="Factory">Factory License</option>
-            )}
+                <option value="Factory">Factory License</option>
+              )}
               {loggedInUser?.isNightShiftPermissionStatus && (
-              <option value="isNightShiftPermission">Night Shift Permission</option>
-            )}
+                <option value="isNightShiftPermission">Night Shift Permission</option>
+              )}
               {loggedInUser?.isOTPermissionStatus && (
-              <option value="isOTPermission">OT Permission</option>
-            )}
+                <option value="isOTPermission">OT Permission</option>
+              )}
               {loggedInUser?.isWeeklyOffExemptionStatus && (
-              <option value="isWeeklyOffExemption">Weekly Off Permission</option>
-            )}
+                <option value="isWeeklyOffExemption">Weekly Off Permission</option>
+              )}
               {loggedInUser?.isTradeLicenseStatus && (
-              <option value="isTradeLicense">Trade License</option>
+                <option value="isTradeLicense">Trade License</option>
               )}
               {loggedInUser?.isPFStatus && (
-              <option value="isPF">P F</option>
+                <option value="isPF">P F</option>
               )}
               {loggedInUser?.isESIStatus && (
-              <option value="isESI">E S I</option>
+                <option value="isESI">E S I</option>
               )}
-              {loggedInUser?.isLFWStatus && (
-              <option value="isESI">E S I</option>
+              {loggedInUser?.isLWFStatus && (
+                <option value="isLWF">L W F</option>
               )}
               {loggedInUser?.isPTRStatus && (
-              <option value="isPTR">P T R</option>
+                <option value="isPTR">P T R</option>
               )}
               {loggedInUser?.isPTEStatus && (
-              <option value="isPTE">P T E</option>
+                <option value="isPTE">P T E</option>
               )}
               {loggedInUser?.isMSMEStatus && (
-              <option value="isMSME">MSME</option>
+                <option value="isMSME">MSME</option>
               )}
               {loggedInUser?.isBOCWStatus && (
-              <option value="isBOCW">BOCW</option>
+                <option value="isBOCW">BOCW</option>
               )}
               {loggedInUser?.isISMWStatus && (
-              <option value="isISMW">ISMW</option>
+                <option value="isISMW">ISMW</option>
               )}
               {loggedInUser?.isFASSAIStatus && (
-              <option value="isFASSAI">FASSAI</option>
+                <option value="isFASSAI">FASSAI</option>
               )}
               {loggedInUser?.isSBStatus && (
-              <option value="isSB">S B</option>
+                <option value="isSB">S B</option>
               )}
             </select>
           </div>
@@ -1265,12 +1436,7 @@ const DashboardTableBranchCount = ({usersInfo}) => {
                     <Table.Summary.Cell className='centered-cell' index={5} >{totalToBeApplied}</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={8} >{licenseDueForRenewal}</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={9} >{licenseExperied}</Table.Summary.Cell>
-                    <Table.Summary.Cell className='centered-cell' index={10}>
-                      {averagePerCompleted + '%'}
-                    </Table.Summary.Cell>
-
-
-
+                    <Table.Summary.Cell className='centered-cell' index={10}>{averagePerCompleted + '%'}</Table.Summary.Cell>
                   </Table.Summary.Row>
                 );
               }}
@@ -1313,9 +1479,10 @@ const DashboardTableBranchCount = ({usersInfo}) => {
               title="Branch Details"
               visible={modalVisibleAFR}
               onCancel={closeModalAFR}
+              style={{overflow: 'hidden'}}
               footer={null}
               width={900}
-              bodyStyle={{ height: '300px', overflowY: 'auto' }}  // Set height of the body content
+              bodyStyle={{ height: '300px', overflowY: 'hidden' }}  // Set height of the body content
             >
               {renderModalContentAFR()}
             </Modal>
