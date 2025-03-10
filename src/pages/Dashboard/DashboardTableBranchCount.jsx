@@ -788,6 +788,15 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Trade License</a> : 'Not Uploaded'
         ),
       });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E Permission',
+        dataIndex: 'licenseimage',
+        key: 'licenseimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Permission</a> : 'Not Uploaded'
+        ),
+      });
     } else if (selectedFieldName === 'isNightShiftPermission') {
       columns.push({
         title: 'View NightShift Permission',
@@ -822,6 +831,15 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
         key: 'licenseimage1',
         render: (file) => (
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E License',
+        dataIndex: 'licenseimage',
+        key: 'licenseimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E License</a> : 'Not Uploaded'
         ),
       });
     } else if (selectedFieldName === 'isBOCW') {
