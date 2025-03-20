@@ -37,6 +37,7 @@ const ComplianceBarChart = () => {
     const [selectedState, setSelectedState] = useState('');
     const [selectedBranch, setSelectedBranch] = useState('');
     const [startDate, setStartDate] = useState('');
+    const [isLBAOrPA, setIsLBAOrPA] = useState(0);
     const [endDate, setEndDate] = useState('');
     const [risk, setRisk] = useState('');
     const [dataSource, setDataSource] = useState([]);
@@ -75,11 +76,12 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
+            isLBAOrPA: isLBAOrPA || 0,
         };
         dispatch(auditCompiledCountAll(postBody));
         dispatch(stateGets());
 
-    }, [dispatch, selectedState, selectedBranch, startDate, endDate, risk]);
+    }, [dispatch, selectedState, selectedBranch, startDate, endDate, risk, isLBAOrPA]);
 
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error}</p>;
@@ -96,6 +98,7 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
+            isLBAOrPA: isLBAOrPA || 0
         };
 
         console.log("Updated Payload", postBody);
@@ -122,6 +125,7 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
+            isLBAOrPA: isLBAOrPA || 0,
         };
 
         console.log("Updated Payload2", postBody);
@@ -148,6 +152,7 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
+            isLBAOrPA: isLBAOrPA || 0,
         };
 
         console.log("Updated Payload3", postBody);
@@ -644,6 +649,22 @@ const ComplianceBarChart = () => {
                 <div className="dashboard-content">
                     <div className="filters-container">
                         <div className="filter-group">
+                            <label for="" className="form-label">Select Audit Type</label>
+
+                            <select
+                                className="form-select"
+                                name='isLBAOrPA'
+                                id='isLBAOrPA'
+                                value={isLBAOrPA}
+                                required
+                                onChange={(e) => setIsLBAOrPA(e.target.value)}
+                            >
+                                <option value={0}>Regular Audit</option>
+                                <option value={1}>Labour Contract Audit</option>
+                                <option value={2}>Principle Contract Audit</option>
+                            </select>
+                        </div>
+                        <div className="filter-group">
                             <label htmlFor="states" className="form-label">Select State</label>
                             <select className="filter-select" id="states" value={selectedState} name="state"
                                 onChange={(e) => {
@@ -727,7 +748,7 @@ const ComplianceBarChart = () => {
                                     //     (sum, row) => sum + parseFloat(row.Percent || 0),
                                     //     0
                                     // );
-                                    const averagePerCompleted = (totalComplied / totalCount *100 ||0).toFixed(2);
+                                    const averagePerCompleted = (totalComplied / totalCount * 100 || 0).toFixed(2);
 
                                     return (
                                         <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: 'lightGrey', textAlign: 'center !important', fontSize: 'small' }}>

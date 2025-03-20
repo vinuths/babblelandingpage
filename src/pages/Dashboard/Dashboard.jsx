@@ -34,7 +34,7 @@ const Dashboard = () => {
     useEffect(() => {
         dispatch(usersGet());
         dispatch(companyTableGet());
-        dispatch(auditGetDataAll());
+        // dispatch(auditGetDataAll());
         dispatch(auditorGet());
         dispatch(checklistGetonCreateAudit());
         dispatch(ongoingAudits());
@@ -42,7 +42,8 @@ const Dashboard = () => {
         dispatch(auditCompiledStatusAll());
         dispatch(auditRegCountAll());
         dispatch(checklistCalenderGet());
-        dispatch(auditCompiledCountAll());
+        const postBody= {isLBAOrPA:0}
+        dispatch(auditCompiledCountAll(postBody));
         dispatch(CompanyBranchesGet());
     }, [dispatch]);
 

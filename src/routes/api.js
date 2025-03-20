@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.0.42:8000/api/admin';
+// const URL = 'http://192.168.0.59:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -539,7 +539,7 @@ export const gettingAuditDetail = async (postBody) => {
     }
     //alert(JSON.stringify(postBody));return;
     // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
-    return await axios.get(`${URL}/gettingAuditDetail`, config);
+    return await axios.post(`${URL}/gettingAuditDetail`, config);
 }
 export const gettingOnGoingAuditDetail = async (postBody) => {
     const config = {
@@ -1464,7 +1464,7 @@ export const FetchCompliedCount = async (postBody) => {
 
     const url = `${URL}/CompiledStatusCountCompGet1`;
 
-    console.log("Sending API Request with:", postBody); // Debugging log
+    // console.log("Sending API Request with:", postBody); // Debugging log
 
     try {
         const response = await axios.post(url, postBody, config);
@@ -1485,7 +1485,7 @@ export const FetchCompliedCountData = async (postBody) => {
 
     const url = `${URL}/getAuditActRuleQuestions`;
 
-    console.log("Sending API Request with:", postBody); // Debugging log
+    // console.log("Sending API Request with:", postBody); // Debugging log
 
     try {
         const response = await axios.post(url, postBody, config);
