@@ -396,14 +396,35 @@ import {
   NOTICE_WISE_DATA_GET_SUCCESS,
   NOTICE_WISE_DATA_GET_FAIL,
   DASH_STATE_WISE_NOTICE_GET_REQUEST,
-DASH_STATE_WISE_NOTICE_GET_SUCCESS,
-DASH_STATE_WISE_NOTICE_GET_FAIL,
-DOWNLOAD_NOTICES_EXCEL_REQUEST,
-DOWNLOAD_NOTICES_EXCEL_SUCCESS,
-DOWNLOAD_NOTICES_EXCEL_FAIL,
-AUDIT_COUNT_DATA_REQUEST,
-AUDIT_COUNT_DATA_SUCCESS,
-AUDIT_COUNT_DATA_FAIL,
+  DASH_STATE_WISE_NOTICE_GET_SUCCESS,
+  DASH_STATE_WISE_NOTICE_GET_FAIL,
+  DOWNLOAD_NOTICES_EXCEL_REQUEST,
+  DOWNLOAD_NOTICES_EXCEL_SUCCESS,
+  DOWNLOAD_NOTICES_EXCEL_FAIL,
+  AUDIT_COUNT_DATA_REQUEST,
+  AUDIT_COUNT_DATA_SUCCESS,
+  AUDIT_COUNT_DATA_FAIL,
+  AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
+  LABOUR_AGREEMENT_NAME_GET_REQUEST,
+  LABOUR_AGREEMENT_NAME_GET_SUCCESS,
+  LABOUR_AGREEMENT_NAME_GET_FAIL,
+  PRINCIPLE_AGREEMENT_NAME_GET_REQUEST,
+  PRINCIPLE_AGREEMENT_NAME_GET_SUCCESS,
+  PRINCIPLE_AGREEMENT_NAME_GET_FAIL,
+  AUDIT_COUNT_LCA_DATA_REQUEST,
+  AUDIT_COUNT_LCA_DATA_SUCCESS,
+  AUDIT_COUNT_LCA_DATA_FAIL,
+  AUDIT_COUNT_PA_DATA_REQUEST,
+  AUDIT_COUNT_PA_DATA_SUCCESS,
+  AUDIT_COUNT_PA_DATA_FAIL,
+  CONTRACTOR_NAME_GET_REQUEST,
+  CONTRACTOR_NAME_GET_SUCCESS,
+  CONTRACTOR_NAME_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -2017,13 +2038,13 @@ export const auditCompCountReducer = (state = { branches: [] }, action) => {
   switch (action.type) {
     case AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL:
       return { ...state, loadingcompCount: true };
-      
+
     case AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL:
       return { ...state, branches: action.payload, loadingcompCount: false }; // ✅ Store array properly
-      
+
     case AUDIT_COMPILED_COUNT_FAIL_All_DETAIL:
       return { ...state, error: action.payload, loadingcompCount: false };
-      
+
     default:
       return state;
   }
@@ -2248,109 +2269,212 @@ export const branchByStateGetReducer = (state = {}, action) => {
 };
 
 const initialNoticeWiseData = {
+  loadingNoticeWiseData: false,
+  error: null, // Added error property in the initial state
+  NoticeWiseDataInfo: [],
+};
+
+export const noticeWiseDataReducer = (
+  state = initialNoticeWiseData,
+  action
+) => {
+  switch (action.type) {
+    case NOTICE_WISE_DATA_GET_REQUEST:
+      return { ...state, loadingNoticeWiseData: true };
+    case NOTICE_WISE_DATA_GET_SUCCESS:
+      return {
         loadingNoticeWiseData: false,
-        error: null, // Added error property in the initial state
-        NoticeWiseDataInfo: [],
+        error: null, // Clear any previous errors
+        NoticeWiseDataInfo: action.payload,
       };
-      
-      export const noticeWiseDataReducer = (
-        state = initialNoticeWiseData,
-        action
-      ) => {
-        switch (action.type) {
-          case NOTICE_WISE_DATA_GET_REQUEST:
-            return { ...state, loadingNoticeWiseData: true };
-          case NOTICE_WISE_DATA_GET_SUCCESS:
-            return {
-              loadingNoticeWiseData: false,
-              error: null, // Clear any previous errors
-              NoticeWiseDataInfo: action.payload,
-            };
-          case NOTICE_WISE_DATA_GET_FAIL:
-            return {
-              loadingNoticeWiseData: false,
-              error: action.payload,
-              NoticeWiseDataInfo: [], // Clear data on failure
-            };
-          default:
-            return state;
-        }
+    case NOTICE_WISE_DATA_GET_FAIL:
+      return {
+        loadingNoticeWiseData: false,
+        error: action.payload,
+        NoticeWiseDataInfo: [], // Clear data on failure
       };
+    default:
+      return state;
+  }
+};
 
-      const initialDashStateWiseNotice = {
+const initialDashStateWiseNotice = {
+  loadingDashStateWiseNotice: false,
+  errorDBB: null, // Added errorDBB property in the initial state
+  DashStateWiseNoticeInfo: [],
+};
+
+export const dashStateWiseNoticeReducer = (
+  state = initialDashStateWiseNotice,
+  action
+) => {
+  switch (action.type) {
+    case DASH_STATE_WISE_NOTICE_GET_REQUEST:
+      return { ...state, loadingDashStateWiseNotice: true };
+    case DASH_STATE_WISE_NOTICE_GET_SUCCESS:
+      return {
         loadingDashStateWiseNotice: false,
-        errorDBB: null, // Added errorDBB property in the initial state
-        DashStateWiseNoticeInfo: [],
+        errorDNB: null, // Clear any previous errorDBBs
+        dashStateWiseNoticeInfo: action.payload,
       };
-      
-      export const dashStateWiseNoticeReducer = (
-        state = initialDashStateWiseNotice,
-        action
-      ) => {
-        switch (action.type) {
-          case DASH_STATE_WISE_NOTICE_GET_REQUEST:
-            return { ...state, loadingDashStateWiseNotice: true };
-          case DASH_STATE_WISE_NOTICE_GET_SUCCESS:
-            return {
-              loadingDashStateWiseNotice: false,
-              errorDNB: null, // Clear any previous errorDBBs
-              dashStateWiseNoticeInfo: action.payload,
-            };
-          case DASH_STATE_WISE_NOTICE_GET_FAIL:
-            return {
-              loadingDashStateWiseNotice: false,
-              errorDNB: action.payload,
-              dashStateWiseNoticeInfo: [], // Clear data on failure
-            };
-          default:
-            return state;
-        }
+    case DASH_STATE_WISE_NOTICE_GET_FAIL:
+      return {
+        loadingDashStateWiseNotice: false,
+        errorDNB: action.payload,
+        dashStateWiseNoticeInfo: [], // Clear data on failure
       };
+    default:
+      return state;
+  }
+};
 
-     
 
-      const initialStateDown = {
+
+const initialStateDown = {
+  loading: false,
+  error: null,
+};
+
+export const noticeDownloadReducer = (state = initialStateDown, action) => {
+  switch (action.type) {
+    case DOWNLOAD_NOTICES_EXCEL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DOWNLOAD_NOTICES_EXCEL_SUCCESS:
+      return {
+        ...state,
         loading: false,
         error: null,
       };
-      
-      export const noticeDownloadReducer = (state = initialStateDown, action) => {
-        switch (action.type) {
-          case DOWNLOAD_NOTICES_EXCEL_REQUEST:
-            return {
-              ...state,
-              loading: true,
-            };
-          case DOWNLOAD_NOTICES_EXCEL_SUCCESS:
-            return {
-              ...state,
-              loading: false,
-              error: null,
-            };
-          case DOWNLOAD_NOTICES_EXCEL_FAIL:
-            return {
-              ...state,
-              loading: false,
-              error: action.payload,
-            };
-          default:
-            return state;
-        }
+    case DOWNLOAD_NOTICES_EXCEL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
+    default:
+      return state;
+  }
+};
 
-      
-      export const auditCompCountDataReducer = (state = { branches: [] }, action) => {
-        switch (action.type) {
-          case AUDIT_COUNT_DATA_REQUEST:
-            return { ...state, loadingAuditCount: true };
-            
-          case AUDIT_COUNT_DATA_SUCCESS:
-            return { ...state, branchesData: action.payload, loadingAuditCount: false }; // ✅ Store array properly
-            
-          case AUDIT_COUNT_DATA_FAIL:
-            return { ...state, error: action.payload, loadingAuditCount: false };
-            
-          default:
-            return state;
-        }
-      };
+
+export const auditCompCountDataReducer = (state = { branches: [] }, action) => {
+  switch (action.type) {
+    case AUDIT_COUNT_DATA_REQUEST:
+      return { ...state, loadingAuditCount: true };
+
+    case AUDIT_COUNT_DATA_SUCCESS:
+      return { ...state, branchesData: action.payload, loadingAuditCount: false }; // ✅ Store array properly
+
+    case AUDIT_COUNT_DATA_FAIL:
+      return { ...state, error: action.payload, loadingAuditCount: false };
+
+    default:
+      return state;
+  }
+};
+
+export const auditCompCountDataReducerLCA = (state = { branches: [] }, action) => {
+  switch (action.type) {
+    case AUDIT_COUNT_LCA_DATA_REQUEST:
+      return { ...state, loadingAuditCountLCA: true };
+
+    case AUDIT_COUNT_LCA_DATA_SUCCESS:
+      return { ...state, branchesData: action.payload, loadingAuditCountLCA: false }; // ✅ Store array properly
+
+    case AUDIT_COUNT_LCA_DATA_FAIL:
+      return { ...state, error: action.payload, loadingAuditCountLCA: false };
+
+    default:
+      return state;
+  }
+};
+
+export const auditCompCountDataReducerPA = (state = { branches: [] }, action) => {
+  switch (action.type) {
+    case AUDIT_COUNT_PA_DATA_REQUEST:
+      return { ...state, loadingAuditCountPA: true };
+
+    case AUDIT_COUNT_PA_DATA_SUCCESS:
+      return { ...state, branchesData: action.payload, loadingAuditCountPA: false }; // ✅ Store array properly
+
+    case AUDIT_COUNT_PA_DATA_FAIL:
+      return { ...state, error: action.payload, loadingAuditCountPA: false };
+
+    default:
+      return state;
+  }
+};
+
+export const auditCompCountReducerPA = (state = { branchesPA: [] }, action) => {
+  switch (action.type) {
+    case AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL:
+      return { ...state, loadingcompCountPA: true };
+
+    case AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL:
+      return { ...state, branchesPA: action.payload, loadingcompCountPA: false }; // ✅ Store array properly
+
+    case AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL:
+      return { ...state, error: action.payload, loadingcompCountPA: false };
+
+    default:
+      return state;
+  }
+};
+
+export const auditCompCountReducerLCA = (state = { branchesLCA: [] }, action) => {
+  switch (action.type) {
+    case AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL:
+      return { ...state, loadingcompCountLCA: true };
+
+    case AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL:
+      return { ...state, branchesLCA: action.payload, loadingcompCountLCA: false }; // ✅ Store array properly
+
+    case AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL:
+      return { ...state, error: action.payload, loadingcompCountLCA: false };
+
+    default:
+      return state;
+  }
+};
+
+export const getLabourContractAgreementNameReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LABOUR_AGREEMENT_NAME_GET_REQUEST:
+      return { loadingLCAN: true };
+    case LABOUR_AGREEMENT_NAME_GET_SUCCESS:
+      return { loadingLCAN: false, LCAN_NameInfo: action.payload };
+    case LABOUR_AGREEMENT_NAME_GET_FAIL:
+      return { loadingLCAN: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getPrincipleAgreementNameReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRINCIPLE_AGREEMENT_NAME_GET_REQUEST:
+      return { loadingPAName: true };
+    case PRINCIPLE_AGREEMENT_NAME_GET_SUCCESS:
+      return { loadingPAName: false, PAN_NameInfo: action.payload };
+    case PRINCIPLE_AGREEMENT_NAME_GET_FAIL:
+      return { loadingPAName: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const ContractorNameReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CONTRACTOR_NAME_GET_REQUEST:
+      return { loadingContractorName: true };
+    case CONTRACTOR_NAME_GET_SUCCESS:
+      return { loadingContractorName: false, contractorNameInfo: action.payload };
+    case CONTRACTOR_NAME_GET_FAIL:
+      return { loadingContractorName: false, error: action.payload };
+    default:
+      return state;
+  }
+};

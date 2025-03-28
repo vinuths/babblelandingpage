@@ -1442,7 +1442,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
                 const averagePerCompleted = ((totalObtained / totalApplicable) * 100 || 0).toFixed(2);
 
                 return (
-                  <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: 'lightGrey', textAlign: 'center', fontSize: 'small' }}>
+                  <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color:'white', textAlign: 'center', fontSize: 'small' }}>
                     <Table.Summary.Cell className='centered-cell' index={0} >Total</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={1} >{totalCount}</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={7} >{totalNotApplicable}</Table.Summary.Cell>

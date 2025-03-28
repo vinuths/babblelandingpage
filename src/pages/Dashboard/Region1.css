@@ -146,7 +146,8 @@
 
 /* Hover effect for cells */
 .clickable-cell:hover {
-  background-color: #545c5fb9 !important; /* Light blue background on hover */
+  background-color: #013879 !important; /* Light blue background on hover */
+  color: white !important; /* Light blue background on hover */
 }
 
 .centered-cell {

@@ -122,7 +122,14 @@ import {
   noticeCompanyCount,
   noticeCompanyCountsDetail,
   NoticeCompanyCountsdownload,
-  FetchCompliedCountData
+  FetchCompliedCountData,
+  FetchCompliedCountPA,
+  FetchCompliedCountLCA,
+  getPrincipleAgreementName,
+  getLabourContractAgreementName,
+  FetchCompliedCountDataLCA,
+  FetchCompliedCountDataPA,
+  getContractorNames
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -540,6 +547,27 @@ import {
   AUDIT_COUNT_DATA_REQUEST,
   AUDIT_COUNT_DATA_SUCCESS,
   AUDIT_COUNT_DATA_FAIL,
+  AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL,
+  AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
+  PRINCIPLE_AGREEMENT_NAME_GET_REQUEST,
+  PRINCIPLE_AGREEMENT_NAME_GET_SUCCESS,
+  PRINCIPLE_AGREEMENT_NAME_GET_FAIL,
+  LABOUR_AGREEMENT_NAME_GET_FAIL,
+  LABOUR_AGREEMENT_NAME_GET_SUCCESS,
+  LABOUR_AGREEMENT_NAME_GET_REQUEST,
+  AUDIT_COUNT_LCA_DATA_REQUEST,
+  AUDIT_COUNT_LCA_DATA_SUCCESS,
+  AUDIT_COUNT_LCA_DATA_FAIL,
+  AUDIT_COUNT_PA_DATA_REQUEST,
+  AUDIT_COUNT_PA_DATA_SUCCESS,
+  AUDIT_COUNT_PA_DATA_FAIL,
+  CONTRACTOR_NAME_GET_REQUEST,
+  CONTRACTOR_NAME_GET_SUCCESS,
+  CONTRACTOR_NAME_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -2349,10 +2377,10 @@ export const checklistGetByid = (id) => async (dispatch) => {
       // document.getElementById("submitting").disabled  = false;
     });
 };
-export const checklistGetAll = (currentPage , pageSize ) => async (dispatch) => {
+export const checklistGetAll = (currentPage, pageSize) => async (dispatch) => {
   dispatch({ type: CHECKLIST_REQUEST_GET_ALL });
 
-  await checklistAllgetting({page: currentPage, limit: pageSize})
+  await checklistAllgetting({ page: currentPage, limit: pageSize })
     .then((response) => {
       console.log("API Response:", response.data); // Debugging
       const { data, totalPages, currentPage } = response.data; // Extract correctly
@@ -5653,38 +5681,38 @@ export const fetchNotifications = () => async (dispatch) => {
 // actions/auditActions.js
 export const auditCompiledStatusAll =
   (postBody = {}) =>
-  async (dispatch) => {
-    dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
+    async (dispatch) => {
+      dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
 
-    try {
-      // Call the backend API
-      const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
-      if (response.status === 200) {
-        const {
-          statewiseCounts,
-          noticeData = [],
-          branches = [],
-        } = response.data; // Safely destructure auditData and branches with default values
+      try {
+        // Call the backend API
+        const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
+        if (response.status === 200) {
+          const {
+            statewiseCounts,
+            noticeData = [],
+            branches = [],
+          } = response.data; // Safely destructure auditData and branches with default values
 
-        dispatch({
-          type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
-          payload: statewiseCounts,
-          payload1: noticeData, // Dispatch auditData as payload1
-          branches, // Dispatch branches directly
-        });
-      } else {
+          dispatch({
+            type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
+            payload: statewiseCounts,
+            payload1: noticeData, // Dispatch auditData as payload1
+            branches, // Dispatch branches directly
+          });
+        } else {
+          dispatch({
+            type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
+            payload: "Unexpected response status",
+          });
+        }
+      } catch (error) {
         dispatch({
           type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-          payload: "Unexpected response status",
+          payload: error.message,
         });
       }
-    } catch (error) {
-      dispatch({
-        type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-        payload: error.message,
-      });
-    }
-  };
+    };
 
 export const auditRegCountAll = (postBody) => async (dispatch) => {
   dispatch({ type: AUDIT_REG_COUNT_REQUEST_All_DETAIL });
@@ -5747,25 +5775,25 @@ export const auditCompiledCountAll = (postBody) => async (dispatch) => {
   dispatch({ type: AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL });
 
   try {
-      const response = await FetchCompliedCount(postBody); // Call the API
-      console.log("count", response.data); // Log the response to verify
+    const response = await FetchCompliedCount(postBody); // Call the API
+    console.log("count", response.data); // Log the response to verify
 
-      if (response.status === 200) {
-          dispatch({
-              type: AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
-              payload: response.data, // No need to modify
-          });
-      } else {
-          dispatch({
-              type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-              payload: response.data,
-          });
-      }
-  } catch (error) {
+    if (response.status === 200) {
       dispatch({
-          type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-          payload: error.message,
+        type: AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
+        payload: response.data, // No need to modify
       });
+    } else {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
+      payload: error.message,
+    });
   }
 };
 
@@ -6316,24 +6344,238 @@ export const auditCompiledCountDataAll = (postBody) => async (dispatch) => {
   dispatch({ type: AUDIT_COUNT_DATA_REQUEST });
 
   try {
-      const response = await FetchCompliedCountData(postBody); // Call the API
-      console.log("1111", response.data); // Log the response to verify
+    const response = await FetchCompliedCountData(postBody); // Call the API
+    console.log("1111", response.data); // Log the response to verify
 
-      if (response.status === 200) {
-          dispatch({
-              type: AUDIT_COUNT_DATA_SUCCESS,
-              payload: response.data, // No need to modify
-          });
-      } else {
-          dispatch({
-              type: AUDIT_COUNT_DATA_FAIL,
-              payload: response.data,
-          });
-      }
-  } catch (error) {
+    if (response.status === 200) {
       dispatch({
-          type: AUDIT_COUNT_DATA_FAIL,
-          payload: error.message,
+        type: AUDIT_COUNT_DATA_SUCCESS,
+        payload: response.data, // No need to modify
       });
+    } else {
+      dispatch({
+        type: AUDIT_COUNT_DATA_FAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COUNT_DATA_FAIL,
+      payload: error.message,
+    });
   }
+};
+export const auditCompiledCountDataAllLCA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_COUNT_LCA_DATA_REQUEST });
+
+  try {
+    const response = await FetchCompliedCountDataLCA(postBody); // Call the API
+    console.log("1111", response.data); // Log the response to verify
+
+    if (response.status === 200) {
+      dispatch({
+        type: AUDIT_COUNT_LCA_DATA_SUCCESS,
+        payload: response.data, // No need to modify
+      });
+    } else {
+      dispatch({
+        type: AUDIT_COUNT_LCA_DATA_FAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COUNT_LCA_DATA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+export const auditCompiledCountDataAllPA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_COUNT_PA_DATA_REQUEST });
+
+  try {
+    const response = await FetchCompliedCountDataPA(postBody); // Call the API
+    console.log("1111", response.data); // Log the response to verify
+
+    if (response.status === 200) {
+      dispatch({
+        type: AUDIT_COUNT_PA_DATA_SUCCESS,
+        payload: response.data, // No need to modify
+      });
+    } else {
+      dispatch({
+        type: AUDIT_COUNT_PA_DATA_FAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COUNT_PA_DATA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+
+export const auditCompiledCountAllLCA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL });
+
+  try {
+    const response = await FetchCompliedCountLCA(postBody); // Call the API
+    console.log("count", response.data); // Log the response to verify
+
+    if (response.status === 200) {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL,
+        payload: response.data, // No need to modify
+      });
+    } else {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const auditCompiledCountAllPA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL });
+
+  try {
+    const response = await FetchCompliedCountPA(postBody); // Call the API
+    console.log("count", response.data); // Log the response to verify
+
+    if (response.status === 200) {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL,
+        payload: response.data, // No need to modify
+      });
+    } else {
+      dispatch({
+        type: AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getLabourContractAgreementNames = (postBody) => async (dispatch) => {
+  dispatch({ type: LABOUR_AGREEMENT_NAME_GET_REQUEST });
+  await getLabourContractAgreementName(postBody)
+    .then((response) => {
+      dispatch({ type: LABOUR_AGREEMENT_NAME_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: LABOUR_AGREEMENT_NAME_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_AGREEMENT_NAME_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const getPrincipleAgreementNames = (postBody) => async (dispatch) => {
+  dispatch({ type: PRINCIPLE_AGREEMENT_NAME_GET_REQUEST });
+  await getPrincipleAgreementName(postBody)
+    .then((response) => {
+      dispatch({ type: PRINCIPLE_AGREEMENT_NAME_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: PRINCIPLE_AGREEMENT_NAME_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: PRINCIPLE_AGREEMENT_NAME_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const getContractorName = (postBody) => async (dispatch) => {
+  dispatch({ type: CONTRACTOR_NAME_GET_REQUEST });
+  await getContractorNames(postBody)
+    .then((response) => {
+      dispatch({ type: CONTRACTOR_NAME_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: CONTRACTOR_NAME_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: CONTRACTOR_NAME_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
 };

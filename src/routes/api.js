@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.0.59:8000/api/admin';
+// const URL = 'http://192.168.0.39:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -431,7 +431,7 @@ export const checklistAllgetting = async (postbody) => {
             Authorization: `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/checklistAllgetting`,postbody, config);
+    return await axios.post(`${URL}/checklistAllgetting`, postbody, config);
 }
 export const checklistApprovegetting = async () => {
     const config = {
@@ -1211,7 +1211,7 @@ export const CalenderChecklistGet = async (postBody) => {
             Authorization: `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/CalenderChecklistgetting`,postBody, config);
+    return await axios.post(`${URL}/CalenderChecklistgetting`, postBody, config);
 }
 export const CompanyBranchesGetting = async () => {
     const config = {
@@ -1354,15 +1354,15 @@ export const NoticeDeleteById = async (id) => {
     return await axios.delete(`${URL}/deleteNoticeById/${id}`, config);
 };
 
-export const getCompanyBranchByState = async(postBody) => {
+export const getCompanyBranchByState = async (postBody) => {
     const config = {
         headers: {
-            "Content-Type":"application/json",
-            Authorization : `Bearer ${getToken()}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
         }
     }
     // alert(id);return;
-    return await axios.post(`${URL}/gettingCompanyBranchByStateForCompanyLogin`,postBody,config);
+    return await axios.post(`${URL}/gettingCompanyBranchByStateForCompanyLogin`, postBody, config);
 }
 export const noticeCompanyCount = async (region, branch, from, to) => {
     const config = {
@@ -1376,10 +1376,10 @@ export const noticeCompanyCount = async (region, branch, from, to) => {
 
     // Send the parameters in the request body as JSON
     const body = {
-        region:region,
-        branch:branch,
-        from:from,
-        to:to,
+        region: region,
+        branch: branch,
+        from: from,
+        to: to,
     };
 
     return await axios.post(url, body, config); // Send as POST request with the body data
@@ -1397,11 +1397,11 @@ export const noticeCompanyCountsDetail = async (state, region, fieldName, branch
 
     const requestBody = {
         state,
-        region, 
-        fieldName, 
-        branch, 
-        from, 
-        to, 
+        region,
+        fieldName,
+        branch,
+        from,
+        to,
     };
 
     try {
@@ -1416,27 +1416,27 @@ export const noticeCompanyCountsDetail = async (state, region, fieldName, branch
 
 export const NoticeCompanyCountsdownload = async (payload) => {
     const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`, // Add the token for authorization
-      },
-      responseType: 'blob', // Ensures we get a Blob
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getToken()}`, // Add the token for authorization
+        },
+        responseType: 'blob', // Ensures we get a Blob
     };
-  
+
     try {
-      const response = await axios.post(`${URL}/downloadNoticeCompanyCountsDetails`, // Ensure this matches the backend route
-        payload,
-        config
-      );
-  
-      return response.data;
+        const response = await axios.post(`${URL}/downloadNoticeCompanyCountsDetails`, // Ensure this matches the backend route
+            payload,
+            config
+        );
+
+        return response.data;
 
     } catch (error) {
-      console.error('Error downloading Excel file:', error);
-      throw error;
+        console.error('Error downloading Excel file:', error);
+        throw error;
     }
-  };
-  
+};
+
 //   export const FetchCompliedCount = async ( state, branch, fromDate, toDate, risk) => {
 //     const config = {
 //         headers: {
@@ -1469,7 +1469,7 @@ export const FetchCompliedCount = async (postBody) => {
     try {
         const response = await axios.post(url, postBody, config);
         console.log("API Response:", response.data); // Debugging log
-        return response;  
+        return response;
     } catch (error) {
         console.error("API Error:", error);
         throw error;
@@ -1489,8 +1489,73 @@ export const FetchCompliedCountData = async (postBody) => {
 
     try {
         const response = await axios.post(url, postBody, config);
+        // console.log("API Response:", response.data); // Debugging log
+        return response;
+    } catch (error) {
+        // console.error("API Error:", error);
+        throw error;
+    }
+};
+export const FetchCompliedCountDataLCA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const url = `${URL}/getAuditActRuleQuestionsLCA`;
+
+    // console.log("Sending API Request with:", postBody); // Debugging log
+
+    try {
+        const response = await axios.post(url, postBody, config);
+        // console.log("API Response:", response.data); // Debugging log
+        return response;
+    } catch (error) {
+        // console.error("API Error:", error);
+        throw error;
+    }
+};
+export const FetchCompliedCountDataPA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const url = `${URL}/getAuditActRuleQuestionsPA`;
+
+    // console.log("Sending API Request with:", postBody); // Debugging log
+
+    try {
+        const response = await axios.post(url, postBody, config);
+        // console.log("API Response:", response.data); // Debugging log
+        return response;
+    } catch (error) {
+        // console.error("API Error:", error);
+        throw error;
+    }
+};
+
+
+export const FetchCompliedCountLCA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const url = `${URL}/CompiledStatusCountCompGetLCA`;
+
+    // console.log("Sending API Request with:", postBody); // Debugging log
+
+    try {
+        const response = await axios.post(url, postBody, config);
         console.log("API Response:", response.data); // Debugging log
-        return response;  
+        return response;
     } catch (error) {
         console.error("API Error:", error);
         throw error;
@@ -1498,3 +1563,55 @@ export const FetchCompliedCountData = async (postBody) => {
 };
 
 
+export const FetchCompliedCountPA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const url = `${URL}/CompiledStatusCountCompGetPA`;
+
+    // console.log("Sending API Request with:", postBody); // Debugging log
+
+    try {
+        const response = await axios.post(url, postBody, config);
+        console.log("API Response:", response.data); // Debugging log
+        return response;
+    } catch (error) {
+        console.error("API Error:", error);
+        throw error;
+    }
+};
+
+export const getLabourContractAgreementName = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getLabourContractAgreementName`, postBody, config); // Removed `postBody`
+};
+
+export const getPrincipleAgreementName = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getPrincipleAgreementName`, postBody, config); // Removed `postBody`
+};
+
+
+export const getContractorNames = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getContractorNamesForCompanyLogin`, postBody, config); // Removed `postBody`
+};

@@ -18,6 +18,8 @@ import DashboardTableBranchCount from "./DashboardTableBranchCount";
 import NoticeTableCount from "./NoticeTableCount";
 import ComplianceBarChart from "./ComplianceBarChart";
 import CalendarComponent from "./CalendarComponent";
+import ComplianceOfLCAaudit from "./ComplianceOfLCAaudit";
+import ComplianceOfPAaudit from "./ComplianceOfPAaudit";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -42,7 +44,7 @@ const Dashboard = () => {
         dispatch(auditCompiledStatusAll());
         dispatch(auditRegCountAll());
         dispatch(checklistCalenderGet());
-        const postBody= {isLBAOrPA:0}
+        const postBody = { isLBAOrPA: 0 }
         dispatch(auditCompiledCountAll(postBody));
         dispatch(CompanyBranchesGet());
     }, [dispatch]);
@@ -57,7 +59,7 @@ const Dashboard = () => {
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
-                                <DashboardTableBranchCount  usersInfo={usersInfo} />
+                                <DashboardTableBranchCount usersInfo={usersInfo} />
                             </div>
                         </div>
                     )}
@@ -70,6 +72,22 @@ const Dashboard = () => {
                             </div>
                         </div>
                     )}
+                    <br />
+                    {loggedInUser?.compileStatusLCA && (
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <ComplianceOfLCAaudit branchesCompany={CompanyBranchesInfo} />
+                        </div>
+                    </div>
+                    )} 
+                    <br />
+                      {loggedInUser?.compileStatusPA && ( 
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <ComplianceOfPAaudit branchesCompany={CompanyBranchesInfo} />
+                        </div>
+                    </div>
+                     )} 
                     <br />
 
                     {loggedInUser?.inspectLisStatus && (

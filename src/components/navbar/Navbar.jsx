@@ -48,6 +48,7 @@ import Checklist from "../../../src/Checklist.png";
 import Lisereg from "../../../src/Lisereg.png";
 import { Modal } from "antd";
 import { Button, Input, Space, Table, Form } from "antd";
+import AutoSliderLogo from "./AutoSliderLogo";
 // import NotificationList from './NotificationList';
 
 const drawerWidth = 200;
@@ -137,7 +138,15 @@ const Navbar = () => {
   const [updateId, setUpdateId] = useState();
   const [imageLoggedInUrl, setImageLoggedInUrl] = useState();
   const userLogin = useSelector((state) => state.userLogin);
+  // console.log("Full Redux State:", state);
+  console.log("userInfo from Redux:", userLogin?.userInfo);
   const { userInfo } = userLogin;
+  console.log("userInfo1", userInfo);
+  const { usersInfo } = useSelector((state) => state.userGet);
+  const loggedInUserId = JSON.parse(localStorage.getItem("userInfo"))?._id;
+  const loggedInUser = usersInfo?.find((user) => user._id === loggedInUserId);
+  console.log("loggedInUser", loggedInUser);
+
   const [name, setName] = useState("");
   const [userId, setUserid] = useState("");
   const getttingNotification = useSelector(
@@ -642,8 +651,14 @@ const Navbar = () => {
       </AppBar>
       {userId ? (
         <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <img
+          <DrawerHeader style={{
+            maxWidth: "100px",
+            maxHeight: "100px",
+            width: "100px",
+            height: "100px",
+            marginLeft:'55px'
+          }}>
+            {/* <img
               src={Logo}
               alt="My Image"
               style={{
@@ -652,14 +667,15 @@ const Navbar = () => {
                 width: "100px",
                 height: "100px",
               }}
-            />
-            <IconButton onClick={handleDrawerClose}>
+            /> */}
+            <AutoSliderLogo loggedInUser={loggedInUser} />
+            {/* <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (
                 <ChevronLeftIcon />
               )}
-            </IconButton>
+            </IconButton> */}
           </DrawerHeader>
           <Divider />
           <List>

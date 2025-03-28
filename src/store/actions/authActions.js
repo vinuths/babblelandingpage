@@ -12,6 +12,8 @@ import {
         dispatch({ type: USER_LOGIN_REQUEST });
     
         await login(postbody).then(response => {
+            console.log("API Response Data: Login", response.data);  // ✅ Check if companyLogo is present
+
             if (response.status === 201 && response.data.role === 'Company') {
                 dispatch({ type: USER_LOGIN_SUCCESS, payload: response.data });
                 setUser(response.data);

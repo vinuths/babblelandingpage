@@ -1,46 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Input, Button, Space, Tooltip, Modal } from 'antd';
-import { auditCompiledCountAll, stateGets, branchGetByState, auditCompiledCountDataAll } from '../../store/actions/otherActions'; // Adjust based on your project structure
+import { auditCompiledCountAllLCA, getLabourContractAgreementNames, stateGets,getContractorName, branchGetByState, auditCompiledCountDataAllLCA } from '../../store/actions/otherActions'; // Adjust based on your project structure
 import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
 import './Region1.css';
 import Loading from '../../components/layout/Loading';
 import Select from 'react-select';
 
-const ComplianceBarChart = () => {
+const ComplianceOfPAaudit = () => {
     const dispatch = useDispatch();
 
-    const branches = useSelector((state) => state.CompCountReducer?.branches || []);
-    const loadingNoticeWiseData = useSelector((state) => state.CompCountReducer?.loadingcompCount);
+    const branches = useSelector((state) => state.auditCompCountRedLCA?.branchesLCA || []);
+    const loadingPA = useSelector((state) => state.auditCompCountRedLCA?.loadingcompCountLCA);
     const getState = useSelector((state) => state.getState);
     const { loadings, stateInfo } = getState;
-    const loading = useSelector((state) => state.CompCountReducer?.loadingcompCount);
-    const error = useSelector((state) => state.CompCountReducer?.error);
+    const loading = useSelector((state) => state.auditCompCountRedLCA?.loadingcompCountLCA);
+    const error = useSelector((state) => state.auditCompCountRedLCA?.error);
     const getBranchByState = useSelector((state) => state.getBranchByState);
     const { branchByStateInfo1 } = getBranchByState;
+    console.log("branchByStateInfo1", branchByStateInfo1);
 
-    const auditCompCountDataRed = useSelector((state) => state.auditCompCountDataRed);
-    const { loadingAuditCount, branchesData } = auditCompCountDataRed;
-    console.log("branchesData", branchesData);
+    const auditCompCountDataRedLCA = useSelector((state) => state.auditCompCountDataRedLCA);
+    const { loadingAuditCountLCA, branchesData } = auditCompCountDataRedLCA;
+    const getLabourContractAgreementNameRed = useSelector((state) => state.getLabourContractAgreementNameRed);
+    const { loadingLCAN, LCAN_NameInfo } = getLabourContractAgreementNameRed;
+    console.log("LCAN_NameInfo", LCAN_NameInfo);
+    const { contractorNameInfo } = useSelector((state) => state.ContractorNameRed);
 
 
     const branchOptions = [
-        { value: "", label: "All Branches" }, // Default empty option
+        { value: "", label: "All Branches" }, // Default option
         ...(branchByStateInfo1
             ? branchByStateInfo1.map(branch => ({
-                value: branch.name,
-                label: branch.name
+                value: branch.id,   // ✅ Use `id` instead of `_id`
+                label: branch.name  // ✅ Show branch name
             }))
-            : []) // Default to an empty array if branchByStateInfo1 is undefined
+            : []
+        )
     ];
+
+
+
 
     const [selectedState, setSelectedState] = useState('');
     const [selectedBranch, setSelectedBranch] = useState('');
+    console.log("selectedBranch", selectedBranch);
+    const [selectedBranches, setSelectedBranches] = useState([]);
+
     const [startDate, setStartDate] = useState('');
-    const [isLBAOrPA, setIsLBAOrPA] = useState(0);
+    // const [isLBAOrPA, setIsLBAOrPA] = useState(0);
     const [endDate, setEndDate] = useState('');
     const [risk, setRisk] = useState('');
     const [dataSource, setDataSource] = useState([]);
+    const [contractorName, setContractorName] = useState(null);
 
     const [fetchedData, setFetchedData] = useState([]);
     const [modalVisible1, setModalVisible1] = useState(false);
@@ -69,19 +81,34 @@ const ComplianceBarChart = () => {
         setDataSource(allRegionNoticeArr);
     }, [branches])
 
+    const handleAuditTypeChange = (branchIds) => {
+        if (!branchIds || branchIds.length === 0) {
+            console.log("No branches selected, skipping API call.");
+            return; // ✅ Prevent unnecessary API call
+        }
+
+        const flattenedBranches = branchIds.flat(); // ✅ Flatten nested arrays
+        dispatch(getContractorName({ branches: flattenedBranches }));
+        // dispatch(getContractorName());
+
+    };
+
+
+
+
     useEffect(() => {
         const postBody = {
             state: selectedState || '',
-            branch: selectedBranch || '',
+            branch: selectedBranches.length > 0 ? selectedBranches : '', // ✅ Send multiple branches
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
-            isLBAOrPA: isLBAOrPA || 0,
+            contractorName: contractorName || null
         };
-        dispatch(auditCompiledCountAll(postBody));
-        dispatch(stateGets());
 
-    }, [dispatch, selectedState, selectedBranch, startDate, endDate, risk, isLBAOrPA]);
+        dispatch(auditCompiledCountAllLCA(postBody));
+        dispatch(stateGets());
+    }, [dispatch, selectedState, selectedBranches, startDate, endDate, risk, contractorName]);
 
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error}</p>;
@@ -98,12 +125,14 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
-            isLBAOrPA: isLBAOrPA || 0
+            // isLBAOrPA: isLBAOrPA || 0,
+            contractorName: contractorName || null
+
         };
 
         console.log("Updated Payload", postBody);
 
-        dispatch(auditCompiledCountDataAll(postBody))
+        dispatch(auditCompiledCountDataAllLCA(postBody))
             .then(() => {
                 // Pass branchesData instead of fetchedData
                 openModal1(branchesData);
@@ -125,12 +154,14 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
-            isLBAOrPA: isLBAOrPA || 0,
+            // isLBAOrPA: isLBAOrPA || 0,
+            contractorName: contractorName || null
+
         };
 
         console.log("Updated Payload2", postBody);
 
-        dispatch(auditCompiledCountDataAll(postBody))
+        dispatch(auditCompiledCountDataAllLCA(postBody))
             .then(() => {
                 // Pass branchesData instead of fetchedData
                 openModal2(branchesData);
@@ -152,12 +183,13 @@ const ComplianceBarChart = () => {
             fromDate: startDate || '',
             toDate: endDate || '',
             risk: risk || '',
-            isLBAOrPA: isLBAOrPA || 0,
+            // isLBAOrPA: isLBAOrPA || 0,
+            contractorName: contractorName || null
         };
 
         console.log("Updated Payload3", postBody);
 
-        dispatch(auditCompiledCountDataAll(postBody))
+        dispatch(auditCompiledCountDataAllLCA(postBody))
             .then(() => {
                 // Pass branchesData instead of fetchedData
                 openModal3(branchesData);
@@ -403,6 +435,20 @@ const ComplianceBarChart = () => {
                 ...getColumnSearchProps("compliedStatus"),
             },
             {
+                title: 'LCAgreement',
+                dataIndex: 'LCAgreement',
+                key: 'LCAgreement',
+                width: 120,
+                ...getColumnSearchProps("LCAgreement"),
+            },
+            {
+                title: 'labourContractor',
+                dataIndex: 'labourContractor',
+                key: 'labourContractor',
+                width: 120,
+                ...getColumnSearchProps("labourContractor"),
+            },
+            {
                 title: 'Risk',
                 dataIndex: 'risk',
                 key: 'risk',
@@ -426,7 +472,7 @@ const ComplianceBarChart = () => {
                 ...getColumnSearchProps("end_date"),
             },
         ];
-        if (loadingAuditCount) {
+        if (loadingAuditCountLCA) {
             return <Loading />; // Show loading spinner while data is being fetched
         }
 
@@ -444,6 +490,8 @@ const ComplianceBarChart = () => {
                     act: audit.act,
                     rule: audit.rule,
                     question: audit.question,
+                    LCAgreement: audit.LCAgreement,
+                    labourContractor: audit.labourContractor,
                     risk: audit.risk,
                     end_date: formatDateToInput(audit.end_date),
                     compliedStatus: audit.compliedStatus,
@@ -517,7 +565,7 @@ const ComplianceBarChart = () => {
             },
         ];
 
-        if (loadingAuditCount) {
+        if (loadingAuditCountLCA) {
             return <Loading />; // Show loading spinner while data is being fetched
         }
         // Check if branchesData is defined and has data
@@ -607,7 +655,7 @@ const ComplianceBarChart = () => {
                 ...getColumnSearchProps("end_date"),
             },
         ];
-        if (loadingAuditCount) {
+        if (loadingAuditCountLCA) {
             return <Loading />; // Show loading spinner while data is being fetched
         }
 
@@ -643,27 +691,12 @@ const ComplianceBarChart = () => {
             <div className="dashboard-container">
                 <div className="dashboard-header">
                     <h2 className="chart-heading">
-                        Compliance Summary
+                        LCA Compliance Summary
                     </h2>
                 </div>
                 <div className="dashboard-content">
                     <div className="filters-container">
-                        {/* <div className="filter-group">
-                            <label for="" className="form-label">Select Audit Type</label>
 
-                            <select
-                                className="form-select"
-                                name='isLBAOrPA'
-                                id='isLBAOrPA'
-                                value={isLBAOrPA}
-                                required
-                                onChange={(e) => setIsLBAOrPA(e.target.value)}
-                            >
-                                <option value={0}>Regular Audit</option>
-                                <option value={1}>Labour Contract Audit</option>
-                                <option value={2}>Principle Contract Audit</option>
-                            </select>
-                        </div> */}
                         <div className="filter-group">
                             <label htmlFor="states" className="form-label">Select State</label>
                             <select className="filter-select" id="states" value={selectedState} name="state"
@@ -685,14 +718,45 @@ const ComplianceBarChart = () => {
                                 id="branchFilter"
                                 className="filter-select"
                                 options={branchOptions}
+                                isMulti
                                 isSearchable
-                                value={branchOptions.find(option => option.value === selectedBranch) || null}
-                                onChange={(selectedOption) => setSelectedBranch(selectedOption ? selectedOption.value : '')}
-                                placeholder="Select Branch..."
-                                isDisabled={!selectedState}
-                            />
-                        </div>
+                                getOptionLabel={(option) => option.label}
+                                value={branchOptions.filter(option => selectedBranches.includes(option.value))}
+                                onChange={(selectedOptions) => {
+                                    const branchIds = selectedOptions ? selectedOptions.map(option => option.value) : [];
 
+                                    setSelectedBranches(branchIds);
+
+                                    if (branchIds.length > 0) {
+                                        handleAuditTypeChange(branchIds); // ✅ Call only if branches exist
+                                    }
+                                }}
+                                placeholder="Select Branch(es)..."
+                                isDisabled={!selectedState} // ✅ Disable when no state is selected
+                            />
+
+                        </div>
+                        <div className="filter-group">
+                            <label for="" className="form-label">Select Contractor</label>
+
+                            <select
+                                className="form-select"
+                                name='contractorName'
+                                id='contractorName'
+                                value={contractorName}
+                                required
+                                disabled={selectedBranches.length === 0} // ✅ Disable when no branch is selected
+                                onChange={(e) => {
+                                    const selectedContractorName = e.target.value;
+                                    setContractorName(selectedContractorName);
+                                }}
+                            >
+                                <option value="">Select Contractor</option> {/*onBlur={handlestateChange}*/}
+                                {contractorNameInfo != 'undefind' && contractorNameInfo?.length > 0 && contractorNameInfo.map(item =>
+                                    <option value={item._id}>{item.contractorName}</option>
+                                )};
+                            </select>
+                        </div>
                         <div className="filter-group">
                             <label htmlFor="from">Start Date:</label>
                             <input
@@ -719,7 +783,7 @@ const ComplianceBarChart = () => {
 
                 </div>
                 <div className="data-section">
-                    {loadingNoticeWiseData ? (
+                    {loadingPA ? (
                         <div className="loading-indicator">Loading...</div>
                     ) : error ? (
                         <div className="error-message">Error: {error}</div>
@@ -811,4 +875,4 @@ const ComplianceBarChart = () => {
     );
 };
 
-export default ComplianceBarChart;
+export default ComplianceOfPAaudit;
