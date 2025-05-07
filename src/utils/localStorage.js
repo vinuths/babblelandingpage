@@ -39,8 +39,10 @@ export const getUser = () =>
 }
 export const removeUser = () =>
 {   
+        sessionStorage.removeItem('userInfo');
         localStorage.removeItem('userInfo');
         localStorage.clear();
+        // window.location.reload();
         
 }
 export const isUserLoggedIn = () => {
