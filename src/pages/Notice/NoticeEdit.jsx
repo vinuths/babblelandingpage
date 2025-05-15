@@ -167,7 +167,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
             setFormData({
                 ...noticeByIDInfo,
                 department: noticeByIDInfo.department || '',
-                dateOfNotice: formatDateToInput(noticeByIDInfo.dateOfNotice || ''),
+                dateOfNotice: noticeByIDInfo.dateOfNotice || '',
                 noticeNumber: noticeByIDInfo.noticeNumber || '',
                 noticeStatus: noticeByIDInfo.noticeStatus || 0,
                 priority: noticeByIDInfo.priority || '',
@@ -378,7 +378,8 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                                 name="dateOfNotice"
                                 id="dateOfNotice"
                                 // Convert dateOfNotice to YYYY-MM-DD format
-                                value={formData?.dateOfNotice ? formatDate(formData.dateOfNotice) : ''}
+                                // value={formData?.dateOfNotice ? formatDate(formData.dateOfNotice) : ''}
+                                value={formData?.dateOfNotice ? formData?.dateOfNotice.split("T")[0] : ''}
                                 onChange={handleChange}
                                 disabled
                             />
@@ -403,7 +404,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                     <tr>
                         <td colSpan="3">
                             <label className="form-label">Dead Line for Closure:</label>
-                            <input type="date" name="closureDeadLine" disabled class="form-control" placeholder="Dead Line for Closure" value={formData?.dateOfNotice ? formatDate(formData.dateOfNotice) : ''} onChange={handleChange} />
+                            <input type="date" name="closureDeadLine" disabled class="form-control" placeholder="Dead Line for Closure" value={formData?.closureDeadLine ? formData?.closureDeadLine.split("T")[0] : ''} onChange={handleChange} />
                         </td>
                         <td colSpan="3">
                             <label className="form-label">Priority:</label>
@@ -444,6 +445,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                                 name="actionDeadline"
                                 className="form-control"
                                 value={formData?.actionDeadline ? formData?.actionDeadline.split("T")[0] : ''}  // Correct the format to YYYY-MM-DD
+                                
                                 onChange={handleChange}
                                 disabled
                             />
