@@ -60,7 +60,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
     useEffect(() => {
         // Fetch state and company data only once
         if (!stateInfo.length) dispatch(stateGets());
-        if (!companyGetTableInfo.length) dispatch(companyTableGet());
+        if (!companyGetTableInfo?.length) dispatch(companyTableGet());
     }, [dispatch, stateInfo, companyGetTableInfo]);
 
     useEffect(() => {

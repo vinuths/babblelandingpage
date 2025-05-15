@@ -372,12 +372,12 @@ const NoticeTables = () => {
             render: (record) => {
                 return (
                     <>
-                        <Link
+                        <button
                             className="text-white btn btn-primary text-decoration-none mx-2"
                             onClick={() => openInPopupForUpdate(record)}
                         >
                             View <EditOutlined />
-                        </Link>
+                        </button>
                         {/* <Link
                             className="text-white btn btn-danger text-decoration-none mx-2"
                             onClick={() => openInPopupForDelete(record)}
