@@ -303,13 +303,12 @@ const Navbar = () => {
       className: "pointer-cursor",
       onClick: (e) => onElibrary(e)
     },
-    {
-      text: "Notification",
-      icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)} />,
-      className: "pointer-cursor",
-      onClick: (e) => onNotification(e)
-    }
-    ,
+    // {
+    //   text: "Notification",
+    //   icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)} />,
+    //   className: "pointer-cursor",
+    //   onClick: (e) => onNotification(e)
+    // },
     // {
     //   text: "Lise/Regs",
     //   icon: <img src={Lisereg} alt="My Image" onClick={(e) => onLisereg(e)} />,
