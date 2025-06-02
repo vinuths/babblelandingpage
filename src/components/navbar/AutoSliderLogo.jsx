@@ -2,21 +2,21 @@ import { useState, useEffect } from "react";
 import Logo from "../../logo.jpeg";
 
 const AutoSliderLogo = ({ loggedInUser }) => {
-    console.log("loggedInUser1",loggedInUser);
+    // console.log("loggedInUser1",loggedInUser);
     
     const defaultLogo = Logo;
     const userCompanyLogo = loggedInUser?.companyLogo;
     const [currentLogo, setCurrentLogo] = useState(defaultLogo);
-    console.log("userCompanyLogo", userCompanyLogo);
+    // console.log("userCompanyLogo", userCompanyLogo);
 
     useEffect(() => {
-        console.log("Auto-slider started...");
+        // console.log("Auto-slider started...");
 
         const interval = setInterval(() => {
             setCurrentLogo((prevLogo) =>
                 prevLogo === defaultLogo ? userCompanyLogo : defaultLogo
             );
-            console.log("Switched logo:", currentLogo);
+            // console.log("Switched logo:", currentLogo);
         }, 3000); // Change every 3 seconds
 
         return () => clearInterval(interval); // Cleanup

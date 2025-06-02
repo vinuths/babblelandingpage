@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Input, Button, Space, Tooltip, Modal } from 'antd';
-import { auditCompiledCountAllLCA, getLabourContractAgreementNames, stateGets,getContractorName, branchGetByState, auditCompiledCountDataAllLCA } from '../../store/actions/otherActions'; // Adjust based on your project structure
+import { auditCompiledCountAllLCA, getLabourContractAgreementNames, stateGets, getContractorName, branchGetByState, auditCompiledCountDataAllLCA } from '../../store/actions/otherActions'; // Adjust based on your project structure
 import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
 import './Region1.css';
 import Loading from '../../components/layout/Loading';
 import Select from 'react-select';
+import { DatePicker, } from "antd";
 
+const { RangePicker } = DatePicker;
 const ComplianceOfPAaudit = () => {
     const dispatch = useDispatch();
 
@@ -53,6 +55,7 @@ const ComplianceOfPAaudit = () => {
     const [risk, setRisk] = useState('');
     const [dataSource, setDataSource] = useState([]);
     const [contractorName, setContractorName] = useState(null);
+    const [region, setRegion] = useState('');
 
     const [fetchedData, setFetchedData] = useState([]);
     const [modalVisible1, setModalVisible1] = useState(false);
@@ -60,14 +63,25 @@ const ComplianceOfPAaudit = () => {
     const [modalVisible3, setModalVisible3] = useState(false);
     const [modalPayload, setModalPayload] = useState(null);
 
+    const [periodType, setPeriodType] = useState({ label: 'Month', value: 'month' });
+    const [month, setMonth] = useState(null);
+    const [monthRange, setMonthRange] = useState([]);
 
+    const periodOptions = [
+        // { label: 'Select Period', value: '' },
+        { label: 'Month', value: 'month' },
+        { label: 'Month Range', value: 'month-range' },
+    ];
     useEffect(() => {
         let allRegionNoticeArr = [];
         if (typeof (branches) !== 'undefined' && branches?.length > 0) {
             branches.map((item, index) => {
                 allRegionNoticeArr.push({
                     key: index + 1,
+                    region: item.region,
                     branch: item.branch,
+                    contractorName: item.contractorName,
+                    contractorId: item.contractorId,
                     total: item.total,
                     CQ: item.CQ,
                     PC: item.PC,
@@ -93,22 +107,65 @@ const ComplianceOfPAaudit = () => {
 
     };
 
-
-
-
     useEffect(() => {
+        // Determine month filtering values
+        let fromMonth = '';
+        let toMonth = '';
+
+        if (periodType?.value === 'month' && month) {
+            fromMonth = month.startOf('month').format('YYYY-MM');
+            toMonth = month.endOf('month').format('YYYY-MM');
+        } else if (periodType?.value === 'month-range' && monthRange?.length === 2) {
+            fromMonth = monthRange[0].startOf('month').format('YYYY-MM');
+            toMonth = monthRange[1].endOf('month').format('YYYY-MM');
+        } else {
+            // Fallback to manual date inputs if months aren't selected
+            fromMonth = startDate || '';
+            toMonth = endDate || '';
+        }
+
         const postBody = {
             state: selectedState || '',
-            branch: selectedBranches.length > 0 ? selectedBranches : '', // ✅ Send multiple branches
-            fromDate: startDate || '',
-            toDate: endDate || '',
+            branch: selectedBranches.length > 0 ? selectedBranches : '',
+            fromMonth,
+            toMonth,
             risk: risk || '',
-            contractorName: contractorName || null
+            contractorName: contractorName || null,
+            region: region || '',
         };
 
         dispatch(auditCompiledCountAllLCA(postBody));
         dispatch(stateGets());
-    }, [dispatch, selectedState, selectedBranches, startDate, endDate, risk, contractorName]);
+    }, [
+        dispatch,
+        selectedState,
+        selectedBranches,
+        startDate,
+        endDate,
+        risk,
+        contractorName,
+        region,
+        periodType,
+        month,
+        monthRange
+    ]);
+
+
+
+    // useEffect(() => {
+    //     const postBody = {
+    //         state: selectedState || '',
+    //         branch: selectedBranches.length > 0 ? selectedBranches : '', // ✅ Send multiple branches
+    //         fromMonth: startDate || '',
+    //         toMonth: endDate || '',
+    //         risk: risk || '',
+    //         contractorName: contractorName || null,
+    //         region: region || '',
+    //     };
+
+    //     dispatch(auditCompiledCountAllLCA(postBody));
+    //     dispatch(stateGets());
+    // }, [dispatch, selectedState, selectedBranches, startDate, endDate, risk, contractorName, region]);
 
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error: {error}</p>;
@@ -116,17 +173,18 @@ const ComplianceOfPAaudit = () => {
 
     const handleCellClick = (record, column) => {
         console.log("record", record);
-        const { branch } = record; // Extract branch from clicked row
+        const { branch, contractorId } = record; // Extract branch from clicked row
 
         const postBody = {
             state: selectedState || '',
             branch: branch || '',
             column: column || '',  // Use the column passed (e.g., 'CQ')
-            fromDate: startDate || '',
-            toDate: endDate || '',
+            fromMonth: startDate || '',
+            toMonth: endDate || '',
             risk: risk || '',
             // isLBAOrPA: isLBAOrPA || 0,
-            contractorName: contractorName || null
+            contractorId: contractorId || null,
+            region: region || '',
 
         };
 
@@ -145,17 +203,18 @@ const ComplianceOfPAaudit = () => {
     };
     const handleCellClick2 = (record, column) => {
         console.log("record", record);
-        const { branch } = record; // Extract branch from clicked row
+        const { branch, contractorId } = record; // Extract branch from clicked row
 
         const postBody = {
             state: selectedState || '',
             branch: branch || '',
             column: column || '',  // Use the column passed (e.g., 'CQ')
-            fromDate: startDate || '',
-            toDate: endDate || '',
+            fromMonth: startDate || '',
+            toMonth: endDate || '',
             risk: risk || '',
             // isLBAOrPA: isLBAOrPA || 0,
-            contractorName: contractorName || null
+            contractorId: contractorId || null,
+            region: region || '',
 
         };
 
@@ -174,17 +233,19 @@ const ComplianceOfPAaudit = () => {
     };
     const handleCellClick3 = (record, column) => {
         console.log("record", record);
-        const { branch } = record; // Extract branch from clicked row
+        const { branch, contractorId } = record; // Extract branch from clicked row
 
         const postBody = {
             state: selectedState || '',
             branch: branch || '',
             column: column || '',  // Use the column passed (e.g., 'CQ')
-            fromDate: startDate || '',
-            toDate: endDate || '',
+            fromMonth: startDate || '',
+            toMonth: endDate || '',
             risk: risk || '',
             // isLBAOrPA: isLBAOrPA || 0,
-            contractorName: contractorName || null
+            contractorId: contractorId || null,
+            region: region || '',
+
         };
 
         console.log("Updated Payload3", postBody);
@@ -227,10 +288,10 @@ const ComplianceOfPAaudit = () => {
     const columns = [
         {
             title: (
-                <Tooltip title="State of the Branches">Branch</Tooltip>
+                <Tooltip title="Contractors Name">Contractors</Tooltip>
             ),
-            dataIndex: 'branch',
-            key: 'branch',
+            dataIndex: 'contractorName',
+            key: 'contractorName',
             width: 100,
             align: 'center',
 
@@ -414,6 +475,18 @@ const ComplianceOfPAaudit = () => {
                 render: (text, record, index) => index + 1,
             },
             {
+                title: 'Branch',
+                dataIndex: 'branches',
+                key: 'branches',
+                width: 150,
+                render: (branches) => {
+                    if (!branches || branches.length === 0) return "-";
+                    return branches.map((b) => b.name).join(", ");
+                },
+                // optional search
+                // ...getColumnSearchProps("branches"),  // not ideal for array search
+            },
+            {
                 title: 'Act',
                 dataIndex: 'act',
                 key: 'act',
@@ -434,20 +507,20 @@ const ComplianceOfPAaudit = () => {
                 width: 120,
                 ...getColumnSearchProps("compliedStatus"),
             },
-            {
-                title: 'LCAgreement',
-                dataIndex: 'LCAgreement',
-                key: 'LCAgreement',
-                width: 120,
-                ...getColumnSearchProps("LCAgreement"),
-            },
-            {
-                title: 'labourContractor',
-                dataIndex: 'labourContractor',
-                key: 'labourContractor',
-                width: 120,
-                ...getColumnSearchProps("labourContractor"),
-            },
+            // {
+            //     title: 'LCAgreement',
+            //     dataIndex: 'LCAgreement',
+            //     key: 'LCAgreement',
+            //     width: 120,
+            //     ...getColumnSearchProps("LCAgreement"),
+            // },
+            // {
+            //     title: 'labourContractor',
+            //     dataIndex: 'labourContractor',
+            //     key: 'labourContractor',
+            //     width: 120,
+            //     ...getColumnSearchProps("labourContractor"),
+            // },
             {
                 title: 'Risk',
                 dataIndex: 'risk',
@@ -466,10 +539,10 @@ const ComplianceOfPAaudit = () => {
 
             {
                 title: 'Month',
-                dataIndex: 'end_date',
-                key: 'end_date',
+                dataIndex: 'time_period',
+                key: 'time_period',
                 width: 120,
-                ...getColumnSearchProps("end_date"),
+                ...getColumnSearchProps("time_period"),
             },
         ];
         if (loadingAuditCountLCA) {
@@ -509,6 +582,18 @@ const ComplianceOfPAaudit = () => {
                 key: "slNo",
                 width: 10,
                 render: (text, record, index) => index + 1,
+            },
+            {
+                title: 'Branch',
+                dataIndex: 'branches',
+                key: 'branches',
+                width: 150,
+                render: (branches) => {
+                    if (!branches || branches.length === 0) return "-";
+                    return branches.map((b) => b.name).join(", ");
+                },
+                // optional search
+                // ...getColumnSearchProps("branches"),  // not ideal for array search
             },
             {
                 title: 'Act',
@@ -558,10 +643,10 @@ const ComplianceOfPAaudit = () => {
 
             {
                 title: 'Month',
-                dataIndex: 'end_date',
-                key: 'end_date',
+                dataIndex: 'time_period',
+                key: 'time_period',
                 width: 70,
-                ...getColumnSearchProps("end_date"),
+                ...getColumnSearchProps("time_period"),
             },
         ];
 
@@ -600,6 +685,18 @@ const ComplianceOfPAaudit = () => {
                 key: "slNo",
                 width: 10,
                 render: (text, record, index) => index + 1,
+            },
+            {
+                title: 'Branch',
+                dataIndex: 'branches',
+                key: 'branches',
+                width: 150,
+                render: (branches) => {
+                    if (!branches || branches.length === 0) return "-";
+                    return branches.map((b) => b.name).join(", ");
+                },
+                // optional search
+                // ...getColumnSearchProps("branches"),  // not ideal for array search
             },
             {
                 title: 'Act',
@@ -649,10 +746,10 @@ const ComplianceOfPAaudit = () => {
 
             {
                 title: 'Month',
-                dataIndex: 'end_date',
-                key: 'end_date',
+                dataIndex: 'time_period',
+                key: 'time_period',
                 width: 120,
-                ...getColumnSearchProps("end_date"),
+                ...getColumnSearchProps("time_period"),
             },
         ];
         if (loadingAuditCountLCA) {
@@ -696,20 +793,44 @@ const ComplianceOfPAaudit = () => {
                 </div>
                 <div className="dashboard-content">
                     <div className="filters-container">
-
                         <div className="filter-group">
-                            <label htmlFor="states" className="form-label">Select State</label>
-                            <select className="filter-select" id="states" value={selectedState} name="state"
+
+                            <label htmlFor="region" className="form-label">Select Region</label>
+
+                            <select
+                                className="filter-select"
+                                aria-label="Region select example"
+                                name="region"
+                                id="region"
+                                value={region}
                                 onChange={(e) => {
-                                    const selectedStateName = e.target.value;
-                                    setSelectedState(selectedStateName);
-                                    dispatch(branchGetByState({ stateIds: selectedStateName }));
-                                }} required>
-                                <option value="">All States</option>
-                                {stateInfo && stateInfo.length > 0 && stateInfo.map(item => (
-                                    <option key={item._id} value={item._id}>{item.name}</option>
-                                ))}
+                                    const selectedRegion = e.target.value;
+                                    setRegion(selectedRegion);
+                                }}
+                            >
+                                <option value="">Select Region</option>
+                                <option value="SouthRegion">South Region</option>
+                                <option value="NorthRegion">North Region</option>
+                                <option value="WestRegion">West Region</option>
+                                <option value="EastRegion">East Region</option>
                             </select>
+
+                        </div>
+                        <div>
+                            <div className="filter-group">
+                                <label htmlFor="states" className="form-label">Select State</label>
+                                <select className="filter-select" id="states" value={selectedState} name="state"
+                                    onChange={(e) => {
+                                        const selectedStateName = e.target.value;
+                                        setSelectedState(selectedStateName);
+                                        dispatch(branchGetByState({ stateIds: selectedStateName }));
+                                    }} required>
+                                    <option value="">All States</option>
+                                    {stateInfo && stateInfo.length > 0 && stateInfo.map(item => (
+                                        <option key={item._id} value={item._id}>{item.name}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
                         <div className="filter-group">
@@ -736,6 +857,9 @@ const ComplianceOfPAaudit = () => {
                             />
 
                         </div>
+                    </div>
+
+                    <div className="filters-container">
                         <div className="filter-group">
                             <label for="" className="form-label">Select Contractor</label>
 
@@ -757,7 +881,7 @@ const ComplianceOfPAaudit = () => {
                                 )};
                             </select>
                         </div>
-                        <div className="filter-group">
+                        {/* <div className="filter-group">
                             <label htmlFor="from">Start Date:</label>
                             <input
                                 type="date"
@@ -777,11 +901,51 @@ const ComplianceOfPAaudit = () => {
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
+                        </div> */}
+
+
+                        <div className="filter-group">
+                            <label htmlFor="periodType">Select Period Type:</label>
+                            <Select
+                                id="periodType"
+                                value={periodType}
+                                onChange={setPeriodType}
+                                options={periodOptions}
+                                className="filter-select"
+                            />
                         </div>
+
+
+                        {periodType.value === 'month' && (
+                            <div className="filter-group">
+                                <label>Select Month:</label>
+                                <DatePicker
+                                    picker="month"
+                                    onChange={(date) => setMonth(date)}
+                                    style={{ width: '100%' }}
+                                    placeholder="Select month"
+                                />
+                            </div>
+                        )}
+
+                        {periodType.value === 'month-range' && (
+                            <div className="filter-group">
+                                <label>Select Month Range:</label>
+                                <RangePicker
+                                    picker="month"
+                                    onChange={(dates) => setMonthRange(dates)}
+                                    style={{ width: '100%' }}
+                                    placeholder={['Start month', 'End month']}
+                                />
+                            </div>
+                        )}
+
+
                     </div>
-
-
                 </div>
+
+
+
                 <div className="data-section">
                     {loadingPA ? (
                         <div className="loading-indicator">Loading...</div>
@@ -816,7 +980,7 @@ const ComplianceOfPAaudit = () => {
                                     const averagePerCompleted = (totalComplied / totalCount * 100 || 0).toFixed(2);
 
                                     return (
-                                        <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color:'white', textAlign: 'center !important', fontSize: 'small' }}>
+                                        <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color: 'white', textAlign: 'center !important', fontSize: 'small' }}>
                                             <Table.Summary.Cell index={0} className='centered-cell' >Total</Table.Summary.Cell>
                                             <Table.Summary.Cell index={1} className='centered-cell' >{totalCount}</Table.Summary.Cell>
                                             <Table.Summary.Cell index={2} className='centered-cell' >{totalComplied}</Table.Summary.Cell>
