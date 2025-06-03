@@ -187,6 +187,7 @@ import {
   updateGeneralELibrary,
   deleteGeneralELibrary,
   getAllHolidayLibraries,
+  HelpSupportMailer,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -793,6 +794,9 @@ import {
   HOLIDAY_LIBRARY_GET_REQUEST1,
   HOLIDAY_LIBRARY_GET_SUCCESS1,
   HOLIDAY_LIBRARY_GET_FAILURE1,
+  HELP_MAIL_REQUEST,
+  HELP_MAIL_SUCCESS,
+  HELP_MAIL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -8974,3 +8978,43 @@ export const generalUpdateLibraryDelete = (postbody, id) => async (dispatch) => 
 
 
 // E-LIBRARY ENDS--------------------------------------->>>>>>>>
+export const HelpAndSupportMail = (postbody) => async (dispatch) => {
+  dispatch({ type: HELP_MAIL_REQUEST });
+
+  await HelpSupportMailer(postbody)
+    .then((response) => {
+      dispatch({
+        type: HELP_MAIL_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Submited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: HELP_MAIL_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HELP_MAIL_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};

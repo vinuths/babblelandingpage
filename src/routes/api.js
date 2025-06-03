@@ -2542,3 +2542,16 @@ export const deleteGeneralELibrary = async (id) => {
 
 
 // E-Library ENDS---------------------->>>
+export const HelpSupportMailer = async (body) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}//HelpSupportMailer`, body, config); // Using POST here
+};

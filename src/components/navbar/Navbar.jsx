@@ -41,6 +41,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../../hide.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/actions/authActions";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+
 import Logo from "../../logo.jpeg";
 // import Logo1 from "../../../src/Logo1.jpeg";
 
@@ -303,6 +305,14 @@ const Navbar = () => {
       className: "pointer-cursor",
       onClick: (e) => onElibrary(e)
     },
+
+// {
+//   text: "HelpAndSupport",
+//   icon: <HelpOutlineIcon onClick={(e) => onHelpAndSupport(e)} />,
+//   className: "pointer-cursor",
+//   onClick: (e) => onHelpAndSupport(e)
+// }
+
     // {
     //   text: "Notification",
     //   icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)} />,
@@ -365,6 +375,10 @@ const Navbar = () => {
 
     // handleDrawerClose();
   };
+
+  const onHelpAndSupport = (e) => {
+  navigate("HelpAndSupport/Formcreate");
+};    // handleDrawerClose();
 
   ///side bar drawer code end
   const onLogout = async (e) => {
@@ -770,6 +784,41 @@ const Navbar = () => {
                 );
               })}
           </List>
+          <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ flexGrow: 1 }} />
+
+                 <List sx={{ paddingLeft: open ? "8px" : "4px" }}>
+                   <ListItem
+                      key="HelpAndSupport"
+                         onClick={(e) => onHelpAndSupport(e)}
+                         sx={{
+                               width: "100%",
+                             cursor: "pointer",
+                            borderRadius: "0.2rem",
+                            paddingLeft: "10px",
+                            paddingRight: "10px",
+                             "&:hover": {
+                            backgroundColor: "#f5f5f5",
+                                  },
+                                 }}
+                             >
+                             <ListItemIcon
+                               sx={{
+                                color: "#1976d2", // icon color blue (MUI primary)
+                                 minWidth: "36px",
+                                                }}
+                             >
+                               <HelpOutlineIcon />
+                                </ListItemIcon>
+                               <ListItemText
+                               primary="Help & Support"
+                                sx={{
+                              color: "#1976d2", // text color blue
+                              opacity: open ? 1 : 0,
+                              }}
+                             />
+                              </ListItem>
+                              </List>
           <Divider />
         </Drawer>
       ) : (
