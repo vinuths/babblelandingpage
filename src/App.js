@@ -49,13 +49,22 @@ import OthersView from "./pages/NewELibrary/View/Others/OthersView";
 import CompOptions from "./pages/NewELibrary/View/ComplianceQA/CompOptions";
 import CompCatView from "./pages/NewELibrary/View/ComplianceQA/CompCategory/CompCatView";
 
+import HolidayElibraryStateDetails from "./pages/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
+
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
+
+        <Route
+          path="/holiday-elibrary-state"
+          element={<HolidayElibraryStateDetails />}
+        />
+
         <Route exact path="/" element={<Login />} />
+        <Route path="/dashboard" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
         <Route path="/dashboard" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
         {/* <Route path="/replicate" element={<Replicate />} />  */}
         <Route path="/notice" element={<PrivateRoutes><Notice /></PrivateRoutes>} />

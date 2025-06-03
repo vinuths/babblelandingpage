@@ -1859,6 +1859,15 @@ export const getHolidayLibraryPaginated = async ({ page, limit, filters }) => {
 
     return await axios.post(`${URL}/getHolidayLibraryPaginated`, body, config);
 };
+export const getAllHolidayLibraries = async (body) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllHolidayLibraries`, body, config);
+};
 
 
 export const updateHolidayLibraryStatus = async (id, status) => {

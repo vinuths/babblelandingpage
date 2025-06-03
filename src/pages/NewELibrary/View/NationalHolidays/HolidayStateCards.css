@@ -1,0 +1,42 @@
+.holiday-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 0px 15px 0px 15px;
+}
+
+.state-card {
+    background-color: #dee7f1; /* translucent dark blue */
+    border: 1px solid #013879;
+    color: #013879;
+    border-radius: 10px;
+    padding: 14px;
+    height: 100%;
+    text-align: center;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+.state-card:hover {
+    background-color: #f7f9fc; /* light background on hover */
+    color: #013879; /* blue text after hover */
+    cursor: pointer;
+    transform: scale(1.05);
+    border-color: #013879;
+}
+
+.pointer-hover {
+    cursor: pointer;
+}
+
+.state-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.effective-date {
+    font-size: 14px;
+    font-weight: 500;
+    color: inherit;
+}

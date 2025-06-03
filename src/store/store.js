@@ -163,6 +163,7 @@ import {
         policyTemplateLibraryPaginatedReducer,
         reLeagalUpdateLibraryPaginatedReducer,
         generalUpdateLibraryPaginatedReducer,
+        holidayLibraryPaginatedReducer1,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -312,6 +313,7 @@ const reducer = combineReducers({
         ruleLibGetRed: ruleLibraryPaginatedReducer,
         labourFormsLibGetReducer: labourFormsLibraryPaginatedReducer,
         holidayLibGetRed: holidayLibraryPaginatedReducer,
+        holidayLibGetRed1: holidayLibraryPaginatedReducer1,
         auditfileupload: fileUploadReducer,
         // auditfileuploadLCA: fileUploadReducerLCA,
         // auditfileuploadPA: fileUploadReducerPA,

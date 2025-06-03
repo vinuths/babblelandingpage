@@ -473,6 +473,9 @@ import {
   GENERAL_GET_REQUEST,
   GENERAL_GET_SUCCESS,
   GENERAL_GET_FAILURE,
+  HOLIDAY_LIBRARY_GET_REQUEST1,
+  HOLIDAY_LIBRARY_GET_SUCCESS1,
+  HOLIDAY_LIBRARY_GET_FAILURE1,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3009,6 +3012,39 @@ export const generalUpdateLibraryPaginatedReducer = (state = initialState_GENERA
         totalPages: action.payload.totalPages,
       };
     case GENERAL_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+
+const initialState_HOLIDAY_LIBRARY1 = {
+  loading: false,
+  data: [],
+  data1: [],
+  error: null
+};
+
+export const holidayLibraryPaginatedReducer1 = (state = initialState_HOLIDAY_LIBRARY1, action) => {
+  switch (action.type) {
+    case HOLIDAY_LIBRARY_GET_REQUEST1:
+      return { ...state, loading: true };
+    case HOLIDAY_LIBRARY_GET_SUCCESS1:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        data1: action.payload
+        // totalCount: action.payload.totalCount,
+        // currentPage: action.payload.currentPage,
+        // totalPages: action.payload.totalPages,
+      };
+    case HOLIDAY_LIBRARY_GET_FAILURE1:
       return { ...state, loading: false, error: action.payload };
     default:
       // console.log("state", state);

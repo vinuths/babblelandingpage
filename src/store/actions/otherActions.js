@@ -186,6 +186,7 @@ import {
   getGeneralELibraryPaginated,
   updateGeneralELibrary,
   deleteGeneralELibrary,
+  getAllHolidayLibraries,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -789,6 +790,9 @@ import {
   GENERAL_DELETE_REQUEST,
   GENERAL_DELETE_SUCCESS,
   GENERAL_DELETE_FAILURE,
+  HOLIDAY_LIBRARY_GET_REQUEST1,
+  HOLIDAY_LIBRARY_GET_SUCCESS1,
+  HOLIDAY_LIBRARY_GET_FAILURE1,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -7303,6 +7307,29 @@ export const holidayLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} 
       if (response.status !== 200) {
         dispatch({
           type: HOLIDAY_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+export const holidayLibraryPaginatedGet1 = (body) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_LIBRARY_GET_REQUEST1 });
+
+  await getAllHolidayLibraries(body)
+    .then((response) => {
+      dispatch({ type: HOLIDAY_LIBRARY_GET_SUCCESS1, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: HOLIDAY_LIBRARY_GET_FAILURE1,
           payload: response.data,
         });
         toast.error(response.data);
