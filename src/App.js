@@ -48,6 +48,11 @@ import WH_LR from "./pages/NewELibrary/View/WH_LR/WH_LR";
 import OthersView from "./pages/NewELibrary/View/Others/OthersView";
 import CompOptions from "./pages/NewELibrary/View/ComplianceQA/CompOptions";
 import CompCatView from "./pages/NewELibrary/View/ComplianceQA/CompCategory/CompCatView";
+import Formcreate from "./pages/HelpAndSupport/Formcreate";
+
+
+
+
 
 
 function App() {
@@ -92,6 +97,9 @@ function App() {
         <Route path="/elibrary/View/Recent_Legal_Updates" element={<PrivateRoutes><LegalUpds /></PrivateRoutes>} />
         <Route path="/elibrary/View/Others" element={<PrivateRoutes><OthersView /></PrivateRoutes>} />
         <Route path="/elibrary/View/Compliance" element={<PrivateRoutes><CompOptions /></PrivateRoutes>} />
+
+        <Route path="/HelpAndSupport/Formcreate" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
+
 
 
       </Routes>
