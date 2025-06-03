@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.0.39:8000/api/admin';
+// const URL = 'http://192.168.1.39:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -1615,3 +1615,921 @@ export const getContractorNames = async (postBody) => {
     };
     return await axios.post(`${URL}/getContractorNamesForCompanyLogin`, postBody, config); // Removed `postBody`
 };
+
+
+
+
+// E-Library STARTS---------------------->>>
+
+
+
+export const createActLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createActLibrary `, postbody, config); // Using POST here
+};
+export const getActLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getActLibraryPaginated`, body, config);
+};
+// actLibraryService.js
+
+export const updateActLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateActLibrary/${id}/status`, { status }, config);
+};
+
+export const updateActLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateActLibrary/${id}`, data, config); // Using POST here
+};
+export const deleteActLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteActLibrary/${id}`, config); // Using POST here
+};
+
+
+
+export const createRulesLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createRulesLibrary `, postbody, config); // Using POST here
+};
+export const getRulesLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getRulesLibraryPaginated`, body, config);
+};
+// actLibraryService.js
+
+export const updateRulesLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateRuleLibrary/${id}/status`, { status }, config);
+};
+
+export const updateRulesLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateRulesLibrary/${id}`, data, config); // Using POST here
+};
+export const deleteRulesLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteRulesLibrary/${id}`, config); // Using POST here
+};
+
+
+
+
+export const createLabourFormsLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createLabourFormsLibrary `, postbody, config); // Using POST here
+};
+export const getLabourFormsLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getLabourFormsLibraryPaginated`, body, config);
+};
+
+
+export const updateLabourFormsLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateLabourFormsLibrary/${id}/status`, { status }, config);
+};
+
+export const updateLabourFormsLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateLabourFormsLibrary/${id}`, data, config); // Using POST here
+};
+export const deleteLabourFormsLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteLabourFormsLibrary/${id}`, config); // Using POST here
+};
+
+
+
+export const createHolidayLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createHolidayLibrary `, postbody, config); // Using POST here
+};
+export const getHolidayLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getHolidayLibraryPaginated`, body, config);
+};
+
+
+export const updateHolidayLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateHolidayLibrary/${id}/status`, { status }, config);
+};
+
+
+export const updateHolidayLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateHolidayLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteHolidayLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteHolidayLibrary/${id}`, config); // Using POST here
+};
+
+export const createLabourWelFundLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createLabourWelFundLibrary `, postbody, config); // Using POST here
+};
+export const getLabourWelFundLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getLabourWelFundLibraryPaginated`, body, config);
+};
+
+
+export const updateLabourWelFundLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateLabourWelFund/${id}/status`, { status }, config);
+};
+
+export const updateLabourWelFundLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateLabourWelFundLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteLabourWelFundLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteLabourWelFundLibrary/${id}`, config); // Using POST here
+};
+
+
+export const createMinimumWagesLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createMinimumWagesLibrary `, postbody, config); // Using POST here
+};
+export const getMinimumWagesLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getMinimumWagesLibraryPaginated`, body, config);
+};
+
+
+export const updateMinimumWagesLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateMinimumWagesLibrary/${id}/status`, { status }, config);
+};
+
+export const updateMinimumWagesLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateMinimumWagesLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteMinimumWagesLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteMinimumWagesLibrary/${id}`, config); // Using POST here
+};
+
+
+export const createWHAndLRLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createWHAndLRLibrary `, postbody, config); // Using POST here
+};
+export const getWHAndLRLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getWHAndLRLibraryPaginated`, body, config);
+};
+
+
+export const updateWHAndLRLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateWHAndLRLibrary/${id}/status`, { status }, config);
+};
+
+export const updateWHAndLRLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateWHAndLRLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteWHAndLRLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteWHAndLRLibrary/${id}`, config); // Using POST here
+};
+
+
+export const createProfessionalTaxLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createProfessionalTaxLibrary `, postbody, config); // Using POST here
+};
+export const getProfessionalTaxLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getProfessionalTaxLibraryPaginated`, body, config);
+};
+
+
+export const updateProfessionalTaxLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateProfessionalTaxLibrary/${id}/status`, { status }, config);
+};
+
+export const updateProfessionalTaxLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateProfessionalTaxLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteProfessionalTaxLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteProfessionalTaxLibrary/${id}`, config); // Using POST here
+};
+
+
+export const createComplianceCategory = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createComplianceCategory `, postbody, config); // Using POST here
+};
+export const getComplianceCategoryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getComplianceCategoryPaginated`, body, config);
+};
+
+
+export const updateComplianceCategoryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateComplianceCategory/${id}/status`, { status }, config);
+};
+
+export const updateComplianceCategory = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateComplianceCategory/${id}`, data, config); // Using POST here
+};
+
+export const deleteComplianceCategory = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteComplianceCategory/${id}`, config); // Using POST here
+};
+
+export const ComplianceCategoryListGettting = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    return await axios.get(`${URL}/ComplianceCategoryListGettting`, config);
+}
+
+
+export const createCompQandALibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createCompQandALibrary `, postbody, config); // Using POST here
+};
+export const getCompQandALibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getCompQandALibraryPaginated`, body, config);
+};
+
+
+export const updateCompQandALibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateCompQandALibrary/${id}/status`, { status }, config);
+};
+
+export const updateCompQandALibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateCompQandALibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteCompQandALibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteCompQandALibrary/${id}`, config); // Using POST here
+};
+
+
+
+export const createPolicyTemplateLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createPolicyTemplateLibrary `, postbody, config); // Using POST here
+};
+export const getPolicyTemplateLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getPolicyTemplateLibraryPaginated`, body, config);
+};
+
+
+export const updatePolicyTemplateLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdatePolicyTemplateLibrary/${id}/status`, { status }, config);
+};
+
+export const updatePolicyTemplateLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updatePolicyTemplateLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deletePolicyTemplateLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deletePolicyTemplateLibrary/${id}`, config); // Using POST here
+};
+
+
+
+export const createReLeagalUpdateLibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createReLeagalUpdateLibrary `, postbody, config); // Using POST here
+};
+export const getReLeagalUpdateLibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getReLeagalUpdateLibraryPaginated`, body, config);
+};
+
+
+export const updateReLeagalUpdateLibraryStatus = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateReLeagalUpdateLibrary/${id}/status`, { status }, config);
+};
+
+export const updateReLeagalUpdateLibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateReLeagalUpdateLibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteReLeagalUpdateLibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteReLeagalUpdateLibrary/${id}`, config); // Using POST here
+};
+
+export const createGeneralELibrary = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createGeneralELibrary `, postbody, config); // Using POST here
+};
+export const getGeneralELibraryPaginated = async ({ page, limit, filters }) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    const body = {
+        page,
+        limit,
+        filters, // send filters in body
+    };
+
+    return await axios.post(`${URL}/getGeneralELibraryPaginated`, body, config);
+};
+
+
+export const statusUpdateGeneralELibrary = async (id, status) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.patch(`${URL}/statusUpdateGeneralLibrary/${id}/status`, { status }, config);
+};
+
+export const updateGeneralELibrary = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateGeneralELibrary/${id}`, data, config); // Using POST here
+};
+
+export const deleteGeneralELibrary = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteGeneralELibrary/${id}`, config); // Using POST here
+};
+
+
+// E-Library ENDS---------------------->>>

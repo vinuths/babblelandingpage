@@ -147,7 +147,22 @@ import {
         getPrincipleAgreementNameReducer,
         auditCompCountDataReducerLCA,
         auditCompCountDataReducerPA,
-        ContractorNameReducer
+        ContractorNameReducer,
+        
+        actLibraryPaginatedReducer,
+        ruleLibraryPaginatedReducer,
+        labourFormsLibraryPaginatedReducer,
+        holidayLibraryPaginatedReducer,
+        labourWelfareLibraryPaginatedReducer,
+        minimumWagesLibraryPaginatedReducer,
+        wHAndLRLibraryPaginatedReducer,
+        professionalTaxLibraryPaginatedReducer,
+        complianceCategoryPaginatedReducer,
+        complianceCategoryGetReducer,
+        compQandALibraryPaginatedReducer,
+        policyTemplateLibraryPaginatedReducer,
+        reLeagalUpdateLibraryPaginatedReducer,
+        generalUpdateLibraryPaginatedReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -293,6 +308,23 @@ const reducer = combineReducers({
         getLabourContractAgreementNameRed: getLabourContractAgreementNameReducer,
         getPrincipleAgreementNameRed: getPrincipleAgreementNameReducer,
         ContractorNameRed: ContractorNameReducer,
+        actLibGetRed: actLibraryPaginatedReducer,
+        ruleLibGetRed: ruleLibraryPaginatedReducer,
+        labourFormsLibGetReducer: labourFormsLibraryPaginatedReducer,
+        holidayLibGetRed: holidayLibraryPaginatedReducer,
+        auditfileupload: fileUploadReducer,
+        // auditfileuploadLCA: fileUploadReducerLCA,
+        // auditfileuploadPA: fileUploadReducerPA,
+        labourWelfareLibraryPaginatedRed: labourWelfareLibraryPaginatedReducer,
+        minimumWagesLibraryPaginatedRed: minimumWagesLibraryPaginatedReducer,
+        wHAndLRLibraryPaginatedRed: wHAndLRLibraryPaginatedReducer,
+        professionalTaxLibraryPaginatedRed: professionalTaxLibraryPaginatedReducer,
+        complianceCategoryPaginatedRed: complianceCategoryPaginatedReducer,
+        complianceCategoryGetRed: complianceCategoryGetReducer,
+        compQandALibraryPaginatedRed: compQandALibraryPaginatedReducer,
+        policyTemplateLibraryPaginatedRed: policyTemplateLibraryPaginatedReducer,
+        reLeagalUpdateLibraryPaginatedRed: reLeagalUpdateLibraryPaginatedReducer,
+        generalUpdateLibraryPaginatedRed: generalUpdateLibraryPaginatedReducer,
 
 });
 

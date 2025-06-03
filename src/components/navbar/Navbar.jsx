@@ -297,12 +297,12 @@ const Navbar = () => {
     //     icon: <CategoryIcon onClick={(e) => onCategory(e)}/>,
     //     onClick: (e) => onCategory(e)
     // },
-    // {
-    //   text: "E-Library",
-    //   icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)} />,
-    //   className: "pointer-cursor",
-    //   onClick: (e) => onElibrary(e)
-    // },
+    {
+      text: "E-Library",
+      icon: <LocalLibraryIcon onClick={(e) => onElibrary(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onElibrary(e)
+    },
     // {
     //   text: "Notification",
     //   icon: <NotificationsNoneIcon onClick={(e) => onNotification(e)} />,
@@ -329,7 +329,7 @@ const Navbar = () => {
     // handleDrawerClose();
   };
   const onElibrary = (e) => {
-    navigate("/elibrary");
+    navigate("/elibrary/View");
     // handleDrawerClose();
   };
   const onNotice = (e) => {

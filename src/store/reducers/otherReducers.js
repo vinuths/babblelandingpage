@@ -425,6 +425,54 @@ import {
   CONTRACTOR_NAME_GET_REQUEST,
   CONTRACTOR_NAME_GET_SUCCESS,
   CONTRACTOR_NAME_GET_FAIL,
+  ACT_LIBRARY_GET_REQUEST,
+  ACT_LIBRARY_GET_SUCCESS,
+  ACT_LIBRARY_GET_FAILURE,
+  RULE_LIBRARY_GET_REQUEST,
+  RULE_LIBRARY_GET_SUCCESS,
+  RULE_LIBRARY_GET_FAILURE,
+  LABOUR_FORMS_LIBRARY_GET_REQUEST,
+  LABOUR_FORMS_LIBRARY_GET_SUCCESS,
+  LABOUR_FORMS_LIBRARY_GET_FAILURE,
+  HOLIDAY_LIBRARY_GET_REQUEST,
+  HOLIDAY_LIBRARY_GET_SUCCESS,
+  HOLIDAY_LIBRARY_GET_FAILURE,
+  FILE_UPLOADS_REQUEST_LCA,
+  FILE_UPLOADS_SUCCESS_LCA,
+  FILE_UPLOADS_FAIL_LCA,
+  FILE_UPLOADS_REQUEST_PA,
+  FILE_UPLOADS_SUCCESS_PA,
+  FILE_UPLOADS_FAIL_PA,
+  LABOUR_WELFARE_LIBRARY_GET_REQUEST,
+  LABOUR_WELFARE_LIBRARY_GET_SUCCESS,
+  LABOUR_WELFARE_LIBRARY_GET_FAILURE,
+  MINIMUM_WAGE_LIBRARY_GET_REQUEST,
+  MINIMUM_WAGE_LIBRARY_GET_SUCCESS,
+  MINIMUM_WAGE_LIBRARY_GET_FAILURE,
+  WH_LR_LIBRARY_GET_REQUEST,
+  WH_LR_LIBRARY_GET_SUCCESS,
+  WH_LR_LIBRARY_GET_FAILURE,
+  PT_LIBRARY_GET_REQUEST,
+  PT_LIBRARY_GET_SUCCESS,
+  PT_LIBRARY_GET_FAILURE,
+  COMP_CAT_GET_REQUEST,
+  COMP_CAT_GET_SUCCESS,
+  COMP_CAT_GET_FAILURE,
+  COMP_LIST_CAT_GET_REQUEST,
+  COMP_LIST_CAT_GET_SUCCESS,
+  COMP_LIST_CAT_GET_FAILURE,
+  COMP_Q_A_GET_REQUEST,
+  COMP_Q_A_GET_SUCCESS,
+  COMP_Q_A_GET_FAILURE,
+  POLICY_TEMPLATE_GET_REQUEST,
+  POLICY_TEMPLATE_GET_SUCCESS,
+  POLICY_TEMPLATE_GET_FAILURE,
+  RE_LEGAL_GET_REQUEST,
+  RE_LEGAL_GET_SUCCESS,
+  RE_LEGAL_GET_FAILURE,
+  GENERAL_GET_REQUEST,
+  GENERAL_GET_SUCCESS,
+  GENERAL_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -1908,18 +1956,18 @@ export const checklistReducer1 = (state = initialState, action) => {
   }
 };
 
-export const fileUploadReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FILE_UPLOADS_REQUEST:
-      return { ...state, loading: true, error: null };
-    case FILE_UPLOADS_SUCCESS:
-      return { ...state, loading: false, data: action.payload };
-    case FILE_UPLOADS_FAIL:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+// export const fileUploadReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case FILE_UPLOADS_REQUEST:
+//       return { ...state, loading: true, error: null };
+//     case FILE_UPLOADS_SUCCESS:
+//       return { ...state, loading: false, data: action.payload };
+//     case FILE_UPLOADS_FAIL:
+//       return { ...state, loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
 
 export const auditReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -2475,6 +2523,495 @@ export const ContractorNameReducer = (state = {}, action) => {
     case CONTRACTOR_NAME_GET_FAIL:
       return { loadingContractorName: false, error: action.payload };
     default:
+      return state;
+  }
+};
+
+const initialState_ACT_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const actLibraryPaginatedReducer = (state = initialState_ACT_LIBRARY, action) => {
+  switch (action.type) {
+    case ACT_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case ACT_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case ACT_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+
+const initialState_RULE_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const ruleLibraryPaginatedReducer = (state = initialState_RULE_LIBRARY, action) => {
+  switch (action.type) {
+    case RULE_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case RULE_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case RULE_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+const initialState_LABOUR_FORMS_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const labourFormsLibraryPaginatedReducer = (state = initialState_LABOUR_FORMS_LIBRARY, action) => {
+  switch (action.type) {
+    case LABOUR_FORMS_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case LABOUR_FORMS_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case LABOUR_FORMS_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+
+
+const initialState_HOLIDAY_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const holidayLibraryPaginatedReducer = (state = initialState_HOLIDAY_LIBRARY, action) => {
+  switch (action.type) {
+    case HOLIDAY_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case HOLIDAY_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case HOLIDAY_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+
+
+export const fileUploadReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FILE_UPLOADS_REQUEST:
+      return { ...state, loading: true, error: null };
+    case FILE_UPLOADS_SUCCESS:
+      return { ...state, loading: false, data: action.payload };
+    case FILE_UPLOADS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const fileUploadReducerLCA = (state = initialState, action) => {
+  switch (action.type) {
+    case FILE_UPLOADS_REQUEST_LCA:
+      return { ...state, loading: true, error: null };
+    case FILE_UPLOADS_SUCCESS_LCA:
+      return { ...state, loading: false, data: action.payload };
+    case FILE_UPLOADS_FAIL_LCA:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const fileUploadReducerPA = (state = initialState, action) => {
+  switch (action.type) {
+    case FILE_UPLOADS_REQUEST_PA:
+      return { ...state, loading: true, error: null };
+    case FILE_UPLOADS_SUCCESS_PA:
+      return { ...state, loading: false, data: action.payload };
+    case FILE_UPLOADS_FAIL_PA:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialState_LABOUR_WELFARE_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const labourWelfareLibraryPaginatedReducer = (state = initialState_LABOUR_WELFARE_LIBRARY, action) => {
+  switch (action.type) {
+    case LABOUR_WELFARE_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case LABOUR_WELFARE_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case LABOUR_WELFARE_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+const initialState_MINIMUM_WAGE_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const minimumWagesLibraryPaginatedReducer = (state = initialState_MINIMUM_WAGE_LIBRARY, action) => {
+  switch (action.type) {
+    case MINIMUM_WAGE_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case MINIMUM_WAGE_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case MINIMUM_WAGE_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+const initialState_WH_LR_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const wHAndLRLibraryPaginatedReducer = (state = initialState_WH_LR_LIBRARY, action) => {
+  switch (action.type) {
+    case WH_LR_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case WH_LR_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case WH_LR_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+
+const initialState_PT_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+export const professionalTaxLibraryPaginatedReducer = (state = initialState_PT_LIBRARY, action) => {
+  switch (action.type) {
+    case PT_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case PT_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case PT_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+const initialState_COMP_CAT_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+
+export const complianceCategoryPaginatedReducer = (state = initialState_COMP_CAT_LIBRARY, action) => {
+  switch (action.type) {
+    case COMP_CAT_GET_REQUEST:
+      return { ...state, loading: true };
+    case COMP_CAT_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case COMP_CAT_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+export const complianceCategoryGetReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COMP_LIST_CAT_GET_REQUEST:
+      return { loading: true };
+    case COMP_LIST_CAT_GET_SUCCESS:
+      return { loading: false, compCategoryInfo: action.payload };
+    case COMP_LIST_CAT_GET_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+const initialState_COMP_Q_A_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+
+export const compQandALibraryPaginatedReducer = (state = initialState_COMP_Q_A_LIBRARY, action) => {
+  switch (action.type) {
+    case COMP_Q_A_GET_REQUEST:
+      return { ...state, loading: true };
+    case COMP_Q_A_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case COMP_Q_A_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+const initialState_POLICY_TEMPLATE_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+
+export const policyTemplateLibraryPaginatedReducer = (state = initialState_POLICY_TEMPLATE_LIBRARY, action) => {
+  switch (action.type) {
+    case POLICY_TEMPLATE_GET_REQUEST:
+      return { ...state, loading: true };
+    case POLICY_TEMPLATE_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case POLICY_TEMPLATE_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+const initialState_RE_LEGAL_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+
+export const reLeagalUpdateLibraryPaginatedReducer = (state = initialState_RE_LEGAL_LIBRARY, action) => {
+  switch (action.type) {
+    case RE_LEGAL_GET_REQUEST:
+      return { ...state, loading: true };
+    case RE_LEGAL_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case RE_LEGAL_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+const initialState_GENERAL_LIBRARY = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null
+};
+
+
+export const generalUpdateLibraryPaginatedReducer = (state = initialState_GENERAL_LIBRARY, action) => {
+  switch (action.type) {
+    case GENERAL_GET_REQUEST:
+      return { ...state, loading: true };
+    case GENERAL_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        totalCount: action.payload.totalCount,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
+      };
+    case GENERAL_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
       return state;
   }
 };

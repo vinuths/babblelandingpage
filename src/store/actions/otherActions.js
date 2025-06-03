@@ -129,7 +129,63 @@ import {
   getLabourContractAgreementName,
   FetchCompliedCountDataLCA,
   FetchCompliedCountDataPA,
-  getContractorNames
+  getContractorNames,
+
+  createActLibrary,
+  getActLibraryPaginated,
+  updateActLibrary,
+  deleteActLibrary,
+  createRulesLibrary,
+  getRulesLibraryPaginated,
+  updateRulesLibrary,
+  deleteRulesLibrary,
+  createLabourFormsLibrary,
+  getLabourFormsLibraryPaginated,
+  updateLabourFormsLibrary,
+  deleteLabourFormsLibrary,
+  createHolidayLibrary,
+  getHolidayLibraryPaginated,
+  updateHolidayLibrary,
+  deleteHolidayLibrary,
+  fileUploadInAuditQuestionLCA,
+  fileUploadInAuditQuestionPA,
+  createLabourWelFundLibrary,
+  getLabourWelFundLibraryPaginated,
+  updateLabourWelFundLibrary,
+  deleteLabourWelFundLibrary,
+  createMinimumWagesLibrary,
+  getMinimumWagesLibraryPaginated,
+  updateMinimumWagesLibrary,
+  deleteMinimumWagesLibrary,
+  createWHAndLRLibrary,
+  getWHAndLRLibraryPaginated,
+  updateWHAndLRLibrary,
+  deleteWHAndLRLibrary,
+  createProfessionalTaxLibrary,
+  getProfessionalTaxLibraryPaginated,
+  updateProfessionalTaxLibrary,
+  deleteProfessionalTaxLibrary,
+  createComplianceCategory,
+  getComplianceCategoryPaginated,
+  deleteComplianceCategory,
+  updateComplianceCategory,
+  ComplianceCategoryListGettting,
+  createCompQandALibrary,
+  getCompQandALibraryPaginated,
+  updateCompQandALibrary,
+  deleteCompQandALibrary,
+  createPolicyTemplateLibrary,
+  getPolicyTemplateLibraryPaginated,
+  updatePolicyTemplateLibrary,
+  deletePolicyTemplateLibrary,
+  createReLeagalUpdateLibrary,
+  getReLeagalUpdateLibraryPaginated,
+  updateReLeagalUpdateLibrary,
+  deleteReLeagalUpdateLibrary,
+  createGeneralELibrary,
+  getGeneralELibraryPaginated,
+  updateGeneralELibrary,
+  deleteGeneralELibrary,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -568,6 +624,171 @@ import {
   CONTRACTOR_NAME_GET_REQUEST,
   CONTRACTOR_NAME_GET_SUCCESS,
   CONTRACTOR_NAME_GET_FAIL,
+  ACT_LIBRARY_CREATE_REQUEST,
+  ACT_LIBRARY_CREATE_SUCCESS,
+  ACT_LIBRARY_CREATE_FAILURE,
+  ACT_LIBRARY_GET_FAILURE,
+  ACT_LIBRARY_GET_SUCCESS,
+  ACT_LIBRARY_GET_REQUEST,
+  ACT_LIBRARY_EDIT_REQUEST,
+  ACT_LIBRARY_EDIT_SUCCESS,
+  ACT_LIBRARY_EDIT_FAILURE,
+  ACT_LIBRARY_DELETE_REQUEST,
+  ACT_LIBRARY_DELETE_SUCCESS,
+  ACT_LIBRARY_DELETE_FAILURE,
+  RULE_LIBRARY_CREATE_REQUEST,
+  RULE_LIBRARY_CREATE_SUCCESS,
+  RULE_LIBRARY_CREATE_FAILURE,
+  RULE_LIBRARY_GET_FAILURE,
+  RULE_LIBRARY_GET_SUCCESS,
+  RULE_LIBRARY_GET_REQUEST,
+  RULE_LIBRARY_EDIT_REQUEST,
+  RULE_LIBRARY_EDIT_SUCCESS,
+  RULE_LIBRARY_EDIT_FAILURE,
+  RULE_LIBRARY_DELETE_REQUEST,
+  RULE_LIBRARY_DELETE_SUCCESS,
+  RULE_LIBRARY_DELETE_FAILURE,
+  LABOUR_FORMS_LIBRARY_CREATE_REQUEST,
+  LABOUR_FORMS_LIBRARY_CREATE_SUCCESS,
+  LABOUR_FORMS_LIBRARY_CREATE_FAILURE,
+  LABOUR_FORMS_LIBRARY_GET_REQUEST,
+  LABOUR_FORMS_LIBRARY_GET_SUCCESS,
+  LABOUR_FORMS_LIBRARY_GET_FAILURE,
+  LABOUR_FORMS_LIBRARY_EDIT_REQUEST,
+  LABOUR_FORMS_LIBRARY_EDIT_SUCCESS,
+  LABOUR_FORMS_LIBRARY_EDIT_FAILURE,
+  LABOUR_FORMS_LIBRARY_DELETE_REQUEST,
+  LABOUR_FORMS_LIBRARY_DELETE_SUCCESS,
+  LABOUR_FORMS_LIBRARY_DELETE_FAILURE,
+  HOLIDAY_LIBRARY_CREATE_REQUEST,
+  HOLIDAY_LIBRARY_CREATE_SUCCESS,
+  HOLIDAY_LIBRARY_CREATE_FAILURE,
+  HOLIDAY_LIBRARY_GET_REQUEST,
+  HOLIDAY_LIBRARY_GET_SUCCESS,
+  HOLIDAY_LIBRARY_GET_FAILURE,
+  HOLIDAY_LIBRARY_EDIT_REQUEST,
+  HOLIDAY_LIBRARY_EDIT_SUCCESS,
+  HOLIDAY_LIBRARY_EDIT_FAILURE,
+  HOLIDAY_LIBRARY_DELETE_REQUEST,
+  HOLIDAY_LIBRARY_DELETE_SUCCESS,
+  HOLIDAY_LIBRARY_DELETE_FAILURE,
+  FILE_UPLOADS_SUCCESS_LCA,
+  FILE_UPLOADS_FAIL_LCA,
+  FILE_UPLOADS_REQUEST_LCA,
+  FILE_UPLOADS_FAIL_PA,
+  FILE_UPLOADS_SUCCESS_PA,
+  FILE_UPLOADS_REQUEST_PA,
+  LABOUR_WELFARE_LIBRARY_CREATE_REQUEST,
+  LABOUR_WELFARE_LIBRARY_CREATE_SUCCESS,
+  LABOUR_WELFARE_LIBRARY_CREATE_FAILURE,
+  LABOUR_WELFARE_LIBRARY_GET_REQUEST,
+  LABOUR_WELFARE_LIBRARY_GET_SUCCESS,
+  LABOUR_WELFARE_LIBRARY_GET_FAILURE,
+  LABOUR_WELFARE_LIBRARY_EDIT_REQUEST,
+  LABOUR_WELFARE_LIBRARY_EDIT_SUCCESS,
+  LABOUR_WELFARE_LIBRARY_EDIT_FAILURE,
+  LABOUR_WELFARE_LIBRARY_DELETE_REQUEST,
+  LABOUR_WELFARE_LIBRARY_DELETE_SUCCESS,
+  LABOUR_WELFARE_LIBRARY_DELETE_FAILURE,
+  MINIMUM_WAGE_LIBRARY_CREATE_REQUEST,
+  MINIMUM_WAGE_LIBRARY_CREATE_SUCCESS,
+  MINIMUM_WAGE_LIBRARY_CREATE_FAILURE,
+  MINIMUM_WAGE_LIBRARY_GET_REQUEST,
+  MINIMUM_WAGE_LIBRARY_GET_SUCCESS,
+  MINIMUM_WAGE_LIBRARY_GET_FAILURE,
+  MINIMUM_WAGE_LIBRARY_EDIT_REQUEST,
+  MINIMUM_WAGE_LIBRARY_EDIT_SUCCESS,
+  MINIMUM_WAGE_LIBRARY_EDIT_FAILURE,
+  MINIMUM_WAGE_LIBRARY_DELETE_REQUEST,
+  MINIMUM_WAGE_LIBRARY_DELETE_SUCCESS,
+  MINIMUM_WAGE_LIBRARY_DELETE_FAILURE,
+  WH_LR_LIBRARY_CREATE_REQUEST,
+  WH_LR_LIBRARY_CREATE_SUCCESS,
+  WH_LR_LIBRARY_CREATE_FAILURE,
+  WH_LR_LIBRARY_GET_REQUEST,
+  WH_LR_LIBRARY_GET_SUCCESS,
+  WH_LR_LIBRARY_GET_FAILURE,
+  WH_LR_LIBRARY_EDIT_REQUEST,
+  WH_LR_LIBRARY_EDIT_SUCCESS,
+  WH_LR_LIBRARY_EDIT_FAILURE,
+  WH_LR_LIBRARY_DELETE_REQUEST,
+  WH_LR_LIBRARY_DELETE_SUCCESS,
+  WH_LR_LIBRARY_DELETE_FAILURE,
+  PT_LIBRARY_CREATE_REQUEST,
+  PT_LIBRARY_CREATE_SUCCESS,
+  PT_LIBRARY_CREATE_FAILURE,
+  PT_LIBRARY_GET_REQUEST,
+  PT_LIBRARY_GET_SUCCESS,
+  PT_LIBRARY_GET_FAILURE,
+  PT_LIBRARY_EDIT_REQUEST,
+  PT_LIBRARY_EDIT_SUCCESS,
+  PT_LIBRARY_EDIT_FAILURE,
+  PT_LIBRARY_DELETE_REQUEST,
+  PT_LIBRARY_DELETE_SUCCESS,
+  PT_LIBRARY_DELETE_FAILURE,
+  COMP_CAT_CREATE_REQUEST,
+  COMP_CAT_CREATE_SUCCESS,
+  COMP_CAT_CREATE_FAILURE,
+  COMP_CAT_GET_REQUEST,
+  COMP_CAT_GET_SUCCESS,
+  COMP_CAT_GET_FAILURE,
+  COMP_CAT_EDIT_REQUEST,
+  COMP_CAT_EDIT_SUCCESS,
+  COMP_CAT_EDIT_FAILURE,
+  COMP_CAT_DELETE_REQUEST,
+  COMP_CAT_DELETE_SUCCESS,
+  COMP_CAT_DELETE_FAILURE,
+  COMP_LIST_CAT_GET_REQUEST,
+  COMP_LIST_CAT_GET_SUCCESS,
+  COMP_LIST_CAT_GET_FAILURE,
+  COMP_Q_A_CREATE_REQUEST,
+  COMP_Q_A_CREATE_SUCCESS,
+  COMP_Q_A_CREATE_FAILURE,
+  COMP_Q_A_GET_REQUEST,
+  COMP_Q_A_GET_SUCCESS,
+  COMP_Q_A_GET_FAILURE,
+  COMP_Q_A_EDIT_REQUEST,
+  COMP_Q_A_EDIT_SUCCESS,
+  COMP_Q_A_EDIT_FAILURE,
+  COMP_Q_A_DELETE_REQUEST,
+  COMP_Q_A_DELETE_SUCCESS,
+  COMP_Q_A_DELETE_FAILURE,
+  POLICY_TEMPLATE_CREATE_REQUEST,
+  POLICY_TEMPLATE_CREATE_SUCCESS,
+  POLICY_TEMPLATE_CREATE_FAILURE,
+  POLICY_TEMPLATE_GET_REQUEST,
+  POLICY_TEMPLATE_GET_SUCCESS,
+  POLICY_TEMPLATE_GET_FAILURE,
+  POLICY_TEMPLATE_EDIT_REQUEST,
+  POLICY_TEMPLATE_EDIT_SUCCESS,
+  POLICY_TEMPLATE_EDIT_FAILURE,
+  POLICY_TEMPLATE_DELETE_REQUEST,
+  POLICY_TEMPLATE_DELETE_SUCCESS,
+  POLICY_TEMPLATE_DELETE_FAILURE,
+  RE_LEGAL_CREATE_REQUEST,
+  RE_LEGAL_CREATE_SUCCESS,
+  RE_LEGAL_CREATE_FAILURE,
+  RE_LEGAL_GET_REQUEST,
+  RE_LEGAL_GET_SUCCESS,
+  RE_LEGAL_GET_FAILURE,
+  RE_LEGAL_EDIT_REQUEST,
+  RE_LEGAL_EDIT_SUCCESS,
+  RE_LEGAL_EDIT_FAILURE,
+  RE_LEGAL_DELETE_REQUEST,
+  RE_LEGAL_DELETE_SUCCESS,
+  RE_LEGAL_DELETE_FAILURE,
+  GENERAL_CREATE_REQUEST,
+  GENERAL_CREATE_SUCCESS,
+  GENERAL_CREATE_FAILURE,
+  GENERAL_GET_REQUEST,
+  GENERAL_GET_SUCCESS,
+  GENERAL_GET_FAILURE,
+  GENERAL_EDIT_REQUEST,
+  GENERAL_EDIT_SUCCESS,
+  GENERAL_EDIT_FAILURE,
+  GENERAL_DELETE_REQUEST,
+  GENERAL_DELETE_SUCCESS,
+  GENERAL_DELETE_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -6579,3 +6800,2150 @@ export const getContractorName = (postBody) => async (dispatch) => {
       });
     });
 };
+
+
+
+
+// E-LIBRARY STARTS--------------------------------------->>>>>>>>
+
+
+
+
+export const actLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: ACT_LIBRARY_CREATE_REQUEST });
+
+  await createActLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: ACT_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Act E-Library is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: ACT_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: ACT_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const actLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: ACT_LIBRARY_GET_REQUEST });
+
+  await getActLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: ACT_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: ACT_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: ACT_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const actLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: ACT_LIBRARY_EDIT_REQUEST });
+
+  await updateActLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: ACT_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Act E-Library is Edited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: ACT_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: ACT_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const actLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: ACT_LIBRARY_DELETE_REQUEST });
+
+  await deleteActLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: ACT_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Act E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: ACT_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: ACT_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const ruleLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: RULE_LIBRARY_CREATE_REQUEST });
+
+  await createRulesLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: RULE_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Rule E-Library is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: RULE_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RULE_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const ruleLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: RULE_LIBRARY_GET_REQUEST });
+
+  await getRulesLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: RULE_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: RULE_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RULE_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const ruleLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: RULE_LIBRARY_EDIT_REQUEST });
+
+  await updateRulesLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: RULE_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Rule E-Library is Edited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: RULE_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RULE_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const ruleLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: RULE_LIBRARY_DELETE_REQUEST });
+
+  await deleteRulesLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: RULE_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Rule E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: RULE_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RULE_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const labourFormsLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: LABOUR_FORMS_LIBRARY_CREATE_REQUEST });
+
+  await createLabourFormsLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Form E-Library is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_FORMS_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const labourFormsLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: LABOUR_FORMS_LIBRARY_GET_REQUEST });
+
+  await getLabourFormsLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: LABOUR_FORMS_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: LABOUR_FORMS_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const labourFormsLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: LABOUR_FORMS_LIBRARY_EDIT_REQUEST });
+
+  await updateLabourFormsLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Form E-Library is Edited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_FORMS_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const labourFormsLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: LABOUR_FORMS_LIBRARY_DELETE_REQUEST });
+
+  await deleteLabourFormsLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Form E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_FORMS_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_FORMS_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const holidayLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_LIBRARY_CREATE_REQUEST });
+
+  await createHolidayLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Holiday E-Library is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: HOLIDAY_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const holidayLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_LIBRARY_GET_REQUEST });
+
+  await getHolidayLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: HOLIDAY_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: HOLIDAY_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const holidayLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_LIBRARY_EDIT_REQUEST });
+
+  await updateHolidayLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Holiday Form E-Library is Edited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: HOLIDAY_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const holidayLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_LIBRARY_DELETE_REQUEST });
+
+  await deleteHolidayLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Holiday Form E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: HOLIDAY_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+// export const fileUploadInAuditQuestion = (formData) => async (dispatch) => {
+//   dispatch({ type: FILE_UPLOADS_REQUEST });
+
+//   try {
+//     const response = await fileUploadInAuditQuestions(formData);
+
+//     if (response.status === 200 && response.data !== 409) {
+//       dispatch({ type: FILE_UPLOADS_SUCCESS, payload: response.data });
+//       toast.success("File uploaded successfully!", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else if (response.data === 409) {
+//       dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
+//       toast.error(response.data.message || "File upload failed", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else {
+//       dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
+//       toast.error(response.data, {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     }
+//   } catch (error) {
+//     dispatch({ type: FILE_UPLOADS_FAIL, payload: error.message });
+//     toast.error(error.message, {
+//       position: "bottom-right",
+//       hideProgressBar: false,
+//       progress: undefined,
+//     });
+//   }
+// };
+// export const fileUploadInAuditQuestion_LCA = (formData) => async (dispatch) => {
+//   dispatch({ type: FILE_UPLOADS_REQUEST_LCA });
+
+//   try {
+//     const response = await fileUploadInAuditQuestionLCA(formData);
+
+//     if (response.status === 200 && response.data !== 409) {
+//       dispatch({ type: FILE_UPLOADS_SUCCESS_LCA, payload: response.data });
+//       toast.success("File uploaded successfully!", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else if (response.data === 409) {
+//       dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: response.data });
+//       toast.error(response.data.message || "File upload failed", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else {
+//       dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: response.data });
+//       toast.error(response.data, {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     }
+//   } catch (error) {
+//     dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: error.message });
+//     toast.error(error.message, {
+//       position: "bottom-right",
+//       hideProgressBar: false,
+//       progress: undefined,
+//     });
+//   }
+// };
+// export const fileUploadInAuditQuestion_PA = (formData) => async (dispatch) => {
+//   dispatch({ type: FILE_UPLOADS_REQUEST_PA });
+
+//   try {
+//     const response = await fileUploadInAuditQuestionPA(formData);
+
+//     if (response.status === 200 && response.data !== 409) {
+//       dispatch({ type: FILE_UPLOADS_SUCCESS_PA, payload: response.data });
+//       toast.success("File uploaded successfully!", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else if (response.data === 409) {
+//       dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: response.data });
+//       toast.error(response.data.message || "File upload failed", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else {
+//       dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: response.data });
+//       toast.error(response.data, {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     }
+//   } catch (error) {
+//     dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: error.message });
+//     toast.error(error.message, {
+//       position: "bottom-right",
+//       hideProgressBar: false,
+//       progress: undefined,
+//     });
+//   }
+// };
+
+
+
+export const labourWelfareLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: LABOUR_WELFARE_LIBRARY_CREATE_REQUEST });
+
+  await createLabourWelFundLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Welfare is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_WELFARE_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const labourWelfareLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: LABOUR_WELFARE_LIBRARY_GET_REQUEST });
+
+  await getLabourWelFundLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: LABOUR_WELFARE_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: LABOUR_WELFARE_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const labourWelfareLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: LABOUR_WELFARE_LIBRARY_EDIT_REQUEST });
+
+  await updateLabourWelFundLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Welfare E-Library is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_WELFARE_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const labourWelfareLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: LABOUR_WELFARE_LIBRARY_DELETE_REQUEST });
+
+  await deleteLabourWelFundLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Labour Welfare E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: LABOUR_WELFARE_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_WELFARE_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const minimumWagesLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: MINIMUM_WAGE_LIBRARY_CREATE_REQUEST });
+
+  await createMinimumWagesLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: MINIMUM_WAGE_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const minimumWagesLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: MINIMUM_WAGE_LIBRARY_GET_REQUEST });
+
+  await getMinimumWagesLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: MINIMUM_WAGE_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: MINIMUM_WAGE_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const minimumWagesLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: MINIMUM_WAGE_LIBRARY_EDIT_REQUEST });
+
+  await updateMinimumWagesLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage E-Library is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: MINIMUM_WAGE_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const minimumWagesLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: MINIMUM_WAGE_LIBRARY_DELETE_REQUEST });
+
+  await deleteMinimumWagesLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: MINIMUM_WAGE_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINIMUM_WAGE_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+
+
+
+export const WHAndLRLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: WH_LR_LIBRARY_CREATE_REQUEST });
+
+  await createWHAndLRLibrary(postbody)
+    .then((response) => {
+      dispatch({
+        type: WH_LR_LIBRARY_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: WH_LR_LIBRARY_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: WH_LR_LIBRARY_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const WHAndLRLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: WH_LR_LIBRARY_GET_REQUEST });
+
+  await getWHAndLRLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: WH_LR_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: WH_LR_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: WH_LR_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const WHAndLRLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: WH_LR_LIBRARY_EDIT_REQUEST });
+
+  await updateWHAndLRLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: WH_LR_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage E-Library is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: WH_LR_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: WH_LR_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const WHAndLRLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: WH_LR_LIBRARY_DELETE_REQUEST });
+
+  await deleteWHAndLRLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: WH_LR_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Minimum Wage E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: WH_LR_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: WH_LR_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+
+
+
+// export const professionalTaxLibraryCreate = (postbody) => async (dispatch) => {
+//   dispatch({ type: PT_LIBRARY_CREATE_REQUEST });
+
+//   await createProfessionalTaxLibrary(postbody)
+//     .then((response) => {
+//       dispatch({
+//         type: PT_LIBRARY_CREATE_SUCCESS,
+//         payload: response.data,
+//       });
+//       if (response.status === 200) {
+//         toast.success("Professional Tax is created Successfully!", {
+//           position: "bottom-right",
+//           hideProgressBar: false,
+//           progress: undefined,
+//         });
+//       } else {
+//         dispatch({
+//           type: PT_LIBRARY_CREATE_FAILURE,
+//           payload: response.data,
+//         });
+//         toast.error(response.data, {
+//           position: "bottom-right",
+//           hideProgressBar: false,
+//           progress: undefined,
+//         });
+//       }
+//     })
+//     .catch((error) => {
+//       dispatch({
+//         type: PT_LIBRARY_CREATE_FAILURE,
+//         payload: error.message,
+//       });
+
+//       toast.error(error.message, {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     });
+// };
+
+export const professionalTaxLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: PT_LIBRARY_CREATE_REQUEST });
+
+  await createProfessionalTaxLibrary(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: PT_LIBRARY_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("Professional Tax is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: PT_LIBRARY_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+
+export const professionalTaxLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: PT_LIBRARY_GET_REQUEST });
+
+  await getProfessionalTaxLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: PT_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: PT_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: PT_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const professionalTaxLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: PT_LIBRARY_EDIT_REQUEST });
+
+  await updateProfessionalTaxLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: PT_LIBRARY_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Professional Tax E-Library is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: PT_LIBRARY_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: PT_LIBRARY_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const professionalTaxLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: PT_LIBRARY_DELETE_REQUEST });
+
+  await deleteProfessionalTaxLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: PT_LIBRARY_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Professional Tax E-Library is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: PT_LIBRARY_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: PT_LIBRARY_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const complianceCategoryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: COMP_CAT_CREATE_REQUEST });
+
+  await createComplianceCategory(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: COMP_CAT_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("Compliance Category created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: COMP_CAT_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+
+export const complianceCategoryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: COMP_CAT_GET_REQUEST });
+
+  await getComplianceCategoryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: COMP_CAT_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: COMP_CAT_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_CAT_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const complianceCategoryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: COMP_CAT_EDIT_REQUEST });
+
+  await updateComplianceCategory(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: COMP_CAT_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Compliance Category is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: COMP_CAT_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_CAT_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const complianceCategoryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: COMP_CAT_DELETE_REQUEST });
+
+  await deleteComplianceCategory(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: COMP_CAT_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Category is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: COMP_CAT_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_CAT_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const categoryGetComplianceList = () => async (dispatch) => {
+  dispatch({ type: COMP_LIST_CAT_GET_REQUEST });
+  try {
+    const response = await ComplianceCategoryListGettting();
+    // console.log("API Response:", response);
+
+    if (response.status === 201 && response.data) {
+      dispatch({
+        type: COMP_LIST_CAT_GET_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      dispatch({
+        type: COMP_LIST_CAT_GET_FAILURE,
+        payload: response.data || "Something went wrong",
+      });
+      toast.error(response.data || "Something went wrong", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: COMP_LIST_CAT_GET_FAILURE,
+      payload: error.message,
+    });
+
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+
+export const compQandALibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: COMP_Q_A_CREATE_REQUEST });
+
+  await createCompQandALibrary(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: COMP_Q_A_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("Compliance Category created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: COMP_Q_A_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+export const compQandALibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: COMP_Q_A_GET_REQUEST });
+
+  await getCompQandALibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: COMP_Q_A_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: COMP_Q_A_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_Q_A_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const compQandALibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: COMP_Q_A_EDIT_REQUEST });
+
+  await updateCompQandALibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: COMP_Q_A_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Compliance Category is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: COMP_Q_A_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_Q_A_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const compQandALibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: COMP_Q_A_DELETE_REQUEST });
+
+  await deleteCompQandALibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: COMP_Q_A_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Category is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: COMP_Q_A_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMP_Q_A_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+
+export const policyTemplateLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: POLICY_TEMPLATE_CREATE_REQUEST });
+
+  await createPolicyTemplateLibrary(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: POLICY_TEMPLATE_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("Policy Template created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: POLICY_TEMPLATE_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+export const policyTemplateLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: POLICY_TEMPLATE_GET_REQUEST });
+
+  await getPolicyTemplateLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: POLICY_TEMPLATE_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: POLICY_TEMPLATE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: POLICY_TEMPLATE_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const policyTemplateLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: POLICY_TEMPLATE_EDIT_REQUEST });
+
+  await updatePolicyTemplateLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: POLICY_TEMPLATE_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Policy Template is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: POLICY_TEMPLATE_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: POLICY_TEMPLATE_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const policyTemplateLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: POLICY_TEMPLATE_DELETE_REQUEST });
+
+  await deletePolicyTemplateLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: POLICY_TEMPLATE_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Policy Template is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: POLICY_TEMPLATE_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: POLICY_TEMPLATE_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const reLeagalUpdateLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: RE_LEGAL_CREATE_REQUEST });
+
+  await createReLeagalUpdateLibrary(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: RE_LEGAL_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("Recent Legal Update created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: RE_LEGAL_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+export const reLeagalUpdateLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: RE_LEGAL_GET_REQUEST });
+
+  await getReLeagalUpdateLibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: RE_LEGAL_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: RE_LEGAL_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RE_LEGAL_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const reLeagalUpdateLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: RE_LEGAL_EDIT_REQUEST });
+
+  await updateReLeagalUpdateLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: RE_LEGAL_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Recent Legal Update is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: RE_LEGAL_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RE_LEGAL_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const reLeagalUpdateLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: RE_LEGAL_DELETE_REQUEST });
+
+  await deleteReLeagalUpdateLibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: RE_LEGAL_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Recent Legal Update is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: RE_LEGAL_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RE_LEGAL_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+
+
+export const generalUpdateLibraryCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: GENERAL_CREATE_REQUEST });
+
+  await createGeneralELibrary(postbody)
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch({
+          type: GENERAL_CREATE_SUCCESS,
+          payload: response.data,
+        });
+        toast.success("General Update created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message;
+
+      dispatch({
+        type: GENERAL_CREATE_FAILURE,
+        payload: message,
+      });
+
+      // ✅ Handle 409 Conflict
+      if (status === 409) {
+        toast.error("This state already exists in Professional Tax!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        toast.error(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    });
+};
+
+export const generalUpdateLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} }) => async (dispatch) => {
+  dispatch({ type: GENERAL_GET_REQUEST });
+
+  await getGeneralELibraryPaginated({ page, limit, filters })
+    .then((response) => {
+      dispatch({ type: GENERAL_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 201) {
+        dispatch({
+          type: GENERAL_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: GENERAL_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const generalUpdateLibraryUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: GENERAL_EDIT_REQUEST });
+
+  await updateGeneralELibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: GENERAL_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("General Update is Updated Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: GENERAL_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: GENERAL_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const generalUpdateLibraryDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: GENERAL_DELETE_REQUEST });
+
+  await deleteGeneralELibrary(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: GENERAL_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("General is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: GENERAL_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: GENERAL_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+// E-LIBRARY ENDS--------------------------------------->>>>>>>>
