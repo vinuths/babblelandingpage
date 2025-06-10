@@ -10,15 +10,15 @@ const ViewElibrary = () => {
     { label: "Labour Forms", path: "/elibrary/View/Labour_Forms" },
     { label: "National & Festival Holidays", path: "/elibrary/View/National_&_Festival_Holidays" },
     
-    { label: "Labour Welfare Fund", path: "/elibrary/View/Labour_Welfare_Fund" },
-    { label: "Minimum Wages", path: "/elibrary/View/Minimum_Wages" },
-    { label: "Working Hours & Leave Rules", path: "/elibrary/View/Working_Hours_&_leave_Rules" },
-    { label: "Professional Tax", path: "/elibrary/View/Professional_Tax" },
+    // { label: "Labour Welfare Fund", path: "/elibrary/View/Labour_Welfare_Fund" },
+    // { label: "Minimum Wages", path: "/elibrary/View/Minimum_Wages" },
+    // { label: "Working Hours & Leave Rules", path: "/elibrary/View/Working_Hours_&_leave_Rules" },
+    // { label: "Professional Tax", path: "/elibrary/View/Professional_Tax" },
     
-    { label: "Compliance Q&A Hub", path: "/elibrary/View/Compliance" },
-    { label: "Policy Templates", path: "/elibrary/View/Policy_Templates" },
-    { label: "Recent Legal Updates", path: "/elibrary/View/Recent_Legal_Updates" },
-    { label: "General", path: "/elibrary/View/Others" },
+    // { label: "Compliance Q&A Hub", path: "/elibrary/View/Compliance" },
+    // { label: "Policy Templates", path: "/elibrary/View/Policy_Templates" },
+    // { label: "Recent Legal Updates", path: "/elibrary/View/Recent_Legal_Updates" },
+    // { label: "General", path: "/elibrary/View/Others" },
   ];
 
   return (

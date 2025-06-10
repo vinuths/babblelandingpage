@@ -34,11 +34,19 @@ const HolidayElibraryStateDetails = () => {
         }
     }, [dispatch, year, selectedState]);
 
+    // useEffect(() => {
+    //     if (holidayStateInfo && Array.isArray(holidayStateInfo) && holidayStateInfo.length > 0) {
+    //         setDataSource(holidayStateInfo[0]);
+    //     }
+    // }, [holidayStateInfo]);
+
     useEffect(() => {
-        if (holidayStateInfo && Array.isArray(holidayStateInfo) && holidayStateInfo.length > 0) {
-            setDataSource(holidayStateInfo[0]);
+        if (holidayStateInfo && Array.isArray(holidayStateInfo)) {
+            setDataSource(holidayStateInfo[0] || null); // Set null if no data
         }
     }, [holidayStateInfo]);
+
+
 
     const columns = [
         {
@@ -140,14 +148,23 @@ const HolidayElibraryStateDetails = () => {
                     </a>
                 )}
             </div>
-
-            <Table
+            {dataSource === null ? (
+                <div className="alert alert-warning text-center">
+                    No holiday data available for the selected state and year.
+                </div>
+            ) : (<Table
                 columns={columns}
                 dataSource={dataSource?.holidayDetails || []}
                 rowKey={(record, index) => index}
                 pagination={false}
                 bordered
-            />
+            // locale={{
+            //     emptyText: "No Holiday Data Available",
+            // }}
+            />)}
+
+
+
         </div>
     );
 };
