@@ -23,7 +23,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
 
   const [selectedRegion, setSelectedRegion] = useState('AllRegions');
-  const [selectedFieldName, setSelectedFieldName] = useState('SE');
+  const [selectedFieldName, setSelectedFieldName] = useState('');
 
   const [selectedState, setSelectedState] = useState('Andhra Pradesh');
   const [selectedLicense, setSelectedLicense] = useState('isTradeLicense');
@@ -423,7 +423,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB Acknowlegement</a> : 'Not Uploaded'
         ),
       });
-    } 
+    }
 
 
     if (selectedFieldName === 'isTradeLicense') {
@@ -556,7 +556,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
         },
         sortDirections: ["descend", "ascend"],
       });
-    } 
+    }
     if (loadingDashStateWiseData) {
       return <Loading />; // Show loading spinner while data is being fetched
     }
@@ -695,7 +695,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB Acknowlegement</a> : 'Not Uploaded'
         ),
       });
-    } 
+    }
     if (loadingDashStateWiseData) {
       return <Loading />; // Show loading spinner while data is being fetched
     }
@@ -878,7 +878,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
           file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB License</a> : 'Not Uploaded'
         ),
       });
-    } 
+    }
 
 
     if (selectedFieldName === 'isTradeLicense') {
@@ -1011,7 +1011,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
         },
         sortDirections: ["descend", "ascend"],
       });
-    } 
+    }
 
     // Adjust columns if the payload fieldName is 'total_count'
     if (modalPayload && modalPayload.fieldName === 'total_count') {
@@ -1201,7 +1201,33 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
 
 
+  useEffect(() => {
+    if (loggedInUser) {
+      const licenseMap = [
+        { key: 'SE', condition: loggedInUser.isSEStatus },
+        { key: 'Factory', condition: loggedInUser.isFactoryStatus },
+        { key: 'isNightShiftPermission', condition: loggedInUser.isNightShiftPermissionStatus },
+        { key: 'isOTPermission', condition: loggedInUser.isOTPermissionStatus },
+        { key: 'isWeeklyOffExemption', condition: loggedInUser.isWeeklyOffExemptionStatus },
+        { key: 'isTradeLicense', condition: loggedInUser.isTradeLicenseStatus },
+        { key: 'isPF', condition: loggedInUser.isPFStatus },
+        { key: 'isESI', condition: loggedInUser.isESIStatus },
+        { key: 'isLWF', condition: loggedInUser.isLWFStatus },
+        { key: 'isPTR', condition: loggedInUser.isPTRStatus },
+        { key: 'isPTE', condition: loggedInUser.isPTEStatus },
+        { key: 'isMSME', condition: loggedInUser.isMSMEStatus },
+        { key: 'isBOCW', condition: loggedInUser.isBOCWStatus },
+        { key: 'isISMW', condition: loggedInUser.isISMWStatus },
+        { key: 'isFASSAI', condition: loggedInUser.isFASSAIStatus },
+        { key: 'isSB', condition: loggedInUser.isSBStatus },
+      ];
 
+      const firstAvailable = licenseMap.find(item => item.condition)?.key;
+      if (firstAvailable) {
+        setSelectedFieldName(firstAvailable);
+      }
+    }
+  }, [loggedInUser]);
 
 
 
@@ -1320,7 +1346,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
       align: "center",
     },
   ];
-  
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
@@ -1355,54 +1381,22 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
               value={selectedFieldName}
               onChange={handleFieldNameChange}
             >
-              {loggedInUser?.isSEStatus && (
-                <option value="SE">S&E License</option>
-              )}
-              {loggedInUser?.isFactoryStatus && (
-                <option value="Factory">Factory License</option>
-              )}
-              {loggedInUser?.isNightShiftPermissionStatus && (
-                <option value="isNightShiftPermission">Night Shift Permission</option>
-              )}
-              {loggedInUser?.isOTPermissionStatus && (
-                <option value="isOTPermission">OT Permission</option>
-              )}
-              {loggedInUser?.isWeeklyOffExemptionStatus && (
-                <option value="isWeeklyOffExemption">Weekly Off Permission</option>
-              )}
-              {loggedInUser?.isTradeLicenseStatus && (
-                <option value="isTradeLicense">Trade License</option>
-              )}
-              {loggedInUser?.isPFStatus && (
-                <option value="isPF">P F</option>
-              )}
-              {loggedInUser?.isESIStatus && (
-                <option value="isESI">E S I</option>
-              )}
-              {loggedInUser?.isLWFStatus && (
-                <option value="isLWF">L W F</option>
-              )}
-              {loggedInUser?.isPTRStatus && (
-                <option value="isPTR">P T R</option>
-              )}
-              {loggedInUser?.isPTEStatus && (
-                <option value="isPTE">P T E</option>
-              )}
-              {loggedInUser?.isMSMEStatus && (
-                <option value="isMSME">MSME</option>
-              )}
-              {loggedInUser?.isBOCWStatus && (
-                <option value="isBOCW">BOCW</option>
-              )}
-              {loggedInUser?.isISMWStatus && (
-                <option value="isISMW">ISMW</option>
-              )}
-              {loggedInUser?.isFASSAIStatus && (
-                <option value="isFASSAI">FASSAI</option>
-              )}
-              {loggedInUser?.isSBStatus && (
-                <option value="isSB">S B</option>
-              )}
+              {loggedInUser?.isSEStatus && <option value="SE">S&E License</option>}
+              {loggedInUser?.isFactoryStatus && <option value="Factory">Factory License</option>}
+              {loggedInUser?.isNightShiftPermissionStatus && <option value="isNightShiftPermission">Night Shift Permission</option>}
+              {loggedInUser?.isOTPermissionStatus && <option value="isOTPermission">OT Permission</option>}
+              {loggedInUser?.isWeeklyOffExemptionStatus && <option value="isWeeklyOffExemption">Weekly Off Permission</option>}
+              {loggedInUser?.isTradeLicenseStatus && <option value="isTradeLicense">Trade License</option>}
+              {loggedInUser?.isPFStatus && <option value="isPF">P F</option>}
+              {loggedInUser?.isESIStatus && <option value="isESI">E S I</option>}
+              {loggedInUser?.isLWFStatus && <option value="isLWF">L W F</option>}
+              {loggedInUser?.isPTRStatus && <option value="isPTR">P T R</option>}
+              {loggedInUser?.isPTEStatus && <option value="isPTE">P T E</option>}
+              {loggedInUser?.isMSMEStatus && <option value="isMSME">MSME</option>}
+              {loggedInUser?.isBOCWStatus && <option value="isBOCW">BOCW</option>}
+              {loggedInUser?.isISMWStatus && <option value="isISMW">ISMW</option>}
+              {loggedInUser?.isFASSAIStatus && <option value="isFASSAI">FASSAI</option>}
+              {loggedInUser?.isSBStatus && <option value="isSB">S B</option>}
             </select>
           </div>
         </div>
@@ -1442,7 +1436,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
                 const averagePerCompleted = ((totalObtained / totalApplicable) * 100 || 0).toFixed(2);
 
                 return (
-                  <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color:'white', textAlign: 'center', fontSize: 'small' }}>
+                  <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color: 'white', textAlign: 'center', fontSize: 'small' }}>
                     <Table.Summary.Cell className='centered-cell' index={0} >Total</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={1} >{totalCount}</Table.Summary.Cell>
                     <Table.Summary.Cell className='centered-cell' index={7} >{totalNotApplicable}</Table.Summary.Cell>
@@ -1497,7 +1491,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
               title="Branch Details"
               visible={modalVisibleAFR}
               onCancel={closeModalAFR}
-              style={{overflow: 'hidden'}}
+              style={{ overflow: 'hidden' }}
               footer={null}
               width={900}
               bodyStyle={{ height: '300px', overflowY: 'hidden' }}  // Set height of the body content
