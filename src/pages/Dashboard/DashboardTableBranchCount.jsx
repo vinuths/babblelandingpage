@@ -36,6 +36,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleEXP, setModalVisibleEXP] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisibleAFR, setModalVisibleAFR] = useState(false);
@@ -171,6 +172,15 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
     // console.log("fetchedData", fetchedData);
 
   };
+  const openModalEXP = (payload, fetchedData) => {
+    setModalPayload(payload); // Save the payload to state
+    // console.log("setModalPayload", payload);
+
+    setModalVisibleEXP(true); // Open the modal
+    setFetchedData(fetchedData)
+    // console.log("fetchedData", fetchedData);
+
+  };
   const openModal1 = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
     // console.log("setModalPayload", payload);
@@ -203,6 +213,10 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
   // Close the modal
   const closeModal = () => {
     setModalVisible(false);
+    setModalPayload(null); // Clear payload after modal close
+  };
+  const closeModalEXP = () => {
+    setModalVisibleEXP(false);
     setModalPayload(null); // Clear payload after modal close
   };
   // Close the modal
@@ -1045,6 +1059,370 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
       />
     );
   };
+  const renderModalContentEXP = () => {
+    // Default columns for the table
+    let columns = [
+      {
+        title: 'Branch Name',
+        dataIndex: 'name',
+        key: 'name',
+        ...getColumnSearchProps("name"),
+      },
+      {
+        title: 'Branch State',
+        dataIndex: ['branchstate', 'name'], // Access nested object property
+        key: 'branchstate',
+        ...getColumnSearchProps("branchstate"),
+
+      },
+      {
+        title: 'Branch District',
+        dataIndex: 'branchdistrict',
+        key: 'branchdistrict',
+        ...getColumnSearchProps("branchdistrict"),
+
+      },
+    ];
+
+    // Dynamic column mapping based on the selected field name
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'View Trade License',
+        dataIndex: 'licenseimageTL', // This will contain the file URL or path
+        key: 'licenseimageTL',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Trade License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E Permission',
+        dataIndex: 'licenseimage',
+        key: 'licenseimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E Permission</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'View NightShift Permission',
+        dataIndex: 'licenseimageNSP',
+        key: 'licenseimageNSP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View NightShift Permission</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'View OT Permission',
+        dataIndex: 'licenseimageOTP',
+        key: 'licenseimageOTP',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View OT Permission</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'View Weekly Off Exemption',
+        dataIndex: 'licenseimageWOE',
+        key: 'licenseimageWOE',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Weekly Off Exemption</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'View Factory License',
+        dataIndex: 'licenseimage1',
+        key: 'licenseimage1',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View Factory License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'View S&E License',
+        dataIndex: 'licenseimage',
+        key: 'licenseimage',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View S&E License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'View BOCW License',
+        dataIndex: 'licenseimageBOCW',
+        key: 'licenseimageBOCW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View BOCW License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isISMW') {
+      columns.push({
+        title: 'View ISMW License',
+        dataIndex: 'licenseimageISMW',
+        key: 'licenseimageISMW',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View ISMW License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'View FASSAI License',
+        dataIndex: 'licenseimageFASSAI',
+        key: 'licenseimageFASSAI',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View FASSAI License</a> : 'Not Uploaded'
+        ),
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'View SB License',
+        dataIndex: 'licenseimageSB',
+        key: 'licenseimageSB',
+        render: (file) => (
+          file ? <a href={file} target="_blank" rel="noopener noreferrer">View SB License</a> : 'Not Uploaded'
+        ),
+      });
+    }
+
+
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'DOE Trade License',
+        dataIndex: 'doeTL',
+        key: 'doeTL',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeTL ? new Date(a.doeTL).getTime() : 0;
+          const dateB = b.doeTL ? new Date(b.doeTL).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'DOE NightShift Permission',
+        dataIndex: 'doeNSP',
+        key: 'doeNSP',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeNSP ? new Date(a.doeNSP).getTime() : 0;
+          const dateB = b.doeNSP ? new Date(b.doeNSP).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'DOE OT Permission',
+        dataIndex: 'doeOTP',
+        key: 'doeOTP',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeOTP ? new Date(a.doeOTP).getTime() : 0;
+          const dateB = b.doeOTP ? new Date(b.doeOTP).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'DOE Weekly Off Exemption',
+        dataIndex: '',
+        key: 'doeWOE',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeWOE ? new Date(a.doeWOE).getTime() : 0;
+          const dateB = b.doeWOE ? new Date(b.doeWOE).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'DOE Factory License',
+        dataIndex: 'doe1',
+        key: 'doe1',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doe1 ? new Date(a.doe1).getTime() : 0;
+          const dateB = b.doe1 ? new Date(b.doe1).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'DOE S&E License',
+        dataIndex: 'doe',
+        key: 'doe',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doe ? new Date(a.doe).getTime() : 0;
+          const dateB = b.doe ? new Date(b.doe).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'DOE BOCW License',
+        dataIndex: 'doeBOCW',
+        key: 'doeBOCW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeBOCW ? new Date(a.doeBOCW).getTime() : 0;
+          const dateB = b.doeBOCW ? new Date(b.doeBOCW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'ISMW') {
+      columns.push({
+        title: 'DOE ISMW License',
+        dataIndex: 'doeISMW',
+        key: 'doeISMW',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeISMW ? new Date(a.doeISMW).getTime() : 0;
+          const dateB = b.doeISMW ? new Date(b.doeISMW).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'DOE FASSAI License',
+        dataIndex: 'doeFASSAI',
+        key: 'doeFASSAI',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeFASSAI ? new Date(a.doeFASSAI).getTime() : 0;
+          const dateB = b.doeFASSAI ? new Date(b.doeFASSAI).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'DOE SB License',
+        dataIndex: 'doeSB',
+        key: 'doeSB',
+        render: (date) => (date ? new Date(date).toLocaleDateString() : 'N/A'), // Format date
+        sorter: (a, b) => {
+          const dateA = a.doeSB ? new Date(a.doeSB).getTime() : 0;
+          const dateB = b.doeSB ? new Date(b.doeSB).getTime() : 0;
+          return dateA - dateB;
+        },
+        sortDirections: ["descend", "ascend"],
+      });
+    }
+
+    if (selectedFieldName === 'isTradeLicense') {
+      columns.push({
+        title: 'Trade Remarks',
+        dataIndex: 'licenseremarkTL',
+        key: 'licenseremarkTL',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'SE') {
+      columns.push({
+        title: 'S&E Remarks',
+        dataIndex: 'licenseremark',
+        key: 'licenseremark',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isNightShiftPermission') {
+      columns.push({
+        title: 'NightShift Remarks',
+        dataIndex: 'licenseremarkNSP',
+        key: 'licenseremarkNSP',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isOTPermission') {
+      columns.push({
+        title: 'OT Remarks',
+        dataIndex: 'licenseremarkOTP',
+        key: 'licenseremarkOTP',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isWeeklyOffExemption') {
+      columns.push({
+        title: 'Weekly Off Remarks',
+        dataIndex: 'licenseremarkWOE',
+        key: 'licenseremarkWOE',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'Factory') {
+      columns.push({
+        title: 'Factory Remarks',
+        dataIndex: 'licenseremark1',
+        key: 'licenseremark1',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isBOCW') {
+      columns.push({
+        title: 'BOCW Remarks',
+        dataIndex: 'licenseremarkBOCW',
+        key: 'licenseremarkBOCW',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isISMW') {
+      columns.push({
+        title: 'ISMW Remarks',
+        dataIndex: 'licenseremarkISMW',
+        key: 'licenseremarkISMW',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isFASSAI') {
+      columns.push({
+        title: 'FASSAI Remarks',
+        dataIndex: 'licenseremarkFASSAI',
+        key: 'licenseremarkFASSAI',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    } else if (selectedFieldName === 'isSB') {
+      columns.push({
+        title: 'SB Remarks',
+        dataIndex: 'licenseremarkSB',
+        key: 'licenseremarkSB',
+        render: (text) => text ? text : <span style={{ color: 'red', fontStyle: 'italic' }}>No Remarks</span>,
+      });
+    }
+
+    // Adjust columns if the payload fieldName is 'total_count'
+    if (modalPayload && modalPayload.fieldName === 'total_count') {
+      columns = [
+        {
+          title: 'Branch Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+      ];
+    }
+
+    if (loadingDashStateWiseData) {
+      return <Loading />; // Show loading spinner while data is being fetched
+    }
+
+    // Check if modalPayload (DashStateWiseDataInfo) is defined and has data
+    if (!fetchedData || fetchedData.length === 0) {
+      return <p>No data available.</p>;
+    }
+
+    return (
+      <Table
+        columns={columns}
+        dataSource={fetchedData.map((item) => ({
+          ...item,
+          key: item._id, // Set the unique key for each row
+        }))}
+        pagination={{ pageSize: 5 }} // Enable pagination with 5 rows per page
+        scroll={{ y: 500, x: 800 }}
+      />
+    );
+  };
 
 
 
@@ -1175,6 +1553,34 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
     // Optionally, you can still open the modal here if needed with a default payload or other logic
     openModal(dataSource1);
+    console.log("Initial Payload", payload);
+  };
+  const handleCellClickEXP = (record, column) => {
+    console.log("record", record);
+    const { state, license, region } = record;
+
+    const payload = {
+      state: state,
+      fieldName: column,
+      license: license,
+      region: region,
+
+    };
+
+    // const dispatch = useDispatch();
+
+    // Dispatch the action to fetch data and then open modal with the fetched data
+    dispatch(DashboardBranchGet(state, column, license, region))
+      .then((fetchedData) => {
+        openModalEXP(fetchedData, payload); // Pass the fetched data to openModal
+        setFetchedData(fetchedData, payload)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+
+    // Optionally, you can still open the modal here if needed with a default payload or other logic
+    openModalEXP(dataSource1);
     console.log("Initial Payload", payload);
   };
 
@@ -1335,7 +1741,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
       key: "license_experied",
       align: "center",
       onCell: (record) => ({
-        onClick: record.license_experied && record.license_experied !== "0" ? () => handleCellClick(record, "license_experied") : undefined,
+        onClick: record.license_experied && record.license_experied !== "0" ? () => handleCellClickEXP(record, "license_experied") : undefined,
         className: record.license_experied && record.license_experied !== "0" ? "clickable-cell" : "",
       }),
     },
@@ -1463,6 +1869,17 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
               width={900}
             >
               {renderModalContent()}
+            </Modal>
+            <Modal
+              className='dashboard_wrapper container'
+              title="Branch Details"
+              visible={modalVisibleEXP}
+              pageSize
+              onCancel={closeModalEXP}
+              footer={null}
+              width={900}
+            >
+              {renderModalContentEXP()}
             </Modal>
             <Modal
               className="dashboard_wrapper container"
