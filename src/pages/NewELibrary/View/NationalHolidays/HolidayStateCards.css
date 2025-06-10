@@ -5,21 +5,90 @@
     padding: 0px 15px 0px 15px;
 }
 
-.state-card {
-    background-color: #dee7f1; /* translucent dark blue */
-    border: 1px solid #013879;
+.holiday-container1 {
+    max-width: 1200px;
+    margin-left: 260px;
+    margin-top: 100px;
+    background-color: white;
+    padding: 20px 25px 20px 25px;
+}
+
+.headBack {
+    display: flex;
+    gap: 300px;
+}
+
+.stateFilter {
+    display: flex;
+    gap: 600px;
+}
+
+.stateFilter1 {
+    display: flex;
+
+}
+
+.stateFilter1 select {
+    padding: 8px 14px;
+    border-radius: 8px;
+    /* border: 1px solid #dcdfe6; */
+    background-color: #ffffff;
+    font-size: 14px;
+    height: 50px;
+    /* min-width: 230px; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative;
+    top: -13px;
+    left: 5px;
     color: #013879;
-    border-radius: 10px;
-    padding: 14px;
+    border: #013879 1px solid;
+    /* width: 300px; */
+}
+
+
+/* .ant-table-thead > tr > th {
+    background-color: #013879 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+
+.ant-table {
+  border: 0.5px solid #013879;
+  border-radius: 10px; 
+} */
+
+/* Optional: Remove border-collapse overlap */
+/* .ant-table-wrapper .ant-table {
+  border-spacing: 0;
+  border-collapse: separate;
+} */
+.holiDates {
+    display: flex;
+    gap: 750px;
+}
+
+.state-card {
+    width: 100%;
     height: 100%;
+    padding: 30px 20px;
+    background-color: white;
     text-align: center;
-    transform: scale(1.02);
-    transition: all 0.3s ease;
+    color: #013879;
+    font-size: 17px;
+    font-weight: 600;
+    border: 2px solid #013879;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 .state-card:hover {
-    background-color: #f7f9fc; /* light background on hover */
-    color: #013879; /* blue text after hover */
+    background-color: #d0def5;
+    /* light background on hover */
+    color: #022046;
+    /* blue text after hover */
     cursor: pointer;
     transform: scale(1.05);
     border-color: #013879;
@@ -27,6 +96,12 @@
 
 .pointer-hover {
     cursor: pointer;
+}
+
+.headLine {
+    text-decoration: underline;
+    color: #013879;
+
 }
 
 .state-name {

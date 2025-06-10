@@ -476,6 +476,12 @@ import {
   HOLIDAY_LIBRARY_GET_REQUEST1,
   HOLIDAY_LIBRARY_GET_SUCCESS1,
   HOLIDAY_LIBRARY_GET_FAILURE1,
+  HOLIDAY_STATE_GET_FAILURE,
+  HOLIDAY_STATE_GET_REQUEST,
+  HOLIDAY_STATE_GET_SUCCESS,
+  LABOUR_WELFARE_STATE_GET_REQUEST,
+  LABOUR_WELFARE_STATE_GET_SUCCESS,
+  LABOUR_WELFARE_STATE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3048,6 +3054,35 @@ export const holidayLibraryPaginatedReducer1 = (state = initialState_HOLIDAY_LIB
       return { ...state, loading: false, error: action.payload };
     default:
       // console.log("state", state);
+      return state;
+  }
+};
+
+
+
+export const holidayLibraryStateWiseReducer = (state = {}, action) => {
+  switch (action.type) {
+    case HOLIDAY_STATE_GET_REQUEST:
+      return { loadingHoliday: true };
+    case HOLIDAY_STATE_GET_SUCCESS:
+      return { loadingHoliday: false, holidayStateInfo: action.payload };
+    case HOLIDAY_STATE_GET_FAILURE:
+      return { loadingHoliday: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+export const labourWelfareLibraryStateWiseReducer = (state = {}, action) => {
+  switch (action.type) {
+    case LABOUR_WELFARE_STATE_GET_REQUEST:
+      return { loadingLabourWelfare: true };
+    case LABOUR_WELFARE_STATE_GET_SUCCESS:
+      return { loadingLabourWelfare: false, LabourWelfareStateInfo: action.payload };
+    case LABOUR_WELFARE_STATE_GET_FAILURE:
+      return { loadingLabourWelfare: false, error: action.payload };
+    default:
       return state;
   }
 };

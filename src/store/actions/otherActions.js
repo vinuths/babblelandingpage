@@ -188,6 +188,8 @@ import {
   deleteGeneralELibrary,
   getAllHolidayLibraries,
   HelpSupportMailer,
+  getAllHolidayByStateLibraries,
+  getAllLabourWelfareByStateLibraries,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -797,6 +799,12 @@ import {
   HELP_MAIL_REQUEST,
   HELP_MAIL_SUCCESS,
   HELP_MAIL_FAILURE,
+  HOLIDAY_STATE_GET_FAILURE,
+  HOLIDAY_STATE_GET_REQUEST,
+  HOLIDAY_STATE_GET_SUCCESS,
+  LABOUR_WELFARE_STATE_GET_REQUEST,
+  LABOUR_WELFARE_STATE_GET_SUCCESS,
+  LABOUR_WELFARE_STATE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -7324,6 +7332,7 @@ export const holidayLibraryPaginatedGet = ({ page = 1, limit = 10, filters = {} 
       toast.error(error.message);
     });
 };
+
 export const holidayLibraryPaginatedGet1 = (body) => async (dispatch) => {
   dispatch({ type: HOLIDAY_LIBRARY_GET_REQUEST1 });
 
@@ -9016,5 +9025,54 @@ export const HelpAndSupportMail = (postbody) => async (dispatch) => {
         hideProgressBar: false,
         progress: undefined,
       });
+    });
+};
+
+export const holidayLibraryStateWise = (postBody) => async (dispatch) => {
+  dispatch({ type: HOLIDAY_STATE_GET_REQUEST });
+
+  await getAllHolidayByStateLibraries(postBody)
+    .then((response) => {
+      dispatch({ type: HOLIDAY_STATE_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: HOLIDAY_STATE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: HOLIDAY_STATE_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+
+export const labourWelfareLibraryStateWise = (postBody) => async (dispatch) => {
+  dispatch({ type: LABOUR_WELFARE_STATE_GET_REQUEST });
+
+  await getAllLabourWelfareByStateLibraries(postBody)
+    .then((response) => {
+      dispatch({ type: LABOUR_WELFARE_STATE_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: LABOUR_WELFARE_STATE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: LABOUR_WELFARE_STATE_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
     });
 };

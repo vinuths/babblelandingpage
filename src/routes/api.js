@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.39:8000/api/admin';
+// const URL = 'http://192.168.1.27:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -2554,4 +2554,25 @@ export const HelpSupportMailer = async (body) => {
 
     // Send a POST request with the IDs in the body
     return await axios.post(`${URL}//HelpSupportMailer`, body, config); // Using POST here
+};
+
+
+export const getAllHolidayByStateLibraries = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllHolidayByStateLibraries`, postBody, config);
+};
+
+export const getAllLabourWelfareByStateLibraries = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllLabourWelfareByStateLibraries`, postBody, config);
 };

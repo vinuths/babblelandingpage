@@ -18,7 +18,7 @@ dayjs.extend(customParseFormat);
 
 const { RangePicker } = DatePicker;
 
-const HolidayElibraryTable = ({ localPage, setLocalPage }) => {
+const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
     const dispatch = useDispatch();
 
     const { data, totalCount, loading } = useSelector(
@@ -273,15 +273,15 @@ const HolidayElibraryTable = ({ localPage, setLocalPage }) => {
             {/* {loading ? (
                 <Spin size="large" className="d-flex justify-content-center" />
             ) : data && data.length > 0 ? ( */}
-                <div className="d-flex justify-content-center mt-3">
-                    <Pagination
-                        current={localPage}
-                        total={totalCount}
-                        pageSize={pageSize}
-                        onChange={(page) => setLocalPage(page)}
-                        showSizeChanger={false}
-                    />
-                </div>
+            <div className="d-flex justify-content-center mt-3">
+                <Pagination
+                    current={localPage}
+                    total={totalCount}
+                    pageSize={pageSize}
+                    onChange={(page) => setLocalPage(page)}
+                    showSizeChanger={false}
+                />
+            </div>
             {/* ) : (
                 null
             )} */}

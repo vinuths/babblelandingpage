@@ -64,7 +64,7 @@ function HolidaysView() {
                   </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                  {/* <HolidayElibraryCreate setLocalPage={setLocalPage} /> */}
+                  <HolidayElibraryTable setLocalPage={setLocalPage} localPage={localPage}/>
                 </div>
 
               </div>

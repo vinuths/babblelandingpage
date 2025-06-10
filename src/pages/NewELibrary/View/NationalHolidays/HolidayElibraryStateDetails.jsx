@@ -1,64 +1,152 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Table } from "antd";
 import moment from "moment";
+import { holidayLibraryStateWise, stateGets } from "../../../../store/actions/otherActions";
+import { useDispatch, useSelector } from "react-redux";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import "./HolidayStateCards.css";
 
 const HolidayElibraryStateDetails = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
+    const { year, stateId } = location.state || {};
 
-    const { stateData, holidays } = location.state || {};
+    const { holidayStateInfo } = useSelector((state) => state.holidayLibraryStateWiseRed);
+    const { stateInfo } = useSelector((state) => state.getState);
 
-    if (!stateData || !holidays) {
-        return <p className="text-danger">No data available. Please go back and select a state.</p>;
-    }
+    const [dataSource, setDataSource] = useState(null);
+    const [selectedState, setSelectedState] = useState(stateId || "");
+
+    useEffect(() => {
+        dispatch(stateGets()); // get all states
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (year && selectedState) {
+            dispatch(
+                holidayLibraryStateWise({
+                    year,
+                    stateId: selectedState,
+                })
+            );
+        }
+    }, [dispatch, year, selectedState]);
+
+    useEffect(() => {
+        if (holidayStateInfo && Array.isArray(holidayStateInfo) && holidayStateInfo.length > 0) {
+            setDataSource(holidayStateInfo[0]);
+        }
+    }, [holidayStateInfo]);
 
     const columns = [
         {
-            title: "Sr. No.",
-            render: (_, __, index) => index + 1,
+            title: "Holiday Name",
+            dataIndex: "holiday",
+            key: "holiday",
         },
         {
-            title: "Act / Rule",
-            dataIndex: "actOrRule",
+            title: "Date",
+            dataIndex: "holidayDate",
+            key: "holidayDate",
+            render: (text) => moment(text).format("DD-MM-YYYY"),
         },
         {
-            title: "Form Number",
-            dataIndex: "formNumber",
+            title: "Day",
+            dataIndex: "holidayDay",
+            key: "holidayDay",
         },
         {
-            title: "Description",
-            dataIndex: "description",
+            title: "Type",
+            dataIndex: "holidaytype",
+            key: "holidaytype",
         },
         {
-            title: "Holiday File",
-            dataIndex: "doc",
-            render: (url) => (
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                    View File
-                </a>
-            ),
-        },
-        {
-            title: "Created",
-            dataIndex: "created_At",
-            render: (date) => moment(date).format("DD-MM-YYYY"),
+            title: "Remarks",
+            dataIndex: "holidayRemarks",
+            key: "holidayRemarks",
         },
     ];
 
     return (
-        <div className="container py-4">
-            <h2 className="mb-4 fw-bold">Holiday List – {stateData.name}</h2>
+        <div className="holiday-container1">
+            {/* Inline style overrides */}
+            <style>{`
+                .ant-table-thead > tr > th {
+                    background-color: #013879 !important;
+                    color: white !important;
+                    font-weight: bold;
+                }
+                .ant-table {
+                    border: 0.5px solid #013879;
+                    border-radius: 10px;
+                }
+            `}</style>
 
-            <button className="btn btn-secondary mb-3" onClick={() => navigate(-1)}>
-                ← Back
-            </button>
+            <div className="headBack">
+                <button className="btn mb-3 ms-2" onClick={() => navigate(-1)}>
+                    <ArrowBackIcon />
+                </button>
+                <h2 className="mb-4 fw-bold headLine">
+                    Holidays List for {dataSource?.state || "State"} - {dataSource?.year}
+                </h2>
+            </div>
+
+            <p>{dataSource?.description}</p>
+
+            <div className="holiDates">
+                <p style={{ color: 'red' }}>
+                    Created On:{" "}
+                    {dataSource?.created_at
+                        ? moment(dataSource.created_at).format("DD MMM YYYY")
+                        : "N/A"}
+                </p>
+                <p style={{ color: 'red' }}>
+                    Effective From:{" "}
+                    {dataSource?.effectiveDate
+                        ? moment(dataSource.effectiveDate).format("DD MMM YYYY")
+                        : "N/A"}
+                </p>
+            </div>
+
+            <div className="stateFilter">
+                <div className="stateFilter1">
+                    <label htmlFor="stateFilter" className="myt fw-bold" >State:</label>
+                    <select
+                        id="stateFilter"
+                        className="form-select"
+                        value={selectedState}
+                        onChange={(e) => setSelectedState(e.target.value)}
+                    >
+                        {stateInfo
+                            ?.filter((state) => state.name !== "All States")
+                            .map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                            ))}
+                    </select>
+
+                </div>
+                {dataSource?.doc && (
+                    <a
+                        className="btn btn-primary mb-3"
+                        href={dataSource.doc}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        📄 View Document
+                    </a>
+                )}
+            </div>
 
             <Table
                 columns={columns}
-                dataSource={holidays}
-                rowKey="_id"
-                pagination={{ pageSize: 10 }}
+                dataSource={dataSource?.holidayDetails || []}
+                rowKey={(record, index) => index}
+                pagination={false}
+                bordered
             />
         </div>
     );

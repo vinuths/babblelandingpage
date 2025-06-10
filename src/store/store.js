@@ -148,7 +148,7 @@ import {
         auditCompCountDataReducerLCA,
         auditCompCountDataReducerPA,
         ContractorNameReducer,
-        
+
         actLibraryPaginatedReducer,
         ruleLibraryPaginatedReducer,
         labourFormsLibraryPaginatedReducer,
@@ -164,6 +164,8 @@ import {
         reLeagalUpdateLibraryPaginatedReducer,
         generalUpdateLibraryPaginatedReducer,
         holidayLibraryPaginatedReducer1,
+        holidayLibraryStateWiseReducer,
+        labourWelfareLibraryStateWiseReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -302,8 +304,8 @@ const reducer = combineReducers({
         dashStateWiseNoticeRed: dashStateWiseNoticeReducer,
         noticeDownloadRed: noticeDownloadReducer,
         auditCompCountDataRed: auditCompCountDataReducer,
-        auditCompCountDataRedLCA:auditCompCountDataReducerLCA,
-        auditCompCountDataRedPA:auditCompCountDataReducerPA,
+        auditCompCountDataRedLCA: auditCompCountDataReducerLCA,
+        auditCompCountDataRedPA: auditCompCountDataReducerPA,
         auditCompCountRedPA: auditCompCountReducerPA,
         auditCompCountRedLCA: auditCompCountReducerLCA,
         getLabourContractAgreementNameRed: getLabourContractAgreementNameReducer,
@@ -327,7 +329,8 @@ const reducer = combineReducers({
         policyTemplateLibraryPaginatedRed: policyTemplateLibraryPaginatedReducer,
         reLeagalUpdateLibraryPaginatedRed: reLeagalUpdateLibraryPaginatedReducer,
         generalUpdateLibraryPaginatedRed: generalUpdateLibraryPaginatedReducer,
-
+        holidayLibraryStateWiseRed: holidayLibraryStateWiseReducer,
+        labourWelfareLibraryStateWiseRed: labourWelfareLibraryStateWiseReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

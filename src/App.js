@@ -50,16 +50,13 @@ import CompOptions from "./pages/NewELibrary/View/ComplianceQA/CompOptions";
 import CompCatView from "./pages/NewELibrary/View/ComplianceQA/CompCategory/CompCatView";
 import Formcreate from "./pages/HelpAndSupport/Formcreate";
 
-
-
-
-
 import HolidayElibraryStateDetails from "./pages/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
+import LabourWelfareState from "./pages/NewELibrary/View/LabourWelfare/LabourWelfareState";
 
 
 function App() {
   return (
-    <Router>
+    <Router basename="/company">
       <Navbar />
       <Routes>
 
@@ -95,6 +92,7 @@ function App() {
 
         <Route path="/elibrary/View/Rules" element={<PrivateRoutes><RulesView /></PrivateRoutes>} />
         <Route path="/elibrary/View/Labour_Welfare_Fund" element={<PrivateRoutes><LabourWelfareView /></PrivateRoutes>} />
+        <Route path="/elibrary/View/Labour_Welfare_Fund/:stateName" element={<PrivateRoutes><LabourWelfareState /></PrivateRoutes>} />
         <Route path="/elibrary/View/Working_Hours_&_leave_Rules" element={<PrivateRoutes><WH_LR /></PrivateRoutes>} />
 
         <Route path="/elibrary/View/Labour_Forms" element={<PrivateRoutes><LabourFormsView /></PrivateRoutes>} />
@@ -107,7 +105,8 @@ function App() {
         <Route path="/elibrary/View/Others" element={<PrivateRoutes><OthersView /></PrivateRoutes>} />
         <Route path="/elibrary/View/Compliance" element={<PrivateRoutes><CompOptions /></PrivateRoutes>} />
 
-        <Route path="/HelpAndSupport/Formcreate" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
+        <Route path="/HelpAndSupport/Form" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
+        <Route path="/elibrary/View/National_&_Festival_Holidays/HolidayList" element={<PrivateRoutes><HolidayElibraryStateDetails /></PrivateRoutes>} />
 
 
 

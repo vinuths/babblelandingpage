@@ -12,8 +12,9 @@ import { Switch } from "antd";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import LabourWelfareCreate from "./LabourWelfareCreate";
+import LabourWelfareState from "./LabourWelfareState";
 import { Typography, FormGroup, styled } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 
 
@@ -21,14 +22,16 @@ const { RangePicker } = DatePicker;
 
 const LabourWelfareTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { data, totalCount, loading } = useSelector(
         (state) => state.labourWelfareLibraryPaginatedRed
     );
+
     // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(150);
     // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");
@@ -68,46 +71,6 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         fetchData(localPage);
     }, [localPage, selectedState, dateRange]);
 
-    const handleDelete = async (id) => {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true,
-        });
-
-        if (result.isConfirmed) {
-            await dispatch(labourWelfareLibraryDelete(id));
-            fetchData(localPage);
-
-            Swal.fire('Deleted!', 'Labour Welfare deleted successfully.', 'success');
-        }
-    };
-
-
-    const formatDateToInput = (isoDate) => {
-        if (!isoDate) return "";
-        return moment(isoDate).format("DD-MM-YYYY");
-    };
-
-    const openInPopupForUpdate = (item) => {
-        setRecordForEdit(item);
-        setOpenPopup(true);
-        setPageTitle('Edit Labour Welfare E-Library');
-        setModalWidth('400px');
-    };
-
-    const onSwitchChange = (id, currentStatus) => {
-        // Add a slight delay to allow animation to complete
-        setTimeout(() => {
-            handleStatusToggle(id, currentStatus);
-        }, 400);
-    };
-
-
     const handleStatusToggle = async (id, currentStatus) => {
         try {
             await updateLabourWelFundLibraryStatus(id, !currentStatus);
@@ -118,217 +81,97 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         }
     };
 
-    const columns = [
-        {
-            title: "Sr. No.",
-            key: "key",
-            width: 80,
-            render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-        },
-        {
-            title: "State",
-            dataIndex: "stateData",
-            key: "state",
-            render: (stateData) => stateData?.name || "N/A",
-            width: 150,
-
-        },
-        {
-            title: "Applicability",
-            dataIndex: "applicability",
-            key: "applicability",
-            width: 120,
-            render: (value) => (
-                <span
-                    style={{
-                        backgroundColor: value === true ? '#d4edda' : '#f8d7da',
-                        color: value === true ? '#155724' : '#721c24',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        display: 'inline-block',
-                        textAlign: 'center',
-                        fontWeight: '500'
-                    }}
-                >
-                    {value === true ? 'Yes' : 'No'}
-                </span>
-            )
-        },
-        {
-            title: "Act",
-            dataIndex: "act",
-            key: "act",
-            width: 150,
-            render: (act) => (
-                <div>
-                    {act ? act :
-                        <NotApplicaple>N/A</NotApplicaple>}
-                </div>
-            ),
-        },
-
-        {
-            title: "Rule",
-            dataIndex: "rule",
-            key: "rule",
-            width: 150,
-            render: (rule) => (
-                <div>
-                    {rule ? rule :
-                        <NotApplicaple>N/A</NotApplicaple>}
-                </div>
-            ),
-        },
-
-        {
-            title: "Document",
-            dataIndex: "doc",
-            key: "doc",
-            render: (doc, record) => (
-                doc ? (
-                    <a href={doc} target="_blank" rel="noopener noreferrer">
-                        {record.act || "View Document"}
-                    </a>
-                ) : (
-                    <NotApplicaple>N/A</NotApplicaple>
-                )
-            ),
-            width: 200,
-
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (status, record) => (
-                <Switch
-                    checked={status}
-                    onChange={() => onSwitchChange(record._id, status)}
-                    style={{
-                        backgroundColor: status ? '#013879' : '#dc3545',
-                    }}
-                    checkedChildren="Active"
-                    unCheckedChildren="In-Active"
-                />
-
-            ),
-            width: 120,
+    const handleStateClick = (stateName) => {
+        const item = data.find(el => el.stateData?.name === stateName);
+        if (item) {
+            navigate(`/elibrary/View/Labour_Welfare_Fund/${item.stateData.name}`, {
+                state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
+            });
+        }
+    };
 
 
-        },
-        {
-            title: "Created Date",
-            dataIndex: "created_At",
-            // key: "created_At",
-            render: (created_At) => formatDateToInput(created_At),
-            width: 100,
+    const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
+    const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();
 
-        },
-        {
-            title: "Last Updated",
-            dataIndex: "updated_at",
-            key: "updated_at",
-            render: (updated_at, record) => (<div>
-                {record.updated_at ? (
-                    <div>
-                        {formatDateToInput(record.updated_at)}
-                    </div>
-                ) : (
-                    <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-                )}
-            </div>
-            ),
-            width: 100,
+    console.log("dataHere", data);
 
-        },
-        {
-            key: "action",
-            title: "Actions",
-            width: 170,
-            render: (record) => (
-                <>
-                    <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-                        <EyeOutlined /> / <EditOutlined />
-                    </Link>
-                    <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-                        <DeleteOutlined />
-                    </Link>
-                </>
-            ),
-        },
-    ];
+
 
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">State Filter</label>
-                    <select
-                        className="form-select"
-                        value={selectedState}
-                        onChange={(e) => {
-                            setSelectedState(e.target.value);
-                            setLocalPage(1); // Reset to page 1
-                        }}
-                    >
-                        <option value="">Select State</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Date Filter</label>
-                    <RangePicker
-                        className="w-100"
-                        value={dateRange}
-                        onChange={(dates) => {
-                            setDateRange(dates || []);
-                            setLocalPage(1);
-                        }}
-                    />
-                </div>
+                <div className="card p-4 mb-4">
 
-
-            </div>
-
-            <div className="table-responsive">
-                {loading ? (
-                    <Spin size="large" className="d-flex justify-content-center" />
-                ) : data && data.length > 0 ? (
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                        rowKey="_id"
-                        scroll={{ x: 1000 }}
-                        sticky
-                    />
-                ) : (
-                    <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '100px' }}>
-                        <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No Labour Welfare E-Library Available</h1>
+                    <div className="headContain">
+                        <h3 className="mb-3 heads">Labour Welfare Fund</h3>
                     </div>
-                )}
-            </div>
+                    <br />
+                    <p>Labour welfare fund is a statutory contribution managed by individual state authorities. The state labour welfare board determines the amount and frequency of the contribution. The contribution and periodicity of remittance differs with every state. In some states the periodicity is annual (Andhra Pradesh, Haryana, Karnataka, Tamil Nadu etc) and in some states it is to be contributed during the month of June & December (Gujarat, Madhya Pradesh, Maharashtra etc).</p>
 
-            {/* {loading ? (
-                <Spin size="large" className="d-flex justify-content-center" />
-            ) : data && data.length > 0 ? ( */}
-            <div className="d-flex justify-content-center mt-3">
-                <Pagination
-                    current={localPage}
-                    total={totalCount}
-                    pageSize={pageSize}
-                    onChange={(page) => setLocalPage(page)}
-                    showSizeChanger={false}
-                />
+                    <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
+                    <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
+
+To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
+
+                    <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
+                    <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
+
+                    <h5 className="mt-4 heads">Applicability of the Act</h5>
+                    <p>This act has been implemented only in selected states including union territories.</p>
+
+                    <div className="row">
+                        <div className="col-md-12 ">
+                            <h6 className="heads" >Applicable States</h6>
+                            <ul style={{ columns: 5, padding: 0, listStyle: "none" }}>
+                                {applicableStates.map((state, index) => (
+                                    <li
+                                        key={`app-${index}`}
+                                        style={{ cursor: "pointer", color: "#0d6efd", marginBottom: "8px" }}
+                                        onClick={() => handleStateClick(state)}
+                                    >
+                                        {state}
+                                    </li>
+                                ))}
+                            </ul>
+
+                        </div>
+                        <div className="col-md-12 ">
+                            <h6 className="heads">Not Applicable States</h6>
+                            <ul style={{ columns: 5, padding: 0, listStyle: "none" }}>
+                                {notApplicableStates.length ? (
+                                    notApplicableStates.map((state, index) => (
+                                        <li
+                                            key={`notapp-${index}`}
+                                            style={{ marginBottom: "8px", color: "#333" }}
+                                        // onClick={() => handleStateClick(state)}
+                                        >
+                                            {state}
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li>No non-applicable states</li>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                    <p className="mt-3" style={{ fontStyle: "italic" }}>
+                        The Labour Welfare Fund Act is not applicable to all category of employees...
+                    </p>
+                </div>
+
+                <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
+                    {openPopup && (
+                        <LabourWelfareState
+                            data={data}
+                        />
+                    )}
+                </Popup>
+
             </div>
-            {/* ) : (
-                null
-            )} */}
-            <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                {openPopup && <LabourWelfareCreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-            </Popup>
         </div>
     );
 };
