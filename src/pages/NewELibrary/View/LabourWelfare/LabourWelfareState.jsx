@@ -211,8 +211,8 @@ const LabourWelfareState = () => {
                                     <td>{dataSource?.employee_Contribution || "N/A"}</td>
                                     <td>{dataSource?.employer_Contribution || "N/A"}</td>
                                     <td>{dataSource?.total_Contribution || "N/A"}</td>
-                                    <td>{formatDate(dataSource?.date_deduction)}</td>
-                                    <td>{formatDate(dataSource?.last_date_remittance)}</td>
+                                    <td>{dataSource?.date_deduction}</td>
+                                    <td>{dataSource?.last_date_remittance}</td>
                                 </tr>
                             </tbody>
                         </table>

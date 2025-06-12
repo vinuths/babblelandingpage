@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Table, Pagination, DatePicker, Select, Spin } from "antd";
+import { Table, Pagination, DatePicker, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { stateGets, WHAndLRLibraryPaginatedGet, WHAndLRLibraryDelete } from "../../../../store/actions/otherActions";
+import { stateGets, labourWelfareLibraryDelete, WHAndLRLibraryPaginatedGet } from "../../../../store/actions/otherActions";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Popup from "../../../../components/Popup";
 import moment from "moment";
-import { updateWHAndLRLibraryStatus } from "../../../../routes/api";
+import { updateLabourWelFundLibraryStatus } from "../../../../routes/api";
 import { Switch } from "antd";
 import { toast } from "react-toastify";
-import WH_LRCreate from "./WH_LRCreate";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+// import LabourWelfareState from "./LabourWelfareState";
+import { Typography, FormGroup, styled } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+dayjs.extend(customParseFormat);
+
 
 const { RangePicker } = DatePicker;
 
+
+// Utility to split array into chunks of 5
+
+
+
+
 const WH_LRTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { data, totalCount, loading } = useSelector(
         (state) => state.wHAndLRLibraryPaginatedRed
     );
+
+    // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(150);
     // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
-    const [dateRange, setDateRange] = useState([]);
+    const [dateRange, setDateRange] = useState("");
 
     const [openPopup, setOpenPopup] = useState(false);
     const [pageTitle, setPageTitle] = useState('');
@@ -46,14 +61,13 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
         const filters = {};
 
         if (selectedState) filters.state = selectedState;
-
         if (dateRange?.length === 2) {
             filters.fromDate = dateRange[0].toISOString();
             filters.toDate = dateRange[1].toISOString();
         }
-
         dispatch(WHAndLRLibraryPaginatedGet({ page, limit: pageSize, filters }));
     };
+
 
     useEffect(() => {
         dispatch(stateGets());
@@ -63,49 +77,9 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
         fetchData(localPage);
     }, [localPage, selectedState, dateRange]);
 
-    const handleDelete = async (id) => {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true,
-        });
-
-        if (result.isConfirmed) {
-            await dispatch(WHAndLRLibraryDelete(id));
-            fetchData(localPage);
-
-            Swal.fire('Deleted!', 'WH And LR deleted successfully.', 'success');
-        }
-    };
-
-
-    const formatDateToInput = (isoDate) => {
-        if (!isoDate) return "";
-        return moment(isoDate).format("DD-MM-YYYY");
-    };
-
-    const openInPopupForUpdate = (item) => {
-        setRecordForEdit(item);
-        setOpenPopup(true);
-        setPageTitle('Edit Working Hours & Leave Rules E-Library');
-        setModalWidth('400px');
-    };
-
-    const onSwitchChange = (id, currentStatus) => {
-        // Add a slight delay to allow animation to complete
-        setTimeout(() => {
-            handleStatusToggle(id, currentStatus);
-        }, 400);
-    };
-
-
     const handleStatusToggle = async (id, currentStatus) => {
         try {
-            await updateWHAndLRLibraryStatus(id, !currentStatus);
+            await updateLabourWelFundLibraryStatus(id, !currentStatus);
             toast.success("Status updated successfully!");
             fetchData(localPage); // reloads the table correctly with filters
         } catch (error) {
@@ -113,194 +87,126 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
         }
     };
 
-    const columns = [
-        {
-            title: "Sr. No.",
-            key: "key",
-            width: 80,
-            render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-        },
-        {
-            title: "State",
-            dataIndex: "stateData",
-            key: "state",
-            render: (stateData) => stateData?.name || "N/A",
-            width: 150,
-
-        },
-        {
-            title: "Type Of Leave",
-            dataIndex: "TypeOfLeave",
-            key: "TypeOfLeave",
-            width: 200,
-        },
-        {
-            title: "Max. Carry Forward Days",
-            dataIndex: "MaxCarryFowDays",
-            key: "MaxCarryFowDays",
-            width: 200,
-        },
-        {
-            title: "Leave Entitlement",
-            dataIndex: "leaveEntitlement",
-            key: "leaveEntitlement",
-            width: 200,
-        },
-        // {
-        //     title: "Act File",
-        //     dataIndex: "doc",
-        //     key: "doc",
-        //     render: (doc, record) => (
-        //         <a href={doc} target="_blank" rel="noopener noreferrer">
-        //             {record.act}
-        //         </a>
-        //     ),
-        //     width: 200,
-
-        // },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (status, record) => (
-                <Switch
-                    checked={status}
-                    onChange={() => onSwitchChange(record._id, status)}
-                    style={{
-                        backgroundColor: status ? '#013879' : '#dc3545',
-                    }}
-                    checkedChildren="Active"
-                    unCheckedChildren="In-Active"
-                />
-
-            ),
-            width: 120,
+    const handleStateClick = (stateName) => {
+        const item = data.find(el => el.stateData?.name === stateName);
+        if (item) {
+            navigate(`/elibrary/View/Labour_Welfare_Fund/${item.stateData.name}`, {
+                state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
+            });
+        }
+    };
 
 
-        },
-        {
-            title: "Created Date",
-            dataIndex: "created_at",
-            // key: "created_at",
-            render: (created_at) => formatDateToInput(created_at),
-            width: 100,
+    const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
+    const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();
+    const allStates = [...new Set(data.map(item => item.stateData?.name))].filter(Boolean).sort();
 
-        },
-        {
-            title: "Last Updated",
-            dataIndex: "updated_at",
-            key: "updated_at",
-            render: (updated_at, record) => (<div>
-                {record.updated_at ? (
-                    <div>
-                        {formatDateToInput(record.updated_at)}
-                    </div>
-                ) : (
-                    <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-                )}
-            </div>
-            ),
-            width: 100,
 
-        },
-        {
-            key: "action",
-            title: "Actions",
-            width: 170,
-            render: (record) => (
-                <>
-                    <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-                        <EyeOutlined /> / <EditOutlined />
-                    </Link>
-                    <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-                        <DeleteOutlined />
-                    </Link>
-                </>
-            ),
-        },
-    ];
+    console.log("dataHere", data);
 
+
+    const buildRows = (data, columns, isClickable = false) => {
+        const rows = Math.ceil(data.length / columns);
+        const result = [];
+
+        for (let i = 0; i < rows; i++) {
+            const cells = [];
+
+            for (let j = 0; j < columns; j++) {
+                const item = data[i + j * rows];
+                if (item) {
+                    cells.push(
+                        <td key={`${i}-${j}`}>
+                            <span
+                                className={isClickable ? 'clickable' : ''}
+                                onClick={isClickable ? () => handleStateClick(item) : null}
+                            >
+                                {item}
+                            </span>
+                        </td>
+                    );
+                } else {
+                    cells.push(<td key={`${i}-${j}`}></td>); // empty cell
+                }
+            }
+
+            result.push(<tr key={i}>{cells}</tr>);
+        }
+
+        return result;
+    };
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">State Filter</label>
-                    <select
-                        className="form-select"
-                        value={selectedState}
-                        onChange={(e) => {
-                            setSelectedState(e.target.value);
-                            setLocalPage(1); // Reset to page 1
-                        }}
-                    >
-                        <option value="">Select State</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Date Filter</label>
-                    <RangePicker
-                        className="w-100"
-                        value={dateRange}
-                        onChange={(dates) => {
-                            setDateRange(dates || []);
-                            setLocalPage(1);
-                        }}
-                    />
-                </div>
-            </div>
+                <div className="card p-4 mb-4">
 
-            <div className="table-responsive">
-                {loading ? (
-                    <Spin size="large" className="d-flex justify-content-center" />
-                ) : data && data.length > 0 ? (
-                    <>
-                        <Table
-                            columns={columns}
-                            dataSource={data}
-                            pagination={false}
-                            rowKey="_id"
-                            scroll={{ x: 1000 }}
-                            sticky
-                        />
-                        <Pagination
-                            current={localPage}
-                            total={totalCount}
-                            pageSize={pageSize}
-                            onChange={(page) => setLocalPage(page)}
-                            showSizeChanger={false}
-                        />
-                    </>
-                ) : (
-                    <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '150px' }}>
-                        <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No Working Hours & Leave Rules E-Library Available</h1>
+                    <div className="headContain">
+                        <h3 className="mb-3 heads">Working Hours & Leave Rules</h3>
                     </div>
-                )}
-            </div>
+                    <br />
+                    <p>Working Hours & Leave Rules in India are governed by various labour laws to ensure employee well-being. Employees can work a maximum of 8 hours per day and 48 hours per week, with mandatory rest intervals. Leave entitlements typically include casual leave, sick leave, earned leave, and national/public holidays, with specifics varying by state and type of employment.</p>
+                    {/* <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
+                    <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
 
-            {/* {loading ? (
-                <Spin size="large" className="d-flex justify-content-center" />
-            ) : data && data.length > 0 ? (
-                <div className="d-flex justify-content-center mt-3">
-<Pagination
-                            current={localPage}
-                            total={totalCount}
-                            pageSize={pageSize}
-                            onChange={(page) => setLocalPage(page)}
-                            showSizeChanger={false}
-                        />
+                        To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
+
+                    <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
+                    <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
+
+                    <h5 className="mt-4 heads">Applicability of the Act</h5>
+                    <p>This act has been implemented only in selected states including union territories.</p> */}
+
+                    <div className="state-container">
+                        {/* Applicable */}
+                        {allStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(allStates, 5, true)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+
+                        {/* Not Applicable */}
+                        {notApplicableStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Not Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(notApplicableStates, 5)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+
+
+
+                    <p className="mt-3" style={{ fontStyle: "italic" }}>
+                        Working Hours & Leave Rules is not applicable to all category of employees...
+                    </p>
                 </div>
-            ) : (
-                null
-            )} */}
-            <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                {openPopup && <WH_LRCreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-            </Popup>
+
+                {/* <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
+                    {openPopup && (
+                        <LabourWelfareState
+                            data={data}
+                        />
+                    )}
+                </Popup> */}
+
+            </div>
         </div>
     );
 };
+
+const NotApplicaple = styled(FormGroup)`
+font-style: Italic;
+font-weight: 400;
+color: #888;
+`
 
 
 export default WH_LRTable;
