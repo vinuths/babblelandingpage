@@ -341,7 +341,7 @@ const MinWagesStateWise = () => {
     };
 
     const stateColumnMap = {
-        "Andhra Pradesh": ["slNo", "classOfEmployment", "zone", "category", "subCategory", "basicPerMonth"],
+        "Andhra Pradesh": ["slNo", "classOfEmployment", "zone", "category", "basicPerMonth", "vdaPerMonth", "totalPerMonth"],
         "Karnataka": ["slNo", "classOfEmployment", "zone", "designation", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerMonth"],
         "Tamil Nadu": ["slNo", "classOfEmployment", "zone", "category", "subCategory", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Arunachal Pradesh": ["slNo", "classOfEmployment", "area", "totalPerDay", "totalPerMonth"],
@@ -464,7 +464,7 @@ const MinWagesStateWise = () => {
                             </button>
                         </div>
                         <div className="col-9" >
-                            <h2 className="mb-4 fw-bold headLine" style={{paddingLeft:'50px !important'}}>
+                            <h2 className="mb-4 fw-bold headLine" style={{ paddingLeft: '50px !important' }}>
                                 Minimum Wage List for {minWageByIDInfo?.state?.name || "State"} - {formatDate(minWageByIDInfo?.effectiveDate)}
                             </h2>
                         </div>
@@ -481,19 +481,19 @@ const MinWagesStateWise = () => {
                             <div className="row">
                                 <div className="col-3">
                                     <p style={{ color: 'red' }}>
-                                    Created On:{" "}
-                                    {formatDate1(minWageByIDInfo.created_At)}
-                                </p>
+                                        Created On:{" "}
+                                        {formatDate1(minWageByIDInfo.created_At)}
+                                    </p>
                                 </div>
                                 <div className="col-6"></div>
                                 <div className="col-3">
                                     <p style={{ color: 'red' }}>
-                                    Effective From:{" "}
-                                    {formatDate1(minWageByIDInfo.effectiveDate)}
-                                </p>
+                                        Effective From:{" "}
+                                        {formatDate1(minWageByIDInfo.effectiveDate)}
+                                    </p>
                                 </div>
-                                
-                                
+
+
 
                             </div>
                         </>
@@ -506,7 +506,7 @@ const MinWagesStateWise = () => {
                                 className="form-select"
                                 value={selectedState}
                                 onChange={handleStateChange}
-                                    style={{ width: '250px' }}
+                                style={{ width: '250px' }}
 
                             >
                                 {stateInfo
