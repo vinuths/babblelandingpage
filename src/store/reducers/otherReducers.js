@@ -482,6 +482,15 @@ import {
   LABOUR_WELFARE_STATE_GET_REQUEST,
   LABOUR_WELFARE_STATE_GET_SUCCESS,
   LABOUR_WELFARE_STATE_GET_FAILURE,
+  MINWAGE_LIBRARY_GET_REQUEST,
+  MINWAGE_LIBRARY_GET_SUCCESS,
+  MINWAGE_LIBRARY_GET_FAILURE,
+  MINWAGE_PERIOD_LIBRARY_GET_REQUEST,
+  MINWAGE_PERIOD_LIBRARY_GET_SUCCESS,
+  MINWAGE_PERIOD_LIBRARY_GET_FAILURE,
+  MINWAGE_LIBRARY_GET_BY_ID_REQUEST,
+  MINWAGE_LIBRARY_GET_BY_ID_SUCCESS,
+  MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3082,6 +3091,67 @@ export const labourWelfareLibraryStateWiseReducer = (state = {}, action) => {
       return { loadingLabourWelfare: false, LabourWelfareStateInfo: action.payload };
     case LABOUR_WELFARE_STATE_GET_FAILURE:
       return { loadingLabourWelfare: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+
+
+const initialState_MINWAGE_LIBRARY = {
+  loading: false,
+  data: [],
+  data1: [],
+  error: null
+};
+
+export const MINWAGELibraryPaginatedReducer1 = (state = initialState_MINWAGE_LIBRARY, action) => {
+  switch (action.type) {
+    case MINWAGE_LIBRARY_GET_REQUEST:
+      return { ...state, loading: true };
+    case MINWAGE_LIBRARY_GET_SUCCESS:
+      // console.log("payload in reducer", action.payload);  // Add this line to log the payload
+
+      return {
+        ...state,
+
+        loading: false,
+        data: action.payload.data,
+        data1: action.payload
+        // totalCount: action.payload.totalCount,
+        // currentPage: action.payload.currentPage,
+        // totalPages: action.payload.totalPages,
+      };
+    case MINWAGE_LIBRARY_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      // console.log("state", state);
+      return state;
+  }
+};
+
+export const minWagePeriodsByStateAndYearGetReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MINWAGE_PERIOD_LIBRARY_GET_REQUEST:
+      return { loading_Min_Period: true };
+    case MINWAGE_PERIOD_LIBRARY_GET_SUCCESS:
+      return { loading_Min_Period: false, minWagePeriodStateInfo: action.payload.data };
+    case MINWAGE_PERIOD_LIBRARY_GET_FAILURE:
+      return { loading_Min_Period: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const minWageGetByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case MINWAGE_LIBRARY_GET_BY_ID_REQUEST:
+      return { loading_Min_By_Id: true };
+    case MINWAGE_LIBRARY_GET_BY_ID_SUCCESS:
+      return { loading_Min_By_Id: false, minWageByIDInfo: action.payload.data };
+    case MINWAGE_LIBRARY_GET_BY_ID_FAILURE:
+      return { loading_Min_By_Id: false, error: action.payload };
     default:
       return state;
   }

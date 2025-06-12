@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.27:8000/api/admin';
+// const URL = 'http://192.168.1.134:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -1868,6 +1868,15 @@ export const getAllHolidayLibraries = async (body) => {
 
     return await axios.post(`${URL}/getAllHolidayLibraries`, body, config);
 };
+export const getAllMinWagesLibraries = async (body) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllMinWagesLibraries`, body, config);
+};
 
 
 export const updateHolidayLibraryStatus = async (id, status) => {
@@ -2541,6 +2550,8 @@ export const deleteGeneralELibrary = async (id) => {
 };
 
 
+
+
 // E-Library ENDS---------------------->>>
 export const HelpSupportMailer = async (body) => {
     const config = {
@@ -2575,4 +2586,26 @@ export const getAllLabourWelfareByStateLibraries = async (postBody) => {
     };
 
     return await axios.post(`${URL}/getAllLabourWelfareByStateLibraries`, postBody, config);
+};
+
+export const getMinWagePeriodsByStateAndYear = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getMinWagePeriodsByStateAndYear`, postBody, config);
+};
+
+export const getMinimumWageById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    // ✅ Correct usage: empty body, headers in third param
+    return await axios.post(`${URL}/getMinimumWageById/${id}`, {}, config);
 };

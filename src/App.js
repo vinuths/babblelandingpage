@@ -52,6 +52,7 @@ import Formcreate from "./pages/HelpAndSupport/Formcreate";
 
 import HolidayElibraryStateDetails from "./pages/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
 import LabourWelfareState from "./pages/NewELibrary/View/LabourWelfare/LabourWelfareState";
+import MinWagesStateWise from "./pages/NewELibrary/View/MinimumWages/MinWagesStateWise";
 
 
 function App() {
@@ -107,6 +108,7 @@ function App() {
 
         <Route path="/HelpAndSupport/Form" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
         <Route path="/elibrary/View/National_&_Festival_Holidays/HolidayList" element={<PrivateRoutes><HolidayElibraryStateDetails /></PrivateRoutes>} />
+        <Route path="/elibrary/View/Minimum_Wages/MinimumWagesList" element={<PrivateRoutes><MinWagesStateWise /></PrivateRoutes>} />
 
 
 

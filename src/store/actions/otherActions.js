@@ -190,6 +190,9 @@ import {
   HelpSupportMailer,
   getAllHolidayByStateLibraries,
   getAllLabourWelfareByStateLibraries,
+  getAllMinWagesLibraries,
+  getMinWagePeriodsByStateAndYear,
+  getMinimumWageById,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -805,6 +808,15 @@ import {
   LABOUR_WELFARE_STATE_GET_REQUEST,
   LABOUR_WELFARE_STATE_GET_SUCCESS,
   LABOUR_WELFARE_STATE_GET_FAILURE,
+  MINWAGE_LIBRARY_GET_REQUEST,
+  MINWAGE_LIBRARY_GET_SUCCESS,
+  MINWAGE_LIBRARY_GET_FAILURE,
+  MINWAGE_PERIOD_LIBRARY_GET_REQUEST,
+  MINWAGE_PERIOD_LIBRARY_GET_SUCCESS,
+  MINWAGE_PERIOD_LIBRARY_GET_FAILURE,
+  MINWAGE_LIBRARY_GET_BY_ID_REQUEST,
+  MINWAGE_LIBRARY_GET_BY_ID_SUCCESS,
+  MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -7356,6 +7368,29 @@ export const holidayLibraryPaginatedGet1 = (body) => async (dispatch) => {
       toast.error(error.message);
     });
 };
+export const MinWageLibraryPaginatedGetByState = (body) => async (dispatch) => {
+  dispatch({ type: MINWAGE_LIBRARY_GET_REQUEST });
+
+  await getAllMinWagesLibraries(body)
+    .then((response) => {
+      dispatch({ type: MINWAGE_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: MINWAGE_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINWAGE_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
 
 export const holidayLibraryUpdate = (postbody, id) => async (dispatch) => {
   dispatch({ type: HOLIDAY_LIBRARY_EDIT_REQUEST });
@@ -9074,5 +9109,67 @@ export const labourWelfareLibraryStateWise = (postBody) => async (dispatch) => {
         payload: error.message,
       });
       toast.error(error.message);
+    });
+};
+export const minWagePeriodsByStateAndYearGet = (postBody) => async (dispatch) => {
+  dispatch({ type: MINWAGE_PERIOD_LIBRARY_GET_REQUEST });
+
+  await getMinWagePeriodsByStateAndYear(postBody)
+    .then((response) => {
+      dispatch({ type: MINWAGE_PERIOD_LIBRARY_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: MINWAGE_PERIOD_LIBRARY_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINWAGE_PERIOD_LIBRARY_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const minWageGetById = (id) => async (dispatch) => {
+  dispatch({ type: MINWAGE_LIBRARY_GET_BY_ID_REQUEST });
+  // console.log("id",id);
+
+  await getMinimumWageById(id)
+    .then((response) => {
+      dispatch({ type: MINWAGE_LIBRARY_GET_BY_ID_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
     });
 };

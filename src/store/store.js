@@ -166,6 +166,9 @@ import {
         holidayLibraryPaginatedReducer1,
         holidayLibraryStateWiseReducer,
         labourWelfareLibraryStateWiseReducer,
+        MINWAGELibraryPaginatedReducer1,
+        minWagePeriodsByStateAndYearGetReducer,
+        minWageGetByIdReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -331,6 +334,9 @@ const reducer = combineReducers({
         generalUpdateLibraryPaginatedRed: generalUpdateLibraryPaginatedReducer,
         holidayLibraryStateWiseRed: holidayLibraryStateWiseReducer,
         labourWelfareLibraryStateWiseRed: labourWelfareLibraryStateWiseReducer,
+        MINWAGELibraryPaginatedRed: MINWAGELibraryPaginatedReducer1,
+        minWagePeriodsByStateAndYearGetRed: minWagePeriodsByStateAndYearGetReducer,
+        minWageGetByIdRed: minWageGetByIdReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

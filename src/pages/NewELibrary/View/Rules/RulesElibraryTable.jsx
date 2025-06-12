@@ -50,8 +50,7 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
             <div className="acts-header">
                 <h2>Rules</h2>
                 <p>
-                    “Rules” is a primary piece of legislation passed by legislature. It is a comprehensive and broad legal framework on specific subject matter covering various topics, which in return also provides basis for compliance, enforcement and dispute resolution concerning the subject matter they address.
-                </p>
+                    Labour Rules in India are detailed guidelines framed under Labour Acts or Codes to ensure proper implementation of labour laws. They cover procedures for registration, compliance, dispute resolution, and welfare provisions for both employers and employees.                </p>
             </div>
             <div className="filter-bar">
                 <div className="left-filters">
@@ -66,11 +65,13 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
                         }}
                     >
                         <option value="">All States</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>
-                                {item.name}
-                            </option>
-                        ))}
+                        {stateInfo
+                            ?.filter((state) => state.name !== "All States")
+                            .map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                            ))}
                     </select>
                 </div>
 

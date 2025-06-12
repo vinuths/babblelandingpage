@@ -64,8 +64,7 @@ const ActTable = ({ localPage, setLocalPage }) => {
             <div className="acts-header">
                 <h2>Acts</h2>
                 <p>
-                    “Acts” is a primary piece of legislation passed by legislature. It is a comprehensive and broad legal framework on specific subject matter covering various topics, which in return also provides basis for compliance, enforcement and dispute resolution concerning the subject matter they address.
-                </p>
+                    Labour Acts in India are designed to protect the rights of workers, ensure fair employment practices, and promote safe and equitable working conditions. These laws cover various aspects such as wages, employment conditions, industrial relations, safety, welfare, and social security.                </p>
             </div>
             <div className="filter-bar">
                 <div className="left-filters">
@@ -80,11 +79,13 @@ const ActTable = ({ localPage, setLocalPage }) => {
                         }}
                     >
                         <option value="">All States</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>
-                                {item.name}
-                            </option>
-                        ))}
+                        {stateInfo
+                            ?.filter((state) => state.name !== "All States")
+                            .map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                            ))}
                     </select>
                 </div>
 

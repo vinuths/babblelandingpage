@@ -72,8 +72,7 @@ const ActTable = ({ localPage, setLocalPage }) => {
             <div className="acts-header">
                 <h2>Labour Forms</h2>
                 <p>
-                    “Acts” is a primary piece of legislation passed by legislature. It is a comprehensive and broad legal framework on specific subject matter covering various topics, which in return also provides basis for compliance, enforcement and dispute resolution concerning the subject matter they address.
-                </p>
+                    Labour Forms are official documents used to comply with labour laws and regulations in India. These forms are submitted to government authorities for purposes such as employee registration, wage records, attendance, bonus, gratuity, inspections, and returns under various Labour Acts and Rules                </p>
             </div>
             <div className="filter-bar">
                 <div className="left-filters">
@@ -88,11 +87,13 @@ const ActTable = ({ localPage, setLocalPage }) => {
                         }}
                     >
                         <option value="">All States</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>
-                                {item.name}
-                            </option>
-                        ))}
+                        {stateInfo
+                            ?.filter((state) => state.name !== "All States")
+                            .map((state) => (
+                                <option key={state._id} value={state._id}>
+                                    {state.name}
+                                </option>
+                            ))}
                     </select>
                 </div>
 

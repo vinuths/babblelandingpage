@@ -20,6 +20,12 @@ dayjs.extend(customParseFormat);
 
 const { RangePicker } = DatePicker;
 
+
+// Utility to split array into chunks of 5
+
+
+
+
 const LabourWelfareTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -97,7 +103,36 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
     console.log("dataHere", data);
 
 
+    const buildRows = (data, columns, isClickable = false) => {
+        const rows = Math.ceil(data.length / columns);
+        const result = [];
 
+        for (let i = 0; i < rows; i++) {
+            const cells = [];
+
+            for (let j = 0; j < columns; j++) {
+                const item = data[i + j * rows];
+                if (item) {
+                    cells.push(
+                        <td key={`${i}-${j}`}>
+                            <span
+                                className={isClickable ? 'clickable' : ''}
+                                onClick={isClickable ? () => handleStateClick(item) : null}
+                            >
+                                {item}
+                            </span>
+                        </td>
+                    );
+                } else {
+                    cells.push(<td key={`${i}-${j}`}></td>); // empty cell
+                }
+            }
+
+            result.push(<tr key={i}>{cells}</tr>);
+        }
+
+        return result;
+    };
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
@@ -109,51 +144,41 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                     <br />
                     <p>Labour welfare fund is a statutory contribution managed by individual state authorities. The state labour welfare board determines the amount and frequency of the contribution. The contribution and periodicity of remittance differs with every state. In some states the periodicity is annual (Andhra Pradesh, Haryana, Karnataka, Tamil Nadu etc) and in some states it is to be contributed during the month of June & December (Gujarat, Madhya Pradesh, Maharashtra etc).</p>
 
-                    <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
+                    {/* <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
                     <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
 
-To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
+                        To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
 
                     <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
                     <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
 
                     <h5 className="mt-4 heads">Applicability of the Act</h5>
-                    <p>This act has been implemented only in selected states including union territories.</p>
+                    <p>This act has been implemented only in selected states including union territories.</p> */}
 
-                    <div className="row">
-                        <div className="col-md-12 ">
-                            <h6 className="heads" >Applicable States</h6>
-                            <ul style={{ columns: 5, padding: 0, listStyle: "none" }}>
-                                {applicableStates.map((state, index) => (
-                                    <li
-                                        key={`app-${index}`}
-                                        style={{ cursor: "pointer", color: "#0d6efd", marginBottom: "8px" }}
-                                        onClick={() => handleStateClick(state)}
-                                    >
-                                        {state}
-                                    </li>
-                                ))}
-                            </ul>
+                    <div className="state-container">
+                        {/* Applicable */}
+                        {applicableStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(applicableStates, 5, true)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
 
-                        </div>
-                        <div className="col-md-12 ">
-                            <h6 className="heads">Not Applicable States</h6>
-                            <ul style={{ columns: 5, padding: 0, listStyle: "none" }}>
-                                {notApplicableStates.length ? (
-                                    notApplicableStates.map((state, index) => (
-                                        <li
-                                            key={`notapp-${index}`}
-                                            style={{ marginBottom: "8px", color: "#333" }}
-                                        // onClick={() => handleStateClick(state)}
-                                        >
-                                            {state}
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>No non-applicable states</li>
-                                )}
-                            </ul>
-                        </div>
+                        {/* Not Applicable */}
+                        {notApplicableStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Not Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(notApplicableStates, 5)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
                     </div>
 
 

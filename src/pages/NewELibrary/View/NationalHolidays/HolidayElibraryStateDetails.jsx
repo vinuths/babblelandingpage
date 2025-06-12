@@ -42,6 +42,7 @@ const HolidayElibraryStateDetails = () => {
 
     useEffect(() => {
         if (holidayStateInfo && Array.isArray(holidayStateInfo)) {
+
             setDataSource(holidayStateInfo[0] || null); // Set null if no data
         }
     }, [holidayStateInfo]);
@@ -49,6 +50,14 @@ const HolidayElibraryStateDetails = () => {
 
 
     const columns = [
+        {
+            title: "Sl",
+            key: "slNo",
+            render: (_text, _record, index) => index + 1,
+            width: 45,
+            // fixed: 'top',
+        }
+        ,
         {
             title: "Holiday Name",
             dataIndex: "holiday",
@@ -85,11 +94,16 @@ const HolidayElibraryStateDetails = () => {
                     background-color: #013879 !important;
                     color: white !important;
                     font-weight: bold;
+                    position: sticky !important;
+                    
                 }
                 .ant-table {
                     border: 0.5px solid #013879;
                     border-radius: 10px;
                 }
+                    .ant-table-cell{
+                    padding: 5px !important;
+                    }
             `}</style>
 
             <div className="headBack">
@@ -158,6 +172,10 @@ const HolidayElibraryStateDetails = () => {
                 rowKey={(record, index) => index}
                 pagination={false}
                 bordered
+                // scroll={{
+                //     y: 600,
+                    
+                // }}
             // locale={{
             //     emptyText: "No Holiday Data Available",
             // }}
