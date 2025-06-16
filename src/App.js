@@ -53,6 +53,8 @@ import Formcreate from "./pages/HelpAndSupport/Formcreate";
 import HolidayElibraryStateDetails from "./pages/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
 import LabourWelfareState from "./pages/NewELibrary/View/LabourWelfare/LabourWelfareState";
 import MinWagesStateWise from "./pages/NewELibrary/View/MinimumWages/MinWagesStateWise";
+import WH_LR_State from "./pages/NewELibrary/View/WH_LR/WH_LR_State";
+import PTState from "./pages/NewELibrary/View/PT/PTState";
 
 
 function App() {
@@ -109,6 +111,8 @@ function App() {
         <Route path="/HelpAndSupport/Form" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
         <Route path="/elibrary/View/National_&_Festival_Holidays/HolidayList" element={<PrivateRoutes><HolidayElibraryStateDetails /></PrivateRoutes>} />
         <Route path="/elibrary/View/Minimum_Wages/MinimumWagesList" element={<PrivateRoutes><MinWagesStateWise /></PrivateRoutes>} />
+        <Route path="/elibrary/View/Working_Hours_&_leave_Rules/:stateName" element={<PrivateRoutes><WH_LR_State /></PrivateRoutes>} />
+        <Route path="/elibrary/View/Professional_Tax/:stateName" element={<PrivateRoutes><PTState /></PrivateRoutes>} />
 
 
 

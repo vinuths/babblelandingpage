@@ -2587,6 +2587,24 @@ export const getAllLabourWelfareByStateLibraries = async (postBody) => {
 
     return await axios.post(`${URL}/getAllLabourWelfareByStateLibraries`, postBody, config);
 };
+export const getAllWHAndLRByStateLibraries = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllWHAndLRByStateLibraries`, postBody, config);
+};
+export const getAllPTByStateLibraries = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllPTByStateLibraries`, postBody, config);
+};
 
 export const getMinWagePeriodsByStateAndYear = async (postBody) => {
     const config = {

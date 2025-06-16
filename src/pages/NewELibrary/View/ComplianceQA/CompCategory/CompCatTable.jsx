@@ -19,7 +19,7 @@ const CompCatTable = ({ localPage, setLocalPage }) => {
     const { data, totalCount, loading } = useSelector(
         (state) => state.complianceCategoryPaginatedRed
     );
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(1000);
     // const [localPage, setLocalPage] = useState(1);
 
     const [openPopup, setOpenPopup] = useState(false);

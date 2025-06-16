@@ -491,6 +491,12 @@ import {
   MINWAGE_LIBRARY_GET_BY_ID_REQUEST,
   MINWAGE_LIBRARY_GET_BY_ID_SUCCESS,
   MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
+  WH_LR_STATE_GET_REQUEST,
+  WH_LR_STATE_GET_SUCCESS,
+  WH_LR_STATE_GET_FAILURE,
+  PT_STATE_GET_REQUEST,
+  PT_STATE_GET_SUCCESS,
+  PT_STATE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3091,6 +3097,33 @@ export const labourWelfareLibraryStateWiseReducer = (state = {}, action) => {
       return { loadingLabourWelfare: false, LabourWelfareStateInfo: action.payload };
     case LABOUR_WELFARE_STATE_GET_FAILURE:
       return { loadingLabourWelfare: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
+export const wH_LRLibraryStateWiseReducer = (state = {}, action) => {
+  switch (action.type) {
+    case WH_LR_STATE_GET_REQUEST:
+      return { loadingLabourWelfare: true };
+    case WH_LR_STATE_GET_SUCCESS:
+      return { loadingLabourWelfare: false, WH_LRStateInfo: action.payload };
+    case WH_LR_STATE_GET_FAILURE:
+      return { loadingLabourWelfare: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const PTLibraryStateWiseReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PT_STATE_GET_REQUEST:
+      return { loadingPTStateWise: true };
+    case PT_STATE_GET_SUCCESS:
+      return { loadingPTStateWise: false, PTStateInfo: action.payload };
+    case PT_STATE_GET_FAILURE:
+      return { loadingPTStateWise: false, error: action.payload };
     default:
       return state;
   }

@@ -193,6 +193,8 @@ import {
   getAllMinWagesLibraries,
   getMinWagePeriodsByStateAndYear,
   getMinimumWageById,
+  getAllWHAndLRByStateLibraries,
+  getAllPTByStateLibraries,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -817,6 +819,12 @@ import {
   MINWAGE_LIBRARY_GET_BY_ID_REQUEST,
   MINWAGE_LIBRARY_GET_BY_ID_SUCCESS,
   MINWAGE_LIBRARY_GET_BY_ID_FAILURE,
+  WH_LR_STATE_GET_REQUEST,
+  WH_LR_STATE_GET_SUCCESS,
+  WH_LR_STATE_GET_FAILURE,
+  PT_STATE_GET_REQUEST,
+  PT_STATE_GET_SUCCESS,
+  PT_STATE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -9106,6 +9114,52 @@ export const labourWelfareLibraryStateWise = (postBody) => async (dispatch) => {
     .catch((error) => {
       dispatch({
         type: LABOUR_WELFARE_STATE_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+export const wHAndLRByStateWise = (postBody) => async (dispatch) => {
+  dispatch({ type: WH_LR_STATE_GET_REQUEST });
+
+  await getAllWHAndLRByStateLibraries(postBody)
+    .then((response) => {
+      dispatch({ type: WH_LR_STATE_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: WH_LR_STATE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: WH_LR_STATE_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+export const pTByStateWise = (postBody) => async (dispatch) => {
+  dispatch({ type: PT_STATE_GET_REQUEST });
+
+  await getAllPTByStateLibraries(postBody)
+    .then((response) => {
+      dispatch({ type: PT_STATE_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: PT_STATE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: PT_STATE_GET_FAILURE,
         payload: error.message,
       });
       toast.error(error.message);

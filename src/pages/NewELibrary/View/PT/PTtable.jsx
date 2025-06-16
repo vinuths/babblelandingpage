@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Table, Pagination, DatePicker, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { stateGets, professionalTaxLibraryDelete, professionalTaxLibraryPaginatedGet } from "../../../../store/actions/otherActions";
+import { stateGets, labourWelfareLibraryDelete, professionalTaxLibraryPaginatedGet } from "../../../../store/actions/otherActions";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Popup from "../../../../components/Popup";
 import moment from "moment";
-import { updateProfessionalTaxLibraryStatus } from "../../../../routes/api";
+import { updateLabourWelFundLibraryStatus } from "../../../../routes/api";
 import { Switch } from "antd";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+// import LabourWelfareState from "./LabourWelfareState";
 import { Typography, FormGroup, styled } from '@mui/material';
-import PTCreate from "./PTCreate";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 
 
 const { RangePicker } = DatePicker;
 
+
+// Utility to split array into chunks of 5
+
+
+
+
 const PTtable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { data, totalCount, loading } = useSelector(
         (state) => state.professionalTaxLibraryPaginatedRed
     );
-    console.log("data",data);
-    
-    // console.log("professionalTaxLibraryPaginatedRed",data);
+
+    // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(1000);
     // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");
@@ -70,49 +77,9 @@ const PTtable = ({ localPage, setLocalPage }) => {
         fetchData(localPage);
     }, [localPage, selectedState, dateRange]);
 
-    const handleDelete = async (id) => {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true,
-        });
-
-        if (result.isConfirmed) {
-            await dispatch(professionalTaxLibraryDelete(id));
-            fetchData(localPage);
-
-            Swal.fire('Deleted!', 'Professional Tax deleted successfully.', 'success');
-        }
-    };
-
-
-    const formatDateToInput = (isoDate) => {
-        if (!isoDate) return "";
-        return moment(isoDate).format("DD-MM-YYYY");
-    };
-
-    const openInPopupForUpdate = (item) => {
-        setRecordForEdit(item);
-        setOpenPopup(true);
-        setPageTitle('Edit Professional Tax E-Library');
-        setModalWidth('400px');
-    };
-
-    const onSwitchChange = (id, currentStatus) => {
-        // Add a slight delay to allow animation to complete
-        setTimeout(() => {
-            handleStatusToggle(id, currentStatus);
-        }, 400);
-    };
-
-
     const handleStatusToggle = async (id, currentStatus) => {
         try {
-            await updateProfessionalTaxLibraryStatus(id, !currentStatus);
+            await updateLabourWelFundLibraryStatus(id, !currentStatus);
             toast.success("Status updated successfully!");
             fetchData(localPage); // reloads the table correctly with filters
         } catch (error) {
@@ -120,233 +87,121 @@ const PTtable = ({ localPage, setLocalPage }) => {
         }
     };
 
-    const columns = [
-        {
-            title: "Sr. No.",
-            key: "key",
-            width: 80,
-            render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-        },
-        {
-            title: "State",
-            dataIndex: "stateData",
-            key: "state",
-            render: (stateData) => stateData?.name || "N/A",
-            width: 150,
-
-        },
-        {
-            title: "Applicability",
-            dataIndex: "applicability",
-            key: "applicability",
-            width: 120,
-            render: (value) => (
-                <span
-                    style={{
-                        backgroundColor: value === true ? '#d4edda' : '#f8d7da',
-                        color: value === true ? '#155724' : '#721c24',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        display: 'inline-block',
-                        textAlign: 'center',
-                        fontWeight: '500'
-                    }}
-                >
-                    {value === true ? 'Yes' : 'No'}
-                </span>
-            )
-        },
-        {
-            title: "Act",
-            dataIndex: "act",
-            key: "act",
-            width: 150,
-            render: (act) => (
-                <div>
-                    {act ? act :
-                        <NotApplicaple>N/A</NotApplicaple>}
-                </div>
-            ),
-        },
-
-        {
-            title: "Rule",
-            dataIndex: "rule",
-            key: "rule",
-            width: 150,
-            render: (rule) => (
-                <div>
-                    {rule ? rule :
-                        <NotApplicaple>N/A</NotApplicaple>}
-                </div>
-            ),
-        },
-
-        {
-            title: "Document",
-            dataIndex: "doc",
-            key: "doc",
-            render: (doc, record) => (
-                doc ? (
-                    <a href={doc} target="_blank" rel="noopener noreferrer">
-                        {record.act || "View Document"}
-                    </a>
-                ) : (
-                    <NotApplicaple>N/A</NotApplicaple>
-                )
-            ),
-            width: 200,
-
-        },
-        {
-            title: "Registration Form",
-            dataIndex: "regFormDoc",
-            key: "regFormDoc",
-            render: (regFormDoc, record) => (
-                regFormDoc ? (
-                    <a href={regFormDoc} target="_blank" rel="noopener noreferrer">
-                        {record.registrationForm || "View Document"}
-                    </a>
-                ) : (
-                    <NotApplicaple>N/A</NotApplicaple>
-                )
-            ),
-            width: 200,
-
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (status, record) => (
-                <Switch
-                    checked={status}
-                    onChange={() => onSwitchChange(record._id, status)}
-                    style={{
-                        backgroundColor: status ? '#013879' : '#dc3545',
-                    }}
-                    checkedChildren="Active"
-                    unCheckedChildren="In-Active"
-                />
-
-            ),
-            width: 120,
+    const handleStateClick = (stateName) => {
+        const item = data.find(el => el.stateData?.name === stateName);
+        if (item) {
+            navigate(`/elibrary/View/Professional_Tax/${item.stateData.name}`, {
+                state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
+            });
+        }
+    };
 
 
-        },
-        {
-            title: "Created Date",
-            dataIndex: "created_At",
-            // key: "created_At",
-            render: (created_At) => formatDateToInput(created_At),
-            width: 100,
+    const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
+    const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();
+    const allStates = [...new Set(data.map(item => item.stateData?.name))].filter(Boolean).sort();
 
-        },
-        {
-            title: "Last Updated",
-            dataIndex: "updated_at",
-            key: "updated_at",
-            render: (updated_at, record) => (<div>
-                {record.updated_at ? (
-                    <div>
-                        {formatDateToInput(record.updated_at)}
-                    </div>
-                ) : (
-                    <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-                )}
-            </div>
-            ),
-            width: 100,
 
-        },
-        {
-            key: "action",
-            title: "Actions",
-            width: 170,
-            render: (record) => (
-                <>
-                    <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-                        <EyeOutlined /> / <EditOutlined />
-                    </Link>
-                    <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-                        <DeleteOutlined />
-                    </Link>
-                </>
-            ),
-        },
-    ];
+    console.log("dataHere", data);
 
+
+    const buildRows = (data, columns, isClickable = false) => {
+        const rows = Math.ceil(data.length / columns);
+        const result = [];
+
+        for (let i = 0; i < rows; i++) {
+            const cells = [];
+
+            for (let j = 0; j < columns; j++) {
+                const item = data[i + j * rows];
+                // console.log("item",item);
+                
+                if (item) {
+                    cells.push(
+                        <td key={`${i}-${j}`}>
+                            <span
+                                className={isClickable ? 'clickable' : ''}
+                                onClick={isClickable ? () => handleStateClick(item) : null}
+                            >
+                                {item}
+                            </span>
+                        </td>
+                    );
+                } else {
+                    cells.push(<td key={`${i}-${j}`}></td>); // empty cell
+                }
+            }
+
+            result.push(<tr key={i}>{cells}</tr>);
+        }
+
+        return result;
+    };
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">State Filter</label>
-                    <select
-                        className="form-select"
-                        value={selectedState}
-                        onChange={(e) => {
-                            setSelectedState(e.target.value);
-                            setLocalPage(1); // Reset to page 1
-                        }}
-                    >
-                        <option value="">Select State</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Date Filter</label>
-                    <RangePicker
-                        className="w-100"
-                        value={dateRange}
-                        onChange={(dates) => {
-                            setDateRange(dates || []);
-                            setLocalPage(1);
-                        }}
-                    />
-                </div>
+                <div className="card p-4 mb-4">
 
-
-            </div>
-
-            <div className="table-responsive">
-                {loading ? (
-                    <Spin size="large" className="d-flex justify-content-center" />
-                ) : data && data.length > 0 ? (
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                        rowKey="_id"
-                        scroll={{ x: 1000 }}
-                        sticky
-                    />
-                ) : (
-                    <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '100px' }}>
-                        <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No Professional Tax E-Library Available</h1>
+                    <div className="headContain">
+                        <h3 className="mb-3 heads">Professional Tax</h3>
                     </div>
-                )}
-            </div>
+                    <br />
+                    <p>
+                        Professional Tax is a state-level tax levied on individuals earning income through employment, profession, or trade. It is deducted monthly by the employer from the employee’s salary and paid to the respective state government.
+                    </p>
+                    {/* <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
+                    <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
 
-            {/* {loading ? (
-                <Spin size="large" className="d-flex justify-content-center" />
-            ) : data && data.length > 0 ? ( */}
-            <div className="d-flex justify-content-center mt-3">
-                <Pagination
-                    current={localPage}
-                    total={totalCount}
-                    pageSize={pageSize}
-                    onChange={(page) => setLocalPage(page)}
-                    showSizeChanger={false}
-                />
+                        To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
+
+                    <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
+                    <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
+
+                    <h5 className="mt-4 heads">Applicability of the Act</h5>
+                    <p>This act has been implemented only in selected states including union territories.</p> */}
+
+                    <div className="state-container">
+                        {/* Applicable */}
+                        {applicableStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(applicableStates, 5, true)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+
+                        {/* Not Applicable */}
+                        {notApplicableStates.length > 0 && (
+                            <div className="table-box">
+                                <div className="table-title">Not Applicable States</div>
+                                <table className="state-table">
+                                    <tbody>
+                                        {buildRows(notApplicableStates, 5)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+
+
+
+                    <p className="mt-3" style={{ fontStyle: "italic" }}>
+                        Professional Tax is not applicable to all category of employees...
+                    </p>
+                </div>
+
+                {/* <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
+                    {openPopup && (
+                        <LabourWelfareState
+                            data={data}
+                        />
+                    )}
+                </Popup> */}
+
             </div>
-            {/* ) : (
-                null
-            )} */}
-            <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                {openPopup && <PTCreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-            </Popup>
         </div>
     );
 };

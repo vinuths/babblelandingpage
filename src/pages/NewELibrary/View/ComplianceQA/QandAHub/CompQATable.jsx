@@ -1,287 +1,183 @@
 import React, { useEffect, useState } from "react";
-import { Table, Pagination, DatePicker, Select, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryGetComplianceList, compQandALibraryPaginatedGet, compQandALibraryDelete } from "../../../../../store/actions/otherActions";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import Popup from "../../../../../components/Popup";
-import moment from "moment";
-import { updateCompQandALibraryStatus } from "../../../../../routes/api";
-import { Switch } from "antd";
-import { toast } from "react-toastify";
-import CompQACreate from "./CompQACreate";
-
-const { RangePicker } = DatePicker;
+import {
+  categoryGetComplianceList,
+  compQandALibraryPaginatedGet,
+} from "../../../../../store/actions/otherActions";
+import { Spin } from "antd";
+import "./CompQACSS.css"; // Custom styles
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CompQATable = ({ localPage, setLocalPage }) => {
   const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const { data, totalCount, loading } = useSelector(
+  const { data, loading } = useSelector(
     (state) => state.compQandALibraryPaginatedRed
   );
-  const { compCategoryInfo } = useSelector((state) => state.complianceCategoryGetRed);
-  // console.log("compCategoryInfo", compCategoryInfo);
+  const { compCategoryInfo } = useSelector(
+    (state) => state.complianceCategoryGetRed
+  );
 
-  const [pageSize] = useState(20);
-  // const [localPage, setLocalPage] = useState(1);
-  const [selectedState, setSelectedState] = useState("");
-  const [dateRange, setDateRange] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState("");
+  const [faqs, setFaqs] = useState([]);
+  const pageSize = 1000;
 
-  const [openPopup, setOpenPopup] = useState(false);
-  const [pageTitle, setPageTitle] = useState('');
-  const [modalWidth, setModalWidth] = useState();
-  const [recordForEdit, setRecordForEdit] = useState(null);
-
-  const addOrEdit = () => {
-    relodreport();
-    setRecordForEdit(null);
-    setOpenPopup(false);
-  };
-
-  const relodreport = () => {
-    fetchData(localPage);
-  };
-
-  const fetchData = (page = localPage) => {
-    const filters = {};
-
-    if (selectedState) filters.complianceCategory = selectedState;
-
-    if (dateRange?.length === 2) {
-      filters.fromDate = dateRange[0].toISOString();
-      filters.toDate = dateRange[1].toISOString();
-    }
-
-    dispatch(compQandALibraryPaginatedGet({ page, limit: pageSize, filters }));
-  };
-
+  // Fetch categories
   useEffect(() => {
     dispatch(categoryGetComplianceList());
   }, [dispatch]);
 
+  // Fetch FAQs based on selected filters
+  const fetchData = (page = localPage) => {
+    const filters = {};
+    if (selectedCategory) filters.complianceCategory = selectedCategory;
+    dispatch(compQandALibraryPaginatedGet({ page, limit: pageSize, filters }));
+  };
+
   useEffect(() => {
-    fetchData(localPage);
-  }, [localPage, selectedState, dateRange]);
+    fetchData();
+  }, [selectedCategory]);
 
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-      reverseButtons: true,
-    });
-
-    if (result.isConfirmed) {
-      await dispatch(compQandALibraryDelete(id));
-      fetchData(localPage);
-
-      Swal.fire('Deleted!', 'Compliance FAQ E-Library deleted successfully.', 'success');
+  // Process data into flat FAQ list
+  useEffect(() => {
+    if (data && Array.isArray(data)) {
+      const flatFAQs = data.flatMap((entry) =>
+        entry.complianceDetails
+          ?.filter((detail) => {
+            if (selectedTopic) {
+              return detail.topic === selectedTopic;
+            }
+            return true;
+          })
+          .map((detail) => ({
+            ...detail,
+            open: false,
+          }))
+      );
+      setFaqs(flatFAQs);
     }
+  }, [data, selectedTopic]);
+
+  // Toggle open/close state
+  const toggleFAQ = (index) => {
+    setFaqs((prev) =>
+      prev.map((faq, i) => ({
+        ...faq,
+        open: i === index ? !faq.open : false,
+      }))
+    );
   };
 
-
-  const formatDateToInput = (isoDate) => {
-    if (!isoDate) return "";
-    return moment(isoDate).format("DD-MM-YYYY");
-  };
-
-  const openInPopupForUpdate = (item) => {
-    setRecordForEdit(item);
-    setOpenPopup(true);
-    setPageTitle('Edit Compliance FAQ E-Library');
-    setModalWidth('400px');
-  };
-
-  const onSwitchChange = (id, currentStatus) => {
-    // Add a slight delay to allow animation to complete
-    setTimeout(() => {
-      handleStatusToggle(id, currentStatus);
-    }, 400);
-  };
-
-
-  const handleStatusToggle = async (id, currentStatus) => {
-    try {
-      await updateCompQandALibraryStatus(id, !currentStatus);
-      toast.success("Status updated successfully!");
-      fetchData(localPage); // reloads the table correctly with filters
-    } catch (error) {
-      toast.error("Failed to update status");
-    }
-  };
-
-  const columns = [
-    {
-      title: "Sr. No.",
-      key: "key",
-      width: 80,
-      render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-    },
-    {
-      title: "Category",
-      dataIndex: "complianceCategoryData",
-      key: "complianceCategory",
-      render: (complianceCategoryData) => complianceCategoryData?.name || "N/A",
-      width: 150,
-
-    },
-    {
-      title: "Topic",
-      dataIndex: "topic",
-      key: "topic",
-      width: 200,
-    },
-    {
-      title: "Question",
-      dataIndex: "question",
-      key: "question",
-      width: 200,
-    },
-    {
-      title: "Answer",
-      dataIndex: "answer",
-      key: "answer",
-      width: 200,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status, record) => (
-        <Switch
-          checked={status}
-          onChange={() => onSwitchChange(record._id, status)}
-          style={{
-            backgroundColor: status ? '#013879' : '#dc3545',
-          }}
-          checkedChildren="Active"
-          unCheckedChildren="In-Active"
-        />
-
-      ),
-      width: 120,
-
-
-    },
-    {
-      title: "Created Date",
-      dataIndex: "created_At",
-      // key: "created_At",
-      render: (created_At) => formatDateToInput(created_At),
-      width: 100,
-
-    },
-    {
-      title: "Last Updated",
-      dataIndex: "updated_at",
-      key: "updated_at",
-      render: (updated_at, record) => (<div>
-        {record.updated_at ? (
-          <div>
-            {formatDateToInput(record.updated_at)}
-          </div>
-        ) : (
-          <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-        )}
-      </div>
-      ),
-      width: 100,
-
-    },
-    {
-      key: "action",
-      title: "Actions",
-      width: 170,
-      render: (record) => (
-        <>
-          <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-            <EyeOutlined /> / <EditOutlined />
-          </Link>
-          <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-            <DeleteOutlined />
-          </Link>
-        </>
-      ),
-    },
+  // Extract unique topics for dropdown
+  const topicOptions = [
+    ...new Set(
+      data
+        ?.flatMap((entry) =>
+          entry.complianceDetails?.map((d) => d.topic)
+        )
+        .filter(Boolean)
+    ),
   ];
 
   return (
-    <div className="container-fluid">
-      <div className="row g-3 mb-3 pt-1 align-items-end">
-        <div className="col-md-6">
-          <label className="form-label fw-semibold">Category Filter</label>
-          <select
-            className="form-select"
-            value={selectedState}
-            onChange={(e) => {
-              setSelectedState(e.target.value);
-              setLocalPage(1); // Reset to page 1
-            }}
-          >
-            <option value="">Select Category</option>
-            {compCategoryInfo?.map((item) => (
-              <option key={item._id} value={item._id}>{item.name}</option>
-            ))}
-          </select>
-        </div>
-        {/* {JSON.stringify(compCategoryInfo)} */}
-        <div className="col-md-6">
-          <label className="form-label fw-semibold">Date Filter</label>
-          <RangePicker
-            className="w-100"
-            value={dateRange}
-            onChange={(dates) => {
-              setDateRange(dates || []);
-              setLocalPage(1);
-            }}
-          />
-        </div>
-      </div>
+    <>
 
-      <div className="table-responsive">
-        {loading ? (
-          <Spin size="large" className="d-flex justify-content-center" />
-        ) : data && data.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={false}
-            rowKey="_id"
-            scroll={{ x: 1000 }}
-            sticky
-          />
-        ) : (
-          <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '100px' }}>
-            <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No Compliance FAQ E-Library Available</h1>
+      <div >
+        {/* <div style={{ marginBottom: "20px" }}> */}
+        <button
+          onClick={() => navigate("/elibrary/View")}
+          className="back-button"
+          style={{ position: 'relative', top: '35px' }}
+        >
+          <ArrowBackIcon />
+        </button>
+        {/* </div> */}
+
+      </div>
+      <div className="container mt-4 backCon">
+        <div className="text-center mb-3">
+          <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
+            Compliance Questions & Answers
+          </h2>
+          {/* <p style={{ color: "gray", fontStyle: "italic", maxWidth: "800px", margin: "auto" }}>
+          This collection covers a wide range of key business areas such as human resources, data security,
+          compliance, and workplace conduct. Our templates are crafted to help companies establish clear
+          guidelines, promote best practices, and ensure regulatory compliance efficiently and effectively.
+        </p> */}
+        </div>
+
+        <div className="row mb-4 justify-content-center">
+          <div className="col-md-6">
+            <label className="form-label fw-semibold text-center d-block">Filter by Category</label>
+            <select
+              className="form-select text-center"
+              value={selectedCategory}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setSelectedTopic("");
+                setLocalPage(1);
+              }}
+            >
+              <option value="">Select Category</option>
+              {compCategoryInfo?.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
-      </div>
 
-      {loading ? (
-        <Spin size="large" className="d-flex justify-content-center" />
-      ) : data && data.length > 0 ? (
-        <div className="d-flex justify-content-center mt-3">
-          <Pagination
-            current={localPage}
-            total={totalCount}
-            pageSize={pageSize}
-            onChange={(page) => setLocalPage(page)}
-            showSizeChanger={false}
-          />
+          <div className="col-md-6">
+            <label className="form-label fw-semibold text-center d-block">Filter by Topic</label>
+            <select
+              className="form-select text-center"
+              value={selectedTopic}
+              onChange={(e) => {
+                setSelectedTopic(e.target.value);
+                setLocalPage(1);
+              }}
+              disabled={!selectedCategory}
+            >
+              <option value="">Select Topic</option>
+              {topicOptions.map((topic, index) => (
+                <option key={index} value={topic}>
+                  {topic}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      ) : (
-        null
-      )}
-      <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-        {openPopup && <CompQACreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-      </Popup>
-    </div>
+
+        <div className="faqs">
+          {loading ? (
+            <Spin size="large" className="d-flex justify-content-center" />
+          ) : faqs.length > 0 ? (
+            faqs.map((faq, index) => (
+              <div
+                className={"faq " + (faq.open ? "open" : "")}
+                key={`${faq.question}-${index}`}
+                onClick={() => toggleFAQ(index)}
+              >
+                <span className="state-badgeTO">{faq.topic}</span>
+                <div className="faq-question">
+                  <span style={{ fontWeight: "bold", marginRight: "8px" }}>{index + 1}.</span>
+                  {faq.question}
+                </div>
+                <div className="faq-answer">{faq.answer}</div>
+              </div>
+            ))
+          ) : (
+            <div className="alert danger-info text-center fw-semibold">
+              No Compliance FAQ E-Library Available
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
-
 
 export default CompQATable;

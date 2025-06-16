@@ -115,7 +115,7 @@ const WH_LRCreate = ({ addOrEdit, recordForEdit, setLocalPage }) => {
         setRateOfOTWages('');
         setDescriptionMain('');
         setTypeOfLeave('');
-        setStatus('');
+        setStatus(true);
         // setDoc(null);
         // setDocUrl(''); // Reset file URL
         // handleClose();

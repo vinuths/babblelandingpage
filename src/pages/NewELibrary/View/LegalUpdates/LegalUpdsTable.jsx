@@ -1,303 +1,170 @@
 import React, { useEffect, useState } from "react";
-import { Table, Pagination, DatePicker, Select, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { stateGets, reLeagalUpdateLibraryPaginatedGet, reLeagalUpdateLibraryDelete } from "../../../../store/actions/otherActions";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import Popup from "../../../../components/Popup";
+import {
+    categoryGetComplianceList,
+    reLeagalUpdateLibraryPaginatedGet,
+} from "../../../../store/actions/otherActions";
+import { Spin } from "antd";
 import moment from "moment";
-import { updateReLeagalUpdateLibraryStatus } from "../../../../routes/api";
-import { Switch } from "antd";
-import { toast } from "react-toastify";
-import LegalUpdsCreate from "./LegalUpdsCreate";
-
-const { RangePicker } = DatePicker;
+import "./LegalCSS.css"; // use same FAQ styles
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 const LegalUpdsTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { data, totalCount, loading } = useSelector(
+    const { data, loading } = useSelector(
         (state) => state.reLeagalUpdateLibraryPaginatedRed
+    );
+    const { compCategoryInfo } = useSelector(
+        (state) => state.complianceCategoryGetRed
     );
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(20);
-    // const [localPage, setLocalPage] = useState(1);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [faqs, setFaqs] = useState([]);
     const [selectedState, setSelectedState] = useState("");
-    const [dateRange, setDateRange] = useState([]);
 
-    const [openPopup, setOpenPopup] = useState(false);
-    const [pageTitle, setPageTitle] = useState('');
-    const [modalWidth, setModalWidth] = useState();
-    const [recordForEdit, setRecordForEdit] = useState(null);
-
-    const addOrEdit = () => {
-        relodreport();
-        setRecordForEdit(null);
-        setOpenPopup(false);
-    };
-
-    const relodreport = () => {
-        fetchData(localPage);
-    };
-
-    const fetchData = (page = localPage) => {
-        const filters = {};
-
-        if (selectedState) filters.state = selectedState;
-
-        if (dateRange?.length === 2) {
-            filters.fromDate = dateRange[0].toISOString();
-            filters.toDate = dateRange[1].toISOString();
-        }
-
-        dispatch(reLeagalUpdateLibraryPaginatedGet({ page, limit: pageSize, filters }));
-    };
+    const pageSize = 1000;
 
     useEffect(() => {
-        dispatch(stateGets());
+        dispatch(categoryGetComplianceList());
     }, [dispatch]);
 
     useEffect(() => {
-        fetchData(localPage);
-    }, [localPage, selectedState, dateRange]);
+        const filters = {};
+        // if (selectedCategory) filters.complianceCategory = selectedCategory;
+        if (selectedState) filters.state = selectedState;
 
-    const handleDelete = async (id) => {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true,
-        });
+        dispatch(reLeagalUpdateLibraryPaginatedGet({ page: localPage, limit: pageSize, filters }));
+    }, [dispatch, selectedState, localPage]);
 
-        if (result.isConfirmed) {
-            await dispatch(reLeagalUpdateLibraryDelete(id));
-            fetchData(localPage);
-
-            Swal.fire('Deleted!', 'Legal Update was deleted successfully.', 'success');
+    useEffect(() => {
+        if (data && Array.isArray(data)) {
+            setFaqs(
+                data.map((item) => ({
+                    ...item,
+                    open: false,
+                }))
+            );
         }
+    }, [data]);
+
+    const toggleFAQ = (index) => {
+        setFaqs((prev) =>
+            prev.map((faq, i) => ({
+                ...faq,
+                open: i === index ? !faq.open : false,
+            }))
+        );
     };
 
-
-    const formatDateToInput = (isoDate) => {
-        if (!isoDate) return "";
-        return moment(isoDate).format("DD-MM-YYYY");
+    const getStateName = (id) => {
+        return stateInfo?.find((s) => s._id === id)?.name || "N/A";
     };
-
-    const openInPopupForUpdate = (item) => {
-        setRecordForEdit(item);
-        setOpenPopup(true);
-        setPageTitle('Edit Recent Legal Update');
-        setModalWidth('400px');
-    };
-
-    const onSwitchChange = (id, currentStatus) => {
-        // Add a slight delay to allow animation to complete
-        setTimeout(() => {
-            handleStatusToggle(id, currentStatus);
-        }, 400);
-    };
-
-
-    const handleStatusToggle = async (id, currentStatus) => {
-        try {
-            await updateReLeagalUpdateLibraryStatus(id, !currentStatus);
-            toast.success("Status updated successfully!");
-            fetchData(localPage); // reloads the table correctly with filters
-        } catch (error) {
-            toast.error("Failed to update status");
-        }
-    };
-
-    const columns = [
-        {
-            title: "Sr. No.",
-            key: "key",
-            width: 80,
-            render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-        },
-        {
-            title: "State",
-            dataIndex: "stateData",
-            key: "state",
-            render: (stateData) => stateData?.name || "N/A",
-            width: 150,
-
-        },
-        {
-            title: "Department",
-            dataIndex: "department",
-            key: "department",
-            width: 200,
-        },
-        {
-            title: "Act or Rule",
-            dataIndex: "actOrRule",
-            key: "actOrRule",
-            width: 200,
-        },
-        {
-            title: "Type",
-            dataIndex: "type",
-            key: "type",
-            width: 200,
-        },
-        {
-            title: "Description",
-            dataIndex: "description",
-            key: "description",
-            width: 200,
-        },
-        {
-            title: "Documents",
-            dataIndex: "doc",
-            key: "doc",
-            render: (doc, record) => (
-                <a href={doc} target="_blank" rel="noopener noreferrer">
-                    {record.actOrRule}
-                </a>
-            ),
-            width: 200,
-
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (status, record) => (
-                <Switch
-                    checked={status}
-                    onChange={() => onSwitchChange(record._id, status)}
-                    style={{
-                        backgroundColor: status ? '#013879' : '#dc3545',
-                    }}
-                    checkedChildren="Active"
-                    unCheckedChildren="In-Active"
-                />
-
-            ),
-            width: 120,
-
-
-        },
-        {
-            title: "Created Date",
-            dataIndex: "created_At",
-            // key: "created_At",
-            render: (created_At) => formatDateToInput(created_At),
-            width: 100,
-
-        },
-        {
-            title: "Last Updated",
-            dataIndex: "updated_at",
-            key: "updated_at",
-            render: (updated_at, record) => (<div>
-                {record.updated_at ? (
-                    <div>
-                        {formatDateToInput(record.updated_at)}
-                    </div>
-                ) : (
-                    <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-                )}
-            </div>
-            ),
-            width: 100,
-
-        },
-        {
-            key: "action",
-            title: "Actions",
-            width: 170,
-            render: (record) => (
-                <>
-                    <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-                        <EyeOutlined /> / <EditOutlined />
-                    </Link>
-                    <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-                        <DeleteOutlined />
-                    </Link>
-                </>
-            ),
-        },
-    ];
 
     return (
-        <div className="container-fluid">
-            <div className="row g-3 mb-3 pt-1 align-items-end">
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">State Filter</label>
-                    <select
-                        className="form-select"
-                        value={selectedState}
-                        onChange={(e) => {
-                            setSelectedState(e.target.value);
-                            setLocalPage(1); // Reset to page 1
-                        }}
-                    >
-                        <option value="">Select State</option>
-                        {stateInfo?.map((item) => (
-                            <option key={item._id} value={item._id}>{item.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Date Filter</label>
-                    <RangePicker
-                        className="w-100"
-                        value={dateRange}
-                        onChange={(dates) => {
-                            setDateRange(dates || []);
-                            setLocalPage(1);
-                        }}
-                    />
-                </div>
-            </div>
+        <>
+            <div >
+                {/* <div style={{ marginBottom: "20px" }}> */}
+                <button
+                    onClick={() => navigate("/elibrary/View")}
+                    className="back-button"
+                    style={{ position: 'relative', top: '35px' }}
+                >
+                    <ArrowBackIcon />
+                </button>
+                {/* </div> */}
 
-            <div className="table-responsive">
-                {loading ? (
-                    <Spin size="large" className="d-flex justify-content-center" />
-                ) : data && data.length > 0 ? (
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                        rowKey="_id"
-                        scroll={{ x: 1000 }}
-                        sticky
-                    />
-                ) : (
-                    <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '100px' }}>
-                        <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No Legal Updates E-Library Available</h1>
+            </div>
+            <div className="container mt-4 backCon">
+                <div className="text-center mb-3">
+                    <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
+                        Legal & Regulatory Updates
+                    </h2>
+                    <p>Stay informed with the latest developments in laws, regulations, and compliance requirements that impact your business. Our Recent Legal Updates provide timely, accurate, and easy-to-understand summaries of key legal changes, helping you navigate the evolving legal landscape with confidence and ensure your operations remain compliant.</p>
+                </div>
+
+                <div className="row mb-4 justify-content-center">
+                    <div className="col-md-6">
+                        <label className="form-label fw-semibold text-center d-block" htmlFor="stateFilter">State:</label>
+                        <select
+                            id="stateFilter"
+                            className="form-select"
+                            value={selectedState}
+                            onChange={(e) => {
+                                setSelectedState(e.target.value);
+                                setLocalPage(1);
+                            }}
+                        >
+                            <option value="">All States</option>
+                            {stateInfo
+                                ?.filter((state) => state.name !== "All States")
+                                .map((state) => (
+                                    <option key={state._id} value={state._id}>
+                                        {state.name}
+                                    </option>
+                                ))}
+                        </select>
                     </div>
-                )}
-            </div>
-
-            {loading ? (
-                <Spin size="large" className="d-flex justify-content-center" />
-            ) : data && data.length > 0 ? (
-                <div className="d-flex justify-content-center mt-3">
-                    <Pagination
-                        current={localPage}
-                        total={totalCount}
-                        pageSize={pageSize}
-                        onChange={(page) => setLocalPage(page)}
-                        showSizeChanger={false}
-                    />
                 </div>
-            ) : (
-                null
-            )}
-            <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                {openPopup && <LegalUpdsCreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-            </Popup>
-        </div>
+
+                <div className="faqs">
+                    {loading ? (
+                        <Spin size="large" className="d-flex justify-content-center" />
+                    ) : faqs.length > 0 ? (
+                        faqs.map((faq, index) => (
+                            <div
+                                className={"faq " + (faq.open ? "open" : "")}
+                                key={faq._id}
+                                onClick={() => toggleFAQ(index)}
+                            >
+                                <span className="state-badgeQA">
+                                    {faq.department} | {getStateName(faq.state)}
+                                </span>
+                                <div className="faq-question">
+                                    <span style={{ fontWeight: "bold", marginRight: "8px" }}>{index + 1}.</span>
+                                    {faq.actOrRule}
+                                </div>
+                                <div className="faq-answer">
+                                    <p style={{ whiteSpace: "pre-line", marginBottom: "10px" }}>{faq.description}</p>
+                                    <p><strong>Type:</strong> {faq.type || "N/A"}</p>
+                                    <div className="row">
+                                        <div className="col-4">
+                                            {faq.updated_at ? (
+                                                <p><strong>Updated On:</strong> {faq.updated_at ? moment(faq.updated_at).format("DD MMM YYYY") : "N/A"}</p>
+                                            ) : (
+                                                <p><strong>Created On:</strong> {faq.created_At ? moment(faq.created_At).format("DD MMM YYYY") : "N/A"}</p>
+                                            )}
+
+                                        </div>
+                                        <div className="col-5"></div>
+                                        <div className="col-3" style={{ marginTop: '-10px' }}>
+                                            {faq.doc && (
+                                                <a
+                                                    className="btn btn-primary"
+                                                    href={faq.doc}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    📄 View Document
+                                                </a>
+                                            )}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="alert alert-danger text-center fw-semibold">
+                            No Legal & Regulatory Updates Available
+                        </div>
+                    )}
+                </div>
+            </div>
+        </>
     );
 };
-
 
 export default LegalUpdsTable;

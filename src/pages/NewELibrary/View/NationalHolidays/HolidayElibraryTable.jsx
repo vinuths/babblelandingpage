@@ -26,7 +26,7 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
     );
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(20);
+    const [pageSize] = useState(1000);
     // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");

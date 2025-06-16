@@ -1,123 +1,69 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const CompOptions = () => {
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { stateGets, compQandALibraryPaginatedGet } from "../../../../store/actions/otherActions";
+import CompQATable from './QandAHub/CompQATable';
+
+
+function CompOptions() {
+  const [localPage, setLocalPage] = useState(1);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const buttons = [
-    { label: "Compliance Question & Answers", path: "/elibrary/View/Compliance/Compliance_Q&A_Hub" },
-    { label: "Compliance Category", path: "/elibrary/View/Compliance/ComplianceCategory" },
-    
-  ];
+
+  useEffect(() => {
+    // dispatch(AllbranchesGet());
+    // dispatch(TableBranchesGet());
+  }, [dispatch]);
+
+
+  const calling = () => {
+    setTimeout(() => {
+      dispatch(compQandALibraryPaginatedGet(1, 1000));
+      dispatch(stateGets());
+
+    }, 200);
+
+  }
 
   return (
-    // <div className='dashboard_wrapper'>
-    //   <div className="row" style={{ width: '1300px' }}>
-    //     <div className="col-lg-12 col-md-12 col-sm-12">
-    //       {/* <div className="table-responsive" style={{width:'1200px'}}> */}
-    //       <div className="table  creat_tbl">
-    //         <div className="form-group">
-    //           <div className="row" >
-    //             <div className="elibrary-wrapper" style={{ padding: '40px 20px', background: '#f4f6f9', height: '83vh', width: '1200px', marginLeft: '78px' }}>
-    //               <div className="container">
-    //                 <h2 style={{ color: '#013879', marginBottom: '30px', fontWeight: '700', textAlign: 'center' }}>
-    //                   E-Library Sections
-    //                 </h2>
-    //                 <div
-    //                   className="button-grid"
-    //                   style={{
-    //                     display: 'flex',
-    //                     flexWrap: 'wrap',
-    //                     justifyContent: 'center',
-    //                     gap: '20px'
-    //                   }}
-    //                 >
-    //                   {buttons.map((btn, index) => (
-    //                     <div key={index} style={{ flex: '1 1 250px', maxWidth: '250px' }}>
-    //                       <button
-    //                         onClick={() => navigate(btn.path)}
-    //                         style={{
-    //                           width: '100%',
-    //                           padding: '30px 20px',
-    //                           backgroundColor: '#013879',
-    //                           color: '#fff',
-    //                           fontSize: '18px',
-    //                           fontWeight: '600',
-    //                           border: 'none',
-    //                           borderRadius: '12px',
-    //                           cursor: 'pointer',
-    //                           transition: 'all 0.3s ease',
-    //                           boxShadow: '0 6px 18px rgba(0, 0, 0, 0.1)'
-    //                         }}
-    //                         onMouseEnter={(e) => {
-    //                           e.currentTarget.style.backgroundColor = '#025197';
-    //                           e.currentTarget.style.transform = 'translateY(-3px)';
-    //                         }}
-    //                         onMouseLeave={(e) => {
-    //                           e.currentTarget.style.backgroundColor = '#013879';
-    //                           e.currentTarget.style.transform = 'translateY(0)';
-    //                         }}
-    //                       >
-    //                         {btn.label}
-    //                       </button>
-    //                     </div>
-    //                   ))}
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </div>
-    //           {/* </div> */}
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
 
-    <div className="dashboard_wrapper" style={{ background: '#f4f6f9', padding: '40px 20px', height: '75vh !important' }}>
-      <div className="container">
-        <h2 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '40px' }}>
-          Compliance Question & Answer Section
-        </h2>
+    <React.Fragment>
+      <div className='dashboard_wrapper'>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <ul class="nav nav-pills mb-3 bg-light" id="pills-tab" role="tablist">
+                {/* <li class="nav-item col-md-6 col-lg-6 col-12" role="presentation">
+                  <button class="nav-link w-100 active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onClick={calling}>View All</button>
+                </li>
+                <li class="nav-item col-md-6 col-lg-6 col-12" role="presentation">
+                  <button class="nav-link w-100" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Create New</button>
+                </li> */}
 
-        <div className="row justify-content-center">
-          {buttons.map((btn, index) => (
-            <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-5" key={index}>
-              <button
-                onClick={() => navigate(btn.path)}
-                style={{
-                  width: '100%',
-                  padding: '30px 20px',
-                  backgroundColor: 'white',
-                  // backgroundColor: '#013879',
-                  // color: '#fff',
-                  color: '#013879',
-                  fontSize: '17px',
-                  fontWeight: '600',
-                  border: '2px solid #013879',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 6px 18px rgba(0, 0, 0, 0.1)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#025197';
-                  e.currentTarget.style.color = 'white';
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'White';
-                  e.currentTarget.style.color = '#013879';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                {btn.label}
-              </button>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="row">
+                    <div class="col-12 col-lg-12">
+                      <CompQATable localPage={localPage} setLocalPage={setLocalPage} />
+                    </div>
+                  </div>
+                </div>
+                {/* <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                  <PTCreate setLocalPage={setLocalPage} />
+                </div> */}
+
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+
+    </React.Fragment>
+  )
+}
 
 export default CompOptions;

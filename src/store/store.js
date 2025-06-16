@@ -169,6 +169,8 @@ import {
         MINWAGELibraryPaginatedReducer1,
         minWagePeriodsByStateAndYearGetReducer,
         minWageGetByIdReducer,
+        wH_LRLibraryStateWiseReducer,
+        PTLibraryStateWiseReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -337,6 +339,8 @@ const reducer = combineReducers({
         MINWAGELibraryPaginatedRed: MINWAGELibraryPaginatedReducer1,
         minWagePeriodsByStateAndYearGetRed: minWagePeriodsByStateAndYearGetReducer,
         minWageGetByIdRed: minWageGetByIdReducer,
+        wH_LRLibraryStateWiseRed:wH_LRLibraryStateWiseReducer,
+        PTLibraryStateWiseRed:PTLibraryStateWiseReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

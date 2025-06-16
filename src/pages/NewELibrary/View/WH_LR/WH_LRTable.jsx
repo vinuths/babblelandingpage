@@ -37,7 +37,7 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
     // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
-    const [pageSize] = useState(150);
+    const [pageSize] = useState(1000);
     // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");
@@ -90,7 +90,7 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
     const handleStateClick = (stateName) => {
         const item = data.find(el => el.stateData?.name === stateName);
         if (item) {
-            navigate(`/elibrary/View/Labour_Welfare_Fund/${item.stateData.name}`, {
+            navigate(`/elibrary/View/Working_Hours_&_leave_Rules/${item.stateData.name}`, {
                 state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
             });
         }
