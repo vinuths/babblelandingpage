@@ -47,7 +47,7 @@ const HolidayElibraryCreate = () => {
         setSelectedHolidayId(matchedHoliday._id);
         setSelectedStateId(state._id);
         setShowTable(true);
-        setSelectedState(state); // <-- store full state object
+        setSelectedState(state);
         navigate("/elibrary/View/National_&_Festival_Holidays/HolidayList", {
             state: {
                 year: selectedYear,
@@ -56,22 +56,67 @@ const HolidayElibraryCreate = () => {
                 selectedState: state,
             },
         });
+    };
 
-
+    // Back button handler
+    const handleBack = () => {
+        if (showTable) {
+            // if currently showing details, go back to list
+            setShowTable(false);
+            // optionally clear selected state/holiday IDs
+            setSelectedHolidayId(null);
+            setSelectedStateId(null);
+            setSelectedState(null);
+        } else {
+            // if on list, navigate back in history
+            navigate(-1);
+        }
     };
 
     return (
-        <div className="holiday-container py-4" >
+        <div className="holiday-container py-4">
+            {/* Back Button + Centered Heading */}
+            <div
+                className="d-flex align-items-center justify-content-center position-relative mb-4"
+                style={{ minHeight: "40px" }}
+            >
+                <button
+                    onClick={handleBack}
+                    style={{
+                        position: "absolute",
+                        left: 0,
+                        background: "none",
+                        border: "none",
+                        color: "#013879",
+                        fontWeight: "bold",
+                        fontSize: "18px",
+                        cursor: "pointer",
+                        padding: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        opacity: 0.85,
+                    }}
+                    aria-label="Back"
+                >
+                    ← Back
+                </button>
+
+                <h2 className="mb-0 fw-bold" style={{ color: "#013879" }}>
+                    {!showTable
+                        ? `Lists of Government & Public Holidays in India ${selectedYear}`
+                        : `Holiday Details for ${selectedState?.name || ""} (${selectedYear})`}
+                </h2>
+            </div>
+
             {!showTable ? (
                 <>
-                    <h2 className="mb-4 text-center fw-bold " style={{ color: '#013879' }}>
-                        Lists of Government & Public Holidays in India {selectedYear}
-                    </h2>
                     <p className="text-center mb-4 text-secondary">
                         Lists of Holidays For States Across India
                     </p>
                     <div className="d-flex justify-content-center align-items-center gap-2 mb-4">
-                        <label htmlFor="selectedYear" className="form-label">Year Filter</label>
+                        <label htmlFor="selectedYear" className="form-label">
+                            Year Filter
+                        </label>
                         <DatePicker
                             className="form-select"
                             picker="year"
@@ -94,17 +139,16 @@ const HolidayElibraryCreate = () => {
                         {stateInfo
                             ?.filter((state) => state.name !== "All States")
                             .map((state) => {
-
                                 const matchingHoliday = holidayData?.find(
                                     (item) => item.stateId === state._id
                                 );
 
                                 const effectiveDate = matchingHoliday?.effectiveDate
                                     ? new Date(matchingHoliday.effectiveDate).toLocaleDateString("en-IN", {
-                                        day: "numeric",
-                                        month: "short",
-                                        year: "numeric",
-                                    })
+                                          day: "numeric",
+                                          month: "short",
+                                          year: "numeric",
+                                      })
                                     : "N/A";
 
                                 return (
@@ -116,11 +160,21 @@ const HolidayElibraryCreate = () => {
                                         <div className="state-card pointer-hover">
                                             <h6 className="state-name">{state.name}</h6>
                                             {matchingHoliday?.effectiveDate ? (
-                                                <p className="effective-date">Effective date: {effectiveDate}</p>
+                                                <p className="effective-date">
+                                                    Effective date: {effectiveDate}
+                                                </p>
                                             ) : (
-                                                <span style={{ color: 'red', fontWeight:'500', fontStyle:'italic', fontSize:'14px' }}>No Data Available</span>
+                                                <span
+                                                    style={{
+                                                        color: "red",
+                                                        fontWeight: "500",
+                                                        fontStyle: "italic",
+                                                        fontSize: "14px",
+                                                    }}
+                                                >
+                                                    No Data Available
+                                                </span>
                                             )}
-
                                         </div>
                                     </div>
                                 );
@@ -134,8 +188,7 @@ const HolidayElibraryCreate = () => {
                         year={selectedYear}
                         holidayId={selectedHolidayId}
                         stateId={selectedStateId}
-                        selectedState={selectedState} // <-- pass it here
-
+                        selectedState={selectedState}
                     />
                 )
             )}

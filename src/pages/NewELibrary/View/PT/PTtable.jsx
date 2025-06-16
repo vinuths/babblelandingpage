@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Table, Pagination, DatePicker, Spin } from "antd";
+import { Table, Pagination, DatePicker, Spin, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { stateGets, labourWelfareLibraryDelete, professionalTaxLibraryPaginatedGet } from "../../../../store/actions/otherActions";
+import {
+    stateGets,
+    labourWelfareLibraryDelete,
+    professionalTaxLibraryPaginatedGet
+} from "../../../../store/actions/otherActions";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Popup from "../../../../components/Popup";
 import moment from "moment";
 import { updateLabourWelFundLibraryStatus } from "../../../../routes/api";
-import { Switch } from "antd";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-// import LabourWelfareState from "./LabourWelfareState";
 import { Typography, FormGroup, styled } from '@mui/material';
-import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // <-- Importing MUI back icon
 dayjs.extend(customParseFormat);
 
-
 const { RangePicker } = DatePicker;
-
-
-// Utility to split array into chunks of 5
-
-
-
 
 const PTtable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
@@ -34,11 +29,9 @@ const PTtable = ({ localPage, setLocalPage }) => {
         (state) => state.professionalTaxLibraryPaginatedRed
     );
 
-    // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
     const [pageSize] = useState(1000);
-    // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");
 
@@ -59,7 +52,6 @@ const PTtable = ({ localPage, setLocalPage }) => {
 
     const fetchData = (page = localPage) => {
         const filters = {};
-
         if (selectedState) filters.state = selectedState;
         if (dateRange?.length === 2) {
             filters.fromDate = dateRange[0].toISOString();
@@ -67,7 +59,6 @@ const PTtable = ({ localPage, setLocalPage }) => {
         }
         dispatch(professionalTaxLibraryPaginatedGet({ page, limit: pageSize, filters }));
     };
-
 
     useEffect(() => {
         dispatch(stateGets());
@@ -81,7 +72,7 @@ const PTtable = ({ localPage, setLocalPage }) => {
         try {
             await updateLabourWelFundLibraryStatus(id, !currentStatus);
             toast.success("Status updated successfully!");
-            fetchData(localPage); // reloads the table correctly with filters
+            fetchData(localPage);
         } catch (error) {
             toast.error("Failed to update status");
         }
@@ -91,19 +82,13 @@ const PTtable = ({ localPage, setLocalPage }) => {
         const item = data.find(el => el.stateData?.name === stateName);
         if (item) {
             navigate(`/elibrary/View/Professional_Tax/${item.stateData.name}`, {
-                state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
+                state: item.stateData._id,
             });
         }
     };
 
-
     const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
     const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();
-    const allStates = [...new Set(data.map(item => item.stateData?.name))].filter(Boolean).sort();
-
-
-    console.log("dataHere", data);
-
 
     const buildRows = (data, columns, isClickable = false) => {
         const rows = Math.ceil(data.length / columns);
@@ -114,8 +99,6 @@ const PTtable = ({ localPage, setLocalPage }) => {
 
             for (let j = 0; j < columns; j++) {
                 const item = data[i + j * rows];
-                // console.log("item",item);
-                
                 if (item) {
                     cells.push(
                         <td key={`${i}-${j}`}>
@@ -128,7 +111,7 @@ const PTtable = ({ localPage, setLocalPage }) => {
                         </td>
                     );
                 } else {
-                    cells.push(<td key={`${i}-${j}`}></td>); // empty cell
+                    cells.push(<td key={`${i}-${j}`}></td>);
                 }
             }
 
@@ -137,31 +120,45 @@ const PTtable = ({ localPage, setLocalPage }) => {
 
         return result;
     };
+
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
                 <div className="card p-4 mb-4">
+                    
+                    <div
+                        className="headContain d-flex align-items-center justify-content-center position-relative"
+                        style={{ minHeight: '40px' }}
+                    >
+                        <button
+                            onClick={() => navigate(-1)}
+                            style={{
+                                position: 'absolute',
+                                left: 0,
+                                background: "none",
+                                border: "none",
+                                color: "#333",
+                                fontSize: "20px",
+                                cursor: "pointer",
+                                padding: 0,
+                                opacity: 0.6,
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                            aria-label="Back"
+                        >
+                            <ArrowBackIcon />
+                        </button>
 
-                    <div className="headContain">
-                        <h3 className="mb-3 heads">Professional Tax</h3>
+                        <h3 className="mb-3 heads m-0">Professional Tax</h3>
                     </div>
+
                     <br />
                     <p>
                         Professional Tax is a state-level tax levied on individuals earning income through employment, profession, or trade. It is deducted monthly by the employer from the employee’s salary and paid to the respective state government.
                     </p>
-                    {/* <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
-                    <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
-
-                        To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
-
-                    <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
-                    <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
-
-                    <h5 className="mt-4 heads">Applicability of the Act</h5>
-                    <p>This act has been implemented only in selected states including union territories.</p> */}
 
                     <div className="state-container">
-                        {/* Applicable */}
                         {applicableStates.length > 0 && (
                             <div className="table-box">
                                 <div className="table-title">Applicable States</div>
@@ -173,7 +170,6 @@ const PTtable = ({ localPage, setLocalPage }) => {
                             </div>
                         )}
 
-                        {/* Not Applicable */}
                         {notApplicableStates.length > 0 && (
                             <div className="table-box">
                                 <div className="table-title">Not Applicable States</div>
@@ -186,31 +182,19 @@ const PTtable = ({ localPage, setLocalPage }) => {
                         )}
                     </div>
 
-
-
                     <p className="mt-3" style={{ fontStyle: "italic" }}>
                         Professional Tax is not applicable to all category of employees...
                     </p>
                 </div>
-
-                {/* <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                    {openPopup && (
-                        <LabourWelfareState
-                            data={data}
-                        />
-                    )}
-                </Popup> */}
-
             </div>
         </div>
     );
 };
 
 const NotApplicaple = styled(FormGroup)`
-font-style: Italic;
-font-weight: 400;
-color: #888;
-`
-
+    font-style: Italic;
+    font-weight: 400;
+    color: #888;
+`;
 
 export default PTtable;

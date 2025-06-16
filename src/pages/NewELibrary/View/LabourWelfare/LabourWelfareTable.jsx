@@ -3,7 +3,7 @@ import { Table, Pagination, DatePicker, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { stateGets, labourWelfareLibraryDelete, labourWelfareLibraryPaginatedGet } from "../../../../store/actions/otherActions";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Popup from "../../../../components/Popup";
 import moment from "moment";
@@ -14,17 +14,9 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import LabourWelfareState from "./LabourWelfareState";
 import { Typography, FormGroup, styled } from '@mui/material';
-import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 
-
 const { RangePicker } = DatePicker;
-
-
-// Utility to split array into chunks of 5
-
-
-
 
 const LabourWelfareTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
@@ -34,11 +26,9 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         (state) => state.labourWelfareLibraryPaginatedRed
     );
 
-    // console.log("labourWelfareLibraryPaginatedRed",data);
     const { stateInfo } = useSelector((state) => state.getState);
 
     const [pageSize] = useState(150);
-    // const [localPage, setLocalPage] = useState(1);
     const [selectedState, setSelectedState] = useState("");
     const [dateRange, setDateRange] = useState("");
 
@@ -68,7 +58,6 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         dispatch(labourWelfareLibraryPaginatedGet({ page, limit: pageSize, filters }));
     };
 
-
     useEffect(() => {
         dispatch(stateGets());
     }, [dispatch]);
@@ -81,7 +70,7 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         try {
             await updateLabourWelFundLibraryStatus(id, !currentStatus);
             toast.success("Status updated successfully!");
-            fetchData(localPage); // reloads the table correctly with filters
+            fetchData(localPage);
         } catch (error) {
             toast.error("Failed to update status");
         }
@@ -91,17 +80,13 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
         const item = data.find(el => el.stateData?.name === stateName);
         if (item) {
             navigate(`/elibrary/View/Labour_Welfare_Fund/${item.stateData.name}`, {
-                state: item.stateData._id, // Correct usage: `state` is the key expected by `useLocation()`
+                state: item.stateData._id,
             });
         }
     };
 
-
     const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
     const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();
-
-    console.log("dataHere", data);
-
 
     const buildRows = (data, columns, isClickable = false) => {
         const rows = Math.ceil(data.length / columns);
@@ -124,7 +109,7 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                         </td>
                     );
                 } else {
-                    cells.push(<td key={`${i}-${j}`}></td>); // empty cell
+                    cells.push(<td key={`${i}-${j}`}></td>);
                 }
             }
 
@@ -133,27 +118,46 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
 
         return result;
     };
+
     return (
         <div className="container-fluid">
             <div className="row g-3 mb-3 pt-1 align-items-end">
                 <div className="card p-4 mb-4">
 
-                    <div className="headContain">
-                        <h3 className="mb-3 heads">Labour Welfare Fund</h3>
+                    {/* Back Button + Centered Heading */}
+                    <div
+                        className="headContain d-flex align-items-center justify-content-center position-relative"
+                        style={{ minHeight: "40px" }}
+                    >
+                        <button
+                            onClick={() => navigate(-1)}
+                            style={{
+                                position: "absolute",
+                                left: 0,
+                                background: "none",
+                                border: "none",
+                                color: "#013879",
+                                fontWeight: "bold",
+                                fontSize: "18px",
+                                cursor: "pointer",
+                                padding: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                opacity: 0.85,
+                            }}
+                            aria-label="Back"
+                        >
+                            ← Back
+                        </button>
+
+                        <h3 className="mb-3 m-0">Labour Welfare Fund</h3>
                     </div>
+
                     <br />
-                    <p>Labour welfare fund is a statutory contribution managed by individual state authorities. The state labour welfare board determines the amount and frequency of the contribution. The contribution and periodicity of remittance differs with every state. In some states the periodicity is annual (Andhra Pradesh, Haryana, Karnataka, Tamil Nadu etc) and in some states it is to be contributed during the month of June & December (Gujarat, Madhya Pradesh, Maharashtra etc).</p>
 
-                    {/* <h5 className="mt-4 heads">What is Labour Welfare Fund?</h5>
-                    <p>Labour welfare is an aid in the form of money or necessities for those in need. It provides facilities to labourers in order to improve their working conditions, provide social security, and raise their standard of living.
-
-                        To justify the above statement, various state legislatures have enacted an Act exclusively focusing on welfare of the workers, known as the Labour Welfare Fund Act. The Labour Welfare Fund Act incorporates various services, benefits and facilities offered to the employee by the employer. Such facilities are offered by the means of contribution from the employer and the employee. However, the rate of contribution may differ from one state to another.</p>
-
-                    <h5 className="mt-4 heads">Scope of Labour Welfare Fund Act</h5>
-                    <p>The scope of this Act is extended to housing, family care & worker’s health service...</p>
-
-                    <h5 className="mt-4 heads">Applicability of the Act</h5>
-                    <p>This act has been implemented only in selected states including union territories.</p> */}
+                    <p>
+                        Labour welfare fund is a statutory contribution managed by individual state authorities. The state labour welfare board determines the amount and frequency of the contribution. The contribution and periodicity of remittance differs with every state. In some states the periodicity is annual (Andhra Pradesh, Haryana, Karnataka, Tamil Nadu etc) and in some states it is to be contributed during the month of June & December (Gujarat, Madhya Pradesh, Maharashtra etc).
+                    </p>
 
                     <div className="state-container">
                         {/* Applicable */}
@@ -181,8 +185,6 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                         )}
                     </div>
 
-
-
                     <p className="mt-3" style={{ fontStyle: "italic" }}>
                         The Labour Welfare Fund Act is not applicable to all category of employees...
                     </p>
@@ -195,7 +197,6 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                         />
                     )}
                 </Popup>
-
             </div>
         </div>
     );
@@ -206,6 +207,5 @@ font-style: Italic;
 font-weight: 400;
 color: #888;
 `
-
 
 export default LabourWelfareTable;

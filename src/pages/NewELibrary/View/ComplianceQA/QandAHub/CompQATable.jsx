@@ -5,13 +5,13 @@ import {
   compQandALibraryPaginatedGet,
 } from "../../../../../store/actions/otherActions";
 import { Spin } from "antd";
-import "./CompQACSS.css"; // Custom styles
+import "./CompQACSS.css";
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const CompQATable = ({ localPage, setLocalPage }) => {
   const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { data, loading } = useSelector(
     (state) => state.compQandALibraryPaginatedRed
@@ -21,16 +21,14 @@ const CompQATable = ({ localPage, setLocalPage }) => {
   );
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedTopic, setSelectedTopic] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [faqs, setFaqs] = useState([]);
   const pageSize = 1000;
 
-  // Fetch categories
   useEffect(() => {
     dispatch(categoryGetComplianceList());
   }, [dispatch]);
 
-  // Fetch FAQs based on selected filters
   const fetchData = (page = localPage) => {
     const filters = {};
     if (selectedCategory) filters.complianceCategory = selectedCategory;
@@ -41,27 +39,18 @@ const CompQATable = ({ localPage, setLocalPage }) => {
     fetchData();
   }, [selectedCategory]);
 
-  // Process data into flat FAQ list
   useEffect(() => {
     if (data && Array.isArray(data)) {
       const flatFAQs = data.flatMap((entry) =>
-        entry.complianceDetails
-          ?.filter((detail) => {
-            if (selectedTopic) {
-              return detail.topic === selectedTopic;
-            }
-            return true;
-          })
-          .map((detail) => ({
-            ...detail,
-            open: false,
-          }))
+        entry.complianceDetails?.map((detail) => ({
+          ...detail,
+          open: false,
+        }))
       );
       setFaqs(flatFAQs);
     }
-  }, [data, selectedTopic]);
+  }, [data]);
 
-  // Toggle open/close state
   const toggleFAQ = (index) => {
     setFaqs((prev) =>
       prev.map((faq, i) => ({
@@ -71,22 +60,20 @@ const CompQATable = ({ localPage, setLocalPage }) => {
     );
   };
 
-  // Extract unique topics for dropdown
-  const topicOptions = [
-    ...new Set(
-      data
-        ?.flatMap((entry) =>
-          entry.complianceDetails?.map((d) => d.topic)
-        )
-        .filter(Boolean)
-    ),
-  ];
+  const filteredFaqs = faqs.filter(
+    (faq) =>
+      faq &&
+      typeof faq.topic === "string" &&
+      typeof faq.question === "string" &&
+      (
+        faq.topic.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        faq.question.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+  );
 
   return (
     <>
-
-      <div >
-        {/* <div style={{ marginBottom: "20px" }}> */}
+      <div>
         <button
           onClick={() => navigate("/elibrary/View")}
           className="back-button"
@@ -94,19 +81,13 @@ const CompQATable = ({ localPage, setLocalPage }) => {
         >
           <ArrowBackIcon />
         </button>
-        {/* </div> */}
-
       </div>
+
       <div className="container mt-4 backCon">
         <div className="text-center mb-3">
           <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
             Compliance Questions & Answers
           </h2>
-          {/* <p style={{ color: "gray", fontStyle: "italic", maxWidth: "800px", margin: "auto" }}>
-          This collection covers a wide range of key business areas such as human resources, data security,
-          compliance, and workplace conduct. Our templates are crafted to help companies establish clear
-          guidelines, promote best practices, and ensure regulatory compliance efficiently and effectively.
-        </p> */}
         </div>
 
         <div className="row mb-4 justify-content-center">
@@ -117,7 +98,6 @@ const CompQATable = ({ localPage, setLocalPage }) => {
               value={selectedCategory}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
-                setSelectedTopic("");
                 setLocalPage(1);
               }}
             >
@@ -131,31 +111,23 @@ const CompQATable = ({ localPage, setLocalPage }) => {
           </div>
 
           <div className="col-md-6">
-            <label className="form-label fw-semibold text-center d-block">Filter by Topic</label>
-            <select
-              className="form-select text-center"
-              value={selectedTopic}
-              onChange={(e) => {
-                setSelectedTopic(e.target.value);
-                setLocalPage(1);
-              }}
-              disabled={!selectedCategory}
-            >
-              <option value="">Select Topic</option>
-              {topicOptions.map((topic, index) => (
-                <option key={index} value={topic}>
-                  {topic}
-                </option>
-              ))}
-            </select>
+            <label className="form-label fw-semibold text-center d-block">Search Keyword</label>
+            <input
+              type="text"
+              className="form-control text-center"
+              placeholder="Type topic or question..."
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              // disabled={!selectedCategory}
+            />
           </div>
         </div>
 
         <div className="faqs">
           {loading ? (
             <Spin size="large" className="d-flex justify-content-center" />
-          ) : faqs.length > 0 ? (
-            faqs.map((faq, index) => (
+          ) : filteredFaqs.length > 0 ? (
+            filteredFaqs.map((faq, index) => (
               <div
                 className={"faq " + (faq?.open ? "open" : "")}
                 key={`${faq?.question}-${index}`}

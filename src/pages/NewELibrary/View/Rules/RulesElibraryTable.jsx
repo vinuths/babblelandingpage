@@ -3,20 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { stateGets, ruleLibraryPaginatedGet } from "../../../../store/actions/otherActions";
 import moment from "moment";
 import { Pagination } from "antd";
-import "antd/dist/reset.css"; // or 'antd/dist/antd.css' depending on your version
+import "antd/dist/reset.css";
 import "./RulesCSS.css";
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const RulesElibraryTable = ({ localPage, setLocalPage }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { data, totalCount, loading } = useSelector((state) => state.ruleLibGetRed);
     const { stateInfo } = useSelector((state) => state.getState);
 
     const [pageSize, setPageSize] = useState(20);
     const [selectedState, setSelectedState] = useState("");
-
-    const totalPages = Math.ceil(totalCount / pageSize);
-
     const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
     const toggleDescription = (id) => {
@@ -48,10 +48,32 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
     return (
         <div className="custom-act-container">
             <div className="acts-header">
+                {/* 🔙 Back Button inside acts-header */}
+                <button
+                    onClick={() => navigate("/elibrary/View")}
+                    className="back-button"
+                    style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        fontSize: "16px",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                        color: "#1890ff",
+                    }}
+                >
+                    <ArrowBackIcon style={{ marginRight: "5px" }} />
+                    Back
+                </button>
+
                 <h2>Rules</h2>
                 <p>
-                    Labour Rules in India are detailed guidelines framed under Labour Acts or Codes to ensure proper implementation of labour laws. They cover procedures for registration, compliance, dispute resolution, and welfare provisions for both employers and employees.                </p>
+                    Labour Rules in India are detailed guidelines framed under Labour Acts or Codes to ensure proper implementation of labour laws. They cover procedures for registration, compliance, dispute resolution, and welfare provisions for both employers and employees.
+                </p>
             </div>
+
             <div className="filter-bar">
                 <div className="left-filters">
                     <label htmlFor="stateFilter">State:</label>
@@ -155,7 +177,7 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
                         current={localPage}
                         pageSize={pageSize}
                         total={totalCount}
-                        showSizeChanger={false} // because you already have your own page size selector
+                        showSizeChanger={false}
                         onChange={(page) => setLocalPage(page)}
                         responsive
                     />
