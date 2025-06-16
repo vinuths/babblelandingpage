@@ -16,7 +16,7 @@ const OthersTable = ({ localPage, setLocalPage }) => {
     (state) => state.generalUpdateLibraryPaginatedRed
   );
 
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(1000);
   const [topicSearch, setTopicSearch] = useState("");
   const [dateRange, setDateRange] = useState([]);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});

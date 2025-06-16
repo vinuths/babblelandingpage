@@ -156,6 +156,10 @@ const LabourWelfareState = () => {
                                     <td>{dataSource?.frequency || "N/A"}</td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Mode Of Remmitance</strong></td>
+                                    <td>{dataSource?.modeOfRemittance || "N/A"}</td>
+                                </tr>
+                                <tr>
                                     <td><strong>Form</strong></td>
                                     <td>
                                         {dataSource?.form ? (
@@ -187,6 +191,10 @@ const LabourWelfareState = () => {
                                             "N/A"
                                         )}
                                     </td>
+                                </tr>
+                                 <tr>
+                                    <td><strong>Note</strong></td>
+                                    <td>{dataSource?.applicableData || "N/A"}</td>
                                 </tr>
                             </tbody>
                         </table>

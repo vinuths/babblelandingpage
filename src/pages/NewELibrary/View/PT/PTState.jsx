@@ -145,14 +145,28 @@ const PTState = () => {
                                 </tr>
                                 <tr>
                                     <td><strong>Applicability</strong></td>
-                                    <td>{dataSource?.applicability || "N/A"}</td>
+                                    <td>
+                                        {dataSource?.applicability === true
+                                            ? "Applicable"
+                                            : dataSource?.applicability === false
+                                                ? "Not Applicable"
+                                                : "N/A"}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Exemption</strong></td>
                                     <td>{dataSource?.exemption || "N/A"}</td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Frequency</strong></td>
+                                    <td>{dataSource?.frequency || "N/A"}</td>
+                                </tr>
+                                <tr>
                                     <td><strong>Registration Form</strong></td>
+                                    <td>{dataSource?.registrationForm || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Registration Form File</strong></td>
                                     <td>
                                         {dataSource?.regFormDoc ? (
                                             <a href={dataSource?.regFormDoc} target="_blank" rel="noreferrer">View Form</a>
@@ -166,20 +180,6 @@ const PTState = () => {
                                     <td>{dataSource?.registrationProcess || "N/A"}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>List Of Documents For Registration</strong></td>
-                                    <td>
-                                        <ul className="mb-0 ps-3">
-                                            <li>Memorandum Of Association</li>
-                                            <li>Articles Of Association</li>
-                                            <li>PAN Card</li>
-                                            <li>Lease Agreement</li>
-                                            <li>VAT Registration copy</li>
-                                            <li>Employer Address Proof and ID Proof and photos</li>
-                                            <li>No of employees</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td><strong>Website</strong></td>
                                     <td>
                                         {dataSource?.websiteLink ? (
@@ -188,6 +188,26 @@ const PTState = () => {
                                             </a>
                                         ) : "N/A"}
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Activity</strong></td>
+                                    <td>{dataSource?.activity || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Note</strong></td>
+                                    <td>{dataSource?.note || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of Deduction</strong></td>
+                                    <td>{dataSource?.dateOfDeduction || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Date of Remmitance</strong></td>
+                                    <td>{dataSource?.lastDateRemittance || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Return Form</strong></td>
+                                    <td><a href={dataSource?.doc} target="_blank" rel="noreferrer">Return Form</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -199,6 +219,7 @@ const PTState = () => {
                         <table className="styled-table">
                             <thead>
                                 <tr>
+                                    <th>Sl No.</th>
                                     <th>Salary (INR)</th>
                                     <th>PT Amount</th>
                                     <th>Remarks</th>
@@ -208,6 +229,7 @@ const PTState = () => {
                                 {dataSource?.professionalRates?.length > 0 ? (
                                     dataSource.professionalRates.map((rate, idx) => (
                                         <tr key={rate._id || idx}>
+                                            <td>{idx + 1}</td>
                                             <td>{rate.salary || "N/A"}</td>
                                             <td>₹ {rate.ptAmount || "N/A"}</td>
                                             <td>{rate.remarks || ""}</td>
@@ -222,7 +244,7 @@ const PTState = () => {
                         </table>
                     </div>
 
-                   
+
                 </>
             )}
 

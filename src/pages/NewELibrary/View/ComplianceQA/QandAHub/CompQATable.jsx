@@ -66,7 +66,7 @@ const CompQATable = ({ localPage, setLocalPage }) => {
     setFaqs((prev) =>
       prev.map((faq, i) => ({
         ...faq,
-        open: i === index ? !faq.open : false,
+        open: i === index ? !faq?.open : false,
       }))
     );
   };
@@ -157,16 +157,16 @@ const CompQATable = ({ localPage, setLocalPage }) => {
           ) : faqs.length > 0 ? (
             faqs.map((faq, index) => (
               <div
-                className={"faq " + (faq.open ? "open" : "")}
-                key={`${faq.question}-${index}`}
+                className={"faq " + (faq?.open ? "open" : "")}
+                key={`${faq?.question}-${index}`}
                 onClick={() => toggleFAQ(index)}
               >
-                <span className="state-badgeTO">{faq.topic}</span>
+                <span className="state-badgeTO">{faq?.topic}</span>
                 <div className="faq-question">
                   <span style={{ fontWeight: "bold", marginRight: "8px" }}>{index + 1}.</span>
-                  {faq.question}
+                  {faq?.question}
                 </div>
-                <div className="faq-answer">{faq.answer}</div>
+                <div className="faq-answer">{faq?.answer}</div>
               </div>
             ))
           ) : (
