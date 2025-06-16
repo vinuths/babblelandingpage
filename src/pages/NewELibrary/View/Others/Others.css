@@ -1,0 +1,23 @@
+.act-part {
+  white-space: pre-wrap;         /* preserves line breaks and wraps text */
+  word-break: break-word;        /* breaks long words if needed */
+  overflow: hidden;              /* hides overflow */
+  max-width: 100%;               /* ensures it stays inside the card */
+  font-size: 13px;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.toggle-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #013879;
+  cursor: pointer;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.toggle-link:hover {
+  text-decoration: underline;
+}

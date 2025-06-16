@@ -1,292 +1,166 @@
 import React, { useEffect, useState } from "react";
-import { Table, Pagination, DatePicker, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { generalUpdateLibraryPaginatedGet, generalUpdateLibraryDelete } from "../../../../store/actions/otherActions";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import Popup from "../../../../components/Popup";
+import { generalUpdateLibraryPaginatedGet } from "../../../../store/actions/otherActions";
+import { Pagination } from "antd";
+import "antd/dist/reset.css";
 import moment from "moment";
-import { statusUpdateGeneralELibrary } from "../../../../routes/api";
-import { Switch } from "antd";
-import { toast } from "react-toastify";
-import { Typography, FormGroup, styled } from '@mui/material';
-import OthersCreate from "./OthersCreate";
-
-const { RangePicker } = DatePicker;
+import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import "./Others.css";
 
 const OthersTable = ({ localPage, setLocalPage }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const { data, totalCount, loading } = useSelector(
-        (state) => state.generalUpdateLibraryPaginatedRed
-    );
+  const { data, totalCount, loading } = useSelector(
+    (state) => state.generalUpdateLibraryPaginatedRed
+  );
 
-    const [pageSize] = useState(1000);
-    // const [localPage, setLocalPage] = useState(1);
-    const [topicSearch, setTopicSearch] = useState("");
-    const [dateRange, setDateRange] = useState([]);
+  const [pageSize, setPageSize] = useState(20);
+  const [topicSearch, setTopicSearch] = useState("");
+  const [dateRange, setDateRange] = useState([]);
+  const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
-    const [openPopup, setOpenPopup] = useState(false);
-    const [pageTitle, setPageTitle] = useState('');
-    const [modalWidth, setModalWidth] = useState();
-    const [recordForEdit, setRecordForEdit] = useState(null);
+  const toggleDescription = (id) => {
+    setExpandedDescriptions((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
-    const addOrEdit = () => {
-        relodreport();
-        setRecordForEdit(null);
-        setOpenPopup(false);
-    };
+  const fetchData = () => {
+    const filters = {};
+    if (topicSearch.trim()) filters.topic = topicSearch.trim();
+    if (dateRange.length === 2) {
+      filters.fromDate = dateRange[0].toISOString();
+      filters.toDate = dateRange[1].toISOString();
+    }
+    dispatch(generalUpdateLibraryPaginatedGet({ page: localPage, limit: pageSize, filters }));
+  };
 
-    const relodreport = () => {
-        fetchData(localPage);
-    };
+  useEffect(() => {
+    const debounce = setTimeout(() => fetchData(), 300);
+    return () => clearTimeout(debounce);
+  }, [localPage, topicSearch, dateRange, pageSize]);
 
-    const fetchData = (page = localPage) => {
-        const filters = {};
+  const formatDateToInput = (date) =>
+    date ? moment(date).format("DD-MM-YYYY") : "";
 
-        if (topicSearch.trim()) filters.topic = topicSearch.trim();
-
-        if (dateRange?.length === 2) {
-            filters.fromDate = dateRange[0].toISOString();
-            filters.toDate = dateRange[1].toISOString();
-        }
-
-        dispatch(generalUpdateLibraryPaginatedGet({ page, limit: 10, filters }));
-    };
-
-
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            fetchData(localPage);
-        }, 300); // debounce input by 300ms
-
-        return () => clearTimeout(delayDebounceFn);
-    }, [localPage, topicSearch, dateRange]);
-
-    const handleDelete = async (id) => {
-        const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true,
-        });
-
-        if (result.isConfirmed) {
-            await dispatch(generalUpdateLibraryDelete(id));
-            fetchData(localPage);
-
-            Swal.fire('Deleted!', 'Topic Template deleted successfully.', 'success');
-        }
-    };
-
-
-    const formatDateToInput = (isoDate) => {
-        if (!isoDate) return "";
-        return moment(isoDate).format("DD-MM-YYYY");
-    };
-
-    const openInPopupForUpdate = (item) => {
-        setRecordForEdit(item);
-        setOpenPopup(true);
-        setPageTitle('Edit Topic Template E-Library');
-        setModalWidth('400px');
-    };
-
-    const onSwitchChange = (id, currentStatus) => {
-        // Add a slight delay to allow animation to complete
-        setTimeout(() => {
-            handleStatusToggle(id, currentStatus);
-        }, 400);
-    };
-
-
-    const handleStatusToggle = async (id, currentStatus) => {
-        try {
-            await statusUpdateGeneralELibrary(id, !currentStatus);
-            toast.success("Status updated successfully!");
-            fetchData(localPage); // reloads the table correctly with filters
-        } catch (error) {
-            toast.error("Failed to update status");
-        }
-    };
-
-    const columns = [
-        {
-            title: "Sr. No.",
-            key: "key",
-            width: 80,
-            render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
-        },
-
-        {
-            title: "Topic",
-            dataIndex: "topic",
-            key: "topic",
-            width: 200,
-        },
-
-        {
-            title: "Documents",
-            dataIndex: "doc",
-            key: "doc",
-            render: (doc, record) => (
-                doc ? (
-                    <a href={doc} target="_blank" rel="noopener noreferrer">
-                        {record.topic || "View Document"}
-                    </a>
-                ) : (
-                    <NotApplicaple>N/A</NotApplicaple>
-                )
-            ),
-            width: 200,
-
-        },
-        {
-            title: "Description",
-            dataIndex: "description",
-            key: "description",
-            width: 200,
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-            key: "status",
-            render: (status, record) => (
-                <Switch
-                    checked={status}
-                    onChange={() => onSwitchChange(record._id, status)}
-                    style={{
-                        backgroundColor: status ? '#013879' : '#dc3545',
-                    }}
-                    checkedChildren="Active"
-                    unCheckedChildren="In-Active"
-                />
-
-            ),
-            width: 120,
-
-
-        },
-        {
-            title: "Created Date",
-            dataIndex: "created_At",
-            // key: "created_At",
-            render: (created_At) => formatDateToInput(created_At),
-            width: 100,
-
-        },
-        {
-            title: "Last Updated",
-            dataIndex: "updated_at",
-            key: "updated_at",
-            render: (updated_at, record) => (<div>
-                {record.updated_at ? (
-                    <div>
-                        {formatDateToInput(record.updated_at)}
-                    </div>
-                ) : (
-                    <div style={{ fontStyle: 'italic', color: 'red', }}> No Updates</div>
-                )}
-            </div>
-            ),
-            width: 100,
-
-        },
-        {
-            key: "action",
-            title: "Actions",
-            width: 170,
-            render: (record) => (
-                <>
-                    <Link className="btn btn-primary mx-2" onClick={() => openInPopupForUpdate(record)}>
-                        <EyeOutlined /> / <EditOutlined />
-                    </Link>
-                    <Link className="btn btn-danger mx-2" onClick={() => handleDelete(record._id)}>
-                        <DeleteOutlined />
-                    </Link>
-                </>
-            ),
-        },
-    ];
-
-    return (
-        <div className="container-fluid">
-            <div className="row g-3 mb-3 pt-1 align-items-end">
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Topic Filter</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search Topic..."
-                        value={topicSearch}
-                        onChange={(e) => {
-                            setTopicSearch(e.target.value);
-                            setLocalPage(1); // Reset to page 1
-                        }}
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label fw-semibold">Date Filter</label>
-                    <RangePicker
-                        className="w-100"
-                        value={dateRange}
-                        onChange={(dates) => {
-                            setDateRange(dates || []);
-                            setLocalPage(1);
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="table-responsive">
-                {loading ? (
-                    <Spin size="large" className="d-flex justify-content-center" />
-                ) : data && data.length > 0 ? (
-                    <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                        rowKey="_id"
-                        scroll={{ x: 1000 }}
-                        sticky
-                    />
-                ) : (
-                    <div style={{ backgroundColor: 'whitesmoke', borderRadius: '8px', textAlign: 'center', paddingTop: '25px', height: '100px' }}>
-                        <h1 style={{ color: 'darkgray', fontStyle: 'italic' }}>No General E-Library Available</h1>
-                    </div>
-                )}
-            </div>
-
-            {loading ? (
-                <Spin size="large" className="d-flex justify-content-center" />
-            ) : data && data.length > 0 ? (
-                <div className="d-flex justify-content-center mt-3">
-                    <Pagination
-                        current={localPage}
-                        total={totalCount}
-                        pageSize={pageSize}
-                        onChange={(page) => setLocalPage(page)}
-                        showSizeChanger={false}
-                    />
-                </div>
-            ) : (
-                null
-            )}
-            <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}>
-                {openPopup && <OthersCreate addOrEdit={addOrEdit} recordForEdit={recordForEdit} setLocalPage={setLocalPage} />}
-            </Popup>
+  return (
+    <>
+      <div>
+        <button onClick={() => navigate("/elibrary/View")} className="back-button">
+          <ArrowBackIcon />
+        </button>
+      </div>
+      <div className="custom-act-container">
+        <div className="acts-header">
+          <h2>General</h2>
+          <p>
+            A collection of miscellaneous templates and documents relevant to compliance and governance. Useful for general references across topics.
+          </p>
         </div>
-    );
-};
 
-const NotApplicaple = styled(FormGroup)`
-font-style: Italic;
-font-weight: 400;
-color: #888;
-`
+        <div className="filter-bar">
+          <div className="left-filters">
+            <label>Search Topic:</label>
+            <input
+              type="text"
+              className="state-select"
+              value={topicSearch}
+              onChange={(e) => {
+                setTopicSearch(e.target.value);
+                setLocalPage(1);
+              }}
+              placeholder="Enter keyword..."
+            />
+          </div>
+          <div className="right-filters">
+            <label>Show:</label>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setLocalPage(1);
+              }}
+              className="state-select"
+            >
+              {[10, 20, 30, 50].map((s) => (
+                <option key={s} value={s}>{s} per page</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="act-list">
+          {loading ? (
+            <div className="loader">Loading...</div>
+          ) : data?.length > 0 ? (
+            data.map((item) => {
+              const isExpanded = expandedDescriptions[item._id];
+              const shouldTruncate = item.description && item.description.length > 300;
+              const displayText = isExpanded || !shouldTruncate
+                ? item.description
+                : item.description.slice(0, 300) + "...";
+
+              return (
+                <div className="act-card" key={item._id}>
+                  <div className="act-info">
+                    <h3>{item.topic}</h3>
+                    <p className="act-part">
+                      {displayText}
+                      {shouldTruncate && (
+                        <span
+                          onClick={() => toggleDescription(item._id)}
+                          className="toggle-link"
+                        >
+                          {isExpanded ? " View Less<<" : " View More>>"}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                  <div className="act-meta">
+                    {item.updated_at ? (
+                      <p>Updated: <span style={{ color: 'red', fontStyle: 'italic' }}>{formatDateToInput(item.updated_at)}</span></p>
+                    ) : (
+                      <p>Created: <span style={{ color: 'red', fontStyle: 'italic' }}>{formatDateToInput(item.created_At)}</span></p>
+                    )}
+                    {item.doc && (
+                      <a
+                        href={item.doc}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="download-btn"
+                      >
+                        Download ⬇ 
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="no-data-box">
+              <h3>No General E-Library Available</h3>
+            </div>
+          )}
+        </div> 
+
+        {data?.length > 0 && (
+          <div className="pagination-bar">
+            <Pagination
+              current={localPage}
+              pageSize={pageSize}
+              total={totalCount}
+              showSizeChanger={false}
+              onChange={(page) => setLocalPage(page)}
+              responsive
+            />
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default OthersTable;
