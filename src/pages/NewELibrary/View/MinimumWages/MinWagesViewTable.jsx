@@ -10,6 +10,7 @@ import { DatePicker, message } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import MinWagesViewCreate from "./MinWagesViewCreate";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 dayjs.extend(customParseFormat);
 
@@ -87,23 +88,11 @@ const MinWagesViewTable = () => {
             >
                 <button
                     onClick={handleBack}
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        background: "none",
-                        border: "none",
-                        color: "#013879",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                        cursor: "pointer",
-                        padding: 0,
-                        display: "flex",
-                        alignItems: "center",
-                        opacity: 0.85,
-                    }}
+                    className="back-button"
+                    style={{ position: 'relative', top: '-1px', left:'-220px' }}
                     aria-label="Back"
                 >
-                    ← Back
+                    <ArrowBackIcon />
                 </button>
 
                 <h2 className="mb-0 fw-bold" style={{ color: "#013879" }}>
@@ -150,13 +139,13 @@ const MinWagesViewTable = () => {
 
                                 const effectiveDate = matchingHoliday?.effectiveDate
                                     ? new Date(matchingHoliday.effectiveDate).toLocaleDateString(
-                                          "en-IN",
-                                          {
-                                              day: "numeric",
-                                              month: "short",
-                                              year: "numeric",
-                                          }
-                                      )
+                                        "en-IN",
+                                        {
+                                            day: "numeric",
+                                            month: "short",
+                                            year: "numeric",
+                                        }
+                                    )
                                     : "N/A";
 
                                 return (

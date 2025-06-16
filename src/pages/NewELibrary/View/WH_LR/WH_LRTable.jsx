@@ -125,36 +125,28 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
     <div className="container-fluid">
       <div className="row g-3 mb-3 pt-1 align-items-end">
         <div className="card p-4 mb-4">
-   
+
           {/* Back arrow + centered heading */}
-          <div
-            className="headContain d-flex align-items-center justify-content-center position-relative"
-            style={{ minHeight: "40px" }}
-          >
-            <button
-              onClick={() => navigate(-1)}
-              style={{
-                position: "absolute",
-                left: 0,
-                background: "none",
-                border: "none",
-                color: "#013879",
-                fontWeight: "bold",
-                fontSize: "18px",
-                cursor: "pointer",
-                padding: 0,
-                opacity: 0.7,
-                display: "flex",
-                alignItems: "center",
-              }}
-              aria-label="Back"
+          <div className="row ">
+            <div className="col-4">
+              <button
+                onClick={() => navigate(-1)}
+                className="back-button"
+                style={{ position: 'relative', top: '8px', left: '-40px' }}
+                aria-label="Back"
+              >
+                <ArrowBackIcon />
+              </button>
+            </div>
+            <div className="col-8 "
+            // style={{ position: 'relative', top: '0px', left: '40px' }}
             >
-              <ArrowBackIcon style={{ fontSize: "22px" }} />
-            </button>
+              <h3 className="mb-3 heads m-0">Working Hours & Leave Rules</h3>
 
-            <h3 className="mb-3 heads m-0">Working Hours & Leave Rules</h3>
+
+            </div>
           </div>
-
+          
           <br />
           <p>
             Working Hours & Leave Rules in India are governed by various labour laws to ensure employee well-being. Employees can work a maximum of 8 hours per day and 48 hours per week, with mandatory rest intervals. Leave entitlements typically include casual leave, sick leave, earned leave, and national/public holidays, with specifics varying by state and type of employment.

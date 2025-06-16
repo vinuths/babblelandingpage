@@ -14,6 +14,8 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import LabourWelfareState from "./LabourWelfareState";
 import { Typography, FormGroup, styled } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 dayjs.extend(customParseFormat);
 
 const { RangePicker } = DatePicker;
@@ -125,33 +127,33 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                 <div className="card p-4 mb-4">
 
                     {/* Back Button + Centered Heading */}
-                    <div
+                    <div className="row headContain">
+                        <div className="col-4">
+                            <button
+                                onClick={() => navigate(-1)}
+                                className="back-button"
+                                style={{ position: 'relative', top: '0px', left: '-40px' }}
+                                aria-label="Back"
+                            >
+                                <ArrowBackIcon />
+                            </button>
+                        </div>
+                        {/* <div className="col-2"></div> */}
+                        <div className="col-8 "
+                            style={{ position: 'relative', top: '0px', left: '40px' }}
+
+                        >
+                            <h3>Labour Welfare Fund</h3>
+
+                        </div>
+                    </div>
+                    {/* <div
                         className="headContain d-flex align-items-center justify-content-center position-relative"
                         style={{ minHeight: "40px" }}
                     >
-                        <button
-                            onClick={() => navigate(-1)}
-                            style={{
-                                position: "absolute",
-                                left: 0,
-                                background: "none",
-                                border: "none",
-                                color: "#013879",
-                                fontWeight: "bold",
-                                fontSize: "18px",
-                                cursor: "pointer",
-                                padding: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                opacity: 0.85,
-                            }}
-                            aria-label="Back"
-                        >
-                            ← Back
-                        </button>
 
-                        <h3 className="mb-3 m-0">Labour Welfare Fund</h3>
-                    </div>
+
+                    </div> */}
 
                     <br />
 

@@ -10,6 +10,7 @@ import { DatePicker, message } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import HolidayElibraryStateDetails from "./HolidayElibraryStateDetails";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; // <-- Importing MUI back icon
 
 dayjs.extend(customParseFormat);
 
@@ -76,37 +77,32 @@ const HolidayElibraryCreate = () => {
     return (
         <div className="holiday-container py-4">
             {/* Back Button + Centered Heading */}
-            <div
-                className="d-flex align-items-center justify-content-center position-relative mb-4"
-                style={{ minHeight: "40px" }}
-            >
-                <button
-                    onClick={handleBack}
-                    style={{
-                        position: "absolute",
-                        left: 0,
-                        background: "none",
-                        border: "none",
-                        color: "#013879",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                        cursor: "pointer",
-                        padding: 0,
-                        display: "flex",
-                        alignItems: "center",
-                        opacity: 0.85,
-                    }}
-                    aria-label="Back"
-                >
-                    ← Back
-                </button>
+            
+                <div className="row ">
+                    <div className="col-2">
+                        <button
+                            onClick={() => navigate(-1)}
+                            className="back-button"
+                            style={{ position: 'relative', top: '8px', left: '-40px' }}
+                            aria-label="Back"
+                        >
+                            <ArrowBackIcon />
+                        </button>
+                    </div>
+                    <div className="col-10 "
+                    // style={{ position: 'relative', top: '0px', left: '40px' }}
+                    >
+                        <h2 className=" fw-bold" style={{ color: "#013879" }}>
+                            {!showTable
+                                ? `Lists of Government & Public Holidays in India ${selectedYear}`
+                                : `Holiday Details for ${selectedState?.name || ""} (${selectedYear})`}
+                        </h2>
 
-                <h2 className="mb-0 fw-bold" style={{ color: "#013879" }}>
-                    {!showTable
-                        ? `Lists of Government & Public Holidays in India ${selectedYear}`
-                        : `Holiday Details for ${selectedState?.name || ""} (${selectedYear})`}
-                </h2>
-            </div>
+                    </div>
+                </div>
+
+
+          
 
             {!showTable ? (
                 <>
@@ -145,10 +141,10 @@ const HolidayElibraryCreate = () => {
 
                                 const effectiveDate = matchingHoliday?.effectiveDate
                                     ? new Date(matchingHoliday.effectiveDate).toLocaleDateString("en-IN", {
-                                          day: "numeric",
-                                          month: "short",
-                                          year: "numeric",
-                                      })
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric",
+                                    })
                                     : "N/A";
 
                                 return (
