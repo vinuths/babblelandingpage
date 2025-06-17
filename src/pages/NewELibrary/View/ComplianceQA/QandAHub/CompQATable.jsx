@@ -58,7 +58,7 @@ const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
     clearTimeout(searchDebounceTimer);
     searchDebounceTimer = setTimeout(() => {
       fetchData(searchKeyword.trim());
-    }, 100);
+    }, 500);
     return () => clearTimeout(searchDebounceTimer);
   }, [searchKeyword]);
 
