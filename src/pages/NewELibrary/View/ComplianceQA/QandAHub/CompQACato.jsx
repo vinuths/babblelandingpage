@@ -24,9 +24,9 @@ const CompQACato = () => {
                         </button>
                     </div>
                     <div className="col-2"></div>
-                    <div className="col-6"><h2 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '60px', textDecoration: 'underline' }}>
-                        Compliance Q&A Categories
-                    </h2></div>
+                    <div className="col-6"><h3 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '30px', textDecoration: 'underline' }}>
+                        Seach By Categories
+                    </h3></div>
                 </div>
 
 

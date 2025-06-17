@@ -71,9 +71,9 @@ const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
             <ArrowBackIcon />
           </button>
 
-          <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
+          {/* <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
             Compliance Questions & Answers
-          </h2>
+          </h2> */}
         </div>
 
         <div className="row mb-4 justify-content-center">

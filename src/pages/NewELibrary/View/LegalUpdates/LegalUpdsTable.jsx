@@ -65,7 +65,7 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
 
     return (
         <>
-            <div className="container mt-4 backCon">
+            <div className="container mt-4 backCon3">
                 {/* Header with Back Button */}
                 <div className="d-flex align-items-center justify-content-between mb-3">
                     <button
