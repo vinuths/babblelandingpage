@@ -34,7 +34,6 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
 
     useEffect(() => {
         const filters = {};
-        // if (selectedCategory) filters.complianceCategory = selectedCategory;
         if (selectedState) filters.state = selectedState;
 
         dispatch(reLeagalUpdateLibraryPaginatedGet({ page: localPage, limit: pageSize, filters }));
@@ -66,23 +65,23 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
 
     return (
         <>
-            <div >
-                {/* <div style={{ marginBottom: "20px" }}> */}
-                <button
-                    onClick={() => navigate("/elibrary/View")}
-                    className="back-button"
-                    style={{ position: 'relative', top: '35px' }}
-                >
-                    <ArrowBackIcon />
-                </button>
-                {/* </div> */}
-
-            </div>
             <div className="container mt-4 backCon">
-                <div className="text-center mb-3">
-                    <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
+                {/* Header with Back Button */}
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <button
+                        onClick={() => navigate("/elibrary/View")}
+                        className="back-button btn btn-link p-0"
+                        style={{ fontSize: "24px" }}
+                    >
+                        <ArrowBackIcon />
+                    </button>
+                    <h2 className="fw-bold flex-grow-1 text-center m-0" style={{ color: "#013879" }}>
                         Legal & Regulatory Updates
                     </h2>
+                    <div style={{ width: "40px" }}></div>
+                </div>
+
+                <div className="text-center mb-3">
                     <p>Stay informed with the latest developments in laws, regulations, and compliance requirements that impact your business. Our Recent Legal Updates provide timely, accurate, and easy-to-understand summaries of key legal changes, helping you navigate the evolving legal landscape with confidence and ensure your operations remain compliant.</p>
                 </div>
 
@@ -137,7 +136,6 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
                                             ) : (
                                                 <p><strong>Created On:</strong> {faq.created_At ? moment(faq.created_At).format("DD MMM YYYY") : "N/A"}</p>
                                             )}
-
                                         </div>
                                         <div className="col-5"></div>
                                         <div className="col-3" style={{ marginTop: '-10px' }}>
@@ -150,9 +148,9 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
                                                 >
                                                     📄 View Document
                                                 </a>
-                                            )}</div>
+                                            )}
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         ))
