@@ -60,7 +60,7 @@ const WH_LRCreate = ({ addOrEdit, recordForEdit, setLocalPage }) => {
             if (!allowedTypes.includes(file.type)) {
                 alert('Only JPG, JPEG, PNG, BMP, or PDF files are allowed.');
                 return;
-            }
+            } 
             // setDoc(file);
             // setDocUrl(URL.createObjectURL(file)); // Create a temporary URL for the uploaded file
         }

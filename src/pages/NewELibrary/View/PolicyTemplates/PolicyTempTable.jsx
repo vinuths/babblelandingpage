@@ -63,7 +63,7 @@ const PolicyTempTable = ({ localPage, setLocalPage }) => {
             <div className="acts-header">
                 <h2>Policy Templates</h2>
                 <p>
-                    This collection covers a wide range of key business areas such as human resources, data security, compliance, and workplace conduct. Our templates are crafted to help companies establish clear guidelines, promote best practices, and ensure regulatory compliance efficiently and effectively.                 </p>
+                   This collection covers a wide range of key business areas such as human resources, data security, compliance, and workplace conduct. Our templates are crafted to help companies establish clear guidelines, promote best practices, and ensure regulatory compliance efficiently and effectively. Whether you are a startup or an established enterprise, this e-library aims to simplify policy development and support consistent governance across your organization.                     </p>
             </div>
             <div className="filter-bar">
                 {/* <div className="left-filters">

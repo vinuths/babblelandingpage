@@ -13,6 +13,7 @@ const Formcreate = () => {
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
     const [message, setMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState(''); // ✅ Added
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,24 +24,43 @@ const Formcreate = () => {
         formData.append('email', email);
         formData.append('mobile', mobile);
         formData.append('message', message);
-
-        dispatch(HelpAndSupportMail(formData));
+        
+        
+        dispatch(HelpAndSupportMail(formData)).then(() => {
 
         setName('');
         setOrganization('');
         setEmail('');
         setMobile('');
         setMessage('');
+        setSuccessMessage('Thank you! Our team will contact you shortly.'); // ✅ Set message
+
+        // Automatically clear message after 5 seconds
+        setTimeout(() => {
+            setSuccessMessage('');
+        }, 5000);
+          
+        }).catch((error) => {
+            console.error('Error submitting form:',error);
+        });
     };
 
     const handleCancel = () => {
         navigate('/');
     };
 
+
     return (
         <Container style={{ marginLeft: '70px' }}>
             <div className="dashboard_wrapper col-10" style={{ background: '#f4f6f9', padding: '40px 20px', height: 'auto' }}>
                 <div className="container">
+                    {/* ✅ Display Success Message */}
+                    {successMessage && (
+                        <div className="alert alert-success text-center" role="alert">
+                            {successMessage}
+                        </div>
+                    )}
+
                     <form className="row g-3 " onSubmit={handleSubmit}>
                         <h2 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '40px' }}>
                             Help & Support

@@ -107,8 +107,7 @@ const HolidayElibraryCreate = () => {
             {!showTable ? (
                 <>
                     <p className="text-center mb-4 text-secondary">
-                        Lists of Holidays For States Across India
-                    </p>
+                       National and festival holidays are days designated by law or custom for celebration or commemoration, often involving a day off from work or school. National holidays typically commemorate significant events in a nation's history, like its founding or independence, and are observed nationwide. Festival holidays, on the other hand, are often linked to cultural or religious celebrations and may vary by region or community                    </p>
                     <div className="d-flex justify-content-center align-items-center gap-2 mb-4">
                         <label htmlFor="selectedYear" className="form-label">
                             Year Filter

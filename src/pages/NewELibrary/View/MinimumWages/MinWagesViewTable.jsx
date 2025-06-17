@@ -105,8 +105,7 @@ const MinWagesViewTable = () => {
             {!showTable ? (
                 <>
                     <p className="text-center mb-4 text-secondary">
-                        Lists of Latest Minimum Wages For States Across India
-                    </p>
+                        Minimum Wages refer to the lowest amount that an employer is legally required to pay to workers for their labour, as fixed by the government. In India, minimum wages vary by state, type of work, skill level, and industry, and are revised periodically to ensure fair pay and prevent exploitation.                    </p>
                     <div className="d-flex justify-content-center align-items-center gap-2 mb-4">
                         <label htmlFor="selectedYear" className="form-label">
                             Year Filter
@@ -128,7 +127,7 @@ const MinWagesViewTable = () => {
                             style={{ width: 200 }}
                         />
                     </div>
-
+                      
                     <div className="row g-3 justify-content-center">
                         {stateInfo
                             ?.filter((state) => state.name !== "All States")
@@ -136,7 +135,7 @@ const MinWagesViewTable = () => {
                                 const matchingHoliday = minimumWageData?.find(
                                     (item) => item.stateId === state._id
                                 );
-
+                                
                                 const effectiveDate = matchingHoliday?.effectiveDate
                                     ? new Date(matchingHoliday.effectiveDate).toLocaleDateString(
                                         "en-IN",

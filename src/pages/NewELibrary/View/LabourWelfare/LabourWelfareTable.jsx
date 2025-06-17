@@ -158,8 +158,7 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
                     <br />
 
                     <p>
-                        Labour welfare fund is a statutory contribution managed by individual state authorities. The state labour welfare board determines the amount and frequency of the contribution. The contribution and periodicity of remittance differs with every state. In some states the periodicity is annual (Andhra Pradesh, Haryana, Karnataka, Tamil Nadu etc) and in some states it is to be contributed during the month of June & December (Gujarat, Madhya Pradesh, Maharashtra etc).
-                    </p>
+Labour Welfare Fund (LWF) is a statutory contribution made by employers and employees to support the welfare of workers. It is used to provide facilities such as housing, education, medical care, recreation, and other social security benefits. The contribution rates and applicability vary by state, and it is applicable to establishments employing a minimum number of workers as defined under respective state laws.                    </p>
 
                     <div className="state-container">
                         {/* Applicable */}
