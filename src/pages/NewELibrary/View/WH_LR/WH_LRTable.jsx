@@ -143,7 +143,6 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
             >
               <h3 className="mb-3 heads m-0">Working Hours & Leave Rules</h3>
 
-
             </div>
           </div>
           
