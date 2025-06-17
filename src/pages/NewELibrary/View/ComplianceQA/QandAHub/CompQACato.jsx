@@ -33,18 +33,18 @@ const CompQACato = () => {
 
                 <div className="row justify-content-center">
                     {compCategoryInfo?.map((cat) => (
-                        <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-5" key={cat._id}>
+                        <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={cat._id}>
                             <button
                                 onClick={() => navigate(`/elibrary/View/Compliance/${cat._id}`)}
                                 style={{
                                     width: '100%',
-                                    padding: '30px 20px',
+                                    padding: '4px 2px',
                                     backgroundColor: 'white',
                                     color: '#013879',
                                     fontSize: '14px',
                                     fontWeight: '600',
                                     border: '2px solid #013879',
-                                    borderRadius: '12px',
+                                    borderRadius: '6px',
                                     cursor: 'pointer',
                                     transition: 'all 0.2s ease',
                                     boxShadow: '0 6px 18px rgba(0, 0, 0, 0.1)'
