@@ -23,7 +23,7 @@ const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
   const fetchData = (keyword = "") => {
     const filters = {
       complianceCategory: categoryId,
-      ...(keyword && { topic: keyword }) // Include topic filter if keyword exists
+      ...(keyword && { question: keyword }) // Include topic filter if keyword exists
     };
     dispatch(compQandALibraryPaginatedGet({ page: localPage, limit: pageSize, filters }));
   };
@@ -82,7 +82,7 @@ const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Type topic..."
+              placeholder="Type Question..."
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
