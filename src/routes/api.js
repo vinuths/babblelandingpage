@@ -2299,7 +2299,7 @@ export const getCompQandALibraryPaginated = async ({ page, limit, filters }) => 
         filters, // send filters in body
     };
 
-    return await axios.post(`${URL}/getCompQandALibraryPaginated`, body, config);
+    return await axios.post(`${URL}/getCompQandALibraryPaginatedView`, body, config);
 };
 
 

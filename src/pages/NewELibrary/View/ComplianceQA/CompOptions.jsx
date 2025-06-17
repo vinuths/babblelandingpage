@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { stateGets, compQandALibraryPaginatedGet } from "../../../../store/actions/otherActions";
 import CompQATable from './QandAHub/CompQATable';
+import CompQACato from './QandAHub/CompQACato';
 
 
 function CompOptions() {
@@ -48,7 +49,8 @@ function CompOptions() {
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                   <div class="row">
                     <div class="col-12 col-lg-12">
-                      <CompQATable localPage={localPage} setLocalPage={setLocalPage} />
+                      {/* <CompQATable localPage={localPage} setLocalPage={setLocalPage} /> */}
+                      <CompQACato localPage={localPage} setLocalPage={setLocalPage} />
                     </div>
                   </div>
                 </div>

@@ -55,6 +55,7 @@ import LabourWelfareState from "./pages/NewELibrary/View/LabourWelfare/LabourWel
 import MinWagesStateWise from "./pages/NewELibrary/View/MinimumWages/MinWagesStateWise";
 import WH_LR_State from "./pages/NewELibrary/View/WH_LR/WH_LR_State";
 import PTState from "./pages/NewELibrary/View/PT/PTState";
+import CompQATable from "./pages/NewELibrary/View/ComplianceQA/QandAHub/CompQATable";
 
 
 function App() {
@@ -107,6 +108,7 @@ function App() {
         <Route path="/elibrary/View/Recent_Legal_Updates" element={<PrivateRoutes><LegalUpds /></PrivateRoutes>} />
         <Route path="/elibrary/View/Others" element={<PrivateRoutes><OthersView /></PrivateRoutes>} />
         <Route path="/elibrary/View/Compliance" element={<PrivateRoutes><CompOptions /></PrivateRoutes>} />
+        <Route path="/elibrary/View/Compliance/:categoryId" element={<CompQATable />} />
 
         <Route path="/HelpAndSupport/Form" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
         <Route path="/elibrary/View/National_&_Festival_Holidays/HolidayList" element={<PrivateRoutes><HolidayElibraryStateDetails /></PrivateRoutes>} />

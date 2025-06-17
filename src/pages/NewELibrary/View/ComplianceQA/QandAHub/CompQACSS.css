@@ -22,7 +22,7 @@
 
 .faq-question {
     position: relative;
-    font-size: 16px;
+    font-size: 14px !important;
     font-weight: 600;
     padding-right: 30px;
     color: #013879;
@@ -50,7 +50,7 @@
     color: #000000;
     line-height: 1.6;
     font-style: italic;
-    font-size: 14px;
+    font-size: 12px !important;
 }
 
 
@@ -78,7 +78,23 @@
     align-items: center;
     /* padding-bottom: 20px; */
     padding: 20px;
-    margin-top: -40px !important;
+    max-width: 1280px;
+    margin-top: 60px !important;
+    margin-left: 220px !important;
+
+    /* text-align: center; */
+}
+.backCon1 {
+    background-color: white;
+    border-radius: 14px;
+    border: 1px solid rgb(172, 171, 171);
+    justify-content: center;
+    align-items: center;
+    /* padding-bottom: 20px; */
+    padding: 0px 20px 20px 20px;
+    max-width: 1280px;
+    margin-top: 100px !important;
+    margin-left: 220px !important;
 
     /* text-align: center; */
 }
@@ -93,6 +109,6 @@
     font-size: 11px;
     /* margin-top: -6px !important; */
     position: relative;
-    top: -27px;
+    top: -30px;
     left: 10px;
 }

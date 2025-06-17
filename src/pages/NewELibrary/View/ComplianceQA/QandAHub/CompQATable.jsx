@@ -1,43 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  categoryGetComplianceList,
-  compQandALibraryPaginatedGet,
+  compQandALibraryPaginatedGet
 } from "../../../../../store/actions/otherActions";
+import { useNavigate, useParams } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Spin } from "antd";
 import "./CompQACSS.css";
-import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const CompQATable = ({ localPage, setLocalPage }) => {
+let searchDebounceTimer;
+
+const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { categoryId } = useParams();
 
-  const { data, loading } = useSelector(
-    (state) => state.compQandALibraryPaginatedRed
-  );
-  const { compCategoryInfo } = useSelector(
-    (state) => state.complianceCategoryGetRed
-  );
-
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const { data, loading } = useSelector((state) => state.compQandALibraryPaginatedRed);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [faqs, setFaqs] = useState([]);
   const pageSize = 1000;
 
-  useEffect(() => {
-    dispatch(categoryGetComplianceList());
-  }, [dispatch]);
-
-  const fetchData = (page = localPage) => {
-    const filters = {};
-    if (selectedCategory) filters.complianceCategory = selectedCategory;
-    dispatch(compQandALibraryPaginatedGet({ page, limit: pageSize, filters }));
+  const fetchData = (keyword = "") => {
+    const filters = {
+      complianceCategory: categoryId,
+      ...(keyword && { topic: keyword }) // Include topic filter if keyword exists
+    };
+    dispatch(compQandALibraryPaginatedGet({ page: localPage, limit: pageSize, filters }));
   };
 
   useEffect(() => {
     fetchData();
-  }, [selectedCategory]);
+  }, [categoryId]);
 
   useEffect(() => {
     if (data && Array.isArray(data)) {
@@ -55,70 +48,43 @@ const CompQATable = ({ localPage, setLocalPage }) => {
     setFaqs((prev) =>
       prev.map((faq, i) => ({
         ...faq,
-        open: i === index ? !faq?.open : false,
+        open: i === index ? !faq.open : false,
       }))
     );
   };
 
-  const filteredFaqs = faqs.filter(
-    (faq) =>
-      faq &&
-      typeof faq.topic === "string" &&
-      typeof faq.question === "string" &&
-      (
-        faq.topic.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-        faq.question.toLowerCase().includes(searchKeyword.toLowerCase())
-      )
-  );
+  // Debounced Search Effect
+  useEffect(() => {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+      fetchData(searchKeyword.trim());
+    }, 100);
+    return () => clearTimeout(searchDebounceTimer);
+  }, [searchKeyword]);
 
   return (
     <>
-      <div>
-        <button
-          onClick={() => navigate("/elibrary/View")}
-          className="back-button"
-          style={{ position: 'relative', top: '35px' }}
-        >
-          <ArrowBackIcon />
-        </button>
-      </div>
 
-      <div className="container mt-4 backCon">
+      <div className="backCon1">
         <div className="text-center mb-3">
+          <button onClick={() => navigate("/elibrary/View/Compliance")} className="back-button" style={{ position: 'relative', top: '55px' }}>
+            <ArrowBackIcon />
+          </button>
+
           <h2 className="fw-bold" style={{ color: "#013879", paddingBottom: "30px", paddingTop: "20px" }}>
             Compliance Questions & Answers
           </h2>
         </div>
 
         <div className="row mb-4 justify-content-center">
-          <div className="col-md-6">
-            <label className="form-label fw-semibold text-center d-block">Filter by Category</label>
-            <select
-              className="form-select text-center"
-              value={selectedCategory}
-              onChange={(e) => {
-                setSelectedCategory(e.target.value);
-                setLocalPage(1);
-              }}
-            >
-              <option value="">Select Category</option>
-              {compCategoryInfo?.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="col-md-6">
+          <div className="col-md-8">
             <label className="form-label fw-semibold text-center d-block">Search Keyword</label>
             <input
               type="text"
-              className="form-control text-center"
-              placeholder="Type topic or question..."
+              className="form-control"
+              placeholder="Type topic..."
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
-              // disabled={!selectedCategory}
             />
           </div>
         </div>
@@ -126,8 +92,8 @@ const CompQATable = ({ localPage, setLocalPage }) => {
         <div className="faqs">
           {loading ? (
             <Spin size="large" className="d-flex justify-content-center" />
-          ) : filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq, index) => (
+          ) : faqs.length > 0 ? (
+            faqs.map((faq, index) => (
               <div
                 className={"faq " + (faq?.open ? "open" : "")}
                 key={`${faq?.question}-${index}`}
@@ -142,7 +108,7 @@ const CompQATable = ({ localPage, setLocalPage }) => {
               </div>
             ))
           ) : (
-            <div className="alert danger-info text-center fw-semibold">
+            <div className="alert alert-danger text-center fw-semibold">
               No Compliance FAQ E-Library Available
             </div>
           )}
