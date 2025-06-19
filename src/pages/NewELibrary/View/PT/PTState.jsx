@@ -128,10 +128,13 @@ const PTState = () => {
             </div>
 
 
-            {Object.keys(dataSource).length === 0 ? (
-                <div className="alert alert-danger">No data found for this state.</div>
+            {!dataSource || Object.keys(dataSource).length === 0 || dataSource.applicability === false ? (
+                <div className="alert alert-danger text-center">
+                    No Professional Tax available for the selected state and year.
+                </div>
             ) : (
                 <>
+                    {/* ✅ Main Details Table */}
                     <div className="table-responsive mb-4">
                         <table className="styled-table">
                             <tbody>
@@ -145,13 +148,7 @@ const PTState = () => {
                                 </tr>
                                 <tr>
                                     <td><strong>Applicability</strong></td>
-                                    <td>
-                                        {dataSource?.applicability === true
-                                            ? "Applicable"
-                                            : dataSource?.applicability === false
-                                                ? "Not Applicable"
-                                                : "N/A"}
-                                    </td>
+                                    <td>{dataSource.applicability ? "Applicable" : "Not Applicable"}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Exemption</strong></td>
@@ -170,8 +167,6 @@ const PTState = () => {
                                     <td>
                                         {dataSource?.regFormDoc ? (
                                             <a href={dataSource?.regFormDoc} target="_blank" rel="noreferrer">View Form</a>
-                                        ) : dataSource?.registrationForm ? (
-                                            <>{dataSource.registrationForm}</>
                                         ) : "N/A"}
                                     </td>
                                 </tr>
@@ -183,7 +178,11 @@ const PTState = () => {
                                     <td><strong>Website</strong></td>
                                     <td>
                                         {dataSource?.websiteLink ? (
-                                            <a href={dataSource.websiteLink.startsWith('http') ? dataSource.websiteLink : `http://${dataSource.websiteLink}`} target="_blank" rel="noreferrer">
+                                            <a
+                                                href={dataSource.websiteLink.startsWith('http') ? dataSource.websiteLink : `http://${dataSource.websiteLink}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
                                                 {dataSource.websiteLink}
                                             </a>
                                         ) : "N/A"}
@@ -207,13 +206,17 @@ const PTState = () => {
                                 </tr>
                                 <tr>
                                     <td><strong>Return Form</strong></td>
-                                    <td><a href={dataSource?.doc} target="_blank" rel="noreferrer">Return Form</a></td>
+                                    <td>
+                                        {dataSource?.doc ? (
+                                            <a href={dataSource?.doc} target="_blank" rel="noreferrer">Return Form</a>
+                                        ) : "N/A"}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    {/* PROFESSIONAL RATES */}
+                    {/* ✅ Professional Rates Table */}
                     <h5 className="fw-bold">Professional Rates</h5>
                     <div className="table-responsive mb-4">
                         <table className="styled-table">
@@ -237,16 +240,15 @@ const PTState = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="3" className="text-center">No PT rate data available</td>
+                                        <td colSpan="4" className="text-center">No PT rate data available</td>
                                     </tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
-
-
                 </>
             )}
+
 
         </div>
     );
