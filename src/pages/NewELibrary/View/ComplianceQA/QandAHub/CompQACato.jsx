@@ -25,7 +25,7 @@ const CompQACato = () => {
                     </div>
                     <div className="col-2"></div>
                     <div className="col-6"><h3 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '30px', textDecoration: 'underline' }}>
-                        Seach By Categories
+                        Search By Categories
                     </h3></div>
                 </div>
 
