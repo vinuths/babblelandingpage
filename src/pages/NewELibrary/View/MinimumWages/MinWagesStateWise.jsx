@@ -374,7 +374,7 @@ const MinWagesStateWise = () => {
         "Uttar Pradesh": ["slNo", "classOfEmployment", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Uttarakhand": ["slNo", "classOfEmployment", "classOfWorkers", "basicPerMonth", "vdaPerMonth", "totalPerMonth"],
         "West Bengal": ["slNo", "classOfEmployment", "zone", "category", "designation", "totalPerDay", "totalPerMonth"],
-        "Central": ["slNo", "classOfEmployment", "subCategory", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
+        "Central": ["slNo", "classOfEmployment","category", "subCategory", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Default": ["classOfEmployment", "zone", "basicPerMonth", "vdaPerMonth", "totalPerMonth", "category", "subCategory", "grade", "district", "designation", "qual_and_exp", "specialAllowance", "hraPerMonth"]
 
     };
