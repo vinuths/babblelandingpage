@@ -195,6 +195,7 @@ import {
   getMinimumWageById,
   getAllWHAndLRByStateLibraries,
   getAllPTByStateLibraries,
+  complianceOverView,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -825,6 +826,9 @@ import {
   PT_STATE_GET_REQUEST,
   PT_STATE_GET_SUCCESS,
   PT_STATE_GET_FAILURE,
+  COMPLIANCE_VIEW_GET_REQUEST,
+  COMPLIANCE_VIEW_GET_SUCCESS,
+  COMPLIANCE_VIEW_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -6056,6 +6060,7 @@ export const auditCompiledCountAll = (postBody) => async (dispatch) => {
 
 
 
+
 export const CompanyBranchesGet = () => async (dispatch) => {
   dispatch({ type: COMPANY_BRANCHES_GET_REQUEST });
   await CompanyBranchesGetting()
@@ -9226,4 +9231,30 @@ export const minWageGetById = (id) => async (dispatch) => {
         progress: undefined,
       });
     });
+};
+
+export const complianceOverViewGet = (postBody) => async (dispatch) => {
+  dispatch({ type: COMPLIANCE_VIEW_GET_REQUEST });
+
+  try {
+    const response = await complianceOverView(postBody); // Call the API
+    // console.log("count", response.data); // Log the response to verify
+
+    if (response.status === 200) {
+      dispatch({
+        type: COMPLIANCE_VIEW_GET_SUCCESS,
+        payload: response.data, // No need to modify
+      });
+    } else {
+      dispatch({
+        type: COMPLIANCE_VIEW_GET_FAIL,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: COMPLIANCE_VIEW_GET_FAIL,
+      payload: error.message,
+    });
+  }
 };

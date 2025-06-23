@@ -2627,3 +2627,15 @@ export const getMinimumWageById = async (id) => {
     // ✅ Correct usage: empty body, headers in third param
     return await axios.post(`${URL}/getMinimumWageById/${id}`, {}, config);
 };
+
+export const complianceOverView = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    // ✅ Correct usage: empty body, headers in third param
+    return await axios.post(`${URL}/complianceOverView`, postbody, config);
+};

@@ -1,0 +1,59 @@
+.compliance-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.compliance-table th{
+  border: 1px solid #013879;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 14px;
+}
+.compliance-table td {
+  border: 1px solid #013879;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.compliance-table thead {
+  background-color: #013879;
+  color: white !important;
+}
+
+.compliance-table tbody tr:hover {
+  background-color: #f5faff;
+}
+
+.compliance-header {
+  color: #013879;
+  font-weight: 600;
+  margin-bottom: 12px;
+  /* color: #ffffff !important; */
+
+}
+
+
+* Month Filter Styling */
+.filter-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-container .MuiFormControl-root {
+  min-width: 140px;
+}
+
+.MuiInputBase-root {
+  background-color: #f0f5ff;
+  border-radius: 4px;
+}
+
+.MuiInputLabel-root {
+  color: #013879 !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #013879 !important;
+}

@@ -497,6 +497,9 @@ import {
   PT_STATE_GET_REQUEST,
   PT_STATE_GET_SUCCESS,
   PT_STATE_GET_FAILURE,
+  COMPLIANCE_VIEW_GET_REQUEST,
+  COMPLIANCE_VIEW_GET_SUCCESS,
+  COMPLIANCE_VIEW_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3185,6 +3188,18 @@ export const minWageGetByIdReducer = (state = {}, action) => {
       return { loading_Min_By_Id: false, minWageByIDInfo: action.payload.data };
     case MINWAGE_LIBRARY_GET_BY_ID_FAILURE:
       return { loading_Min_By_Id: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const complianceOverviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COMPLIANCE_VIEW_GET_REQUEST:
+      return { loading_COMPVIEW: true };
+    case COMPLIANCE_VIEW_GET_SUCCESS:
+      return { loading_COMPVIEW: false, compOverView: action.payload };
+    case COMPLIANCE_VIEW_GET_FAIL:
+      return { loading_COMPVIEW: false, error: action.payload };
     default:
       return state;
   }

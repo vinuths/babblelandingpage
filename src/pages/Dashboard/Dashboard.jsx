@@ -20,6 +20,8 @@ import ComplianceBarChart from "./ComplianceBarChart";
 import CalendarComponent from "./CalendarComponent";
 import ComplianceOfLCAaudit from "./ComplianceOfLCAaudit";
 import ComplianceOfPAaudit from "./ComplianceOfPAaudit";
+import CompOverTable from "./ComplianceOverView/CompOverTable";
+import ComplianceDashboard from "./ComplianceOverView/components/ComplianceDashboard";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -56,6 +58,15 @@ const Dashboard = () => {
         <React.Fragment>
             <div className="dashboard_wrapper">
                 <div className="container">
+                    {/* {loggedInUser?.regLisStatus && ( */}
+                        <div className="row">
+                            <div className="col-sm-12">
+                                {/* <CompOverTable usersInfo={usersInfo} /> */}
+                                <ComplianceDashboard usersInfo={usersInfo} />
+                            </div>
+                        </div>
+                    {/* )} */}
+                    <br />
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
