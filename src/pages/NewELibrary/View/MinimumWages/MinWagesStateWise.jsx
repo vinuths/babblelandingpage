@@ -342,14 +342,15 @@ const MinWagesStateWise = () => {
 
     const stateColumnMap = {
         "Andhra Pradesh": ["slNo", "classOfEmployment", "zone", "category", "basicPerMonth", "vdaPerMonth", "totalPerMonth"],
+        "Andaman": ["slNo", "classOfEmployment", "totalPerDay",  "totalPerMonth"],
         "Karnataka": ["slNo", "classOfEmployment", "zone", "designation", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerMonth"],
         "Tamil Nadu": ["slNo", "classOfEmployment", "zone", "category", "subCategory", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Arunachal Pradesh": ["slNo", "classOfEmployment", "area", "totalPerDay", "totalPerMonth"],
-        "Assam": ["slNo", "classOfEmployment", "totalPerDay", "totalPerMonth"],
+        "Assam": ["slNo", "classOfEmployment","basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Bihar": ["slNo", "classOfEmployment", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Chandigarh": ["slNo", "classOfEmployment", "subCategory", "totalPerDay", "totalPerMonth"],
         "Chhattisgarh": ["slNo", "classOfEmployment", "zone", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
-"Dadra and Nagar Haveli and Daman & Diu": ["slNo", "classOfEmployment", "basicPerDay", "vdaPerDay", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],        "Delhi": ["slNo", "classOfEmployment", "classOfWorkers", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
+        "Dadra and Nagar Haveli and Daman & Diu": ["slNo", "classOfEmployment", "basicPerDay", "vdaPerDay", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],        "Delhi": ["slNo", "classOfEmployment", "classOfWorkers", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Goa": ["slNo", "classOfEmployment", "zone", "category", "basicPerDay", "vdaPerDay", "totalPerDay", "totalPerMonth"],
         "Gujarat": ["slNo", "classOfEmployment", "zone", "basicPerDay", "vdaPerDay", "totalPerDay", "totalPerMonth"],
         "Haryana": ["slNo", "classOfEmployment", "qualificationAndExperience", "basicPerDay", "basicPerMonth", "totalPerDay", "totalPerMonth"],
