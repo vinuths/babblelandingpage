@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import './Compliance.css';
 import { useDispatch, useSelector } from "react-redux";
-// import { complianceOverViewGet } from "../../../../store/actions/otherActions";
 
 export const OverviewTable = ({ setView }) => {
     const dispatch = useDispatch();
@@ -24,12 +23,6 @@ export const OverviewTable = ({ setView }) => {
     const [fromMonth, setFromMonth] = useState("2025-05");
     const [toMonth, setToMonth] = useState("2025-05");
 
-    // const { compOverView } = useSelector((state) => state.complianceOverviewRed);
-    // console.log("compOverView", compOverView);
-
-    // useEffect(() => {
-    //     dispatch(complianceOverViewGet());
-    // }, [dispatch])
     return (
         <Card>
             <CardContent>

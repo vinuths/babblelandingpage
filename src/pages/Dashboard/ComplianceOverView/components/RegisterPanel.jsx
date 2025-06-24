@@ -13,17 +13,13 @@ import {
     Paper
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { complianceOverViewGet } from "../../../../store/actions/otherActions";
 
 
 
 export const RegisterPanel = ({ onBack }) => {
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(complianceOverViewGet());
-    }, [dispatch])
     return (
+        
         <Card sx={{ mb: 4 }}>
             <CardContent>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>

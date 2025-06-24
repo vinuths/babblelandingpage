@@ -58,15 +58,15 @@ const Dashboard = () => {
         <React.Fragment>
             <div className="dashboard_wrapper">
                 <div className="container">
-                    {/* {loggedInUser?.regLisStatus && ( */}
+                    {/* {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
-                                {/* <CompOverTable usersInfo={usersInfo} /> */}
+                                <CompOverTable usersInfo={usersInfo} />
                                 <ComplianceDashboard usersInfo={usersInfo} />
                             </div>
                         </div>
-                    {/* )} */}
-                    <br />
+                    )} 
+                    <br /> */}
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
