@@ -26,47 +26,119 @@ export const LicenseDetails = ({ onBack }) => {
   }, [dispatch]);
 
   const licenses = [
-    {
-      label: "BOCW",
-      numberKey: "licensenumberBOCW",
-      validKey: "doeBOCW",
-      renewalKey: "doddrBOCW",
-      statusKey: "lis_status_bocw",
-      fileKey: "licenseimageBOCW",
-    },
-    {
-      label: "PF",
-      numberKey: "licensenumberBOCW",
-      validKey: "doeBOCW",
-      renewalKey: "doddrBOCW",
-      statusKey: "lis_status_bocw",
-      fileKey: "licenseimageBOCW",
-    },
-    {
-      label: "FASSAI",
-      numberKey: "licensenumberFASSAI",
-      validKey: "doeFASSAI",
-      renewalKey: "doddrFASSAI",
-      statusKey: "lis_status_fassai",
-      fileKey: "licenseimageFASSAI",
-    },
-    {
-      label: "ISMW",
-      numberKey: "licensenumberISMW",
-      validKey: "doeISMW",
-      renewalKey: "doddrISMW",
-      statusKey: "lis_status_ismw",
-      fileKey: "licenseimageISMW",
-    },
-    {
-      label: "TRADE LICENSE",
-      numberKey: "licensenumberTL",
-      validKey: "doeTL",
-      renewalKey: "doddrTL",
-      statusKey: "lis_statusTL",
-      fileKey: "licenseimageTL",
-    },
-  ];
+  {
+    label: "NSP",
+    numberKey: "licensenumberNSP",
+    validKey: "doeNSP",
+    renewalKey: "doddrNSP",
+    statusKey: "lis_statusNSP",
+    fileKey: "licenseimageNSP",
+  },
+  {
+    label: "OTP",
+    numberKey: "licensenumberOTP",
+    validKey: "doeOTP",
+    renewalKey: "doddrOTP",
+    statusKey: "lis_statusOTP",
+    fileKey: "licenseimageOTP",
+  },
+  {
+    label: "TL",
+    numberKey: "licensenumberTL",
+    validKey: "doeTL",
+    renewalKey: "doddrTL",
+    statusKey: "lis_statusTL",
+    fileKey: "licenseimageTL",
+  },
+  {
+    label: "WOE",
+    numberKey: "licensenumberWOE",
+    validKey: "doeWOE",
+    renewalKey: "doddrWOE",
+    statusKey: "lis_statusWOE",
+    fileKey: "licenseimageWOE",
+  },
+  {
+    label: "PF",
+    numberKey: "pfnumber",
+    validKey: "doc",  
+    renewalKey: "",  
+    statusKey: "lis_status_pf",
+    fileKey: "pfimage",
+  },
+  {
+    label: "ESI",
+    numberKey: "esinumber",
+    validKey: "doc",  
+    renewalKey: "",  
+    statusKey: "lis_status_esi",
+    fileKey: "esiimage",
+  },
+  {
+    label: "LWF",
+    numberKey: "registrationlwfD3",
+    validKey: "doregistrationlwfD3",
+    renewalKey: "",   
+    statusKey: "lis_status_lwf",
+    fileKey: "registrationlwfD3image",
+  },
+  {
+    label: "PTR",
+    numberKey: "registrationptrD3",
+    validKey: "doregistrationptrD3",
+    renewalKey: "",   
+    statusKey: "lis_status_ptr",
+    fileKey: "registrationptrD3image",
+  },
+  {
+    label: "PTE",
+    numberKey: "registrationPTED3",
+    validKey: "doregistrationPTED3",
+    renewalKey: "",   
+    statusKey: "lis_status_pte",
+    fileKey: "registrationPTED3image",
+  },
+  {
+    label: "MSME",
+    numberKey: "licensenumberMSME",
+    validKey: "dorMSME",  
+    renewalKey: "",      
+    statusKey: "lis_status_msme",
+    fileKey: "licenseimageMSME",
+  },
+  {
+    label: "BOCW",
+    numberKey: "licensenumberBOCW",
+    validKey: "doeBOCW",
+    renewalKey: "doddrBOCW",
+    statusKey: "lis_status_bocw",
+    fileKey: "licenseimageBOCW",
+  },
+  {
+    label: "ISMW",
+    numberKey: "licensenumberISMW",
+    validKey: "doeISMW",
+    renewalKey: "doddrISMW",
+    statusKey: "lis_status_ismw",
+    fileKey: "licenseimageISMW",
+  },
+  {
+    label: "FASSAI",
+    numberKey: "licensenumberFASSAI",
+    validKey: "doeFASSAI",
+    renewalKey: "doddrFASSAI",
+    statusKey: "lis_status_fassai",
+    fileKey: "licenseimageFASSAI",
+  },
+  {
+    label: "SB",
+    numberKey: "licensenumberSB",
+    validKey: "dorSB",  
+    renewalKey: "",     
+    statusKey: "lis_status_sb",
+    fileKey: "licenseimageSB",
+  },
+];
 
   const formatDate = (dateString) => {
     if (!dateString) return "-";
@@ -99,7 +171,7 @@ export const LicenseDetails = ({ onBack }) => {
               {compOverView?.[0] &&
                 licenses.map((item, idx) => (
                   <TableRow key={idx}>
-                    <TableCell>{compOverView[0].name || '-'}</TableCell>
+                    {/* <TableCell>{compOverView[0].name || '-'}</TableCell> */}
                     <TableCell>{item.label}</TableCell>
                     <TableCell>{compOverView[0][item.numberKey] || '-'}</TableCell>
                     <TableCell>{formatDate(compOverView[0][item.validKey])}</TableCell>
