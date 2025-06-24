@@ -342,7 +342,7 @@ const MinWagesStateWise = () => {
 
     const stateColumnMap = {
         "Andhra Pradesh": ["slNo", "classOfEmployment", "zone", "category", "basicPerMonth", "vdaPerMonth", "totalPerMonth"],
-        "Andaman and Nicobar islands": ["slNo", "classOfEmployment", "totalPerDay",  "totalPerMonth"],
+        "Andaman and Nicobar Islands": ["slNo", "classOfEmployment", "totalPerDay",  "totalPerMonth"],
         "Karnataka": ["slNo", "classOfEmployment", "zone", "designation", "basicPerDay", "basicPerMonth", "vdaPerDay", "vdaPerMonth", "totalPerMonth"],
         "Tamil Nadu": ["slNo", "classOfEmployment", "zone", "category", "subCategory", "basicPerMonth", "vdaPerMonth", "totalPerDay", "totalPerMonth"],
         "Arunachal Pradesh": ["slNo", "classOfEmployment", "area", "totalPerDay", "totalPerMonth"],
