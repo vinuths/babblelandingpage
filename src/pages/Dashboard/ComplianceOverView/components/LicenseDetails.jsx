@@ -61,48 +61,48 @@ export const LicenseDetails = ({ onBack }) => {
   {
     label: "PF",
     numberKey: "pfnumber",
-    validKey: "doc",  
-    renewalKey: "",  
+    validKey: "NA",  
+    renewalKey: "NA",  
     statusKey: "lis_status_pf",
     fileKey: "pfimage",
   },
   {
     label: "ESI",
     numberKey: "esinumber",
-    validKey: "doc",  
-    renewalKey: "",  
+    validKey: "NA", 
+    renewalKey: "NA",  
     statusKey: "lis_status_esi",
     fileKey: "esiimage",
   },
   {
     label: "LWF",
     numberKey: "registrationlwfD3",
-    validKey: "doregistrationlwfD3",
-    renewalKey: "",   
+    validKey: "NA",
+    renewalKey: "NA",   
     statusKey: "lis_status_lwf",
     fileKey: "registrationlwfD3image",
   },
   {
     label: "PTR",
     numberKey: "registrationptrD3",
-    validKey: "doregistrationptrD3",
-    renewalKey: "",   
+    validKey: "NA",
+    renewalKey: "NA",   
     statusKey: "lis_status_ptr",
     fileKey: "registrationptrD3image",
   },
   {
     label: "PTE",
     numberKey: "registrationPTED3",
-    validKey: "doregistrationPTED3",
-    renewalKey: "",   
+    validKey: "NA",
+    renewalKey: "NA",   
     statusKey: "lis_status_pte",
     fileKey: "registrationPTED3image",
   },
   {
     label: "MSME",
     numberKey: "licensenumberMSME",
-    validKey: "dorMSME",  
-    renewalKey: "",      
+    validKey: "NA",  
+    renewalKey: "NA",     
     statusKey: "lis_status_msme",
     fileKey: "licenseimageMSME",
   },
@@ -133,15 +133,15 @@ export const LicenseDetails = ({ onBack }) => {
   {
     label: "SB",
     numberKey: "licensenumberSB",
-    validKey: "dorSB",  
-    renewalKey: "",     
+    validKey: "NA", 
+    renewalKey: "NA",     
     statusKey: "lis_status_sb",
     fileKey: "licenseimageSB",
   },
 ];
 
   const formatDate = (dateString) => {
-    if (!dateString) return "-";
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB");
   };
