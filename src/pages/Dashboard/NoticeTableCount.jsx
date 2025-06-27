@@ -777,6 +777,7 @@ const NoticeTableCount = ({ branchesCompany }) => {
                                 <option value="NorthRegion">North Region</option>
                                 <option value="WestRegion">West Region</option>
                                 <option value="EastRegion">East Region</option>
+                                <option value="Central">Central</option>
                             </select>
                         </div>
 

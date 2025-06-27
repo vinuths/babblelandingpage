@@ -62,6 +62,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
     NorthRegion: "North Region",
     EastRegion: "East Region",
     WestRegion: "West Region",
+    Central: "Central",
   };
 
   useEffect(() => {
@@ -1776,6 +1777,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
               <option value="NorthRegion">North Region</option>
               <option value="WestRegion">West Region</option>
               <option value="EastRegion">East Region</option>
+              <option value="Central">Central</option>
             </select>
           </div>
 
