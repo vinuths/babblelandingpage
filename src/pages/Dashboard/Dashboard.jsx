@@ -58,15 +58,14 @@ const Dashboard = () => {
         <React.Fragment>
             <div className="dashboard_wrapper">
                 <div className="container">
-                    {/* {loggedInUser?.regLisStatus && (
+                    {loggedInUser?.compOverViewStatus && (
                         <div className="row">
                             <div className="col-sm-12">
-                                <CompOverTable usersInfo={usersInfo} />
                                 <ComplianceDashboard usersInfo={usersInfo} />
                             </div>
                         </div>
-                    )} 
-                    <br /> */}
+                     )}
+                    <br />
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">
@@ -75,7 +74,6 @@ const Dashboard = () => {
                         </div>
                     )}
                     <br />
-
                     {loggedInUser?.compileStatus && (
                         <div className="row">
                             <div className="col-sm-12">
@@ -90,7 +88,7 @@ const Dashboard = () => {
                             <ComplianceOfLCAaudit branchesCompany={CompanyBranchesInfo} />
                         </div>
                     </div>
-                    )} 
+                    )}
                     <br />
                       {loggedInUser?.compileStatusPA && ( 
                     <div className="row">
@@ -98,9 +96,8 @@ const Dashboard = () => {
                             <ComplianceOfPAaudit branchesCompany={CompanyBranchesInfo} />
                         </div>
                     </div>
-                     )} 
+                     )}
                     <br />
-
                     {loggedInUser?.inspectLisStatus && (
                         <div className="row">
                             <div className="col-sm-12">

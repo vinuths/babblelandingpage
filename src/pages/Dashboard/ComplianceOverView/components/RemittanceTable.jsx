@@ -1,5 +1,5 @@
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardContent,
@@ -11,51 +11,247 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Paper
+  Paper,
+  TextField,
+  Box
 } from "@mui/material";
+import { companyLoginBranchGet, remittanceGetAll } from "../../../../store/actions/otherActions";
 
-const RemittanceTable = ({ onBack, onViewDoc }) => (
-  <Card sx={{ mb: 4 }}>
-    <CardContent>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <Typography variant="h6" className="compliance-header">Remittance Tracker</Typography>
-        <Button variant="outlined" size="small" onClick={onBack}>Back</Button>
-      </div>
-      <TableContainer component={Paper}>
-        <Table size="small" className="compliance-table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Payment Type</TableCell>
-              <TableCell>Challan Type</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Period</TableCell>
-              <TableCell>Due Date</TableCell>
-              <TableCell>Payment Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {["PF", "ESIC", "PT"].map((type, idx) => (
-              <TableRow key={idx}>
-                <TableCell>{type}</TableCell>
-                <TableCell>Regular</TableCell>
-                <TableCell>12345</TableCell>
-                <TableCell>May-25</TableCell>
-                <TableCell>15-Jun-25</TableCell>
-                <TableCell>16-Jun-25</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>
-                  <Button size="small" onClick={() => onViewDoc(type)}>
-                    View Document
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </CardContent>
-  </Card>
-);
+const rowsPerPageDefault = 10000;
+
+const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack, onViewDoc }) => {
+  const dispatch = useDispatch();
+  const { loading, data = [] } = useSelector((s) => s.remittanceRed || {});
+  const { loadingCLB, getCompanyLoginBranchInfo } = useSelector((s) => s.companyLoginBranchRed || {});
+
+  useEffect(() => {
+    dispatch(companyLoginBranchGet());
+  }, [dispatch]);
+  const [page, setPage] = useState(0);
+  const [branch, setBranch] = useState('');
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageDefault);
+
+  const [paymentTypeFilter, setPaymentTypeFilter] = useState('');
+  const [challanTypeFilter, setChallanTypeFilter] = useState('');
+  const [periodFilter, setPeriodFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+
+
+  useEffect(() => {
+    if (!fromMonth || !toMonth) return;
+
+    const postBody = {
+      fromDate: fromMonth,
+      toDate: toMonth,
+      ...(branch && { branchId: branch }) // ✅ sends ID, not name
+    };
+
+    dispatch(remittanceGetAll({
+      page: page + 1,
+      limit: rowsPerPage,
+      filters: postBody
+    }));
+
+  }, [dispatch, page, rowsPerPage, fromMonth, toMonth, branch]);
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+
+  return (
+    <Card sx={{ mb: 3 }}>
+      <CardContent>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6">Remittance Tracker</Typography>
+          <Button variant="outlined" style={{ backgroundColor: '#013879', color: 'white' }} size="small" onClick={onBack}>Back</Button>
+        </div>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            mb: 2,
+          }}
+        >
+          {/* 📅 Date Filters (left side) */}
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', marginTop: '10px' }} className="filter-container">
+            <TextField
+              type="month"
+              size="small"
+              label="From"
+              value={fromMonth}
+              onChange={(e) => setFromMonth(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              type="month"
+              size="small"
+              label="To"
+              value={toMonth}
+              onChange={(e) => setToMonth(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
+
+          {/* 🏢 Branch Selector (right side) */}
+          <Box sx={{ minWidth: 200 }}>
+            <select
+              className="form-select"
+              id="branch"
+              name="branch"
+              value={branch}
+              onChange={(e) => setBranch(e.target.value)}
+            >
+              <option value="">All Branches</option>
+              {Array.isArray(getCompanyLoginBranchInfo) &&
+                getCompanyLoginBranchInfo.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                ))}
+            </select>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 9, mb: 2, marginLeft: '40px' }}>
+          <TextField
+            size="small"
+            label="Filter by Payment Type"
+            value={paymentTypeFilter}
+            onChange={(e) => setPaymentTypeFilter(e.target.value.toLowerCase())}
+          />
+          <TextField
+            size="small"
+            label="Filter by Challan Type"
+            value={challanTypeFilter}
+            onChange={(e) => setChallanTypeFilter(e.target.value.toLowerCase())}
+          />
+          <TextField
+            size="small"
+            label="Filter by Period"
+            value={periodFilter}
+            onChange={(e) => setPeriodFilter(e.target.value.toLowerCase())}
+          />
+          <TextField
+            size="small"
+            label="Filter by Status"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value.toLowerCase())}
+          />
+
+        </Box>
+
+
+
+        {loading ? (
+          <p>Loading…</p>
+        ) : (
+
+          <TableContainer component={Paper} sx={{ mt: 2 }}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Sl.No</TableCell>
+                  <TableCell>Branch</TableCell>
+                  <TableCell>Payment&nbsp;Type</TableCell>
+                  <TableCell>Challan&nbsp;Type</TableCell>
+                  <TableCell>Amount</TableCell>
+                  <TableCell>Period</TableCell>
+                  <TableCell>Due&nbsp;Date</TableCell>
+                  <TableCell>Payment&nbsp;Date</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>File&nbsp;Docs</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8} align="center">
+                      <Typography color="error">No Data Available</Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  data
+                    .filter((r) => {
+                      const period = `${r.periodAt || ''}–${r.periodTo || ''}`.toLowerCase();
+
+                      const statusLabel =
+                        r.status === 1
+                          ? "remittances are done in time"
+                          : r.status === 2
+                            ? "remittances are done after due date"
+                            : r.status === 3
+                              ? "remittance is not done"
+                              : "no status yet";
+
+                      return (
+                        (r.paymentType || '').toLowerCase().includes(paymentTypeFilter) &&
+                        (r.challanType || '').toLowerCase().includes(challanTypeFilter) &&
+                        (`${formatDate(r.periodAt)} – ${formatDate(r.periodTo)}`.toLowerCase().includes(periodFilter)) &&
+                        (statusLabel.toLowerCase().includes(statusFilter))
+
+                      );
+                    })
+                    .map((r, index) => (
+
+                      <TableRow key={r._id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{r.branch?.name}</TableCell>
+                        <TableCell>{r.paymentType}</TableCell>
+                        <TableCell>{r.challanType}</TableCell>
+                        <TableCell>{r.amount}</TableCell>
+                        <TableCell>{formatDate(r.periodAt)} – {formatDate(r.periodTo)}</TableCell>
+                        <TableCell>{formatDate(r.dueDatePayment)}</TableCell>
+                        <TableCell>{formatDate(r.paymentDate)}</TableCell>
+
+                        <TableCell>
+                          <span
+                            style={{
+                              color:
+                                r.status === 1
+                                  ? "green"
+                                  : r.status === 2
+                                    ? "orange"
+                                    : r.status === 3
+                                      ? "red"
+                                      : "gray",
+                              fontStyle: r.status === 0 ? "italic" : "normal",
+                            }}
+                          >
+                            {r.status === 1
+                              ? "Remittances are done in Time"
+                              : r.status === 2
+                                ? "Remittances are done after Due date"
+                                : r.status === 3
+                                  ? "Remittance is not done"
+                                  : "No Status Yet"}
+                          </span>
+                        </TableCell>
+                        <TableCell align="center">
+                          {r.status !== 3 ? (
+                            <Button
+                              size="small"
+                              onClick={() => onViewDoc(r._id)} // ← send id up
+                            >
+                              View Docs
+                            </Button>
+                          ) : ("-")}
+
+                        </TableCell>
+                      </TableRow>
+                    )))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
 export default RemittanceTable;

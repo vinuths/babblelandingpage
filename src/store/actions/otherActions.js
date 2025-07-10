@@ -45,7 +45,7 @@ import {
   gettingchecklistOnrejectFilter,
   gettingchecklistAllCompliance,
   gettingcomplianceOnApproveFilter,
-  gettingChecklistOnCreate,
+  // gettingChecklistOnCreate,
   createLiseReg,
   gettingAuditDetail,
   getttingReg,
@@ -67,13 +67,13 @@ import {
   elibraryReject,
   elibrarySaveandApprove,
   elibraryRejectedDocs,
-  companytab1,
-  companytab2,
-  companytab3,
-  companytab4,
-  companytab5,
-  companytab6,
-  companytab7,
+  // companytab1,
+  // companytab2,
+  // companytab3,
+  // companytab4,
+  // companytab5,
+  // companytab6,
+  // companytab7,
   companyL,
   gettingCompanyById,
   companyLcreate,
@@ -147,8 +147,8 @@ import {
   getHolidayLibraryPaginated,
   updateHolidayLibrary,
   deleteHolidayLibrary,
-  fileUploadInAuditQuestionLCA,
-  fileUploadInAuditQuestionPA,
+  // fileUploadInAuditQuestionLCA,
+  // fileUploadInAuditQuestionPA,
   createLabourWelFundLibrary,
   getLabourWelFundLibraryPaginated,
   updateLabourWelFundLibrary,
@@ -196,6 +196,13 @@ import {
   getAllWHAndLRByStateLibraries,
   getAllPTByStateLibraries,
   complianceOverView,
+  getAllRemittanceTrackers,
+  getRemmitanceTrackerById,
+  getReturnsTrackerById,
+  getAllReturnsTrackers,
+  getAllRegisters,
+  overViewStatuses,
+  companyLoginBranch,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -682,12 +689,12 @@ import {
   HOLIDAY_LIBRARY_DELETE_REQUEST,
   HOLIDAY_LIBRARY_DELETE_SUCCESS,
   HOLIDAY_LIBRARY_DELETE_FAILURE,
-  FILE_UPLOADS_SUCCESS_LCA,
-  FILE_UPLOADS_FAIL_LCA,
-  FILE_UPLOADS_REQUEST_LCA,
-  FILE_UPLOADS_FAIL_PA,
-  FILE_UPLOADS_SUCCESS_PA,
-  FILE_UPLOADS_REQUEST_PA,
+  // FILE_UPLOADS_SUCCESS_LCA,
+  // FILE_UPLOADS_FAIL_LCA,
+  // FILE_UPLOADS_REQUEST_LCA,
+  // FILE_UPLOADS_FAIL_PA,
+  // FILE_UPLOADS_SUCCESS_PA,
+  // FILE_UPLOADS_REQUEST_PA,
   LABOUR_WELFARE_LIBRARY_CREATE_REQUEST,
   LABOUR_WELFARE_LIBRARY_CREATE_SUCCESS,
   LABOUR_WELFARE_LIBRARY_CREATE_FAILURE,
@@ -829,6 +836,27 @@ import {
   COMPLIANCE_VIEW_GET_REQUEST,
   COMPLIANCE_VIEW_GET_SUCCESS,
   COMPLIANCE_VIEW_GET_FAIL,
+  REMITTANCE_GET_REQUEST,
+  REMITTANCE_GET_SUCCESS,
+  REMITTANCE_GET_FAILURE,
+  REMITTANCE_GET_BY_ID_REQUEST,
+  REMITTANCE_GET_BY_ID_SUCCESS,
+  REMITTANCE_GET_BY_ID_FAILURE,
+  RETURNS_GET_REQUEST,
+  RETURNS_GET_SUCCESS,
+  RETURNS_GET_FAILURE,
+  RETURNS_GET_BY_ID_REQUEST,
+  RETURNS_GET_BY_ID_SUCCESS,
+  RETURNS_GET_BY_ID_FAILURE,
+  REGISTER_COMP_GET_REQUEST,
+  REGISTER_COMP_GET_SUCCESS,
+  REGISTER_COMP_GET_FAILURE,
+  COMPLIANCE_VIEW_STATUS_GET_REQUEST,
+  COMPLIANCE_VIEW_STATUS_GET_SUCCESS,
+  COMPLIANCE_VIEW_STATUS_GET_FAIL,
+  COMPANY_LOGIN_BRANCH_GET_REQUEST,
+  COMPANY_LOGIN_BRANCH_GET_SUCCESS,
+  COMPANY_LOGIN_BRANCH_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -9257,4 +9285,262 @@ export const complianceOverViewGet = (postBody) => async (dispatch) => {
       payload: error.message,
     });
   }
+};
+
+export const remittanceGetAll = (postBody) => async (dispatch) => {
+  const { filters = {} } = postBody || {};
+  const { fromDate, toDate } = filters;
+
+  if (fromDate && toDate) {
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
+    if (from > to) {
+      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      return;
+    }
+  }
+
+  dispatch({ type: REMITTANCE_GET_REQUEST });
+
+  try {
+    const response = await getAllRemittanceTrackers(postBody);
+    dispatch({ type: REMITTANCE_GET_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: REMITTANCE_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
+export const remmitanceGetById = (id) => async (dispatch) => {
+  dispatch({ type: REMITTANCE_GET_BY_ID_REQUEST });
+
+  await getRemmitanceTrackerById(id)
+    .then((response) => {
+      dispatch({
+        type: REMITTANCE_GET_BY_ID_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+
+      } else {
+        dispatch({
+          type: REMITTANCE_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REMITTANCE_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const returnsGetAll = (postBody) => async (dispatch) => {
+  const { filters = {} } = postBody || {};
+  const { fromDate, toDate } = filters;
+
+  if (fromDate && toDate) {
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
+    if (from > to) {
+      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      return;
+    }
+  }
+  dispatch({ type: RETURNS_GET_REQUEST });
+
+  try {
+    const response = await getAllReturnsTrackers(postBody);
+    dispatch({ type: RETURNS_GET_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: RETURNS_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+export const returnsGetById = (id) => async (dispatch) => {
+  dispatch({ type: RETURNS_GET_BY_ID_REQUEST });
+
+  await getReturnsTrackerById(id)
+    .then((response) => {
+      dispatch({
+        type: RETURNS_GET_BY_ID_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+
+      } else {
+        dispatch({
+          type: RETURNS_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: RETURNS_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const registerCompPaginatedGet = (postBody) => async (dispatch) => {
+  const { filters = {} } = postBody || {};
+  const { fromDate, toDate } = filters;
+
+  if (fromDate && toDate) {
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
+    if (from > to) {
+      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      return;
+    }
+  }
+  dispatch({ type: REGISTER_COMP_GET_REQUEST });
+
+  await getAllRegisters(postBody)
+    .then((response) => {
+      dispatch({ type: REGISTER_COMP_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: REGISTER_COMP_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+
+export const overViewStatusGet = (postBody) => async (dispatch) => {
+  const { fromMonth, toMonth } = postBody || {};
+
+  // 🔍 Date validation before API call
+  if (fromMonth && toMonth) {
+    const from = new Date(fromMonth);
+    const to = new Date(toMonth);
+
+    if (from > to) {
+      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      return; // ⛔ Stop and prevent API call
+    }
+  }
+
+  dispatch({ type: COMPLIANCE_VIEW_STATUS_GET_REQUEST });
+
+  await overViewStatuses(postBody)
+    .then((response) => {
+      dispatch({ type: COMPLIANCE_VIEW_STATUS_GET_SUCCESS, payload: response.data });
+
+      if (response.status === 201) {
+        // Optional success condition
+      } else {
+        dispatch({
+          type: COMPLIANCE_VIEW_STATUS_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMPLIANCE_VIEW_STATUS_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+export const companyLoginBranchGet = (postBody) => async (dispatch) => {
+
+  dispatch({ type: COMPANY_LOGIN_BRANCH_GET_REQUEST });
+
+  await companyLoginBranch(postBody)
+    .then((response) => {
+      dispatch({ type: COMPANY_LOGIN_BRANCH_GET_SUCCESS, payload: response.data });
+
+      if (response.status === 200) {
+        // Optional success condition
+      } else {
+        dispatch({
+          type: COMPANY_LOGIN_BRANCH_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: COMPANY_LOGIN_BRANCH_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
 };

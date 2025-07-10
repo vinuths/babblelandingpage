@@ -2558,7 +2558,7 @@ export const HelpSupportMailer = async (body) => {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
-            
+
 
         },
     };
@@ -2638,4 +2638,75 @@ export const complianceOverView = async (postbody) => {
 
     // ✅ Correct usage: empty body, headers in third param
     return await axios.post(`${URL}/complianceOverView`, postbody, config);
+};
+
+
+export const getAllRemittanceTrackers = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getAllRemmitanceTrackers`, postBody, config);
+};
+export const getRemmitanceTrackerById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+        },
+    };
+    return await axios.post(`${URL}/getRemmitanceTrackerById/${id}`, {}, config);
+};
+
+export const getAllReturnsTrackers = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getAllReturnsTrackers`, postBody, config);
+};
+
+export const getReturnsTrackerById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+        },
+    };
+    return await axios.post(`${URL}/getReturnsTrackerById/${id}`, {}, config);
+};
+
+export const getAllRegisters = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllRegisters`, postBody, config);
+};
+
+export const overViewStatuses = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/overViewStatuses`, postBody, config);
+};
+export const companyLoginBranch = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/companyLoginBranch`, config);
 };

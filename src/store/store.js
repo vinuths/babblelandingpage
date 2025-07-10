@@ -172,6 +172,13 @@ import {
         wH_LRLibraryStateWiseReducer,
         PTLibraryStateWiseReducer,
         complianceOverviewReducer,
+        remittanceReducer,
+        remittanceGetByIdReducer,
+        returnsReducer,
+        returnsGetByIdReducer,
+        getregisterCompReducer,
+        getOverViewStatusReducer,
+        companyLoginBranchReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -343,6 +350,14 @@ const reducer = combineReducers({
         wH_LRLibraryStateWiseRed: wH_LRLibraryStateWiseReducer,
         PTLibraryStateWiseRed: PTLibraryStateWiseReducer,
         complianceOverviewRed: complianceOverviewReducer,
+        remittanceRed: remittanceReducer,
+        remittanceGetByIdRed: remittanceGetByIdReducer,
+        returnsRed: returnsReducer,
+        returnsGetByIdRed: returnsGetByIdReducer,
+        getregisterCompRed: getregisterCompReducer,
+        getOverViewStatusRed: getOverViewStatusReducer,
+        companyLoginBranchRed: companyLoginBranchReducer,
+
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

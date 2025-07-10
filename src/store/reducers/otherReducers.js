@@ -500,6 +500,27 @@ import {
   COMPLIANCE_VIEW_GET_REQUEST,
   COMPLIANCE_VIEW_GET_SUCCESS,
   COMPLIANCE_VIEW_GET_FAIL,
+  REMITTANCE_GET_REQUEST,
+  REMITTANCE_GET_SUCCESS,
+  REMITTANCE_GET_FAILURE,
+  REMITTANCE_GET_BY_ID_REQUEST,
+  REMITTANCE_GET_BY_ID_SUCCESS,
+  REMITTANCE_GET_BY_ID_FAILURE,
+  RETURNS_GET_REQUEST,
+  RETURNS_GET_SUCCESS,
+  RETURNS_GET_FAILURE,
+  RETURNS_GET_BY_ID_REQUEST,
+  RETURNS_GET_BY_ID_SUCCESS,
+  RETURNS_GET_BY_ID_FAILURE,
+  REGISTER_COMP_GET_REQUEST,
+  REGISTER_COMP_GET_SUCCESS,
+  REGISTER_COMP_GET_FAILURE,
+  COMPLIANCE_VIEW_STATUS_GET_REQUEST,
+  COMPLIANCE_VIEW_STATUS_GET_SUCCESS,
+  COMPLIANCE_VIEW_STATUS_GET_FAIL,
+  COMPANY_LOGIN_BRANCH_GET_REQUEST,
+  COMPANY_LOGIN_BRANCH_GET_SUCCESS,
+  COMPANY_LOGIN_BRANCH_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3200,6 +3221,175 @@ export const complianceOverviewReducer = (state = {}, action) => {
       return { loading_COMPVIEW: false, compOverView: action.payload };
     case COMPLIANCE_VIEW_GET_FAIL:
       return { loading_COMPVIEW: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialRemittanceState = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null,
+};
+
+
+export const remittanceReducer = (state = initialRemittanceState, action) => {
+  switch (action.type) {
+    case REMITTANCE_GET_REQUEST:
+      return { ...state, loading: true };
+    case REMITTANCE_GET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data || [],
+        totalCount: action.payload.totalCount || 0,
+        currentPage: action.payload.currentPage || 1,
+        totalPages: action.payload.totalPages || 1,
+      };
+    case REMITTANCE_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const remittanceGetByIdReducer = (state = initialRemittanceState, action) => {
+  switch (action.type) {
+    case REMITTANCE_GET_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case REMITTANCE_GET_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data || [],
+        totalCount: action.payload.totalCount || 0,
+        currentPage: action.payload.currentPage || 1,
+        totalPages: action.payload.totalPages || 1,
+      };
+    case REMITTANCE_GET_BY_ID_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialReturnsState = {
+  loading: false,
+  data: [],
+  totalCount: 0,
+  currentPage: 1,
+  totalPages: 1,
+  error: null,
+};
+
+export const returnsReducer = (state = initialReturnsState, action) => {
+  switch (action.type) {
+    case RETURNS_GET_REQUEST:
+      return { ...state, loading: true };
+    case RETURNS_GET_SUCCESS:
+      // return {
+      //   ...state,
+      //   loading: false,
+      //   data: action.payload.data || [],
+      //   totalCount: action.payload.totalCount || 0,
+      //   currentPage: action.payload.currentPage || 1,
+      //   totalPages: action.payload.totalPages || 1,
+      // };
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data,
+        count: action.payload.count,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages
+      };
+    case RETURNS_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const returnsGetByIdReducer = (state = initialReturnsState, action) => {
+  switch (action.type) {
+    case RETURNS_GET_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case RETURNS_GET_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data || [],
+        totalCount: action.payload.totalCount || 0,
+        currentPage: action.payload.currentPage || 1,
+        totalPages: action.payload.totalPages || 1,
+      };
+    case RETURNS_GET_BY_ID_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const getregisterCompReducer = (state = {}, action) => {
+  switch (action.type) {
+    case REGISTER_COMP_GET_REQUEST:
+      return { loadingLA: true };
+    case REGISTER_COMP_GET_SUCCESS:
+      return { loadingLA: false, getRegisterCompInfo: action.payload, data: action.payload.data };
+    case REGISTER_COMP_GET_FAILURE:
+      return { loadingLA: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const companyLoginBranchReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COMPANY_LOGIN_BRANCH_GET_REQUEST:
+      return { loadingCLB: true };
+    case COMPANY_LOGIN_BRANCH_GET_SUCCESS:
+      return { loadingCLB: false, getCompanyLoginBranchInfo: action.payload|| [], };
+    case COMPANY_LOGIN_BRANCH_GET_FAIL:
+      return { loadingCLB: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialStateover = {
+  loadingOVS: false,
+  error: null,
+
+  // data returned by the API
+  overview: null,          // whole payload, if you need it
+  branchCount: 0,
+  licenceSummary: [],      // note the **c**
+  remmitanceResponse: [],  // note the **double‑m**
+  registerResponse: {},
+  returnsResponse: {},
+};
+
+export const getOverViewStatusReducer = (state = initialStateover, action) => {
+  switch (action.type) {
+    case COMPLIANCE_VIEW_STATUS_GET_REQUEST:
+      return { ...state, loadingOVS: true, error: null };
+
+    case COMPLIANCE_VIEW_STATUS_GET_SUCCESS: {
+      const p = action.payload || {};
+      return {
+        ...state,
+        loadingOVS: false,
+        overview: p,
+        branchCount: p.branchCount ?? 0,
+        licenceSummary: p.licenceSummary ?? [],
+        remmitanceResponse: p.remmitanceResponse ?? [],
+        registerResponse: p.registerResponse ?? {},
+        returnsResponse: p.returnsResponse ?? {},
+      };
+    }
+
+    case COMPLIANCE_VIEW_STATUS_GET_FAIL:
+      return { ...state, loadingOVS: false, error: action.payload };
+
     default:
       return state;
   }
