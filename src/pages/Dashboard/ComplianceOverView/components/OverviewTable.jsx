@@ -65,15 +65,23 @@ export const OverviewTable = ({ setView, loggedInUser, fromMonth, toMonth, setFr
 
     // Utility for remittance custom logic
     const getRemittanceStatusAndDetail = (remittanceData) => {
+        if (!Array.isArray(remittanceData) || remittanceData.length === 0) {
+            return {
+                text: "No Data",
+                color: "grey",
+                detailText: "No Data",
+            };
+        }
+
         const statuses = remittanceData.map(r => r.status);
         const types = remittanceData.map(r => r.type);
 
         const has0 = statuses.includes(0);
         const has3 = statuses.includes(3);
         const has4 = statuses.includes(4);
-        const all0 = statuses.length && statuses.every(s => s === 0);
-        const all1 = statuses.length && statuses.every(s => s === 1);
-        const all1Or2 = statuses.length && statuses.every(s => s === 1 || s === 2);
+        const all0 = statuses.every(s => s === 0);
+        const all1 = statuses.every(s => s === 1);
+        const all1Or2 = statuses.every(s => s === 1 || s === 2);
 
         let statusText = "No Data";
         let statusColor = "grey";
@@ -112,6 +120,7 @@ export const OverviewTable = ({ setView, loggedInUser, fromMonth, toMonth, setFr
         return { text: statusText, color: statusColor, detailText };
     };
 
+
     const remittanceModule = (() => {
         const { text, color, detailText } = getRemittanceStatusAndDetail(remmitanceResponse);
         return {
@@ -149,7 +158,7 @@ export const OverviewTable = ({ setView, loggedInUser, fromMonth, toMonth, setFr
             return {
                 text: "Partially Completed",
                 color: "orange",
-                detailText: `(${licences}) Licenses are not in place or renewed`
+                detailText: `Licenses are not in place or renewed`
             };
         }
 
@@ -164,9 +173,9 @@ export const OverviewTable = ({ setView, loggedInUser, fromMonth, toMonth, setFr
         // Mixed statuses (e.g., 2 and 3 or 1, 2, 3)
         const licences = licenceSummary.filter(l => l.status === 3).map(l => l.licence).join(', ');
         return {
-            text: "Pending",
-            color: "red",
-            detailText: `(${licences}) Licenses are not in place or renewed`
+            text: "Partially Completed",
+            color: "orange",
+            detailText: "Licenses are not in place or renewed"
         };
     };
 

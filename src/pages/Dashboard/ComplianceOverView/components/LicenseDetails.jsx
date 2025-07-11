@@ -12,7 +12,8 @@ import {
   Typography,
   Paper,
   Box,
-  TextField
+  TextField,
+  Tooltip
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { complianceOverViewGet } from "../../../../store/actions/otherActions";
@@ -37,163 +38,221 @@ export const LicenseDetails = ({ onBack }) => {
 
 
   const licenses = [
-    // expiryStatus‑based licences  –––––––––––––––––
     {
       label: "S&E",
+      tooltip: "Shops & Establishment Registration",
       numberKey: "licensenumber",
       validKey: "doe",
       renewalKey: "doddr",
       statusKey: "expiryStatus.licensenumber.status",
       dayKey: "expiryStatus.licensenumber.days",
       fileKey: "licenseimage",
+      conditionKey: "isFactoryOrSE",
+      conditionValue: "S&E",
+      issuingAuthKey: "issuingauthimage"
     },
     {
       label: "Factory",
+      tooltip: "Factory License Registration",
       numberKey: "licensenumber1",
       validKey: "doe1",
       renewalKey: "doddr1",
       statusKey: "expiryStatus.licensenumber1.status",
       dayKey: "expiryStatus.licensenumber1.days",
       fileKey: "licenseimage1",
+      conditionKey: "isFactoryOrSE",
+      conditionValue: "Factory",
+      issuingAuthKey: "issuingauthimage1"
     },
     {
       label: "NSP",
+      tooltip: "Night Shift Permission",
       numberKey: "licensenumberNSP",
       validKey: "doeNSP",
       renewalKey: "doddrNSP",
       statusKey: "expiryStatus.licensenumberNSP.status",
       dayKey: "expiryStatus.licensenumberNSP.days",
       fileKey: "licenseimageNSP",
+      conditionKey: "isNightShiftPermission",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageNSP"
     },
     {
       label: "OTP",
+      tooltip: "Overtime Permission",
       numberKey: "licensenumberOTP",
       validKey: "doeOTP",
       renewalKey: "doddrOTP",
       statusKey: "expiryStatus.licensenumberOTP.status",
       dayKey: "expiryStatus.licensenumberOTP.days",
       fileKey: "licenseimageOTP",
+      conditionKey: "isOTPermission",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageOTP"
     },
     {
       label: "TL",
+      tooltip: "Trade License",
       numberKey: "licensenumberTL",
       validKey: "doeTL",
       renewalKey: "doddrTL",
       statusKey: "expiryStatus.licensenumberTL.status",
       dayKey: "expiryStatus.licensenumberTL.days",
       fileKey: "licenseimageTL",
+      conditionKey: "isTradeLicense",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageTL"
     },
     {
       label: "WOE",
+      tooltip: "Weekly Off Exemption",
       numberKey: "licensenumberWOE",
       validKey: "doeWOE",
       renewalKey: "doddrWOE",
       statusKey: "expiryStatus.licensenumberWOE.status",
       dayKey: "expiryStatus.licensenumberWOE.days",
       fileKey: "licenseimageWOE",
+      conditionKey: "isWeeklyOffExemption",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageWOE"
     },
     {
       label: "BOCW",
+      tooltip: "Building and Other Construction Workers Registration",
       numberKey: "licensenumberBOCW",
       validKey: "doeBOCW",
       renewalKey: "doddrBOCW",
       statusKey: "expiryStatus.licensenumberBOCW.status",
       dayKey: "expiryStatus.licensenumberBOCW.days",
       fileKey: "licenseimageBOCW",
+      conditionKey: "isBOCW",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageBOCW"
     },
     {
       label: "ISMW",
+      tooltip: "Inter-State Migrant Workmen License",
       numberKey: "licensenumberISMW",
       validKey: "doeISMW",
       renewalKey: "doddrISMW",
       statusKey: "expiryStatus.licensenumberISMW.status",
       dayKey: "expiryStatus.licensenumberISMW.days",
       fileKey: "licenseimageISMW",
+      conditionKey: "isISMW",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageISMW"
     },
     {
       label: "FASSAI",
+      tooltip: "Food Safety and Standards Authority of India License",
       numberKey: "licensenumberFASSAI",
       validKey: "doeFASSAI",
       renewalKey: "doddrFASSAI",
       statusKey: "expiryStatus.licensenumberFASSAI.status",
       dayKey: "expiryStatus.licensenumberFASSAI.days",
       fileKey: "licenseimageFASSAI",
+      conditionKey: "isFASSAI",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageFASSAI"
     },
-
-    // licences whose status is inside the number object ––––––––
     {
       label: "PF",
+      tooltip: "Provident Fund Registration",
       numberKey: "pfnumber",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.pfnumber.status",
       dayKey: "expiryStatus.pfnumber.days",
       fileKey: "pfimage",
+      conditionKey: "isPF",
+      conditionValue: "YES"
     },
     {
       label: "ESI",
+      tooltip: "Employee State Insurance Registration",
       numberKey: "esinumber",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.esinumber.status",
       dayKey: "expiryStatus.esinumber.days",
       fileKey: "esiimage",
+      conditionKey: "isESI",
+      conditionValue: "YES"
     },
     {
       label: "LWF",
+      tooltip: "Labour Welfare Fund Registration",
       numberKey: "registrationlwfD3",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.registrationlwfD3.status",
       dayKey: "expiryStatus.registrationlwfD3.days",
       fileKey: "registrationlwfD3image",
+      conditionKey: "isLWF",
+      conditionValue: "YES"
     },
     {
       label: "PTR",
+      tooltip: "Professional Tax Registration (PTR)",
       numberKey: "registrationptrD3",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.registrationptrD3.status",
       dayKey: "expiryStatus.registrationptrD3.days",
       fileKey: "registrationptrD3image",
+      conditionKey: "isPTR",
+      conditionValue: "YES"
     },
     {
       label: "PTE",
+      tooltip: "Professional Tax Enrollment (PTE)",
       numberKey: "registrationPTED3",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.registrationPTED3.status",
       dayKey: "expiryStatus.registrationPTED3.days",
       fileKey: "registrationPTED3image",
+      conditionKey: "isPTE",
+      conditionValue: "YES"
     },
     {
       label: "MSME",
+      tooltip: "Micro, Small and Medium Enterprises Certificate",
       numberKey: "licensenumberMSME",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.licensenumberMSME.status",
       dayKey: "expiryStatus.licensenumberMSME.days",
       fileKey: "licenseimageMSME",
+      conditionKey: "isMSME",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageMSME"
     },
     {
       label: "SB",
+      tooltip: "Shops Board Registration",
       numberKey: "licensenumberSB",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.licensenumberSB.status",
       dayKey: "expiryStatus.licensenumberSB.days",
       fileKey: "licenseimageSB",
+      conditionKey: "isSB",
+      conditionValue: "YES",
+      issuingAuthKey: "issuingauthimageSB"
     },
     {
       label: "CLRA",
+      tooltip: "Contract Labour Regulation and Abolition License",
       numberKey: "contractLabourRegistration",
       validKey: "NA",
       renewalKey: "NA",
       statusKey: "expiryStatus.contractLabourRegistration.status",
       dayKey: "N/A",
       fileKey: "contractLabourRegistrationFile",
-
-    },
+      conditionKey: "is_contract",
+      conditionValue: true
+    }
   ];
 
 
@@ -262,6 +321,7 @@ export const LicenseDetails = ({ onBack }) => {
                 <TableCell>Valid Upto</TableCell>
                 <TableCell>Renewal Due</TableCell>
                 <TableCell>Status</TableCell>
+                <TableCell>Acknowlegement</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -274,9 +334,15 @@ export const LicenseDetails = ({ onBack }) => {
                   ----------------------------------------------------------- */
                   const branchLicenses = licenses
                     .filter((lic) => {
-                      if (lic.numberKey === "licensenumber1") return !branch.licensenumber;
-                      if (lic.numberKey === "licensenumber") return !branch.licensenumber1;
-                      return branch[lic.numberKey];
+                      const condKey = lic.conditionKey;
+                      const condValue = lic.conditionValue;
+
+                      if (!condKey) return true; // No condition specified, include
+                      if (condKey === "isFactoryOrSE") {
+                        return branch.isFactoryOrSE === condValue;
+                      }
+
+                      return branch[condKey] === condValue;
                     })
                     .filter((lic) => {
                       const validDateStr =
@@ -313,7 +379,10 @@ export const LicenseDetails = ({ onBack }) => {
                     <TableRow key={`${branchIndex}-${licenseIndex}`}>
                       <TableCell>{licenseIndex + 1}</TableCell>
                       <TableCell>{branch.name || '-'}</TableCell>
-                      <TableCell>{item.label}</TableCell>
+                      <TableCell style={{ cursor: 'pointer', textAlign: 'center' }}><Tooltip title={item.tooltip || item.label} arrow>
+                        <span>{item.label}</span>
+                      </Tooltip></TableCell>
+
                       <TableCell>{branch[item.numberKey] || '-'}</TableCell>
 
                       <TableCell>
@@ -342,10 +411,24 @@ export const LicenseDetails = ({ onBack }) => {
                           } else if (statusObj === 3 && daysObj != null) {
                             label = `Expired (${daysObj} days ago)`;
                             color = "red";
-                          } else if (statusObj === 1) {
+                          }
+                          else if (statusObj === 1) {
                             label = "Active";
                             color = "green";
-                          } else if (statusObj === 4) {
+                          }
+                          else if (statusObj === 4) {
+                            label = "Applied";
+                            color = "darkGreen";
+                          }
+                          else if (statusObj === 5) {
+                            label = "Applied For Renewal";
+                            color = "brown";
+                          }
+                          else if (statusObj === 6) {
+                            label = "Not Applied";
+                            color = "red";
+                          }
+                          else if (statusObj === 7) {
                             label = "Not‑Available";
                             color = "grey";
                           }
@@ -353,13 +436,32 @@ export const LicenseDetails = ({ onBack }) => {
                           return <Typography style={{ color }}>{label}</Typography>;
                         })()}
                       </TableCell>
+                      <TableCell>
+                        {(() => {
+                          const statusObj = getNestedValue(branch, item.statusKey);
+
+                          if (statusObj === 4 && item.issuingAuthKey && branch[item.issuingAuthKey]) {
+                            return (
+                              <Button
+                                size="small"
+                                target="_blank"
+                                href={branch[item.issuingAuthKey]}>
+                                View File
+                              </Button>
+                            );
+                          }
+
+                          return "-";
+                        })()}
+                      </TableCell>
+
 
                       <TableCell>
                         {branch[item.fileKey] ? (
                           <Button size="small" target="_blank" href={branch[item.fileKey]}>
                             View Document
                           </Button>
-                        ) : "No File"}
+                        ) : "-"}
                       </TableCell>
                     </TableRow>
                   ));
