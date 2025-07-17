@@ -270,7 +270,7 @@ export const OverviewTable = ({ setView, loggedInUser, fromMonth, toMonth, setFr
 
 
     return (
-        <Card>
+        <Card style={{ border: '2px solid rgb(126, 126, 126)', marginTop:' 15px' }}>
             <CardContent>
                 <Box
                     sx={{

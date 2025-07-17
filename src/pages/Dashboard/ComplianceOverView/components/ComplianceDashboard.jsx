@@ -61,7 +61,7 @@ export default function ComplianceDashboard() {
 
 
     return (
-        <div style={{ padding: 24 }}>
+        <div style={{ padding: 24,}}>
             {view === "overview" && (
                 <OverviewTable
                     setView={setView}

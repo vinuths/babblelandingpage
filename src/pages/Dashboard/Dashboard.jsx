@@ -22,6 +22,7 @@ import ComplianceOfLCAaudit from "./ComplianceOfLCAaudit";
 import ComplianceOfPAaudit from "./ComplianceOfPAaudit";
 import CompOverTable from "./ComplianceOverView/CompOverTable";
 import ComplianceDashboard from "./ComplianceOverView/components/ComplianceDashboard";
+import PFTrackerBoard from "./PFTrackerBoard";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -58,13 +59,22 @@ const Dashboard = () => {
         <React.Fragment>
             <div className="dashboard_wrapper">
                 <div className="container">
+                    {loggedInUser?.pfTrackerStatus && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <PFTrackerBoard usersInfo={usersInfo} />
+                            </div>
+                        </div>
+                    )}
+                    <br />
+
                     {loggedInUser?.compOverViewStatus && (
                         <div className="row">
                             <div className="col-sm-12">
                                 <ComplianceDashboard usersInfo={usersInfo} />
                             </div>
                         </div>
-                     )}
+                    )}
                     <br />
                     {loggedInUser?.regLisStatus && (
                         <div className="row">
@@ -83,20 +93,20 @@ const Dashboard = () => {
                     )}
                     <br />
                     {loggedInUser?.compileStatusLCA && (
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <ComplianceOfLCAaudit branchesCompany={CompanyBranchesInfo} />
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <ComplianceOfLCAaudit branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
                     )}
                     <br />
-                      {loggedInUser?.compileStatusPA && ( 
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <ComplianceOfPAaudit branchesCompany={CompanyBranchesInfo} />
+                    {loggedInUser?.compileStatusPA && (
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <ComplianceOfPAaudit branchesCompany={CompanyBranchesInfo} />
+                            </div>
                         </div>
-                    </div>
-                     )}
+                    )}
                     <br />
                     {loggedInUser?.inspectLisStatus && (
                         <div className="row">

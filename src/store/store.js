@@ -179,6 +179,7 @@ import {
         getregisterCompReducer,
         getOverViewStatusReducer,
         companyLoginBranchReducer,
+        pfTrackerReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -357,6 +358,7 @@ const reducer = combineReducers({
         getregisterCompRed: getregisterCompReducer,
         getOverViewStatusRed: getOverViewStatusReducer,
         companyLoginBranchRed: companyLoginBranchReducer,
+        pfTrackerRed: pfTrackerReducer,
 
 });
 

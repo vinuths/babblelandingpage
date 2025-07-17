@@ -2710,3 +2710,11 @@ export const companyLoginBranch = async () => {
     };
     return await axios.get(`${URL}/companyLoginBranch`, config);
 };
+export const getPFTrackerforCompany = async (postBody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getPFTrackerforCompany`, postBody, config);
+};

@@ -203,6 +203,7 @@ import {
   getAllRegisters,
   overViewStatuses,
   companyLoginBranch,
+  getPFTrackerforCompany,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -857,6 +858,9 @@ import {
   COMPANY_LOGIN_BRANCH_GET_REQUEST,
   COMPANY_LOGIN_BRANCH_GET_SUCCESS,
   COMPANY_LOGIN_BRANCH_GET_FAIL,
+  PF_TRACKER_GET_REQUEST,
+  PF_TRACKER_GET_SUCCESS,
+  PF_TRACKER_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -9543,4 +9547,16 @@ export const companyLoginBranchGet = (postBody) => async (dispatch) => {
         progress: undefined,
       });
     });
+};
+
+export const pfGetAll = (postBody) => async (dispatch) => {
+  dispatch({ type: PF_TRACKER_GET_REQUEST });
+
+  try {
+    const response = await getPFTrackerforCompany(postBody);
+    dispatch({ type: PF_TRACKER_GET_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: PF_TRACKER_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
 };

@@ -80,7 +80,7 @@ const DateCalendarServerRequest = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className='chart-container' style={{ padding: '20px', maxWidth: '1000px', margin: 'auto', backgroundColor: 'white' }}>
+      <div className='chart-container' style={{border: '2px solid rgb(126, 126, 126)', padding: '20px', maxWidth: '1000px', margin: 'auto', backgroundColor: 'white' }}>
         <h2 className='chart-heading'>Due Date Calendar </h2>
         <br />
         <div className="row">

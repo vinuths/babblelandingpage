@@ -755,7 +755,7 @@ const NoticeTableCount = ({ branchesCompany }) => {
 
     return (
         <>
-            <div className="dashboard-container">
+            <div className="dashboard-container" style={{ border: '2px solid rgb(126, 126, 126)', maxWidth:'1250px', marginLeft:'20px'}}>
                 <div className="dashboard-header">
                     <h2 className="chart-heading">
                         Notices/Inspection

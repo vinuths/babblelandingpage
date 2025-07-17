@@ -521,6 +521,9 @@ import {
   COMPANY_LOGIN_BRANCH_GET_REQUEST,
   COMPANY_LOGIN_BRANCH_GET_SUCCESS,
   COMPANY_LOGIN_BRANCH_GET_FAIL,
+  PF_TRACKER_GET_REQUEST,
+  PF_TRACKER_GET_SUCCESS,
+  PF_TRACKER_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3390,6 +3393,25 @@ export const getOverViewStatusReducer = (state = initialStateover, action) => {
     case COMPLIANCE_VIEW_STATUS_GET_FAIL:
       return { ...state, loadingOVS: false, error: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+export const pfTrackerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case PF_TRACKER_GET_REQUEST:
+      return { ...state, loading: true, error: null };
+    case PF_TRACKER_GET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data,
+        total: action.payload.total,
+        stats: action.payload.stats
+      };
+    case PF_TRACKER_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
