@@ -314,7 +314,7 @@ export const LicenseDetails = ({ onBack }) => {
           <Table size="small" className="compliance-table">
             <TableHead>
               <TableRow>
-                <TableCell>S. No</TableCell>
+                {/* <TableCell>S. No</TableCell> */}
                 <TableCell>Branch Name</TableCell>
                 <TableCell>License Type</TableCell>
                 <TableCell>License No</TableCell>
@@ -377,7 +377,7 @@ export const LicenseDetails = ({ onBack }) => {
                   /* ---------- render only the rows that survived the filter ---------- */
                   return branchLicenses.map((item, licenseIndex) => (
                     <TableRow key={`${branchIndex}-${licenseIndex}`}>
-                      <TableCell>{licenseIndex + 1}</TableCell>
+                      {/* <TableCell>{licenseIndex + 1}</TableCell> */}
                       <TableCell>{branch.name || '-'}</TableCell>
                       <TableCell style={{ cursor: 'pointer', textAlign: 'center' }}><Tooltip title={item.tooltip || item.label} arrow>
                         <span>{item.label}</span>
@@ -414,6 +414,10 @@ export const LicenseDetails = ({ onBack }) => {
                           }
                           else if (statusObj === 1) {
                             label = "Active";
+                            color = "green";
+                          }
+                          else if (statusObj === 10) {
+                            label = "Active (LifeTime)";
                             color = "green";
                           }
                           else if (statusObj === 4) {

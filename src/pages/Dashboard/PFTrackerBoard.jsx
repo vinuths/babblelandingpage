@@ -111,7 +111,7 @@ const PFTrackerBoard = () => {
         <div className="container-fluid pf-container">
             {!selectedRecord ? (
                 <>
-                    <div className="pf-header">PF Tracker :</div>
+                    <div className="pf-header">PF Grievance Tracker :</div>
 
                     {/* Filters */}
                     <div className="pf-filter-row">

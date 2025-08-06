@@ -80,8 +80,8 @@ const DateCalendarServerRequest = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className='chart-container' style={{border: '2px solid rgb(126, 126, 126)', padding: '20px', maxWidth: '1000px', margin: 'auto', backgroundColor: 'white' }}>
-        <h2 className='chart-heading'>Due Date Calendar </h2>
+      <div className='chart-container' style={{border: '2px solid rgb(126, 126, 126)', padding: '20px', maxWidth: '1000px', margin: 'auto', backgroundColor: 'white',marginTop:'30px', borderRadius:'8px' }}>
+        <h2 className='chart-heading'>Compliance Calendar</h2>
         <br />
         <div className="row">
           <div className="col-sm-6"><DateCalendar

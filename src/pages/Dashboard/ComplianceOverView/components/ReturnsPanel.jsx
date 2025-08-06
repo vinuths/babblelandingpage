@@ -166,15 +166,15 @@ const ReturnsPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack, on
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Sl. No</TableCell>
-                  <TableCell>Branch</TableCell>
-                  <TableCell>Act</TableCell>
-                  <TableCell>Return&nbsp;Name</TableCell>
-                  <TableCell>Period</TableCell>
-                  <TableCell>Due&nbsp;Date</TableCell>
-                  <TableCell>Filing&nbsp;Date</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell align="center">Docs</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Sl. No</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Branch</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Act</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Return&nbsp;Name</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Period</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Due&nbsp;Date</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Filing&nbsp;Date</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Status</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }} align="center">Docs</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -229,7 +229,7 @@ const ReturnsPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack, on
                             >
                               View Docs
                             </Button>
-                          ):("-")}
+                          ) : ("-")}
 
                         </TableCell>
                       </TableRow>

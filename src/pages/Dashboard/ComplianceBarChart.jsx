@@ -640,10 +640,10 @@ const ComplianceBarChart = () => {
 
     return (
         <>
-            <div className="dashboard-container" style={{ border: '2px solid rgb(126, 126, 126)', maxWidth:'1250px', marginLeft:'20px'}}>
+            <div className="dashboard-container" style={{ border: '2px solid rgb(126, 126, 126)', maxWidth: '1250px', marginLeft: '20px', marginTop: '30px', borderRadius: '8px' }}>
                 <div className="dashboard-header">
                     <h2 className="chart-heading">
-                        Compliance Summary
+                        Establishment Audit Summary
                     </h2>
                 </div>
                 <div className="dashboard-content">
@@ -752,7 +752,7 @@ const ComplianceBarChart = () => {
                                     const averagePerCompleted = (totalComplied / totalCount * 100 || 0).toFixed(2);
 
                                     return (
-                                        <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color:'white', textAlign: 'center !important', fontSize: 'small' }}>
+                                        <Table.Summary.Row style={{ fontWeight: 'bold', backgroundColor: '#013879', color: 'white', textAlign: 'center !important', fontSize: 'small' }}>
                                             <Table.Summary.Cell index={0} className='centered-cell' >Total</Table.Summary.Cell>
                                             <Table.Summary.Cell index={1} className='centered-cell' >{totalCount}</Table.Summary.Cell>
                                             <Table.Summary.Cell index={2} className='centered-cell' >{totalComplied}</Table.Summary.Cell>

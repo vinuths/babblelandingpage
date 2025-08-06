@@ -524,6 +524,12 @@ import {
   PF_TRACKER_GET_REQUEST,
   PF_TRACKER_GET_SUCCESS,
   PF_TRACKER_GET_FAILURE,
+  APPLICABLE_COMP_GET_REQUEST,
+  APPLICABLE_COMP_GET_SUCCESS,
+  APPLICABLE_COMP_GET_FAILURE,
+  APPLICABLE_LICE_GET_REQUEST,
+  APPLICABLE_LICE_GET_SUCCESS,
+  APPLICABLE_LICE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3350,7 +3356,7 @@ export const companyLoginBranchReducer = (state = {}, action) => {
     case COMPANY_LOGIN_BRANCH_GET_REQUEST:
       return { loadingCLB: true };
     case COMPANY_LOGIN_BRANCH_GET_SUCCESS:
-      return { loadingCLB: false, getCompanyLoginBranchInfo: action.payload|| [], };
+      return { loadingCLB: false, getCompanyLoginBranchInfo: action.payload || [], };
     case COMPANY_LOGIN_BRANCH_GET_FAIL:
       return { loadingCLB: false, error: action.payload };
     default:
@@ -3411,6 +3417,40 @@ export const pfTrackerReducer = (state = initialState, action) => {
         stats: action.payload.stats
       };
     case PF_TRACKER_GET_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const applicableCompReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case APPLICABLE_COMP_GET_REQUEST:
+      return { ...state, loading: true, error: null };
+    case APPLICABLE_COMP_GET_SUCCESS:
+      return {
+        ...state,
+        loadingAC: false,
+        data: action.payload.data,
+        // total: action.payload.total,
+      };
+    case APPLICABLE_COMP_GET_FAILURE:
+      return { ...state, loading: false, errorAC: action.payload };
+    default:
+      return state;
+  }
+};
+export const applicableLicensesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case APPLICABLE_LICE_GET_REQUEST:
+      return { ...state, loading: true, error: null };
+    case APPLICABLE_LICE_GET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data,
+        // total: action.payload.total,
+      };
+    case APPLICABLE_LICE_GET_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

@@ -34,6 +34,7 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
   const { loadingCLB, getCompanyLoginBranchInfo } = useSelector((s) => s.companyLoginBranchRed || {});
 
   const [actFilter, setActFilter] = useState('');
+  const [stateFilter, setStateFilter] = useState('');
   const [registerFilter, setRegisterFilter] = useState('');
   const [periodFilter, setPeriodFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -133,7 +134,13 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
             </select>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 7, mb: 2, mt: 2,ml:8 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 2, mt: 2, ml: 0 }}>
+          <TextField
+            size="small"
+            label="Filter by State"
+            value={stateFilter}
+            onChange={(e) => setStateFilter(e.target.value.toLowerCase())}
+          />
           <TextField
             size="small"
             label="Filter by Applicable Act"
@@ -170,15 +177,16 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
                   <TableRow>
 
 
-                    <TableCell>Sl. No</TableCell>
-                    <TableCell>Branch</TableCell>
-                    <TableCell>Act</TableCell>
-                    <TableCell>Register&nbsp;Name</TableCell>
-                    <TableCell>Period</TableCell>
-                    <TableCell>Details</TableCell>
-                    <TableCell>Remarks</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell align="center">Document</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Sl. No</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>State</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Branch</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Act</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Register&nbsp;Name</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Period</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Details</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Remarks</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Status</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }} align="center">Document</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -198,17 +206,19 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
                             : "no status available";
 
                         return (
+                          (r.state || "").toLowerCase().includes(stateFilter) &&
                           (r.applicableAct || "").toLowerCase().includes(actFilter) &&
                           (r.registerName || "").toLowerCase().includes(registerFilter) &&
                           (r.period || "").toLowerCase().includes(periodFilter) &&
                           statusLabel.includes(statusFilter)
                         );
                       })
-                      .map((r,index) => (
+                      .map((r, index) => (
                         <TableRow key={r._id}>
 
 
-                          <TableCell>{index+1}</TableCell>
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>{r.state}</TableCell>
                           <TableCell>{r.branchName}</TableCell>
                           <TableCell>{r.applicableAct}</TableCell>
                           <TableCell>{r.registerName}</TableCell>

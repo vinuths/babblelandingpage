@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.134:8000/api/admin';
+// const URL = 'http://192.168.1.31:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -1284,14 +1284,14 @@ export const DashboardBranchGetting = async (state, fieldName, license, region) 
         throw error; // Ensure any errors are thrown so they can be caught in the action
     }
 };
-export const AllBranchesGetting = async () => {
+export const AllBranchesGetting = async (postBody,) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
         },
     };
-    return await axios.get(`${URL}/getAllBranches`, config); // Removed `postBody`
+    return await axios.post(`${URL}/getAllBranches`, postBody, config); // Removed `postBody`
 };
 export const BranchesGettingByCompany = async (data) => {
     const config = {
@@ -2717,4 +2717,22 @@ export const getPFTrackerforCompany = async (postBody) => {
         },
     };
     return await axios.post(`${URL}/getPFTrackerforCompany`, postBody, config);
+};
+export const applicableCompliances = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/applicableCompliances`, postBody, config);
+};
+export const getBranchForLicensesDetails = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getBranchForLicensesDetails`, postBody, config);
 };

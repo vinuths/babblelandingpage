@@ -49,14 +49,14 @@ const RemittanceDocs = ({ type: remittanceId, onBack }) => {
         {loading || !data ? (
           <p>Loading…</p>
         ) : (
-          <TableContainer component={Paper} sx={{ mt: 2 }}>
-            <Table size="small">
+          <TableContainer component={Paper} sx={{ mt: 2 }} >
+            <Table size="small" >
               <TableHead>
                 <TableRow>
-                  <TableCell>Sl No.</TableCell>
-                  <TableCell>Challan&nbsp;No.</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Sl No.</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Challan&nbsp;No.</TableCell>
                   {visibleFields.map((field) => (
-                    <TableCell key={field.key}>{field.label}</TableCell>
+                    <TableCell key={field.key} style={{ backgroundColor: '#013879', color: 'white' }}>{field.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>

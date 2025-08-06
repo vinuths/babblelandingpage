@@ -39,11 +39,11 @@ const ReturnDocView = ({ returnName: returnId, onBack }) => {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>#</TableCell>
-                  <TableCell>Workings</TableCell>
-                  <TableCell>Acknowledgement</TableCell>
-                  <TableCell>Returns</TableCell>
-                  <TableCell>Remarks</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>#</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Workings</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Acknowledgement</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Returns</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Remarks</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

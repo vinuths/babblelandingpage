@@ -180,6 +180,8 @@ import {
         getOverViewStatusReducer,
         companyLoginBranchReducer,
         pfTrackerReducer,
+        applicableCompReducer,
+        applicableLicensesReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -359,6 +361,8 @@ const reducer = combineReducers({
         getOverViewStatusRed: getOverViewStatusReducer,
         companyLoginBranchRed: companyLoginBranchReducer,
         pfTrackerRed: pfTrackerReducer,
+        applicableCompRed: applicableCompReducer,
+        applicableLicensesRed: applicableLicensesReducer,
 
 });
 

@@ -651,7 +651,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
                                         />
                                     </div> */}<br />
                                     {formData.supportingDocuments && formData.supportingDocuments.length > 0 ? (
-                                        <a href={formData.supportingDocuments[0]} target="_blank" rel="noopener noreferrer">
+                                        <a href={formData.supportingDocuments} target="_blank" rel="noopener noreferrer">
                                             View Supporting Document
                                         </a>
                                     ) : (

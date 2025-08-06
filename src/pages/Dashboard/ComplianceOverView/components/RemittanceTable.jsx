@@ -54,13 +54,32 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
 
   }, [dispatch, page, rowsPerPage, fromMonth, toMonth, branch]);
   const formatDate = (dateStr) => {
-    if (!dateStr) return "N/A";
+    if (!dateStr) return "-";
     const date = new Date(dateStr);
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
+  const formatDate1 = (dateStr) => {
+    if (!dateStr) return " ";
+    const date = new Date(dateStr);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${month}-${year}`;
+  };
+  const formatDate2 = (dateStr) => {
+    if (!dateStr) return " ";
+    const date = new Date(dateStr);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `-${month}-${year}`;
+  };
+
 
 
   return (
@@ -154,18 +173,28 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
 
           <TableContainer component={Paper} sx={{ mt: 2 }}>
             <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Sl.No</TableCell>
-                  <TableCell>Branch</TableCell>
-                  <TableCell>Payment&nbsp;Type</TableCell>
-                  <TableCell>Challan&nbsp;Type</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>Period</TableCell>
-                  <TableCell>Due&nbsp;Date</TableCell>
-                  <TableCell>Payment&nbsp;Date</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>File&nbsp;Docs</TableCell>
+              <TableHead >
+                <TableRow >
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '50px' }}>Sl</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>State</TableCell>
+                  {/* <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Act/Rule</TableCell> */}
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '140px' }}>Branch</TableCell>
+                  {/* <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Category</TableCell> */}
+                  {/* <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Frequency</TableCell> */}
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '80px' }}>Type</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Challan&nbsp;Type</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Amount</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '160px' }}>
+                    Period
+                  </TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '140px' }}>
+                    Due&nbsp;Date
+                  </TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white', minWidth: '110px' }}>
+                    Paid&nbsp;On
+                  </TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Status</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Docs</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -199,15 +228,32 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
                     })
                     .map((r, index) => (
 
-                      <TableRow key={r._id}>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell>{r.branch?.name}</TableCell>
-                        <TableCell>{r.paymentType}</TableCell>
+                      <TableRow key={r._id} >
+                        <TableCell style={{ minWidth: '50px' }}>{index + 1}</TableCell>
+                        <TableCell>{r.stateData[0]?.name}</TableCell>
+                        {/* <TableCell>{r.actOrRule}</TableCell> */}
+                        <TableCell style={{ minWidth: '140px' }}>{r.branch?.name}</TableCell>
+                        {/* <TableCell>{r.cateoData[0]?.name}</TableCell> */}
+                        {/* <TableCell>{r.remFrequency}</TableCell> */}
+                        <TableCell style={{ minWidth: '80px' }}>{r.paymentType}</TableCell>
                         <TableCell>{r.challanType}</TableCell>
-                        <TableCell>{r.amount}</TableCell>
-                        <TableCell>{formatDate(r.periodAt)} – {formatDate(r.periodTo)}</TableCell>
-                        <TableCell>{formatDate(r.dueDatePayment)}</TableCell>
-                        <TableCell>{formatDate(r.paymentDate)}</TableCell>
+                        <TableCell>
+                          {new Intl.NumberFormat('en-IN', {
+                            style: 'currency',
+                            currency: 'INR',
+                            maximumFractionDigits: 0
+                          }).format(r.amount)}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '160px' }}>
+                          {formatDate1(r.periodAt)}  {formatDate2(r.periodTo)}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '140px' }}>
+                          {formatDate(r.dueDatePayment)}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '110px' }}>
+                          {formatDate(r.paymentDate)}
+                        </TableCell>
+
 
                         <TableCell>
                           <span
@@ -224,11 +270,11 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
                             }}
                           >
                             {r.status === 1
-                              ? "Remittances are done in Time"
+                              ? "Done in Time"
                               : r.status === 2
-                                ? "Remittances are done after Due date"
+                                ? "Done after Due date"
                                 : r.status === 3
-                                  ? "Remittance is not done"
+                                  ? "Not done"
                                   : "No Status Yet"}
                           </span>
                         </TableCell>
@@ -236,9 +282,10 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
                           {r.status !== 3 ? (
                             <Button
                               size="small"
+                              style={{backgroundColor:'#013879', color:'white'}}
                               onClick={() => onViewDoc(r._id)} // ← send id up
                             >
-                              View Docs
+                              View
                             </Button>
                           ) : ("-")}
 

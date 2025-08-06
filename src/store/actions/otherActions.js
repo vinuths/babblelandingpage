@@ -204,6 +204,8 @@ import {
   overViewStatuses,
   companyLoginBranch,
   getPFTrackerforCompany,
+  applicableCompliances,
+  getBranchForLicensesDetails,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -861,6 +863,12 @@ import {
   PF_TRACKER_GET_REQUEST,
   PF_TRACKER_GET_SUCCESS,
   PF_TRACKER_GET_FAILURE,
+  APPLICABLE_COMP_GET_REQUEST,
+  APPLICABLE_COMP_GET_SUCCESS,
+  APPLICABLE_COMP_GET_FAILURE,
+  APPLICABLE_LICE_GET_REQUEST,
+  APPLICABLE_LICE_GET_SUCCESS,
+  APPLICABLE_LICE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -6465,9 +6473,9 @@ export const NoticesDeleteById = (id) => async (dispatch) => {
   }
 };
 
-export const AllbranchesGet = () => async (dispatch) => {
+export const AllbranchesGet = (postBody) => async (dispatch) => {
   dispatch({ type: BRANCHES_GET_REQUEST });
-  await AllBranchesGetting()
+  await AllBranchesGetting(postBody)
     .then((response) => {
       dispatch({ type: BRANCHES_GET_SUCCESS, payload: response.data });
       if (response.status === 200) {
@@ -9538,6 +9546,76 @@ export const companyLoginBranchGet = (postBody) => async (dispatch) => {
     .catch((error) => {
       dispatch({
         type: COMPANY_LOGIN_BRANCH_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+export const compliancesApplicable = (postBody) => async (dispatch) => {
+
+  dispatch({ type: APPLICABLE_COMP_GET_REQUEST });
+
+  await applicableCompliances(postBody)
+    .then((response) => {
+      dispatch({ type: APPLICABLE_COMP_GET_SUCCESS, payload: response.data });
+
+      if (response.status === 200) {
+        // Optional success condition
+      } else {
+        dispatch({
+          type: APPLICABLE_COMP_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: APPLICABLE_COMP_GET_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+export const licnesesApplicable = (postBody) => async (dispatch) => {
+
+  dispatch({ type: APPLICABLE_LICE_GET_REQUEST });
+
+  await getBranchForLicensesDetails(postBody)
+    .then((response) => {
+      dispatch({ type: APPLICABLE_LICE_GET_SUCCESS, payload: response.data });
+
+      if (response.status === 200) {
+        // Optional success condition
+      } else {
+        dispatch({
+          type: APPLICABLE_LICE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: APPLICABLE_LICE_GET_FAILURE,
         payload: error.message,
       });
 
