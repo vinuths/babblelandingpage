@@ -206,6 +206,7 @@ import {
   getPFTrackerforCompany,
   applicableCompliances,
   getBranchForLicensesDetails,
+  downloadRegionBranchesExcel,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -869,6 +870,9 @@ import {
   APPLICABLE_LICE_GET_REQUEST,
   APPLICABLE_LICE_GET_SUCCESS,
   APPLICABLE_LICE_GET_FAILURE,
+  REPORT_REGION_EXCEL_REQUEST,
+  REPORT_REGION_EXCEL_SUCCESS,
+  REPORT_REGION_EXCEL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -6161,6 +6165,8 @@ export const RegionWiseDataGet = (region, fieldName) => async (dispatch) => {
     });
 };
 
+
+
 // export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
 //   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
 //   try {
@@ -9637,4 +9643,43 @@ export const pfGetAll = (postBody) => async (dispatch) => {
     dispatch({ type: PF_TRACKER_GET_FAILURE, payload: error.message });
     toast.error(error.message);
   }
+};
+
+export const regionBranchesExcelDownload = (postBody) => async (dispatch) => {
+  dispatch({ type: REPORT_REGION_EXCEL_REQUEST });
+
+  await downloadRegionBranchesExcel(postBody)
+    .then((response) => {
+      // Create a blob from the response data
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "branches_export.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      dispatch({ type: REPORT_REGION_EXCEL_SUCCESS });
+    })
+    .catch((error) => {
+      dispatch({
+        type: REPORT_REGION_EXCEL_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
 };

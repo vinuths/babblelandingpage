@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RegionWiseDataGet, DashboardBranchGet } from '../../store/actions/otherActions'; // Assuming your action is in this file
+import { RegionWiseDataGet, DashboardBranchGet, regionBranchesExcelDownload } from '../../store/actions/otherActions'; // Assuming your action is in this file
 import { Table, Input, Button, Space, Select, Tooltip, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import './Region.css';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/layout/Loading';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const DashboardTableBranchCount = ({ usersInfo }) => {
   const dispatch = useDispatch();
@@ -164,6 +165,13 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
 
   // Open modal and set payload
+  const ExcelDownload = (selectedRegion, selectedFieldName) => {
+    const postBody = {
+      region: selectedRegion,
+      fieldName: selectedFieldName
+    }
+    dispatch(regionBranchesExcelDownload(postBody))
+  };
   const openModal = (payload, fetchedData) => {
     setModalPayload(payload); // Save the payload to state
     // console.log("setModalPayload", payload);
@@ -1756,10 +1764,26 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
 
   return (
     <div className="dashboard-container" style={{ border: '2px solid rgb(126, 126, 126)', maxWidth: '1250px', marginLeft: '20px', marginTop: '30px', borderRadius: '8px' }}>
-      <div className="dashboard-header">
-        <h2 className="chart-heading">Registrations & Licenses
+      <div className="dashboard-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h2 className="chart-heading" style={{ flex: 1, textAlign: "center" }}>
+          Registrations & Licenses
         </h2>
+
+        <button
+          onClick={() => ExcelDownload(selectedRegion, selectedFieldName)}
+          style={{
+            padding: "6px 12px",
+            backgroundColor: "#013879",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer"
+          }}
+        >
+          <DownloadIcon /> Excel
+        </button>
       </div>
+
 
       <div className="dashboard-content">
         {/* Filters Section */}

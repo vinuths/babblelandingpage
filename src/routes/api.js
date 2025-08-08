@@ -2736,3 +2736,13 @@ export const getBranchForLicensesDetails = async (postBody) => {
     };
     return await axios.post(`${URL}/getBranchForLicensesDetails`, postBody, config);
 };
+export const downloadRegionBranchesExcel = async (postBody) => {
+    const config = {
+        headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+        responseType: "blob"
+    };
+    return await axios.post(`${URL}/downloadRegionBranchesExcel`, postBody, config);
+};
