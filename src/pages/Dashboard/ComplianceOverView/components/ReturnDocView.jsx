@@ -24,6 +24,27 @@ const ReturnDocView = ({ returnName: returnId, onBack }) => {
     if (returnId) dispatch(returnsGetById(returnId));
   }, [dispatch, returnId]);
 
+
+  const renderFileLink = (fileUrl) => {
+    if (!fileUrl) return "-";
+
+    const ext = fileUrl.split('.').pop().toLowerCase();
+
+    if (ext === "pdf") {
+      return <a href={fileUrl} target="_blank" rel="noopener noreferrer">View</a>;
+    }
+    if (["xls", "xlsx"].includes(ext)) {
+      // Option 1: Download directly
+      return <a href={fileUrl} download>View</a>;
+
+      // Option 2: Use Google Docs Viewer to open in browser
+      // return <a href={`https://docs.google.com/viewer?url=${encodeURIComponent(fileUrl)}&embedded=true`} target="_blank" rel="noopener noreferrer">View</a>;
+    }
+
+    return <a href={fileUrl} target="_blank" rel="noopener noreferrer">View</a>;
+  };
+
+
   return (
     <Card sx={{ mb: 3 }}>
       <CardContent>
@@ -59,13 +80,7 @@ const ReturnDocView = ({ returnName: returnId, onBack }) => {
                       <TableCell>{idx + 1}</TableCell>
                       {["workings", "acknowledement", "returns"].map((key) => (
                         <TableCell key={key}>
-                          {d[key] ? (
-                            <a href={d[key]} target="_blank" rel="noopener noreferrer">
-                              View
-                            </a>
-                          ) : (
-                            "-"
-                          )}
+                          {renderFileLink(d[key])}
                         </TableCell>
                       ))}
                       <TableCell>{d.remarks || "-"}</TableCell>
