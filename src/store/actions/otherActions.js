@@ -9650,12 +9650,11 @@ export const regionBranchesExcelDownload = (postBody) => async (dispatch) => {
 
   await downloadRegionBranchesExcel(postBody)
     .then((response) => {
-      // Create a blob from the response data
+      // Successful file response (2xx) -> download file
       const blob = new Blob([response.data], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
 
-      // Create a download link
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -9668,15 +9667,28 @@ export const regionBranchesExcelDownload = (postBody) => async (dispatch) => {
       dispatch({ type: REPORT_REGION_EXCEL_SUCCESS });
     })
     .catch((error) => {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error.message || "Something went wrong";
+
+      // If backend returned 404, display that message (not a fatal failure)
+      if (status === 404) {
+        toast.info(message, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+        // Considered a 'successful' flow from UI perspective (no file to download)
+        dispatch({ type: REPORT_REGION_EXCEL_SUCCESS });
+        return;
+      }
+
+      // Other errors -> failure
       dispatch({
         type: REPORT_REGION_EXCEL_FAILURE,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
 
-      toast.error(error.message, {
+      toast.error(message, {
         position: "bottom-right",
         hideProgressBar: false,
         progress: undefined,

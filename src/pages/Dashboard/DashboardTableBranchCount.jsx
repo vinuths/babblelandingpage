@@ -1627,7 +1627,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
         { key: 'isTradeLicense', condition: loggedInUser.isTradeLicenseStatus },
         { key: 'isPF', condition: loggedInUser.isPFStatus },
         { key: 'isESI', condition: loggedInUser.isESIStatus },
-        { key: 'isLWF', condition: loggedInUser.isLWFStatus },
+        { key: 'isLWF', condition: loggedInUser.isLFWStatus },
         { key: 'isPTR', condition: loggedInUser.isPTRStatus },
         { key: 'isPTE', condition: loggedInUser.isPTEStatus },
         { key: 'isMSME', condition: loggedInUser.isMSMEStatus },
@@ -1821,7 +1821,7 @@ const DashboardTableBranchCount = ({ usersInfo }) => {
               {loggedInUser?.isTradeLicenseStatus && <option value="isTradeLicense">Trade License</option>}
               {loggedInUser?.isPFStatus && <option value="isPF">P F</option>}
               {loggedInUser?.isESIStatus && <option value="isESI">E S I</option>}
-              {loggedInUser?.isLWFStatus && <option value="isLWF">L W F</option>}
+              {loggedInUser?.isLFWStatus && <option value="isLWF">L W F</option>}
               {loggedInUser?.isPTRStatus && <option value="isPTR">P T R</option>}
               {loggedInUser?.isPTEStatus && <option value="isPTE">P T E</option>}
               {loggedInUser?.isMSMEStatus && <option value="isMSME">MSME</option>}
