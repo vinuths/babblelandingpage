@@ -194,6 +194,7 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
                     Paid&nbsp;On
                   </TableCell>
                   <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Status</TableCell>
+                  <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Approval</TableCell>
                   <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Docs</TableCell>
                 </TableRow>
               </TableHead>
@@ -278,11 +279,30 @@ const RemittanceTable = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack,
                                   : "No Status Yet"}
                           </span>
                         </TableCell>
+                        <TableCell>
+                          <span
+                            style={{
+                              color:
+                                r.workStatus === 1
+                                  ? "green"
+                                  : r.workStatus === 2
+                                    ? "red"
+                                    : "gray",
+                              fontStyle: r.workStatus === 0 ? "italic" : "normal",
+                            }}
+                          >
+                            {r.workStatus === 1
+                              ? "Approved"
+                              : r.workStatus === 2
+                                ? "Rejected"
+                                : "Pending"}
+                          </span>
+                        </TableCell>
                         <TableCell align="center">
                           {r.status !== 3 ? (
                             <Button
                               size="small"
-                              style={{backgroundColor:'#013879', color:'white'}}
+                              style={{ backgroundColor: '#013879', color: 'white' }}
                               onClick={() => onViewDoc(r._id)} // ← send id up
                             >
                               View

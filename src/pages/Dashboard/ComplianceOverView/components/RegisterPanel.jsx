@@ -186,6 +186,7 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
                     <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Details</TableCell>
                     <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Remarks</TableCell>
                     <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Status</TableCell>
+                    <TableCell style={{ backgroundColor: '#013879', color: 'white' }}>Approval</TableCell>
                     <TableCell style={{ backgroundColor: '#013879', color: 'white' }} align="center">Document</TableCell>
                   </TableRow>
                 </TableHead>
@@ -233,6 +234,25 @@ const RegisterPanel = ({ setFromMonth, setToMonth, fromMonth, toMonth, onBack })
                               </TableCell>
                             );
                           })()}
+                          <TableCell>
+                            <span
+                              style={{
+                                color:
+                                  r.workStatus === 1
+                                    ? "green"
+                                    : r.workStatus === 2
+                                      ? "red"
+                                      : "gray",
+                                fontStyle: r.workStatus === 0 ? "italic" : "normal",
+                              }}
+                            >
+                              {r.workStatus === 1
+                                ? "Approved"
+                                : r.workStatus === 2
+                                  ? "Rejected"
+                                  : "Pending"}
+                            </span>
+                          </TableCell>
                           <TableCell align="center">
                             {r.doc ? (
                               <a

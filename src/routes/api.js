@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.31:8000/api/admin';
+// const URL = 'http://192.168.1.3:8000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
