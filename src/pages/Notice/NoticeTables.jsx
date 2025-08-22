@@ -7,10 +7,11 @@ import { DownOutlined } from "@ant-design/icons";
 import Popup from "../../components/Popup";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
-import { categoryCreate, categoryGet, AllbranchesGet, TableBranchesGet, TableNoticesGet, NoticesDeleteById, NoticesUpdateById } from '../../store/actions/otherActions';
+import { categoryCreate, AllbranchesGet, TableBranchesGet, TableNoticesGet, NoticesDeleteById, NoticesUpdateById } from '../../store/actions/otherActions';
 import NoticeEdit from "./NoticeEdit";
 import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
-import '../../css/Pop.css'
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const NoticeTables = () => {
     const searchInput = useRef(null);
@@ -26,14 +27,16 @@ const NoticeTables = () => {
     const [searchedColumn, setSearchedColumn] = useState("");
     const getState = useSelector((state) => state.getState);
     const { loadings, stateInfo } = getState;
-    const { tableNoticesInfo, loadingNoticesTable, error } = useSelector((state) => state.TableNoticesGetRed);
-    console.log("tableNoticesInfo", tableNoticesInfo);
+    const { tableNoticesInfo, totalRecords, currentPage, pageSize } = useSelector(
+        (state) => state.TableNoticesGetRed
+    );    // console.log("tableNoticesInfo", tableNoticesInfo);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(TableNoticesGet());
+        dispatch(TableNoticesGet(1, 20)); // initial load
     }, [dispatch]);
+
     const formatDateToInput = (isoDate) => {
         if (!isoDate) return ""; // Return an empty string for empty or invalid dates
         const date = new Date(isoDate);
@@ -43,53 +46,88 @@ const NoticeTables = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const getMenu = (noticeId, status) => {
-        console.log("noticeStatus", status);  // Log the noticeStatus value
+    const getMenu = (noticeId, status, dateOfNoticeClosure) => {
+        // console.log("noticeStatus", status);  // Log the noticeStatus value
+        // console.log("dateOfNoticeClosure", dateOfNoticeClosure);  // Log the noticeStatus value
 
         return (
-            <Menu style={{backgroundColor:'lightgray'}}>
-                {/* {status === 3 && ( */}
-                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 3)}>
-                        <Button style={{ backgroundColor: "#2ECC71", color: "white" }}>
-                        Documents ready for Submission
+            <div style={{ maxHeight: '200px', overflowY: 'auto', backgroundColor: 'lightgray', zIndex: '99' }}>
+                <Menu>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 1)}>
+                        <Button style={{ backgroundColor: "#eb4034", color: "white" }}>
+                            Work In Progress
                         </Button>
                     </Menu.Item>
-                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 5)}>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 2)}>
+                        <Button style={{ backgroundColor: "#5578c2", color: "white" }}>
+                            Documents ready for Attestation
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 3)}>
+                        <Button style={{ backgroundColor: "#2ECC71", color: "white" }}>
+                            Submit for Inspection
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 4)}>
+                        <Button style={{ backgroundColor: "#8155c2", color: "white" }}>
+                            Inspection Completed
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 5, dateOfNoticeClosure)}>
                         <Button style={{ backgroundColor: "#34953D", color: "white" }}>
                             Inspection Closed
                         </Button>
                     </Menu.Item>
-                {/* )} */}
-                <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 6)}>
-                    <Button style={{ backgroundColor: "yellow", color: "black" }}>
-                        Notice cancelled
-                    </Button>
-                </Menu.Item>
-                <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 8)}>
-                    <Button style={{ backgroundColor: "red", color: "white" }}>
-                        Additional Document Shared
-                    </Button>
-                </Menu.Item>
-                <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 10)}>
-                    <Button style={{ backgroundColor: "orange", color: "white" }}>
-                        Clarification needed
-                    </Button>
-                </Menu.Item>
-            </Menu>
+
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 6)}>
+                        <Button style={{ backgroundColor: "red", color: "white" }}>
+                            Notice Cancelled
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 7)}>
+                        <Button style={{ backgroundColor: "#55c282", color: "black" }}>
+                            Request Additional Document Executive
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 8)}>
+                        <Button style={{ backgroundColor: "yellow", color: "black" }}>
+                            Share Additional Document Matrix
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 9)}>
+                        <Button style={{ backgroundColor: "#68736d", color: "white" }}>
+                            Request Additional Document Matrix
+                        </Button>
+                    </Menu.Item>
+                    <Menu.Item onClick={() => NoticeUploadStatus(noticeId, 10)}>
+                        <Button style={{ backgroundColor: "orange", color: "white" }}>
+                            Share Additional Document Executive
+                        </Button>
+                    </Menu.Item>
+                </Menu>
+            </div>
+
         );
     };
 
 
 
-    const NoticeUploadStatus = async (noticeId, status) => {
+    const NoticeUploadStatus = async (noticeId, status, dateOfNoticeClosure) => {
         try {
+            // Check if the status is 5 and dateOfNoticeClosure is empty
+            if (status === 5 && (!dateOfNoticeClosure || dateOfNoticeClosure === "")) {
+                // Show error toast if dateOfNoticeClosure is empty or null
+                toast.error("Please select a Notice Close Date.");
+                return; // Stop further execution
+            }
+
             // Prepare the postBody with noticeId and status
             const postBody = {
                 noticeId: noticeId,    // Ensure you're passing the correct noticeId
                 noticeStatus: status,  // Pass the numeric status value
             };
 
-            console.log("Payload being sent:", postBody);  // Debugging log
+            // console.log("Payload being sent:", postBody);  // Debugging log
 
             // Dispatch the update action with the correct body
             await dispatch(NoticesUpdateById(postBody, noticeId));
@@ -104,18 +142,21 @@ const NoticeTables = () => {
 
 
 
+
     useEffect(() => {
         // Check if tableNoticesInfo is defined and has length
         if (Array.isArray(tableNoticesInfo) && tableNoticesInfo.length > 0) {
+            // console.log("tableNoticesInfo", tableNoticesInfo);
+
             // Directly map the data into an array without redeclaring 'noticeArrAll'
             const noticeArrAll = tableNoticesInfo?.map((notice, index) => ({
-                key: index + 1,
+                key: (currentPage - 1) * pageSize + (index + 1),
                 id: notice?._id,
                 noticeNumber: notice?.noticeNumber,
-                companyId: notice?.company._id,
-                company: notice?.company.companyname,
-                branchId: notice?.branch._id,
-                branch: notice?.branch.name,
+                companyId: notice?.company?._id,
+                company: notice?.company?.companyname,
+                branchId: notice?.branch?._id,
+                branch: notice?.branch?.name,
                 dateOfNotice: formatDateToInput(notice?.dateOfNotice),
                 typeOfNotice: notice?.typeOfNotice,
                 issuingAuthority: notice?.issuingAuthority,
@@ -136,65 +177,68 @@ const NoticeTables = () => {
                 remarksNoticeReply: notice.remarksNoticeReply,
                 remarksNoticeAttested: notice.remarksNoticeAttested,
                 remarksNoticeClosureAck: notice.remarksNoticeClosureAck,
+                dateOfNoticeClosure: formatDateToInput(notice?.dateOfNoticeClosure),
                 noticeStatus: (
                     <div>
-    {notice.noticeStatus === 0 ? (
-        <Button style={{ backgroundColor: "#4A90E2", color: "white" }}> {/* Soft Blue */}
-            Notice Assigned
-        </Button>
-    ) : notice.noticeStatus === 1 ? (
-        <Button style={{ backgroundColor: "#00B74A", color: "white" }}> {/* Bright Green */}
-            Work In Progress
-        </Button>
-    ) : notice.noticeStatus === 2 ? (
-        <Button style={{ backgroundColor: "#F1C40F", color: "black" }}> {/* Light Yellow */}
-            Attest the Documents
-        </Button>
-    ) : notice.noticeStatus === 3 ? (
-        <Button style={{ backgroundColor: "#2ECC71", color: "white", height:'60px'}}> {/* Light Green */}
-            Documents Ready<br/>for Submission
-        </Button>
-    ) : notice.noticeStatus === 4 ? (
-        <Button style={{ backgroundColor: "#E74C3C", color: "white" }}> {/* Soft Red */}
-            Verify Acknowledgement
-        </Button>
-    ) : notice.noticeStatus === 5 ? (
-        <Button style={{ backgroundColor: "#2ECC71", color: "white" }}> {/* Light Green */}
-            Inspection Closed
-        </Button>
-    ) : notice.noticeStatus === 6 ? (
-        <Button style={{ backgroundColor: "#D9534F", color: "white" }}> {/* Dark Red */}
-            Notice Cancelled
-        </Button>
-    ) : notice.noticeStatus === 7 ? (
-        <Button style={{ backgroundColor: "#FFB347", color: "black",height:'60px' }}> {/* Amber */}
-            Additional Document<br/>
-            Requested
-        </Button>
-    ) : notice.noticeStatus === 8 ? (
-        <Button style={{ backgroundColor: "#FF7F50", color: "white",height:'60px' }}> {/* Dark Orange */}
-            Additional Document<br/>
-            Shared
-        </Button>
-    ) : notice.noticeStatus === 9 ? (
-        <Button style={{ backgroundColor: "#FFEB3B", color: "black" }}> {/* Light Yellow */}
-            Clarification Requested
-        </Button>
-    ) : notice.noticeStatus === 10 ? (
-        <Button style={{ backgroundColor: "#FF7043", color: "white" }}> {/* Dark Orange */}
-            Clarification Needed
-        </Button>
-    ) : null}
+                        {notice.noticeStatus === 0 ? (
+                            <Button style={{ backgroundColor: "#4A90E2", color: "white" }}> {/* Soft Blue */}
+                                Notice Assigned
+                            </Button>
+                        ) : notice.noticeStatus === 1 ? (
+                            <Button style={{ backgroundColor: "#eb4034", color: "white" }}> {/* Bright Green */}
+                                Work In Progress
+                            </Button>
+                        ) : notice.noticeStatus === 2 ? (
+                            <Button style={{ backgroundColor: "#5578c2", color: "white" }}> {/* Light Yellow */}
+                                Documents ready for Attestation
+                            </Button>
+                        ) : notice.noticeStatus === 3 ? (
+                            <Button style={{ backgroundColor: "#2ECC71", color: "white" }}> {/* Light Green */}
+                                Submit for Inspection
+                            </Button>
+                        ) : notice.noticeStatus === 4 ? (
+                            <Button style={{ backgroundColor: "#8155c2", color: "white" }}> {/* Soft Red */}
+                                Inspection Completed
+                            </Button>
+                        ) : notice.noticeStatus === 5 ? (
+                            <Button style={{ backgroundColor: "#34953D", color: "white" }}> {/* Light Green */}
+                                Inspection Closed
+                            </Button>
+                        ) : notice.noticeStatus === 6 ? (
+                            <Button style={{ backgroundColor: "red", color: "white" }}> {/* Dark Red */}
+                                Notice Cancelled
+                            </Button>
+                        ) : notice.noticeStatus === 7 ? (
+                            <Button style={{ backgroundColor: "#55c282", color: "black", height: '60px' }}> {/* Amber */}
+                                Additional Document<br />
+                                Requested by Executive
+                            </Button>
+                        ) : notice.noticeStatus === 8 ? (
+                            <Button style={{ backgroundColor: "yellow", color: "black", height: '60px' }}> {/* Dark Orange */}
+                                Additional Document<br />
+                                Shared by Matrix
+                            </Button>
+                        ) : notice.noticeStatus === 9 ? (
+                            <Button style={{ backgroundColor: "#68736d", color: "white", height: '60px' }}> {/* Light Yellow */}
+                                Additional Document<br />
+                                Requested by Matrix
+                            </Button>
+                        ) : notice.noticeStatus === 10 ? (
+                            <Button style={{ backgroundColor: "#FF7043", color: "white", height: '60px' }}> {/* Dark Orange */}
+                                Additional Document<br />
+                                Shared by Executive
+                            </Button>
+                        ) : null}
 
-    {/* <div>
-        <br />
-        <Dropdown overlay={getMenu(notice._id, notice.noticeStatus)} trigger={["click"]}>
-            <Button>
-                Update Status <DownOutlined />
-            </Button>
-        </Dropdown>
-    </div> */}
-</div>
+                        <div>
+                            <br />
+                            <Dropdown overlay={getMenu(notice._id, notice.noticeStatus, notice?.dateOfNoticeClosure)} trigger={["click"]}>
+                                <Button>
+                                    Update Status <DownOutlined />
+                                </Button>
+                            </Dropdown>
+                        </div>
+                    </div>
 
                 ),
             }));
@@ -214,14 +258,23 @@ const NoticeTables = () => {
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
-        setSearchText(selectedKeys[0]);
+        const searchText = selectedKeys[0] || "";
+        // Build filters object - keep previous filters if you track them in a ref/state.
+        const filters = { [dataIndex]: searchText };
+        // jump to page 1 for new search
+        dispatch(TableNoticesGet(1, pageSize || 20, filters));
+        setSearchText(searchText);
         setSearchedColumn(dataIndex);
     };
 
     const handleReset = (clearFilters) => {
         clearFilters();
         setSearchText("");
+        // clear filters on server
+        dispatch(TableNoticesGet(1, pageSize || 20, {}));
     };
+
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -276,21 +329,60 @@ const NoticeTables = () => {
     };
 
 
-    const openInPopupForDelete = (recordForEdit) => {
-        dispatch(NoticesDeleteById(recordForEdit.id))
-            .then(() => {
-                // Directly remove the deleted notice from the local dataSource state
-                const updatedDataSource = dataSource.filter((item) => item.id !== recordForEdit.id);
-                setDataSource(updatedDataSource);
-                setFilteredData(updatedDataSource);
 
-                // Optionally, you can still dispatch to get the latest data
-                dispatch(TableNoticesGet());
-            })
-            .catch((error) => {
-                console.error("Error deleting notice:", error);
-            });
+    const openInPopupForDelete = (recordForEdit, pagination, filters) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(NoticesDeleteById(recordForEdit.id))
+                    .then(() => {
+                        // Directly remove the deleted notice from the local dataSource state
+                        const updatedDataSource = dataSource.filter((item) => item.id !== recordForEdit.id);
+                        setDataSource(updatedDataSource);
+                        setFilteredData(updatedDataSource);
+
+                        // Optionally, you can still dispatch to get the latest data
+                        dispatch(TableNoticesGet());
+                        // dispatch(TableNoticesGet(pagination.current, pagination.pageSize, filters));
+
+
+                        Swal.fire("Deleted!", "The notice has been deleted.", "success");
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting notice:", error);
+                        Swal.fire("Error!", "Failed to delete the notice.", "error");
+                    });
+            }
+        });
     };
+    const handleTableChange = (pagination, filters, sorter) => {
+        // transform antd filters (object of arrays) into simple values (take first)
+        const simpleFilters = {};
+        Object.keys(filters || {}).forEach((k) => {
+            if (filters[k] && filters[k].length > 0) {
+                // For text filters (search inputs) you probably send them as strings
+                simpleFilters[k] = filters[k][0];
+            }
+        });
+
+        // add sorter if present
+        let sort = {};
+        if (sorter && sorter.field) {
+            sort[sorter.field] = sorter.order === "ascend" ? 1 : -1;
+        } else {
+            sort = { createdAt: -1 };
+        }
+
+        dispatch(TableNoticesGet(pagination.current, pagination.pageSize, simpleFilters, sort));
+    };
+
 
 
 
@@ -320,7 +412,7 @@ const NoticeTables = () => {
             title: "Status",
             dataIndex: "noticeStatus",
             key: "noticeStatus",
-            width: 250,
+            width: 300,
             // ...getColumnSearchProps("noticeStatus"),
         },
         {
@@ -370,23 +462,25 @@ const NoticeTables = () => {
             title: "Actions",
             width: 250,
             render: (record) => {
+                // console.log("record", record);
+
                 return (
                     <>
-                        <button
+                        <Link
                             className="text-white btn btn-primary text-decoration-none mx-2"
                             onClick={() => openInPopupForUpdate(record)}
                         >
-                            View <EditOutlined />
-                        </button>
-                        {/* <Link
+                            <EditOutlined />
+                        </Link>
+                        <Link
                             className="text-white btn btn-danger text-decoration-none mx-2"
                             onClick={() => openInPopupForDelete(record)}
                         >
-                            <DeleteOutlined /> 
-                        </Link> */}
+                            <DeleteOutlined /> {/* Delete Icon */}
+                        </Link>
                     </>
                 );
-                
+
             },
         },
     ];
@@ -397,11 +491,18 @@ const NoticeTables = () => {
                 <div className="table-responsive">
                     <Table
                         columns={columns}
-                        dataSource={filteredData}
-                        pagination={{ pageSize: 50, showSizeChanger: false, position: ["bottomCenter"] }}
-                        scroll={{ x: 1750 }}
-                        sticky={true}
+                        dataSource={dataSource}
+                        loading={loadings || getState.loading || false}
+                        pagination={{
+                            current: currentPage,
+                            pageSize,
+                            total: totalRecords,
+                            showSizeChanger: true,
+                            position: ["bottomCenter"],
+                        }}
+                        onChange={handleTableChange}
                     />
+
                 </div>
             </div>
             <Popup openPopup={openPopup} pageTitle={pageTitle} setOpenPopup={setOpenPopup} modalWidth={modalWidth}  >

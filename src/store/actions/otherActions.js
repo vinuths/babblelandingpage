@@ -6317,9 +6317,9 @@ export const CreatingNotice = (data) => async (dispatch) => {
     });
 };
 
-export const TableNoticesGet = () => async (dispatch) => {
+export const TableNoticesGet = (page = 1, limit = 50, filters = {}) => async (dispatch) => {
   dispatch({ type: NOTICES_TABLE_GET_REQUEST });
-  await TableNoticesGetting()
+  await TableNoticesGetting({ page, limit, filters })
     .then((response) => {
       dispatch({ type: NOTICES_TABLE_GET_SUCCESS, payload: response.data });
       if (response.status === 200) {

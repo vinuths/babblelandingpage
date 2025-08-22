@@ -24,7 +24,7 @@ const NoticeCreate = () => {
     const navigate = useNavigate(); // Initialize useNavigate
     const getCompanyTable = useSelector((state) => state.getCompanyTable);
     const { loadingcompanytable, companyGetTableInfo } = getCompanyTable;
-    console.log("companyGetTableInfo", companyGetTableInfo);
+    // console.log("companyGetTableInfo", companyGetTableInfo);
     const { CompanyBranchesInfo, loadingBranch, error } = useSelector((state) => state.CompanyBranchesGetRed);
     const { BranchesByCompanyInfo, loadingBranchByC, error1 } = useSelector((state) => state.BranchesByCompanyGetRed);
 
@@ -177,7 +177,7 @@ const NoticeCreate = () => {
         });
         try {
             setLoading(true);
-            console.log("dtat", formData);
+            // console.log("dtat", formData);
             await dispatch(CreatingNotice(form)); // Dispatch your existing action
             resetForm();
             dispatch(TableNoticesGet());

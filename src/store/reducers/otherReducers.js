@@ -2313,7 +2313,10 @@ export const TableNoticesGetReducer = (
       return {
         ...state,
         loadingNoticesTable: false,
-        tableNoticesInfo: action.payload,
+        tableNoticesInfo: action.payload.data,
+        totalRecords: action.payload.totalRecords,
+        currentPage: action.payload.currentPage,
+        pageSize: action.payload.pageSize,
       };
     case NOTICES_TABLE_GET_FAIL:
       return { ...state, loadingNoticesTable: false, error: action.payload };

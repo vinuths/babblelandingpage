@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.3:8000/api/admin';
+const URL = 'http://192.168.1.66:8000/api/admin';
 
-const URL = 'https://backend.matrixhrtech.com/api/admin';
+// const URL = 'https://backend.matrixhrtech.com/api/admin';
 
 axios.defaults.withCredentials = true;
 ///api of users starts
@@ -1314,14 +1314,14 @@ export const NoticeCreate = async (data) => {
     return await axios.post(`${URL}/createNotice`, data, config);
 };
 
-export const TableNoticesGetting = async () => {
+export const TableNoticesGetting = async (body) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
         },
     };
-    return await axios.get(`${URL}/getTableNotice`, config);
+    return await axios.post(`${URL}/getTableNotice`, body, config);
 };
 
 export const NoticeGetById = async (id) => {

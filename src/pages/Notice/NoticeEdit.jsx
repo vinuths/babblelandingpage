@@ -263,7 +263,7 @@ const NoticeEdit = ({ addOrEdit, recordForEdit, setOpenPopup }) => {
             }
         });
 
-        console.log("Payload being sent:", Object.fromEntries(form.entries()));  // Debugging the payload
+        // console.log("Payload being sent:", Object.fromEntries(form.entries()));  // Debugging the payload
 
         try {
             setLoading(true);
