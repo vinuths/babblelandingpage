@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     categoryGetComplianceList,
     reLeagalUpdateLibraryPaginatedGet,
+    stateGets,
 } from "../../../../store/actions/otherActions";
 import { Spin } from "antd";
 import moment from "moment";
@@ -30,6 +31,7 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
 
     useEffect(() => {
         dispatch(categoryGetComplianceList());
+        dispatch(stateGets());
     }, [dispatch]);
 
     useEffect(() => {
