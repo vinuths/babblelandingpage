@@ -182,6 +182,7 @@ import {
         pfTrackerReducer,
         applicableCompReducer,
         applicableLicensesReducer,
+        bulkFilesShareGetReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -363,6 +364,7 @@ const reducer = combineReducers({
         pfTrackerRed: pfTrackerReducer,
         applicableCompRed: applicableCompReducer,
         applicableLicensesRed: applicableLicensesReducer,
+        bulkFilesShareGetRed: bulkFilesShareGetReducer,
 
 });
 

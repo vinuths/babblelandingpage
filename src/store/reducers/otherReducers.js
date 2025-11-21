@@ -530,6 +530,9 @@ import {
   APPLICABLE_LICE_GET_REQUEST,
   APPLICABLE_LICE_GET_SUCCESS,
   APPLICABLE_LICE_GET_FAILURE,
+  BULK_FILE_SHARE_GET_REQUEST,
+  BULK_FILE_SHARE_GET_SUCCESS,
+  BULK_FILE_SHARE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3455,6 +3458,19 @@ export const applicableLicensesReducer = (state = initialState, action) => {
       };
     case APPLICABLE_LICE_GET_FAILURE:
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const bulkFilesShareGetReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BULK_FILE_SHARE_GET_REQUEST:
+      return { ...state, loading_BULK_FILES_SHARE_DATA: true, error: null };
+    case BULK_FILE_SHARE_GET_SUCCESS:
+      return { ...state, loading_BULK_FILES_SHARE_DATA: false, bulkFilesShareGetInfo: action.payload.data || [] };
+    case BULK_FILE_SHARE_GET_FAILURE:
+      return { ...state, loading_BULK_FILES_SHARE_DATA: false, error: action.payload };
     default:
       return state;
   }

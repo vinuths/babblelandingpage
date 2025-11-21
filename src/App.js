@@ -56,11 +56,12 @@ import MinWagesStateWise from "./pages/NewELibrary/View/MinimumWages/MinWagesSta
 import WH_LR_State from "./pages/NewELibrary/View/WH_LR/WH_LR_State";
 import PTState from "./pages/NewELibrary/View/PT/PTState";
 import CompQATable from "./pages/NewELibrary/View/ComplianceQA/QandAHub/CompQATable";
+import BulkFileView from "./pages/BulkFileUploader/BulkFileView";
 
 
 function App() {
   return (
-    <Router basename="/company">
+    <Router >
       <Navbar />
       <Routes>
 
@@ -116,6 +117,7 @@ function App() {
         <Route path="/elibrary/View/Working_Hours_&_leave_Rules/:stateName" element={<PrivateRoutes><WH_LR_State /></PrivateRoutes>} />
         <Route path="/elibrary/View/Professional_Tax/:stateName" element={<PrivateRoutes><PTState /></PrivateRoutes>} />
 
+        <Route path="/file-sharing" element={<PrivateRoutes><BulkFileView /></PrivateRoutes>} />
 
 
       </Routes>

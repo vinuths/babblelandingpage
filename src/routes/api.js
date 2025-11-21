@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.69:8000/api/admin';
+// const URL = 'http://192.168.1.8:7000/api/admin';
 
 const URL = 'https://backend.matrixhrtech.com/api/admin';
 
@@ -2745,4 +2745,16 @@ export const downloadRegionBranchesExcel = async (postBody) => {
         responseType: "blob"
     };
     return await axios.post(`${URL}/downloadRegionBranchesExcel`, postBody, config);
+};
+
+export const getAllBulkZips = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.get(`${URL}/getAllBulkZips`, config);
 };

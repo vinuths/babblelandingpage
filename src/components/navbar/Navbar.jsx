@@ -42,6 +42,7 @@ import "../../hide.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/actions/authActions";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 import Logo from "../../logo.jpeg";
 // import Logo1 from "../../../src/Logo1.jpeg";
@@ -279,6 +280,7 @@ const Navbar = () => {
       className: "pointer-cursor",
       onClick: (e) => onNotice(e),
     },
+
     // {
     //     text: "Audit",
     //     icon: <ManageAccountsIcon onClick={(e) => onAudit(e)}/>,
@@ -305,13 +307,19 @@ const Navbar = () => {
       className: "pointer-cursor",
       onClick: (e) => onElibrary(e)
     },
+    {
+      text: "File Sharing",
+      icon: <FileDownloadIcon onClick={(e) => onFileShare(e)} />,
+      className: "pointer-cursor",
+      onClick: (e) => onFileShare(e),
+    },
 
-// {
-//   text: "HelpAndSupport",
-//   icon: <HelpOutlineIcon onClick={(e) => onHelpAndSupport(e)} />,
-//   className: "pointer-cursor",
-//   onClick: (e) => onHelpAndSupport(e)
-// }
+    // {
+    //   text: "HelpAndSupport",
+    //   icon: <HelpOutlineIcon onClick={(e) => onHelpAndSupport(e)} />,
+    //   className: "pointer-cursor",
+    //   onClick: (e) => onHelpAndSupport(e)
+    // }
 
     // {
     //   text: "Notification",
@@ -346,6 +354,10 @@ const Navbar = () => {
     navigate("/notice");
     // handleDrawerClose();
   };
+  const onFileShare = (e) => {
+    navigate("/file-sharing");
+    // handleDrawerClose();
+  };
   const onNotification = (e) => {
     navigate("/notification");
     // handleDrawerClose();
@@ -377,8 +389,8 @@ const Navbar = () => {
   };
 
   const onHelpAndSupport = (e) => {
-  navigate("HelpAndSupport/Form");
-};    // handleDrawerClose();
+    navigate("HelpAndSupport/Form");
+  };    // handleDrawerClose();
 
   ///side bar drawer code end
   const onLogout = async (e) => {
@@ -669,7 +681,7 @@ const Navbar = () => {
             maxHeight: "100px",
             width: "100px",
             height: "100px",
-            marginLeft:'55px'
+            marginLeft: '55px'
           }}>
             {/* <img
               src={Logo}
@@ -785,40 +797,40 @@ const Navbar = () => {
               })}
           </List>
           <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} />
 
-                 <List sx={{ paddingLeft: open ? "8px" : "4px" }}>
-                   <ListItem
-                      key="HelpAndSupport"
-                         onClick={(e) => onHelpAndSupport(e)}
-                         sx={{
-                               width: "100%",
-                             cursor: "pointer",
-                            borderRadius: "0.2rem",
-                            paddingLeft: "10px",
-                            paddingRight: "10px",
-                             "&:hover": {
-                            backgroundColor: "#f5f5f5",
-                                  },
-                                 }}
-                             >
-                             <ListItemIcon
-                               sx={{
-                                color: "#1976d2", // icon color blue (MUI primary)
-                                 minWidth: "36px",
-                                                }}
-                             >
-                               <HelpOutlineIcon />
-                                </ListItemIcon>
-                               <ListItemText
-                               primary="Help & Support"
-                                sx={{
-                              color: "#1976d2", // text color blue
-                              opacity: open ? 1 : 0,
-                              }}
-                             />
-                              </ListItem>
-                              </List>
+          <List sx={{ paddingLeft: open ? "8px" : "4px" }}>
+            <ListItem
+              key="HelpAndSupport"
+              onClick={(e) => onHelpAndSupport(e)}
+              sx={{
+                width: "100%",
+                cursor: "pointer",
+                borderRadius: "0.2rem",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  color: "#1976d2", // icon color blue (MUI primary)
+                  minWidth: "36px",
+                }}
+              >
+                <HelpOutlineIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Help & Support"
+                sx={{
+                  color: "#1976d2", // text color blue
+                  opacity: open ? 1 : 0,
+                }}
+              />
+            </ListItem>
+          </List>
           <Divider />
         </Drawer>
       ) : (

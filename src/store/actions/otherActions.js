@@ -207,6 +207,7 @@ import {
   applicableCompliances,
   getBranchForLicensesDetails,
   downloadRegionBranchesExcel,
+  getAllBulkZips,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -873,6 +874,9 @@ import {
   REPORT_REGION_EXCEL_REQUEST,
   REPORT_REGION_EXCEL_SUCCESS,
   REPORT_REGION_EXCEL_FAILURE,
+  BULK_FILE_SHARE_GET_REQUEST,
+  BULK_FILE_SHARE_GET_SUCCESS,
+  BULK_FILE_SHARE_GET_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -9689,6 +9693,38 @@ export const regionBranchesExcelDownload = (postBody) => async (dispatch) => {
       });
 
       toast.error(message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const bulkZipsGetAll = () => async (dispatch) => {
+  dispatch({ type: BULK_FILE_SHARE_GET_REQUEST });
+  await getAllBulkZips()
+    .then((response) => {
+      dispatch({ type: BULK_FILE_SHARE_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+      } else {
+        dispatch({
+          type: BULK_FILE_SHARE_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: BULK_FILE_SHARE_GET_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
         position: "bottom-right",
         hideProgressBar: false,
         progress: undefined,
