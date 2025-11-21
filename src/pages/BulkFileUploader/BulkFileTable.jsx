@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { bulkZipsGetAll } from "../../store/actions/otherActions";
+import { bulkFileShareDownload, bulkZipsGetAll } from "../../store/actions/otherActions";
 import { Table, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import { downloadBulkFile } from "../../routes/api";
+import { CircularProgress } from "@mui/material";
 
 const BulkFileTable = () => {
     const dispatch = useDispatch();
@@ -14,9 +16,34 @@ const BulkFileTable = () => {
     const { loading_BULK_FILES_SHARE_DATA, bulkFilesShareGetInfo } =
         bulkFilesShareGetRed;
 
+    const bulkFilesShareDownloadRed = useSelector(
+        (state) => state.bulkFilesShareDownloadRed
+    );
+
+    const { loading_BULK_FILES_SHARE_DOWNLOAD_DATA } =
+        bulkFilesShareDownloadRed;
+
     useEffect(() => {
         dispatch(bulkZipsGetAll());
     }, [dispatch]);
+
+
+
+
+    const [downloadingId, setDownloadingId] = useState(null);
+
+    const handleSecureDownload = async (fileId, fileName) => {
+        setDownloadingId(fileId);   // 🔥 only that row becomes loading
+
+        try {
+            await dispatch(bulkFileShareDownload(fileId, fileName));
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setDownloadingId(null);   // reset loading only for that row
+        }
+    };
+
 
     const columns = [
         {
@@ -75,23 +102,29 @@ const BulkFileTable = () => {
             title: "Download",
             key: "download",
             render: (_, record) => (
-                <Button
-                    style={{ color: "white", backgroundColor: '#013879' }}
-
+                <button
+                    style={{
+                        color: "white",
+                        backgroundColor: '#013879',
+                        border: 'none',
+                        padding: '8px 16px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '14px'
+                    }}
+                    disabled={downloadingId === record._id}
+                    onClick={() => handleSecureDownload(record._id, record.fileName)}
                 >
-                    <a
-                        href={record.fileUrl}
-                        download={record.fileName}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: "white", backgroundColor: '#013879', textDecoration: 'none' }}
-                    >
-                        {record.fileName}
-                    </a>
-                </Button>
+                    {downloadingId === record._id ? (
+                        <CircularProgress color="success" size={20} thickness={5} />
+                    ) : (
+                        'Download'
+                    )}
+                </button>
+
             ),
-        },
-       
+        }
+
     ];
 
     return (

@@ -183,6 +183,7 @@ import {
         applicableCompReducer,
         applicableLicensesReducer,
         bulkFilesShareGetReducer,
+        bulkFilesShareDownloadReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -365,6 +366,7 @@ const reducer = combineReducers({
         applicableCompRed: applicableCompReducer,
         applicableLicensesRed: applicableLicensesReducer,
         bulkFilesShareGetRed: bulkFilesShareGetReducer,
+        bulkFilesShareDownloadRed: bulkFilesShareDownloadReducer,
 
 });
 

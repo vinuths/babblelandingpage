@@ -533,6 +533,9 @@ import {
   BULK_FILE_SHARE_GET_REQUEST,
   BULK_FILE_SHARE_GET_SUCCESS,
   BULK_FILE_SHARE_GET_FAILURE,
+  BULK_FILE_SHARE_DOWNLOAD_REQUEST,
+  BULK_FILE_SHARE_DOWNLOAD_SUCCESS,
+  BULK_FILE_SHARE_DOWNLOAD_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
   switch (action.type) {
@@ -3471,6 +3474,18 @@ export const bulkFilesShareGetReducer = (state = initialState, action) => {
       return { ...state, loading_BULK_FILES_SHARE_DATA: false, bulkFilesShareGetInfo: action.payload.data || [] };
     case BULK_FILE_SHARE_GET_FAILURE:
       return { ...state, loading_BULK_FILES_SHARE_DATA: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const bulkFilesShareDownloadReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BULK_FILE_SHARE_DOWNLOAD_REQUEST:
+      return { ...state, loading_BULK_FILES_SHARE_DOWNLOAD_DATA: true, error: null };
+    case BULK_FILE_SHARE_DOWNLOAD_SUCCESS:
+      return { ...state, loading_BULK_FILES_SHARE_DOWNLOAD_DATA: false, bulkFilesShareGetInfo: action.payload.data || [] };
+    case BULK_FILE_SHARE_DOWNLOAD_FAILURE:
+      return { ...state, loading_BULK_FILES_SHARE_DOWNLOAD_DATA: false, error: action.payload };
     default:
       return state;
   }

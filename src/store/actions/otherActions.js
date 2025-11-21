@@ -208,6 +208,7 @@ import {
   getBranchForLicensesDetails,
   downloadRegionBranchesExcel,
   getAllBulkZips,
+  downloadBulkFile,
   // checklistAddInAudit,
   // fileUploadInAuditQuestion as
 } from "../../routes/api";
@@ -877,6 +878,9 @@ import {
   BULK_FILE_SHARE_GET_REQUEST,
   BULK_FILE_SHARE_GET_SUCCESS,
   BULK_FILE_SHARE_GET_FAILURE,
+  BULK_FILE_SHARE_DOWNLOAD_REQUEST,
+  BULK_FILE_SHARE_DOWNLOAD_SUCCESS,
+  BULK_FILE_SHARE_DOWNLOAD_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -9730,4 +9734,57 @@ export const bulkZipsGetAll = () => async (dispatch) => {
         progress: undefined,
       });
     });
+
+};
+
+
+export const bulkFileShareDownload = (fileId, fileName) => async (dispatch) => {
+  dispatch({ type: BULK_FILE_SHARE_DOWNLOAD_REQUEST });
+
+  try {
+    const response = await downloadBulkFile(fileId);
+
+    // Extract filename from headers or fallback to passed fileName
+    let downloadedFileName =
+      response.headers["content-disposition"]
+        ?.split("filename=")[1]
+        ?.replace(/"/g, "") || fileName || "download.zip";
+
+    // Ensure .zip extension
+    if (!downloadedFileName.endsWith(".zip")) {
+      downloadedFileName += ".zip";
+    }
+
+    // Create blob
+    const blob = new Blob([response.data], { type: "application/zip" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create hidden link
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = downloadedFileName;
+    document.body.appendChild(link);
+    link.click();
+
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    dispatch({
+      type: BULK_FILE_SHARE_DOWNLOAD_SUCCESS,
+      payload: { downloadedFileName },
+    });
+
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message;
+
+    dispatch({
+      type: BULK_FILE_SHARE_DOWNLOAD_FAILURE,
+      payload: errorMessage,
+    });
+
+    toast.error(errorMessage, {
+      position: "bottom-right",
+      hideProgressBar: false,
+    });
+  }
 };

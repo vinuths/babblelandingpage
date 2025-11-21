@@ -2758,3 +2758,29 @@ export const getAllBulkZips = async () => {
     };
     return await axios.get(`${URL}/getAllBulkZips`, config);
 };
+// Correct your downloadBulkFile API function
+// export const downloadBulkFile = async (fileId) => {
+//     const config = {
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${getToken()}`,
+//         },
+//         responseType: 'blob' // Important for file downloads
+//     };
+
+//     return await axios.post(`${URL}/downloadBulkFile/${fileId}`,  config);
+//     // Remove the empty {} second parameter
+// };
+
+export const downloadBulkFile = async (fileId) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+        responseType: "blob", // 👈 important
+    };
+    return await axios.get(`${URL}/downloadBulkFile/${fileId}`, config);
+};
