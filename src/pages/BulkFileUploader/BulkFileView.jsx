@@ -7,7 +7,7 @@ import { bulkZipsGetAll } from "../../store/actions/otherActions";
 function BulkFileView() {
     const [localPage, setLocalPage] = useState(1);
 
-   
+
     const [showModal, setShowModal] = useState(true);
 
     const navigate = useNavigate();
@@ -27,19 +27,18 @@ function BulkFileView() {
     return (
         <React.Fragment>
 
-            
+
             {showModal && (
                 <>
                     <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-                       <div className="modal-dialog modal-dialog-centered modal-md" role="document">
+                        <div className="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title">Important Notice</h5>
+                                    <h5 className="modal-title" style={{ fontWeight: '700' }}>Important Notice!</h5>
                                 </div>
                                 <div className="modal-body">
                                     <p>
-                                        Files will be saved only for <strong>30 days</strong>.
-                                       From  the date of upload. After 30 days, all files will be permanently deleted and cannot be recovered.
+                                        Files will be saved only for <strong style={{ color: 'red' }}>30 days</strong> from  the Date of Upload. Files above 30+ days will be permanently deleted and cannot be recovered.
                                     </p>
                                 </div>
                                 <div className="modal-footer">
