@@ -30,7 +30,7 @@ function BulkFileView() {
 
             {showModal && (
                 <>
-                    <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal fade show d-block" style={{ marginLeft: '95px' }} tabIndex="-1" role="dialog">
                         <div className="modal-dialog modal-dialog-centered modal-md" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
