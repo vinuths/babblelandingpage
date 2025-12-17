@@ -5,6 +5,7 @@ import { Table, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { downloadBulkFile } from "../../routes/api";
 import { CircularProgress } from "@mui/material";
+import { DownloadOutlined } from "@mui/icons-material";
 
 const BulkFileTable = () => {
     const dispatch = useDispatch();
@@ -117,8 +118,9 @@ const BulkFileTable = () => {
                 >
                     {downloadingId === record._id ? (
                         <CircularProgress color="success" size={20} thickness={5} />
-                    ) : (
-                        'Download'
+                    ) : (<>
+                        <DownloadOutlined /> {record.fileName}
+                    </>
                     )}
                 </button>
 
