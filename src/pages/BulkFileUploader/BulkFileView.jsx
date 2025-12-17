@@ -38,7 +38,7 @@ function BulkFileView() {
                                 </div>
                                 <div className="modal-body">
                                     <p>
-                                        Files will be saved only for <strong style={{ color: 'red' }}>30 days</strong> from  the Date of Upload. Files above 30+ days will be permanently deleted and cannot be recovered.
+                                        Files will be saved only for <strong style={{ color: 'red' }}>30 days</strong> from  the Date of Upload. Files above 30+ days will be <b>Deleted Automatically</b> and cannot be recovered.
                                     </p>
                                 </div>
                                 <div className="modal-footer">
