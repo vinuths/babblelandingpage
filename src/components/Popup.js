@@ -1,6 +1,6 @@
 import React from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import {Dialog,DialogContent,DialogContentText,DialogTitle,Typography}from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, Typography } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import '../hide.css';
 import Slide from '@mui/material/Slide';  
 const Transition = React.forwardRef(function Transition(props, ref) {

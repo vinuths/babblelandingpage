@@ -45,7 +45,7 @@ import {
   gettingchecklistOnrejectFilter,
   gettingchecklistAllCompliance,
   gettingcomplianceOnApproveFilter,
-  // gettingChecklistOnCreate,
+  gettingChecklistOnCreate,
   createLiseReg,
   gettingAuditDetail,
   getttingReg,
@@ -67,13 +67,13 @@ import {
   elibraryReject,
   elibrarySaveandApprove,
   elibraryRejectedDocs,
-  // companytab1,
-  // companytab2,
-  // companytab3,
-  // companytab4,
-  // companytab5,
-  // companytab6,
-  // companytab7,
+  companytab1,
+  companytab2,
+  companytab3,
+  companytab4,
+  companytab5,
+  companytab6,
+  companytab7,
   companyL,
   gettingCompanyById,
   companyLcreate,
@@ -104,32 +104,35 @@ import {
   assignedCompanyFilter,
   AuditUploadStatusValue,
   DueDaysNotification,
-  fetchCompiledStatusCount,
-  CalenderChecklistGet,
-  FetchRegCount,
-  FetchCompliedCount,
-  CompanyBranchesGetting,
+  updateDueDates,
+  auditFieldsUpdate,
+  // checklistAddInAudit,
+  // fileUploadInAuditQuestion as 
+  BranchesCreate,
   AllBranchesGetting,
-  RegionWiseDataGetting,
-  DashboardBranchGetting,
+  TableBranchesGetting,
+  BranchUpdateById,
+  BranchGetById,
+  CompanyBranchesGetting,
   BranchesGettingByCompany,
   NoticeCreate,
   TableNoticesGetting,
   NoticeGetById,
   NoticeUpdateById,
   NoticeDeleteById,
-  getCompanyBranchByState,
-  noticeCompanyCount,
-  noticeCompanyCountsDetail,
-  NoticeCompanyCountsdownload,
-  FetchCompliedCountData,
-  FetchCompliedCountPA,
-  FetchCompliedCountLCA,
-  getPrincipleAgreementName,
   getLabourContractAgreementName,
-  FetchCompliedCountDataLCA,
-  FetchCompliedCountDataPA,
-  getContractorNames,
+  getPrincipleAgreementName,
+  gettingAuditDetailLCA,
+  gettingAuditDetailPA,
+  auditAllFilterLCA,
+  auditAllFilterPA,
+  AuditUploadStatusValueLCA,
+  AuditUploadStatusValuePA,
+  fileUploadInAuditQuestionLCA,
+  fileUploadInAuditQuestionPA,
+
+
+
 
   createActLibrary,
   getActLibraryPaginated,
@@ -147,8 +150,6 @@ import {
   getHolidayLibraryPaginated,
   updateHolidayLibrary,
   deleteHolidayLibrary,
-  // fileUploadInAuditQuestionLCA,
-  // fileUploadInAuditQuestionPA,
   createLabourWelFundLibrary,
   getLabourWelFundLibraryPaginated,
   updateLabourWelFundLibrary,
@@ -195,26 +196,48 @@ import {
   getMinimumWageById,
   getAllWHAndLRByStateLibraries,
   getAllPTByStateLibraries,
-  complianceOverView,
+  createRemittanceTracker,
   getAllRemittanceTrackers,
+  updateRemittanceTracker,
+  deleteRemittanceTracker,
   getRemmitanceTrackerById,
-  getReturnsTrackerById,
-  getAllReturnsTrackers,
+  createRegisterComp,
   getAllRegisters,
-  overViewStatuses,
-  companyLoginBranch,
-  getPFTrackerforCompany,
-  applicableCompliances,
-  getBranchForLicensesDetails,
-  downloadRegionBranchesExcel,
-  getAllBulkZips,
-  downloadBulkFile,
-  // checklistAddInAudit,
-  // fileUploadInAuditQuestion as
+  getRegisterById,
+  updateRegisterById,
+  deleteRegisterById,
+  createReturnsTracker,
+  getAllReturnsTrackers,
+  updateReturnsTracker,
+  deleteReturnsTracker,
+  getReturnsTrackerById,
+  catGetComp,
+  getChecklistByCategory,
+  deleteBranches,
+  companyexecutiveEGet,
+  getBranchRequests,
+  getBranchRequestById,
+  checkBranchNameExists,
+  deleteBranchLicenseRequest,
+  exportForm13Templates,
+  exportForm13TemplatesPDF,
+  exportForm13TemplatesAuto,
+  generateFormFRegisters,
+  generateFormFRegistersPDF,
+  exportFormDExcel,
+  exportFormDPDF,
+  formCExcel,
+  formCPDF,
+  exportFormAExcel,
+  stridesAttendanceData,
+  regiIntigrateCreate,
+  regiIntigrateFetchAll,
+
 } from "../../routes/api";
 
 import { checklistAddInAudit as apiChecklistAddInAudit } from "../../routes/api";
 import { fileUploadInAuditQuestion as fileUploadInAuditQuestions } from "../../routes/api";
+
 
 import { toast } from "react-toastify";
 import {
@@ -569,36 +592,33 @@ import {
   NOTIFICATION_REQUEST,
   NOTIFICATION_SUCCESS,
   NOTIFICATION_FAILURE,
-  AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL,
-  AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
-  AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-  CHECKLIST_CALENDER_REQUEST_GET_ALL,
-  CHECKLIST_CALENDER_SUCCESS_GET_ALL,
-  CHECKLIST_CALENDER_GET_FAIL_ALL,
-  AUDIT_REG_COUNT_REQUEST_All_DETAIL,
-  AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
-  AUDIT_REG_COUNT_FAIL_All_DETAIL,
-  AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL,
-  AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
-  AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-  COMPANY_BRANCHES_GET_REQUEST,
-  COMPANY_BRANCHES_GET_SUCCESS,
-  COMPANY_BRANCHES_GET_FAIL,
-  REGION_WISE_DATA_GET_REQUEST,
-  REGION_WISE_DATA_GET_SUCCESS,
-  REGION_WISE_DATA_GET_FAIL,
-  NOTICE_WISE_DATA_GET_REQUEST,
-  NOTICE_WISE_DATA_GET_SUCCESS,
-  NOTICE_WISE_DATA_GET_FAIL,
-  DASH_STATE_WISE_DATA_GET_REQUEST,
-  DASH_STATE_WISE_DATA_GET_SUCCESS,
-  DASH_STATE_WISE_DATA_GET_FAIL,
-  COMPANY_BRANCHES_BY_CREATE_REQUEST,
-  COMPANY_BRANCHES_BY_CREATE_SUCCESS,
-  COMPANY_BRANCHES_BY_CREATE_FAIL,
+  UPDATE_AUDIT_FIELDS_REQUEST,
+  UPDATE_AUDIT_FIELDS_SUCCESS,
+  UPDATE_AUDIT_FIELDS_FAILURE,
+  UPDATE_DUE_DATES_REQUEST,
+  UPDATE_DUE_DATES_SUCCESS,
+  UPDATE_DUE_DATES_FAILURE,
+  BRANCHES_ADD_REQUEST,
+  BRANCHES_ADD_SUCCESS,
+  BRANCHES_ADD_FAILURE,
+  BRANCHES_EDIT_REQUEST,
+  BRANCHES_EDIT_SUCCESS,
+  BRANCHES_EDIT_FAILURE,
   BRANCHES_GET_REQUEST,
   BRANCHES_GET_SUCCESS,
   BRANCHES_GET_FAIL,
+  BRANCHES_GET_BY_ID_REQUEST,
+  BRANCHES_GET_BY_ID_SUCCESS,
+  BRANCHES_GET_BY_ID_FAILURE,
+  BRANCHES_TABLE_GET_REQUEST,
+  BRANCHES_TABLE_GET_SUCCESS,
+  BRANCHES_TABLE_GET_FAIL,
+  COMPANY_BRANCHES_GET_REQUEST,
+  COMPANY_BRANCHES_GET_SUCCESS,
+  COMPANY_BRANCHES_GET_FAIL,
+  COMPANY_BRANCHES_BY_CREATE_REQUEST,
+  COMPANY_BRANCHES_BY_CREATE_SUCCESS,
+  COMPANY_BRANCHES_BY_CREATE_FAIL,
   NOTICE_ADD_REQUEST,
   NOTICE_ADD_SUCCESS,
   NOTICE_ADD_FAILURE,
@@ -614,39 +634,38 @@ import {
   NOTICES_DELETE_REQUEST,
   NOTICES_DELETE_SUCCESS,
   NOTICES_DELETE_FAILURE,
-  BRANCH_STATE_REQUEST_GET,
-  BRANCH_STATE_SUCCESS_GET,
-  BRANCH_STATE_GET_FAIL,
-  DASH_STATE_WISE_NOTICE_GET_REQUEST,
-  DASH_STATE_WISE_NOTICE_GET_SUCCESS,
-  DASH_STATE_WISE_NOTICE_GET_FAIL,
-  DOWNLOAD_NOTICES_EXCEL_REQUEST,
-  DOWNLOAD_NOTICES_EXCEL_SUCCESS,
-  DOWNLOAD_NOTICES_EXCEL_FAIL,
-  AUDIT_COUNT_DATA_REQUEST,
-  AUDIT_COUNT_DATA_SUCCESS,
-  AUDIT_COUNT_DATA_FAIL,
-  AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL,
-  AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL,
-  AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
-  AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL,
-  AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL,
-  AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
+  LABOUR_AGREEMENT_NAME_GET_REQUEST,
+  LABOUR_AGREEMENT_NAME_GET_SUCCESS,
+  LABOUR_AGREEMENT_NAME_GET_FAIL,
   PRINCIPLE_AGREEMENT_NAME_GET_REQUEST,
   PRINCIPLE_AGREEMENT_NAME_GET_SUCCESS,
   PRINCIPLE_AGREEMENT_NAME_GET_FAIL,
-  LABOUR_AGREEMENT_NAME_GET_FAIL,
-  LABOUR_AGREEMENT_NAME_GET_SUCCESS,
-  LABOUR_AGREEMENT_NAME_GET_REQUEST,
-  AUDIT_COUNT_LCA_DATA_REQUEST,
-  AUDIT_COUNT_LCA_DATA_SUCCESS,
-  AUDIT_COUNT_LCA_DATA_FAIL,
-  AUDIT_COUNT_PA_DATA_REQUEST,
-  AUDIT_COUNT_PA_DATA_SUCCESS,
-  AUDIT_COUNT_PA_DATA_FAIL,
-  CONTRACTOR_NAME_GET_REQUEST,
-  CONTRACTOR_NAME_GET_SUCCESS,
-  CONTRACTOR_NAME_GET_FAIL,
+  AUDIT_LCA_REQUEST_All_DETAIL,
+  AUDIT_LCA_SUCCESS_All_DETAIL,
+  AUDIT_LCA_FAIL_All_DETAIL,
+  AUDIT_PA_REQUEST_All_DETAIL,
+  AUDIT_PA_SUCCESS_All_DETAIL,
+  AUDIT_PA_FAIL_All_DETAIL,
+  AUDITOR_LCA_REQUEST_GET_ALL_FILTER,
+  AUDITOR_LCA_SUCCESS_GET_ALL_FILTER,
+  AUDITOR_LCA_GET_FAIL_ALL_FILTER,
+  AUDITOR_PA_REQUEST_GET_ALL_FILTER,
+  AUDITOR_PA_SUCCESS_GET_ALL_FILTER,
+  AUDITOR_PA_GET_FAIL_ALL_FILTER,
+  AUDIT_UPLOAD_STATUS_REQUEST_LCA,
+  AUDIT_UPLOAD_STATUS_SUCCESS_LCA,
+  AUDIT_UPLOAD_STATUS_FAILURE_LCA,
+  AUDIT_UPLOAD_STATUS_REQUEST_PA,
+  AUDIT_UPLOAD_STATUS_SUCCESS_PA,
+  AUDIT_UPLOAD_STATUS_FAILURE_PA,
+  FILE_UPLOADS_SUCCESS_LCA,
+  FILE_UPLOADS_FAIL_LCA,
+  FILE_UPLOADS_REQUEST_LCA,
+  FILE_UPLOADS_FAIL_PA,
+  FILE_UPLOADS_SUCCESS_PA,
+  FILE_UPLOADS_REQUEST_PA,
+
+
   ACT_LIBRARY_CREATE_REQUEST,
   ACT_LIBRARY_CREATE_SUCCESS,
   ACT_LIBRARY_CREATE_FAILURE,
@@ -695,12 +714,6 @@ import {
   HOLIDAY_LIBRARY_DELETE_REQUEST,
   HOLIDAY_LIBRARY_DELETE_SUCCESS,
   HOLIDAY_LIBRARY_DELETE_FAILURE,
-  // FILE_UPLOADS_SUCCESS_LCA,
-  // FILE_UPLOADS_FAIL_LCA,
-  // FILE_UPLOADS_REQUEST_LCA,
-  // FILE_UPLOADS_FAIL_PA,
-  // FILE_UPLOADS_SUCCESS_PA,
-  // FILE_UPLOADS_REQUEST_PA,
   LABOUR_WELFARE_LIBRARY_CREATE_REQUEST,
   LABOUR_WELFARE_LIBRARY_CREATE_SUCCESS,
   LABOUR_WELFARE_LIBRARY_CREATE_FAILURE,
@@ -839,48 +852,114 @@ import {
   PT_STATE_GET_REQUEST,
   PT_STATE_GET_SUCCESS,
   PT_STATE_GET_FAILURE,
-  COMPLIANCE_VIEW_GET_REQUEST,
-  COMPLIANCE_VIEW_GET_SUCCESS,
-  COMPLIANCE_VIEW_GET_FAIL,
+  REMITTANCE_CREATE_REQUEST,
+  REMITTANCE_CREATE_SUCCESS,
+  REMITTANCE_CREATE_FAILURE,
   REMITTANCE_GET_REQUEST,
   REMITTANCE_GET_SUCCESS,
   REMITTANCE_GET_FAILURE,
+  REMITTANCE_EDIT_REQUEST,
+  REMITTANCE_EDIT_SUCCESS,
+  REMITTANCE_EDIT_FAILURE,
+  REMITTANCE_DELETE_REQUEST,
+  REMITTANCE_DELETE_SUCCESS,
+  REMITTANCE_DELETE_FAILURE,
   REMITTANCE_GET_BY_ID_REQUEST,
   REMITTANCE_GET_BY_ID_SUCCESS,
   REMITTANCE_GET_BY_ID_FAILURE,
-  RETURNS_GET_REQUEST,
-  RETURNS_GET_SUCCESS,
-  RETURNS_GET_FAILURE,
-  RETURNS_GET_BY_ID_REQUEST,
-  RETURNS_GET_BY_ID_SUCCESS,
-  RETURNS_GET_BY_ID_FAILURE,
+  REGISTER_COMP_CREATE_REQUEST,
+  REGISTER_COMP_CREATE_SUCCESS,
+  REGISTER_COMP_CREATE_FAILURE,
   REGISTER_COMP_GET_REQUEST,
   REGISTER_COMP_GET_SUCCESS,
   REGISTER_COMP_GET_FAILURE,
-  COMPLIANCE_VIEW_STATUS_GET_REQUEST,
-  COMPLIANCE_VIEW_STATUS_GET_SUCCESS,
-  COMPLIANCE_VIEW_STATUS_GET_FAIL,
-  COMPANY_LOGIN_BRANCH_GET_REQUEST,
-  COMPANY_LOGIN_BRANCH_GET_SUCCESS,
-  COMPANY_LOGIN_BRANCH_GET_FAIL,
-  PF_TRACKER_GET_REQUEST,
-  PF_TRACKER_GET_SUCCESS,
-  PF_TRACKER_GET_FAILURE,
-  APPLICABLE_COMP_GET_REQUEST,
-  APPLICABLE_COMP_GET_SUCCESS,
-  APPLICABLE_COMP_GET_FAILURE,
-  APPLICABLE_LICE_GET_REQUEST,
-  APPLICABLE_LICE_GET_SUCCESS,
-  APPLICABLE_LICE_GET_FAILURE,
-  REPORT_REGION_EXCEL_REQUEST,
-  REPORT_REGION_EXCEL_SUCCESS,
-  REPORT_REGION_EXCEL_FAILURE,
-  BULK_FILE_SHARE_GET_REQUEST,
-  BULK_FILE_SHARE_GET_SUCCESS,
-  BULK_FILE_SHARE_GET_FAILURE,
-  BULK_FILE_SHARE_DOWNLOAD_REQUEST,
-  BULK_FILE_SHARE_DOWNLOAD_SUCCESS,
-  BULK_FILE_SHARE_DOWNLOAD_FAILURE,
+  REGISTER_COMP_EDIT_REQUEST,
+  REGISTER_COMP_EDIT_SUCCESS,
+  REGISTER_COMP_EDIT_FAILURE,
+  REGISTER_COMP_DELETE_REQUEST,
+  REGISTER_COMP_DELETE_SUCCESS,
+  REGISTER_COMP_DELETE_FAILURE,
+  REGISTER_COMP_GET_BY_ID_REQUEST,
+  REGISTER_COMP_GET_BY_ID_SUCCESS,
+  REGISTER_COMP_GET_BY_ID_FAILURE,
+  RETURNS_CREATE_REQUEST,
+  RETURNS_CREATE_SUCCESS,
+  RETURNS_CREATE_FAILURE,
+  RETURNS_GET_REQUEST,
+  RETURNS_GET_SUCCESS,
+  RETURNS_GET_FAILURE,
+  RETURNS_EDIT_REQUEST,
+  RETURNS_EDIT_SUCCESS,
+  RETURNS_EDIT_FAILURE,
+  RETURNS_DELETE_REQUEST,
+  RETURNS_DELETE_SUCCESS,
+  RETURNS_DELETE_FAILURE,
+  RETURNS_GET_BY_ID_REQUEST,
+  RETURNS_GET_BY_ID_SUCCESS,
+  RETURNS_GET_BY_ID_FAILURE,
+  CATEGORY_COMPANY_GET_FAIL,
+  CATEGORY_COMPANY_REQUEST_GET,
+  CATEGORY_COMPANY_SUCCESS_GET,
+  CHECKLIST_BY_CATEO_REQUEST,
+  CHECKLIST_BY_CATEO_SUCCESS,
+  CHECKLIST_BY_CATEO_FAILURE,
+  BRANCHES_DELETE_REQUEST,
+  BRANCHES_DELETE_SUCCESS,
+  BRANCHES_DELETE_FAILURE,
+  EXECUTIVECOMPANY_REQUEST_GET,
+  EXECUTIVECOMPANY_SUCCESS_GET,
+  EXECUTIVECOMPANY_GET_FAIL,
+  BRANCHREQUEST_REQUEST,
+  BRANCHREQUEST_SUCCESS,
+  BRANCHREQUEST_FAILURE,
+  BRANCHREQUEST_ID_REQUEST,
+  BRANCHREQUEST_ID_SUCCESS,
+  BRANCHREQUEST_ID_FAILURE,
+  BRANCH_CHECK_REQUEST,
+  BRANCH_CHECK_SUCCESS,
+  BRANCH_CHECK_FAILURE,
+  BRANCHREQUEST_DELETE_REQUEST,
+  BRANCHREQUEST_DELETE_SUCCESS,
+  BRANCHREQUEST_DELETE_FAILURE,
+  TEMPLATE_REGI_GET_REQUEST,
+  TEMPLATE_REGI_GET_SUCCESS,
+  TEMPLATE_REGI_GET_FAILURE,
+  TEMPLATE_REGI_PDF_GET_REQUEST,
+  TEMPLATE_REGI_PDF_GET_SUCCESS,
+  TEMPLATE_REGI_PDF_GET_FAILURE,
+  TEMPLATE_REGI_UP_GET_REQUEST,
+  TEMPLATE_REGI_UP_GET_SUCCESS,
+  TEMPLATE_REGI_UP_GET_FAILURE,
+  TEMPLATE_FORM_F_GET_REQUEST,
+  TEMPLATE_FORM_F_GET_SUCCESS,
+  TEMPLATE_FORM_F_GET_FAILURE,
+  TEMPLATE_FORM_D_GET_REQUEST,
+  TEMPLATE_FORM_D_GET_SUCCESS,
+  TEMPLATE_FORM_D_GET_FAILURE,
+  TEMPLATE_FORM_F_PDF_GET_REQUEST,
+  TEMPLATE_FORM_F_PDF_GET_SUCCESS,
+  TEMPLATE_FORM_F_PDF_GET_FAILURE,
+  TEMPLATE_FORM_D_PDF_GET_SUCCESS,
+  TEMPLATE_FORM_D_PDF_GET_FAILURE,
+  TEMPLATE_FORM_D_PDF_GET_REQUEST,
+  TEMPLATE_FORM_C_GET_REQUEST,
+  TEMPLATE_FORM_C_GET_SUCCESS,
+  TEMPLATE_FORM_C_GET_FAILURE,
+  TEMPLATE_FORM_C_PDF_GET_REQUEST,
+  TEMPLATE_FORM_C_PDF_GET_SUCCESS,
+  TEMPLATE_FORM_C_PDF_GET_FAILURE,
+  TEMPLATE_FORM_A_GET_REQUEST,
+  TEMPLATE_FORM_A_GET_SUCCESS,
+  TEMPLATE_FORM_A_GET_FAILURE,
+  REGI_INTIGRATE_REQUEST,
+  REGI_INTIGRATE_SUCCESS,
+  REGI_INTIGRATE_FAILURE,
+  REGI_INTIGRATE_CREATE_REQUEST,
+  REGI_INTIGRATE_CREATE_SUCCESS,
+  REGI_INTIGRATE_CREATE_FAILURE,
+  REGI_INTIGRATE_GET_ALL_REQUEST,
+  REGI_INTIGRATE_GET_ALL_SUCCESS,
+  REGI_INTIGRATE_GET_ALL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -2690,32 +2769,52 @@ export const checklistGetByid = (id) => async (dispatch) => {
       // document.getElementById("submitting").disabled  = false;
     });
 };
-export const checklistGetAll = (currentPage, pageSize) => async (dispatch) => {
+export const checklistGetAll = () => async (dispatch) => {
   dispatch({ type: CHECKLIST_REQUEST_GET_ALL });
 
-  await checklistAllgetting({ page: currentPage, limit: pageSize })
+  await checklistAllgetting()
     .then((response) => {
-      console.log("API Response:", response.data); // Debugging
-      const { data, totalPages, currentPage } = response.data; // Extract correctly
-
-      dispatch({
-        type: CHECKLIST_SUCCESS_GET_ALL,
-        payload: {
-          data: Array.isArray(data) ? data : [], // Ensure data is an array
-          totalPages: totalPages || 0,
-          currentPage: currentPage || 1,
-        },
-      });
-
-      console.log("Dispatched Payload:", { data, totalPages, currentPage }); // Debugging
+      // alert(JSON.stringify(response.data))
+      dispatch({ type: CHECKLIST_SUCCESS_GET_ALL, payload: response.data });
+      if (response.status === 201) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+        /*swal({
+                        title: "Successful!",
+                        text: 'User Addes Successfully !',
+                        icon: "success",
+                        button: "OK!",
+                });*/
+      } else {
+        dispatch({
+          type: CHECKLIST_GET_FAIL_ALL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+        // document.getElementById("submitting").innerText = "Save";
+        // document.getElementById("submitting").disabled  = false;
+      }
     })
     .catch((error) => {
       dispatch({
-        type: CHECKLIST_GET_FAIL_ALL,
+        type: CHECKLIST_GET_FAIL,
         payload: error.message,
       });
 
-      console.error("Error Fetching Checklist:", error);
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+      // document.getElementById("submitting").innerText = "Save";
+      // document.getElementById("submitting").disabled  = false;
     });
 };
 export const checklistGetApprove = () => async (dispatch) => {
@@ -5716,6 +5815,8 @@ export const checklistAddInAudit = (data) => async (dispatch) => {
     });
 };
 
+
+
 // export const fileUploadInAuditQuestion = (auditId, formData) => async (dispatch) => {
 //   dispatch({ type: FILE_UPLOADS_REQUEST });
 
@@ -5824,22 +5925,22 @@ export const fileUploadInAuditQuestion = (formData) => async (dispatch) => {
 
     if (response.status === 200 && response.data !== 409) {
       dispatch({ type: FILE_UPLOADS_SUCCESS, payload: response.data });
-      toast.success("File uploaded successfully!", {
-        position: "bottom-right",
+      toast.success('File uploaded successfully!', {
+        position: 'bottom-right',
         hideProgressBar: false,
         progress: undefined,
       });
     } else if (response.data === 409) {
       dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
-      toast.error(response.data.message || "File upload failed", {
-        position: "bottom-right",
+      toast.error(response.data.message || 'File upload failed', {
+        position: 'bottom-right',
         hideProgressBar: false,
         progress: undefined,
       });
     } else {
       dispatch({ type: FILE_UPLOADS_FAIL, payload: response.data });
       toast.error(response.data, {
-        position: "bottom-right",
+        position: 'bottom-right',
         hideProgressBar: false,
         progress: undefined,
       });
@@ -5847,7 +5948,7 @@ export const fileUploadInAuditQuestion = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: FILE_UPLOADS_FAIL, payload: error.message });
     toast.error(error.message, {
-      position: "bottom-right",
+      position: 'bottom-right',
       hideProgressBar: false,
       progress: undefined,
     });
@@ -5949,11 +6050,11 @@ export const fetchNotifications = () => async (dispatch) => {
           type: NOTIFICATION_FAILURE,
           payload: response.data,
         });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
+        // toast.error(response.data, {
+        //   position: "bottom-right",
+        //   hideProgressBar: false,
+        //   progress: undefined,
+        // });
       }
     })
     .catch((error) => {
@@ -5969,150 +6070,290 @@ export const fetchNotifications = () => async (dispatch) => {
       // });
     });
 };
+export const updateAuditFields = (auditId, postbody) => async (dispatch) => {
+  dispatch({ type: UPDATE_AUDIT_FIELDS_REQUEST });
 
-// export const auditCompiledStatusAll = (postBody) => async (dispatch) => {
-//   dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
+  try {
+    const response = await auditFieldsUpdate(auditId, postbody);
 
-//   try {
-//     const response = await fetchCompiledStatusCount(postBody);
-//     if (response.status === 200) {
-//       // Check if response.data is an array
-//       if (Array.isArray(response.data)) {
-//         dispatch({ type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL, payload: response.data });
-//       } else {
-//         dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: 'Unexpected data format' });
-//       }
-//     } else {
-//       dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: response.data });
-//     }
-//   } catch (error) {
-//     dispatch({ type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL, payload: error.message });
-//   }
-// };
+    if (response.status === 200) {
+      dispatch({ type: UPDATE_AUDIT_FIELDS_SUCCESS, payload: response.data });
+      toast.success("Audit is Updated Successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_AUDIT_FIELDS_FAILURE,
+        payload: response.data.message || "Failed to update the audit",
+      });
+      toast.error(response.data.message || "Failed to update the audit", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: UPDATE_AUDIT_FIELDS_FAILURE,
+      payload: error.message,
+    });
 
-// actions/auditActions.js
-// actions/auditActions.js
-export const auditCompiledStatusAll =
-  (postBody = {}) =>
-    async (dispatch) => {
-      dispatch({ type: AUDIT_COMPILED_STATUS_REQUEST_All_DETAIL });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
 
-      try {
-        // Call the backend API
-        const response = await fetchCompiledStatusCount(postBody); // Assuming postBody contains the state filter
-        if (response.status === 200) {
-          const {
-            statewiseCounts,
-            noticeData = [],
-            branches = [],
-          } = response.data; // Safely destructure auditData and branches with default values
+export const updateAuditDueDates = () => async (dispatch) => {
+  dispatch({ type: UPDATE_DUE_DATES_REQUEST });
 
-          dispatch({
-            type: AUDIT_COMPILED_STATUS_SUCCESS_All_DETAIL,
-            payload: statewiseCounts,
-            payload1: noticeData, // Dispatch auditData as payload1
-            branches, // Dispatch branches directly
-          });
-        } else {
-          dispatch({
-            type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-            payload: "Unexpected response status",
-          });
-        }
-      } catch (error) {
+  try {
+    const response = await updateDueDates();
+
+    if (response.status === 200) {
+      dispatch({ type: UPDATE_DUE_DATES_SUCCESS, payload: response.data });
+      // toast.success("Due dates updated successfully!", {
+      //     position: "bottom-right",
+      //     hideProgressBar: false,
+      //     progress: undefined,
+      // });
+    } else {
+      dispatch({
+        type: UPDATE_DUE_DATES_FAILURE,
+        payload: response.data.message || "Failed to update due dates",
+      });
+      // toast.error(response.data.message || "Failed to update due dates", {
+      //     position: "bottom-right",
+      //     hideProgressBar: false,
+      //     progress: undefined,
+      // });
+    }
+  } catch (error) {
+    dispatch({
+      type: UPDATE_DUE_DATES_FAILURE,
+      payload: error.message,
+    });
+
+    // toast.error(error.message, {
+    //     position: "bottom-right",
+    //     hideProgressBar: false,
+    //     progress: undefined,
+    // });
+  }
+};
+export const createBranches = (data) => async (dispatch) => {
+  dispatch({ type: BRANCHES_ADD_REQUEST });
+
+  await BranchesCreate(data)
+    .then((response) => {
+      dispatch({
+        type: BRANCHES_ADD_SUCCESS,
+        payload: response.data,
+      });
+
+      if (response.status === 201) {
+        toast.success("Branches added successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
         dispatch({
-          type: AUDIT_COMPILED_STATUS_FAIL_All_DETAIL,
-          payload: error.message,
+          type: BRANCHES_ADD_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data.message || "Failed to add branch", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
         });
       }
-    };
+    })
+    .catch((error) => {
+      let errorMessage = error.message;
 
-export const auditRegCountAll = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_REG_COUNT_REQUEST_All_DETAIL });
+      // Handle duplicate key error from MongoDB
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message.includes("E11000 duplicate key error")
+      ) {
+        errorMessage = "Branch with the same name already exists.";
+      }
+
+      dispatch({
+        type: BRANCHES_ADD_FAILURE,
+        payload: errorMessage,
+      });
+
+      toast.error(errorMessage, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const AllbranchesGet = () => async (dispatch) => {
+  dispatch({ type: BRANCHES_GET_REQUEST });
+  await AllBranchesGetting()
+    .then((response) => {
+      dispatch({ type: BRANCHES_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: BRANCHES_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: BRANCHES_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+export const TableBranchesGet = () => async (dispatch) => {
+  dispatch({ type: BRANCHES_TABLE_GET_REQUEST });
+  await TableBranchesGetting()
+    .then((response) => {
+      dispatch({ type: BRANCHES_TABLE_GET_SUCCESS, payload: response.data });
+      if (response.status === 200) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: BRANCHES_TABLE_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: BRANCHES_TABLE_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const BranchesGetById = (id) => async (dispatch) => {
+  dispatch({ type: BRANCHES_GET_BY_ID_REQUEST });
+  // console.log("id",id);
+
+  await BranchGetById(id)
+    .then((response) => {
+      dispatch({ type: BRANCHES_GET_BY_ID_SUCCESS, payload: response.data });
+      if (response.status === 201) {
+        // toast.success('Category is Added Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: BRANCHES_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: BRANCHES_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const BranchesUpdateById = (postbody, id) => async (dispatch) => {
+  dispatch({ type: BRANCHES_EDIT_REQUEST });
 
   try {
-    const response = await FetchRegCount(postBody);
+    const response = await BranchUpdateById(postbody, id);
+
+    dispatch({
+      type: BRANCHES_EDIT_SUCCESS,
+      payload: response.data,
+    });
+
     if (response.status === 200) {
-      const { statewiseCounts, auditData = [], branches = [] } = response.data; // Extract statewiseCounts from response data
-      dispatch({
-        type: AUDIT_REG_COUNT_SUCCESS_All_DETAIL,
-        payload: statewiseCounts,
-        payload1: auditData, // Dispatch auditData as payload1
-        branches,
+      toast.success("Branch is Updated Successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
       });
     } else {
       dispatch({
-        type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
-        payload: "Unexpected response status",
+        type: BRANCHES_EDIT_FAILURE,
+        payload: response.data.message || "Failed to update the branch.",
+      });
+
+      toast.error(response.data.message || "Failed to update the branch.", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
       });
     }
   } catch (error) {
     dispatch({
-      type: AUDIT_REG_COUNT_FAIL_All_DETAIL,
-      payload: error.message,
-    });
-  }
-};
-
-export const checklistCalenderGet = (postBody) => async (dispatch) => {
-  dispatch({ type: CHECKLIST_CALENDER_REQUEST_GET_ALL });
-
-  try {
-    const response = await CalenderChecklistGet(postBody);
-    console.log("API Response Data:", response.data); // ✅ Debug log
-
-    if (response.status === 200) {
-      dispatch({
-        type: CHECKLIST_CALENDER_SUCCESS_GET_ALL,
-        payload: response.data,
-      });
-    } else {
-      dispatch({
-        type: CHECKLIST_CALENDER_GET_FAIL_ALL,
-        payload: response.data,
-      });
-      toast.error(response.data, { position: "bottom-right" });
-    }
-  } catch (error) {
-    dispatch({
-      type: CHECKLIST_CALENDER_GET_FAIL_ALL, // ✅ Fixed wrong action type
+      type: BRANCHES_EDIT_FAILURE,
       payload: error.message,
     });
 
-    toast.error(error.message, { position: "bottom-right" });
-  }
-};
-
-
-export const auditCompiledCountAll = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COMPILED_COUNT_REQUEST_All_DETAIL });
-
-  try {
-    const response = await FetchCompliedCount(postBody); // Call the API
-    console.log("count", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_SUCCESS_All_DETAIL,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COMPILED_COUNT_FAIL_All_DETAIL,
-      payload: error.message,
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
     });
   }
 };
-
-
-
-
 export const CompanyBranchesGet = () => async (dispatch) => {
   dispatch({ type: COMPANY_BRANCHES_GET_REQUEST });
   await CompanyBranchesGetting()
@@ -6150,127 +6391,49 @@ export const CompanyBranchesGet = () => async (dispatch) => {
     });
 };
 
-export const RegionWiseDataGet = (region, fieldName) => async (dispatch) => {
-  dispatch({ type: REGION_WISE_DATA_GET_REQUEST });
-  await RegionWiseDataGetting(region, fieldName)
-    .then((response) => {
-      dispatch({ type: REGION_WISE_DATA_GET_SUCCESS, payload: response.data });
-    })
-    .catch((error) => {
-      dispatch({
-        type: REGION_WISE_DATA_GET_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
 
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
+export const BranchesGetByCompany =
+  (postbody) => async (dispatch) => {
+    dispatch({ type: COMPANY_BRANCHES_BY_CREATE_REQUEST });
 
-
-
-// export const DashboardBranchGet = (state, fieldName, license) => async (dispatch) => {
-//   dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
-//   try {
-//     const response = await DashboardBranchGetting(state, fieldName, license);
-//     // console.log("API Response:", response.data);  // Log the API response
-//     dispatch({ type: DASH_STATE_WISE_DATA_GET_SUCCESS, payload: response.data });
-//   } catch (error) {
-//     dispatch({
-//       type: DASH_STATE_WISE_DATA_GET_FAIL,
-//       payload: error.response && error.response.data.message
-//         ? error.response.data.message
-//         : error.message,
-//     });
-//     toast.error(error.message, {
-//       position: "bottom-right",
-//       hideProgressBar: false,
-//       progress: undefined,
-//     });
-//   }
-// };
-
-export const DashboardBranchGet =
-  (state, fieldName, license, region) => async (dispatch) => {
-    dispatch({ type: DASH_STATE_WISE_DATA_GET_REQUEST });
-
-    try {
-      // Updated to send data using the modified DashboardBranchGetting
-      const fetchedData = await DashboardBranchGetting(
-        state,
-        fieldName,
-        license,
-        region
-      ); // Pass arguments as before
-
-      dispatch({
-        type: DASH_STATE_WISE_DATA_GET_SUCCESS,
-        payload: fetchedData,
-      });
-      return fetchedData; // Return data to be passed to the modal
-    } catch (error) {
-      dispatch({
-        type: DASH_STATE_WISE_DATA_GET_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-      throw error; // Throw error to be caught in handleCellClick
-    }
-  };
-
-export const BranchesGetByCompany = (postbody) => async (dispatch) => {
-  dispatch({ type: COMPANY_BRANCHES_BY_CREATE_REQUEST });
-
-  await BranchesGettingByCompany(postbody)
-    .then((response) => {
-      dispatch({
-        type: COMPANY_BRANCHES_BY_CREATE_SUCCESS,
-        payload: response.data,
-      });
-      if (response.status === 200) {
-        // toast.success("Company Ineraction License is created Successfully!", {
-        //   position: "bottom-right",
-        //   hideProgressBar: false,
-        //   progress: undefined,
-        // });
-      } else {
+    await BranchesGettingByCompany(postbody)
+      .then((response) => {
         dispatch({
-          type: COMPANY_BRANCHES_BY_CREATE_FAIL,
+          type: COMPANY_BRANCHES_BY_CREATE_SUCCESS,
           payload: response.data,
         });
-        toast.error(response.data, {
+        if (response.status === 200) {
+          // toast.success("Company Ineraction License is created Successfully!", {
+          //   position: "bottom-right",
+          //   hideProgressBar: false,
+          //   progress: undefined,
+          // });
+        } else {
+          dispatch({
+            type: COMPANY_BRANCHES_BY_CREATE_FAIL,
+            payload: response.data,
+          });
+          toast.error(response.data, {
+            position: "bottom-right",
+            hideProgressBar: false,
+            progress: undefined,
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({
+          type: COMPANY_BRANCHES_BY_CREATE_FAIL,
+          payload: error.message,
+        });
+
+        toast.error(error.message, {
           position: "bottom-right",
           hideProgressBar: false,
           progress: undefined,
         });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: COMPANY_BRANCHES_BY_CREATE_FAIL,
-        payload: error.message,
       });
+  };
 
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
 
 export const CreatingNotice = (data) => async (dispatch) => {
   dispatch({ type: NOTICE_ADD_REQUEST });
@@ -6487,304 +6650,6 @@ export const NoticesDeleteById = (id) => async (dispatch) => {
   }
 };
 
-export const AllbranchesGet = (postBody) => async (dispatch) => {
-  dispatch({ type: BRANCHES_GET_REQUEST });
-  await AllBranchesGetting(postBody)
-    .then((response) => {
-      dispatch({ type: BRANCHES_GET_SUCCESS, payload: response.data });
-      if (response.status === 200) {
-        // toast.success('Category is Added Successfully!', {
-        //         position: "bottom-right",
-        //         hideProgressBar: false,
-        //         progress: undefined,
-        // });
-      } else {
-        dispatch({
-          type: BRANCHES_GET_FAIL,
-          payload: response.data,
-        });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: BRANCHES_GET_FAIL,
-        payload: error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
-export const branchGetByState = (postBody) => async (dispatch) => {
-  dispatch({ type: BRANCH_STATE_REQUEST_GET });
-  await getCompanyBranchByState(postBody)
-    .then((response) => {
-      dispatch({ type: BRANCH_STATE_SUCCESS_GET, payload: response.data });
-
-      if (response.status === 200) {
-        // console.log("data",response.data);
-        // toast.success('Category is Added Successfully!', {
-        //         position: "bottom-right",
-        //         hideProgressBar: false,
-        //         progress: undefined,
-        // });
-      } else {
-        dispatch({
-          type: BRANCH_STATE_GET_FAIL,
-          payload: response.data,
-        });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: BRANCH_STATE_GET_FAIL,
-        payload: error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
-
-export const noticeCompanyCounts =
-  (region, branch, from, to) => async (dispatch) => {
-    dispatch({ type: NOTICE_WISE_DATA_GET_REQUEST });
-    await noticeCompanyCount(region, branch, from, to)
-      .then((response) => {
-        dispatch({
-          type: NOTICE_WISE_DATA_GET_SUCCESS,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: NOTICE_WISE_DATA_GET_FAIL,
-          payload:
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message,
-        });
-
-        toast.error(error.message, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      });
-  };
-
-export const noticeCompanyCountsDetails =
-  (state, region, fieldName, branch, from, to) => async (dispatch) => {
-    dispatch({ type: DASH_STATE_WISE_NOTICE_GET_REQUEST });
-
-    try {
-      // API Call
-      const fetchedData = await noticeCompanyCountsDetail(
-        state,
-        region,
-        fieldName,
-        branch,
-        from,
-        to
-      );
-
-      dispatch({
-        type: DASH_STATE_WISE_NOTICE_GET_SUCCESS,
-        payload: fetchedData,
-      });
-      return fetchedData; // Returning for further processing
-    } catch (error) {
-      dispatch({
-        type: DASH_STATE_WISE_NOTICE_GET_FAIL,
-        payload: error.response?.data?.message || error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-
-      throw error;
-    }
-  };
-
-export const downloadNoticesExcel = (payload) => async (dispatch) => {
-  try {
-    dispatch({ type: DOWNLOAD_NOTICES_EXCEL_REQUEST });
-
-    // Call the utility function to download the Excel file
-    const response = await NoticeCompanyCountsdownload(payload);
-
-    // Create a download link for the Excel file
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "notices.xlsx");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    dispatch({
-      type: DOWNLOAD_NOTICES_EXCEL_SUCCESS,
-    });
-  } catch (error) {
-    dispatch({
-      type: DOWNLOAD_NOTICES_EXCEL_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
-
-
-export const auditCompiledCountDataAll = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COUNT_DATA_REQUEST });
-
-  try {
-    const response = await FetchCompliedCountData(postBody); // Call the API
-    console.log("1111", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COUNT_DATA_SUCCESS,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COUNT_DATA_FAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COUNT_DATA_FAIL,
-      payload: error.message,
-    });
-  }
-};
-export const auditCompiledCountDataAllLCA = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COUNT_LCA_DATA_REQUEST });
-
-  try {
-    const response = await FetchCompliedCountDataLCA(postBody); // Call the API
-    console.log("1111", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COUNT_LCA_DATA_SUCCESS,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COUNT_LCA_DATA_FAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COUNT_LCA_DATA_FAIL,
-      payload: error.message,
-    });
-  }
-};
-export const auditCompiledCountDataAllPA = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COUNT_PA_DATA_REQUEST });
-
-  try {
-    const response = await FetchCompliedCountDataPA(postBody); // Call the API
-    console.log("1111", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COUNT_PA_DATA_SUCCESS,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COUNT_PA_DATA_FAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COUNT_PA_DATA_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-
-export const auditCompiledCountAllLCA = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COMPILED_COUNT_LCA_REQUEST_All_DETAIL });
-
-  try {
-    const response = await FetchCompliedCountLCA(postBody); // Call the API
-    console.log("count", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_LCA_SUCCESS_All_DETAIL,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COMPILED_COUNT_LCA_FAIL_All_DETAIL,
-      payload: error.message,
-    });
-  }
-};
-
-export const auditCompiledCountAllPA = (postBody) => async (dispatch) => {
-  dispatch({ type: AUDIT_COMPILED_COUNT_PA_REQUEST_All_DETAIL });
-
-  try {
-    const response = await FetchCompliedCountPA(postBody); // Call the API
-    console.log("count", response.data); // Log the response to verify
-
-    if (response.status === 200) {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_PA_SUCCESS_All_DETAIL,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: AUDIT_COMPILED_COUNT_PA_FAIL_All_DETAIL,
-      payload: error.message,
-    });
-  }
-};
-
 export const getLabourContractAgreementNames = (postBody) => async (dispatch) => {
   dispatch({ type: LABOUR_AGREEMENT_NAME_GET_REQUEST });
   await getLabourContractAgreementName(postBody)
@@ -6859,20 +6724,27 @@ export const getPrincipleAgreementNames = (postBody) => async (dispatch) => {
     });
 };
 
-export const getContractorName = (postBody) => async (dispatch) => {
-  dispatch({ type: CONTRACTOR_NAME_GET_REQUEST });
-  await getContractorNames(postBody)
+
+
+
+
+export const auditGetDataAllLCA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_LCA_REQUEST_All_DETAIL });
+
+  await gettingAuditDetailLCA(postBody)
     .then((response) => {
-      dispatch({ type: CONTRACTOR_NAME_GET_SUCCESS, payload: response.data });
+      // alert(JSON.stringify(response.data))
+      dispatch({ type: AUDIT_LCA_SUCCESS_All_DETAIL, payload: response.data });
+      // alert(response.status)
       if (response.status === 200) {
-        // toast.success('Category is Added Successfully!', {
+        // toast.success('Audit is Created Successfully!', {
         //         position: "bottom-right",
         //         hideProgressBar: false,
         //         progress: undefined,
         // });
       } else {
         dispatch({
-          type: CONTRACTOR_NAME_GET_FAIL,
+          type: AUDIT_LCA_FAIL_All_DETAIL,
           payload: response.data,
         });
         toast.error(response.data, {
@@ -6884,7 +6756,7 @@ export const getContractorName = (postBody) => async (dispatch) => {
     })
     .catch((error) => {
       dispatch({
-        type: CONTRACTOR_NAME_GET_FAIL,
+        type: AUDIT_LCA_FAIL_All_DETAIL,
         payload: error.message,
       });
 
@@ -6896,11 +6768,314 @@ export const getContractorName = (postBody) => async (dispatch) => {
     });
 };
 
+export const auditGetDataAllPA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDIT_PA_REQUEST_All_DETAIL });
+
+  await gettingAuditDetailPA(postBody)
+    .then((response) => {
+      // alert(JSON.stringify(response.data))
+      dispatch({ type: AUDIT_PA_SUCCESS_All_DETAIL, payload: response.data });
+      // alert(response.status)
+      if (response.status === 200) {
+        // toast.success('Audit is Created Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
+      } else {
+        dispatch({
+          type: AUDIT_PA_FAIL_All_DETAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: AUDIT_PA_FAIL_All_DETAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const auditAllFiltersLCA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDITOR_LCA_REQUEST_GET_ALL_FILTER });
+  await auditAllFilterLCA(postBody)
+    .then((response) => {
+      // console.log(response.data);
+      dispatch({
+        type: AUDITOR_LCA_SUCCESS_GET_ALL_FILTER,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+      } else {
+        dispatch({
+          type: AUDITOR_LCA_GET_FAIL_ALL_FILTER,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: AUDITOR_LCA_GET_FAIL_ALL_FILTER,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const auditAllFiltersPA = (postBody) => async (dispatch) => {
+  dispatch({ type: AUDITOR_PA_REQUEST_GET_ALL_FILTER });
+  await auditAllFilterPA(postBody)
+    .then((response) => {
+      // console.log(response.data);
+      dispatch({
+        type: AUDITOR_PA_SUCCESS_GET_ALL_FILTER,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+      } else {
+        dispatch({
+          type: AUDITOR_PA_GET_FAIL_ALL_FILTER,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: AUDITOR_PA_GET_FAIL_ALL_FILTER,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+// export const updateAuditFields = (auditId, postbody) => async (dispatch) => {
+
+
+//   dispatch({ type: UPDATE_AUDIT_FIELDS_REQUEST });
+
+//   try {
+//     const response = await auditFieldsUpdate(auditId, postbody);
+
+//     if (response.status === 200) {
+//       dispatch({ type: UPDATE_AUDIT_FIELDS_SUCCESS, payload: response.data });
+//       toast.success("Audit is Updated Successfully!", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     } else {
+//       dispatch({
+//         type: UPDATE_AUDIT_FIELDS_FAILURE,
+//         payload: response.data.message || "Failed to update the audit",
+//       });
+//       toast.error(response.data.message || "Failed to update the audit", {
+//         position: "bottom-right",
+//         hideProgressBar: false,
+//         progress: undefined,
+//       });
+//     }
+//   } catch (error) {
+//     dispatch({
+//       type: UPDATE_AUDIT_FIELDS_FAILURE,
+//       payload: error.message,
+//     });
+
+//     toast.error(error.message, {
+//       position: "bottom-right",
+//       hideProgressBar: false,
+//       progress: undefined,
+//     });
+//   }
+// };
+
+
+export const auditUploadStatusValueLCA = (data) => async (dispatch) => {
+  dispatch({ type: AUDIT_UPLOAD_STATUS_REQUEST_LCA });
+
+  try {
+    const response = await AuditUploadStatusValueLCA(data);
+    dispatch({ type: AUDIT_UPLOAD_STATUS_SUCCESS_LCA, payload: response.data });
+
+    if (response.status === 201) {
+      toast.success("Audit status updated successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({
+        type: AUDIT_UPLOAD_STATUS_FAILURE_LCA,
+        payload: response.data,
+      });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_UPLOAD_STATUS_FAILURE_LCA,
+      payload: error.message,
+    });
+
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const auditUploadStatusValuePA = (data) => async (dispatch) => {
+  dispatch({ type: AUDIT_UPLOAD_STATUS_REQUEST_PA });
+
+  try {
+    const response = await AuditUploadStatusValuePA(data);
+    dispatch({ type: AUDIT_UPLOAD_STATUS_SUCCESS_PA, payload: response.data });
+
+    if (response.status === 201) {
+      toast.success("Audit status updated successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({
+        type: AUDIT_UPLOAD_STATUS_FAILURE_PA,
+        payload: response.data,
+      });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: AUDIT_UPLOAD_STATUS_FAILURE_PA,
+      payload: error.message,
+    });
+
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const fileUploadInAuditQuestion_LCA = (formData) => async (dispatch) => {
+  dispatch({ type: FILE_UPLOADS_REQUEST_LCA });
+
+  try {
+    const response = await fileUploadInAuditQuestionLCA(formData);
+
+    if (response.status === 200 && response.data !== 409) {
+      dispatch({ type: FILE_UPLOADS_SUCCESS_LCA, payload: response.data });
+      toast.success("File uploaded successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else if (response.data === 409) {
+      dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: response.data });
+      toast.error(response.data.message || "File upload failed", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: response.data });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: FILE_UPLOADS_FAIL_LCA, payload: error.message });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+export const fileUploadInAuditQuestion_PA = (formData) => async (dispatch) => {
+  dispatch({ type: FILE_UPLOADS_REQUEST_PA });
+
+  try {
+    const response = await fileUploadInAuditQuestionPA(formData);
+
+    if (response.status === 200 && response.data !== 409) {
+      dispatch({ type: FILE_UPLOADS_SUCCESS_PA, payload: response.data });
+      toast.success("File uploaded successfully!", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else if (response.data === 409) {
+      dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: response.data });
+      toast.error(response.data.message || "File upload failed", {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    } else {
+      dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: response.data });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: FILE_UPLOADS_FAIL_PA, payload: error.message });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
 
 
 
-// E-LIBRARY STARTS--------------------------------------->>>>>>>>
 
+// E-library------------------>>>>
 
 
 
@@ -9287,50 +9462,21 @@ export const minWageGetById = (id) => async (dispatch) => {
     });
 };
 
-export const complianceOverViewGet = (postBody) => async (dispatch) => {
-  dispatch({ type: COMPLIANCE_VIEW_GET_REQUEST });
+export const remittanceCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: REMITTANCE_CREATE_REQUEST });
 
   try {
-    const response = await complianceOverView(postBody); // Call the API
-    // console.log("count", response.data); // Log the response to verify
+    const response = await createRemittanceTracker(postbody);
+    dispatch({ type: REMITTANCE_CREATE_SUCCESS, payload: response.data });
 
-    if (response.status === 200) {
-      dispatch({
-        type: COMPLIANCE_VIEW_GET_SUCCESS,
-        payload: response.data, // No need to modify
-      });
-    } else {
-      dispatch({
-        type: COMPLIANCE_VIEW_GET_FAIL,
-        payload: response.data,
-      });
-    }
+    toast.success('Remittance created successfully!');
   } catch (error) {
-    dispatch({
-      type: COMPLIANCE_VIEW_GET_FAIL,
-      payload: error.message,
-    });
+    dispatch({ type: REMITTANCE_CREATE_FAILURE, payload: error.message });
+    toast.error(error.message);
   }
 };
 
 export const remittanceGetAll = (postBody) => async (dispatch) => {
-  const { filters = {} } = postBody || {};
-  const { fromDate, toDate } = filters;
-
-  if (fromDate && toDate) {
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
-
-    if (from > to) {
-      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-      return;
-    }
-  }
-
   dispatch({ type: REMITTANCE_GET_REQUEST });
 
   try {
@@ -9338,6 +9484,34 @@ export const remittanceGetAll = (postBody) => async (dispatch) => {
     dispatch({ type: REMITTANCE_GET_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: REMITTANCE_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
+export const remittanceUpdate = (data, id) => async (dispatch) => {
+  dispatch({ type: REMITTANCE_EDIT_REQUEST });
+
+  try {
+    const response = await updateRemittanceTracker(data, id);
+    dispatch({ type: REMITTANCE_EDIT_SUCCESS, payload: response.data });
+
+    toast.success('Remittance updated successfully!');
+  } catch (error) {
+    dispatch({ type: REMITTANCE_EDIT_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
+export const remittanceDelete = (id) => async (dispatch) => {
+  dispatch({ type: REMITTANCE_DELETE_REQUEST });
+
+  try {
+    const response = await deleteRemittanceTracker(id);
+    dispatch({ type: REMITTANCE_DELETE_SUCCESS, payload: response.data });
+
+    toast.success('Remittance deleted successfully!');
+  } catch (error) {
+    dispatch({ type: REMITTANCE_DELETE_FAILURE, payload: error.message });
     toast.error(error.message);
   }
 };
@@ -9379,33 +9553,248 @@ export const remmitanceGetById = (id) => async (dispatch) => {
     });
 };
 
-export const returnsGetAll = (postBody) => async (dispatch) => {
-  const { filters = {} } = postBody || {};
-  const { fromDate, toDate } = filters;
 
-  if (fromDate && toDate) {
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
+export const registerCompCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: REGISTER_COMP_CREATE_REQUEST });
 
-    if (from > to) {
-      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
+  await createRegisterComp(postbody)
+    .then((response) => {
+      dispatch({
+        type: REGISTER_COMP_CREATE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Register Compliance is created Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_COMP_CREATE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_CREATE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
         position: "bottom-right",
         hideProgressBar: false,
         progress: undefined,
       });
-      return;
-    }
+    });
+};
+
+export const registerCompPaginatedGet = (postbody) => async (dispatch) => {
+  dispatch({ type: REGISTER_COMP_GET_REQUEST });
+
+  await getAllRegisters(postbody)
+    .then((response) => {
+      dispatch({ type: REGISTER_COMP_GET_SUCCESS, payload: response.data });
+
+      if (response.status !== 200) {
+        dispatch({
+          type: REGISTER_COMP_GET_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data);
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_GET_FAILURE,
+        payload: error.message,
+      });
+      toast.error(error.message);
+    });
+};
+
+export const registerCompUpdate = (postbody, id) => async (dispatch) => {
+  dispatch({ type: REGISTER_COMP_EDIT_REQUEST });
+
+  await updateRegisterById(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: REGISTER_COMP_EDIT_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Register Compliance is Edited Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_COMP_EDIT_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_EDIT_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const registerCompDelete = (postbody, id) => async (dispatch) => {
+  dispatch({ type: REGISTER_COMP_DELETE_REQUEST });
+
+  await deleteRegisterById(postbody, id)
+    .then((response) => {
+      dispatch({
+        type: REGISTER_COMP_DELETE_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+        toast.success("Register Compliance is Deleted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_COMP_DELETE_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_DELETE_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const registerGetById = (id) => async (dispatch) => {
+  dispatch({ type: REGISTER_COMP_GET_BY_ID_REQUEST });
+  // console.log("id", id);
+
+  await getRegisterById(id)
+    .then((response) => {
+      dispatch({
+        type: REGISTER_COMP_GET_BY_ID_SUCCESS,
+        payload: response.data,
+      });
+      if (response.status === 200) {
+
+      } else {
+        dispatch({
+          type: REGISTER_COMP_GET_BY_ID_FAILURE,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER_COMP_GET_BY_ID_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+
+
+export const returnsCreate = (postbody) => async (dispatch) => {
+  dispatch({ type: RETURNS_CREATE_REQUEST });
+
+  try {
+    const response = await createReturnsTracker(postbody);
+    dispatch({ type: RETURNS_CREATE_SUCCESS, payload: response.data });
+
+    toast.success('Returns created successfully!');
+  } catch (error) {
+    dispatch({ type: RETURNS_CREATE_FAILURE, payload: error.message });
+    toast.error(error.message);
   }
+};
+
+export const returnsGetAll = (params) => async (dispatch) => {
   dispatch({ type: RETURNS_GET_REQUEST });
 
   try {
-    const response = await getAllReturnsTrackers(postBody);
+    const response = await getAllReturnsTrackers(params);
     dispatch({ type: RETURNS_GET_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({ type: RETURNS_GET_FAILURE, payload: error.message });
     toast.error(error.message);
   }
 };
+
+export const returnsUpdate = (data, id) => async (dispatch) => {
+  dispatch({ type: RETURNS_EDIT_REQUEST });
+
+  try {
+    const response = await updateReturnsTracker(data, id);
+    dispatch({ type: RETURNS_EDIT_SUCCESS, payload: response.data });
+
+    toast.success('Returns updated successfully!');
+  } catch (error) {
+    dispatch({ type: RETURNS_EDIT_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
+export const returnsDelete = (id) => async (dispatch) => {
+  dispatch({ type: RETURNS_DELETE_REQUEST });
+
+  try {
+    const response = await deleteReturnsTracker(id);
+    dispatch({ type: RETURNS_DELETE_SUCCESS, payload: response.data });
+
+    toast.success('Returns deleted successfully!');
+  } catch (error) {
+    dispatch({ type: RETURNS_DELETE_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
 export const returnsGetById = (id) => async (dispatch) => {
   dispatch({ type: RETURNS_GET_BY_ID_REQUEST });
 
@@ -9442,112 +9831,15 @@ export const returnsGetById = (id) => async (dispatch) => {
       });
     });
 };
-
-export const registerCompPaginatedGet = (postBody) => async (dispatch) => {
-  const { filters = {} } = postBody || {};
-  const { fromDate, toDate } = filters;
-
-  if (fromDate && toDate) {
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
-
-    if (from > to) {
-      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-      return;
-    }
-  }
-  dispatch({ type: REGISTER_COMP_GET_REQUEST });
-
-  await getAllRegisters(postBody)
+export const categoryGetComp = () => async (dispatch) => {
+  dispatch({ type: CATEGORY_COMPANY_REQUEST_GET });
+  await catGetComp()
     .then((response) => {
-      dispatch({ type: REGISTER_COMP_GET_SUCCESS, payload: response.data });
-
-      if (response.status !== 200) {
-        dispatch({
-          type: REGISTER_COMP_GET_FAILURE,
-          payload: response.data,
-        });
-        toast.error(response.data);
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: REGISTER_COMP_GET_FAILURE,
-        payload: error.message,
-      });
-      toast.error(error.message);
-    });
-};
-
-
-export const overViewStatusGet = (postBody) => async (dispatch) => {
-  const { fromMonth, toMonth } = postBody || {};
-
-  // 🔍 Date validation before API call
-  if (fromMonth && toMonth) {
-    const from = new Date(fromMonth);
-    const to = new Date(toMonth);
-
-    if (from > to) {
-      toast.error("Invalid month range: 'From' month should not be after 'To' month.", {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-      return; // ⛔ Stop and prevent API call
-    }
-  }
-
-  dispatch({ type: COMPLIANCE_VIEW_STATUS_GET_REQUEST });
-
-  await overViewStatuses(postBody)
-    .then((response) => {
-      dispatch({ type: COMPLIANCE_VIEW_STATUS_GET_SUCCESS, payload: response.data });
-
-      if (response.status === 201) {
-        // Optional success condition
-      } else {
-        dispatch({
-          type: COMPLIANCE_VIEW_STATUS_GET_FAIL,
-          payload: response.data,
-        });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: COMPLIANCE_VIEW_STATUS_GET_FAIL,
-        payload: error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
-export const companyLoginBranchGet = (postBody) => async (dispatch) => {
-
-  dispatch({ type: COMPANY_LOGIN_BRANCH_GET_REQUEST });
-
-  await companyLoginBranch(postBody)
-    .then((response) => {
-      dispatch({ type: COMPANY_LOGIN_BRANCH_GET_SUCCESS, payload: response.data });
-
+      dispatch({ type: CATEGORY_COMPANY_SUCCESS_GET, payload: response.data });
       if (response.status === 200) {
-        // Optional success condition
       } else {
         dispatch({
-          type: COMPANY_LOGIN_BRANCH_GET_FAIL,
+          type: CATEGORY_COMPANY_GET_FAIL,
           payload: response.data,
         });
         toast.error(response.data, {
@@ -9559,77 +9851,7 @@ export const companyLoginBranchGet = (postBody) => async (dispatch) => {
     })
     .catch((error) => {
       dispatch({
-        type: COMPANY_LOGIN_BRANCH_GET_FAIL,
-        payload: error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
-export const compliancesApplicable = (postBody) => async (dispatch) => {
-
-  dispatch({ type: APPLICABLE_COMP_GET_REQUEST });
-
-  await applicableCompliances(postBody)
-    .then((response) => {
-      dispatch({ type: APPLICABLE_COMP_GET_SUCCESS, payload: response.data });
-
-      if (response.status === 200) {
-        // Optional success condition
-      } else {
-        dispatch({
-          type: APPLICABLE_COMP_GET_FAILURE,
-          payload: response.data,
-        });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: APPLICABLE_COMP_GET_FAILURE,
-        payload: error.message,
-      });
-
-      toast.error(error.message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
-    });
-};
-export const licnesesApplicable = (postBody) => async (dispatch) => {
-
-  dispatch({ type: APPLICABLE_LICE_GET_REQUEST });
-
-  await getBranchForLicensesDetails(postBody)
-    .then((response) => {
-      dispatch({ type: APPLICABLE_LICE_GET_SUCCESS, payload: response.data });
-
-      if (response.status === 200) {
-        // Optional success condition
-      } else {
-        dispatch({
-          type: APPLICABLE_LICE_GET_FAILURE,
-          payload: response.data,
-        });
-        toast.error(response.data, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-      }
-    })
-    .catch((error) => {
-      dispatch({
-        type: APPLICABLE_LICE_GET_FAILURE,
+        type: CATEGORY_COMPANY_GET_FAIL,
         payload: error.message,
       });
 
@@ -9641,78 +9863,587 @@ export const licnesesApplicable = (postBody) => async (dispatch) => {
     });
 };
 
-export const pfGetAll = (postBody) => async (dispatch) => {
-  dispatch({ type: PF_TRACKER_GET_REQUEST });
+export const getChecklistFromCategory = (postBody) => async (dispatch) => {
+  dispatch({ type: CHECKLIST_BY_CATEO_REQUEST });
 
   try {
-    const response = await getPFTrackerforCompany(postBody);
-    dispatch({ type: PF_TRACKER_GET_SUCCESS, payload: response.data });
+    const response = await getChecklistByCategory(postBody);
+    dispatch({ type: CHECKLIST_BY_CATEO_SUCCESS, payload: response.data });
+
+    // toast.success("Returns deleted successfully!");
   } catch (error) {
-    dispatch({ type: PF_TRACKER_GET_FAILURE, payload: error.message });
+    dispatch({ type: CHECKLIST_BY_CATEO_FAILURE, payload: error.message });
+    // toast.error(error.message);
+  }
+};
+
+
+export const branchesDelete = (id) => async (dispatch) => {
+  dispatch({ type: BRANCHES_DELETE_REQUEST });
+
+  try {
+    const response = await deleteBranches(id);
+    dispatch({ type: BRANCHES_DELETE_SUCCESS, payload: response.data });
+
+    toast.success("Branch Deleted successfully!");
+  } catch (error) {
+    dispatch({ type: BRANCHES_DELETE_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+}
+
+
+export const companyExecutiveGet = (data) => async (dispatch) => {
+  dispatch({ type: EXECUTIVECOMPANY_REQUEST_GET });
+  await companyexecutiveEGet(data)
+    .then((response) => {
+      dispatch({ type: EXECUTIVECOMPANY_SUCCESS_GET, payload: response.data });
+      if (response.status === 201) {
+      } else {
+        dispatch({
+          type: EXECUTIVECOMPANY_GET_FAIL,
+          payload: response.data,
+        });
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: EXECUTIVECOMPANY_GET_FAIL,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+export const branchRequestsGet = (data = {}) => async (dispatch) => {
+  try {
+    dispatch({ type: BRANCHREQUEST_REQUEST });
+
+    const response = await getBranchRequests(data);
+
+    if (response.status === 200) {
+      dispatch({
+        type: BRANCHREQUEST_SUCCESS,
+        payload: response.data, // contains { data, pagination, filters }
+      });
+    } else {
+      dispatch({
+        type: BRANCHREQUEST_FAILURE,
+        payload: response.data,
+      });
+      toast.error(response.data, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: BRANCHREQUEST_FAILURE,
+      payload: error.message,
+    });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const branchRequestByIdGet = (id) => async (dispatch) => {
+  dispatch({ type: BRANCHREQUEST_ID_REQUEST });
+
+  try {
+    const response = await getBranchRequestById(id);
+    dispatch({ type: BRANCHREQUEST_ID_SUCCESS, payload: response.data });
+
+    // toast.success("Branch Deleted successfully!");
+  } catch (error) {
+    dispatch({ type: BRANCHREQUEST_ID_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+}
+export const branchNameExistsCheck = (data) => async (dispatch) => {
+  dispatch({ type: BRANCH_CHECK_REQUEST });
+
+  try {
+    const response = await checkBranchNameExists(data);
+    dispatch({ type: BRANCH_CHECK_SUCCESS, payload: response.data });
+
+    // toast.success("Branch Deleted successfully!");
+  } catch (error) {
+    dispatch({ type: BRANCH_CHECK_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+}
+export const branchLicenseRequestdelete = (id) => async (dispatch) => {
+  dispatch({ type: BRANCHREQUEST_DELETE_REQUEST });
+
+  try {
+    const response = await deleteBranchLicenseRequest(id);
+    dispatch({ type: BRANCHREQUEST_DELETE_SUCCESS, payload: response.data });
+
+    toast.success("Branch Deleted successfully!");
+  } catch (error) {
+    dispatch({ type: BRANCHREQUEST_DELETE_FAILURE, payload: error.message });
     toast.error(error.message);
   }
 };
 
-export const regionBranchesExcelDownload = (postBody) => async (dispatch) => {
-  dispatch({ type: REPORT_REGION_EXCEL_REQUEST });
 
-  await downloadRegionBranchesExcel(postBody)
-    .then((response) => {
-      // Successful file response (2xx) -> download file
-      const blob = new Blob([response.data], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
 
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "branches_export.xlsx");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+export const form13Templatesexport = () => async (dispatch) => {
+  dispatch({ type: TEMPLATE_REGI_GET_REQUEST });
 
-      dispatch({ type: REPORT_REGION_EXCEL_SUCCESS });
-    })
-    .catch((error) => {
-      const status = error?.response?.status;
-      const message = error?.response?.data?.message || error.message || "Something went wrong";
+  try {
+    const response = await exportForm13Templates();
 
-      // If backend returned 404, display that message (not a fatal failure)
-      if (status === 404) {
-        toast.info(message, {
-          position: "bottom-right",
-          hideProgressBar: false,
-          progress: undefined,
-        });
-        // Considered a 'successful' flow from UI perspective (no file to download)
-        dispatch({ type: REPORT_REGION_EXCEL_SUCCESS });
-        return;
-      }
-
-      // Other errors -> failure
-      dispatch({
-        type: REPORT_REGION_EXCEL_FAILURE,
-        payload: message,
-      });
-
-      toast.error(message, {
-        position: "bottom-right",
-        hideProgressBar: false,
-        progress: undefined,
-      });
+    // Create a blob and trigger download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "RegiTemplate_FormXIII.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    dispatch({ type: TEMPLATE_REGI_GET_SUCCESS });
+    // toast.success("Export successful!");
+  } catch (error) {
+    dispatch({ type: TEMPLATE_REGI_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
 };
 
-export const bulkZipsGetAll = () => async (dispatch) => {
-  dispatch({ type: BULK_FILE_SHARE_GET_REQUEST });
-  await getAllBulkZips()
+export const form13TemplatesAutoexport = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_REGI_UP_GET_REQUEST });
+
+  try {
+    const response = await exportForm13TemplatesAuto(formData);
+
+    // Create a blob and trigger download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "RegiTemplate_FormXIII.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    dispatch({ type: TEMPLATE_REGI_UP_GET_SUCCESS, payload: true, });
+    // toast.success("Export successful!");
+  } catch (error) {
+    dispatch({ type: TEMPLATE_REGI_UP_GET_FAILURE, payload: error.message });
+    toast.error(error.message);
+  }
+};
+
+
+export const formFRegistersgenerate = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_F_GET_REQUEST });
+
+  try {
+    const response = await generateFormFRegisters(formData);
+
+    // Create a Blob for download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "FormF_AllEmployees.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    dispatch({ type: TEMPLATE_FORM_F_GET_SUCCESS, payload: true });
+    toast.success("Form F registers generated successfully!");
+  } catch (error) {
+    console.error("Form F export failed:", error);
+    dispatch({ type: TEMPLATE_FORM_F_GET_FAILURE, payload: error.message });
+    toast.error(error.response?.data?.message || "Form F export failed!");
+  }
+};
+export const formDRegistersgenerate = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_D_GET_REQUEST });
+
+  try {
+    const response = await exportFormDExcel(formData);
+
+    // Create a Blob for download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "FormF_AllEmployees.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    dispatch({ type: TEMPLATE_FORM_D_GET_SUCCESS, payload: true });
+    toast.success("Form F registers generated successfully!");
+  } catch (error) {
+    console.error("Form F export failed:", error);
+    dispatch({ type: TEMPLATE_FORM_D_GET_FAILURE, payload: error.message });
+    toast.error(error.response?.data?.message || "Form F export failed!");
+  }
+};
+
+export const formCRegistersgenerate = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_C_GET_REQUEST });
+
+  try {
+    // Make API call to backend that exports Form C Excel
+    const response = await formCExcel(formData);
+
+    // Create a Blob for Excel download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Generate a download link dynamically
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `Form_C_Data.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+    dispatch({ type: TEMPLATE_FORM_C_GET_SUCCESS, payload: true });
+    toast.success("Form C registers generated successfully!");
+  } catch (error) {
+    console.error("Form C export failed:", error);
+    dispatch({ type: TEMPLATE_FORM_C_GET_FAILURE, payload: error.message });
+    toast.error(error.response?.data?.message || "Form C export failed!");
+  }
+};
+
+export const formARegistersgenerate = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_A_GET_REQUEST });
+
+  try {
+    // Make API call to backend that exports Form C Excel
+    const response = await exportFormAExcel(formData);
+
+    // Create a Blob for Excel download
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Generate a download link dynamically
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `Form_A_Data.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+    dispatch({ type: TEMPLATE_FORM_A_GET_SUCCESS, payload: true });
+    toast.success("Form C registers generated successfully!");
+  } catch (error) {
+    console.error("Form C export failed:", error);
+    dispatch({ type: TEMPLATE_FORM_A_GET_FAILURE, payload: error.message });
+    toast.error(error.response?.data?.message || "Form C export failed!");
+  }
+};
+
+
+
+export const form13TemplatesexportPDF = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_REGI_PDF_GET_REQUEST });
+
+  try {
+    // 🧩 Step 1: Detect if formData is a FormData() instance or a plain object
+    let formType;
+
+    if (formData instanceof FormData) {
+      formType = formData.get("formType");
+    } else {
+      formType = formData?.formType;
+    }
+
+    // console.log("Form Type Received:", `"${formType}"`);
+    // console.log("Full Payload:", formData);
+
+    // 🧩 Step 2: API call (ensure backend returns blob)
+    const response = await exportForm13TemplatesPDF(formData);
+
+    // 🧩 Step 3: Create PDF Blob
+    const blob = new Blob([response.data], { type: "application/pdf" });
+
+    // 🧩 Step 4: Create a dynamic filename
+    const cleanFormType = formType?.trim()?.toLowerCase();
+    const fileName =
+      cleanFormType === "form t" ? "Form-T.pdf"
+        : cleanFormType === "form f" ? "Form-F.pdf"
+          : "Form13.pdf";
+
+    // 🧩 Step 5: Trigger download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    // 🧩 Step 6: Dispatch success
+    dispatch({
+      type: TEMPLATE_REGI_PDF_GET_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    console.error("PDF Export Error:", error);
+    dispatch({
+      type: TEMPLATE_REGI_PDF_GET_FAILURE,
+      payload: error?.response?.data?.message || error.message,
+    });
+    toast.error(error?.response?.data?.message || "PDF export failed");
+  }
+};
+
+export const formFTemplatesExportPDF = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_F_PDF_GET_REQUEST });
+
+  try {
+    // 🧩 Step 1: Detect if formData is a FormData() instance or a plain object
+    let formType;
+
+    if (formData instanceof FormData) {
+      formType = formData.get("formType");
+    } else {
+      formType = formData?.formType;
+    }
+
+    // console.log("Form Type Received:", `"${formType}"`);
+    // console.log("Full Payload:", formData);
+
+    // 🧩 Step 2: API call (ensure backend returns blob)
+    const response = await generateFormFRegistersPDF(formData);
+
+    // 🧩 Step 3: Create PDF Blob
+    const blob = new Blob([response.data], { type: "application/pdf" });
+
+    // 🧩 Step 4: Create a dynamic filename
+    const cleanFormType = formType?.trim()?.toLowerCase();
+    const fileName =
+      cleanFormType === "form t" ? "Form-T.pdf"
+        : cleanFormType === "form f" ? "Form-F.pdf"
+          : "Form13.pdf";
+
+    // 🧩 Step 5: Trigger download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    // 🧩 Step 6: Dispatch success
+    dispatch({
+      type: TEMPLATE_FORM_F_PDF_GET_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    console.error("PDF Export Error:", error);
+    dispatch({
+      type: TEMPLATE_FORM_F_PDF_GET_FAILURE,
+      payload: error?.response?.data?.message || error.message,
+    });
+    toast.error(error?.response?.data?.message || "PDF export failed");
+  }
+};
+
+export const exportFormDPdfAction = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_D_PDF_GET_REQUEST });
+
+  try {
+    // Ensure formType is "Form D"
+    let formType;
+    if (formData instanceof FormData) {
+      formType = formData.get("formType");
+    } else {
+      formType = formData?.formType;
+    }
+
+    if (formType?.trim()?.toLowerCase() !== "form d") {
+      throw new Error("Invalid form type. This action is only for Form D.");
+    }
+
+    // API call: backend should return PDF as arraybuffer/blob
+    const response = await exportFormDPDF(formData); // axios POST with responseType: 'arraybuffer'
+
+    // Create PDF Blob
+    const blob = new Blob([response.data], { type: "application/pdf" });
+
+    // Generate file name dynamically
+    const fileName = `Form-D_${Date.now()}.pdf`;
+
+    // Trigger download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    // Dispatch success
+    dispatch({
+      type: TEMPLATE_FORM_D_PDF_GET_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    console.error("Form D PDF export error:", error);
+    dispatch({
+      type: TEMPLATE_FORM_D_PDF_GET_FAILURE,
+      payload: error?.response?.data?.message || error.message,
+    });
+    toast.error(error?.response?.data?.message || "Form D PDF export failed");
+  }
+};
+
+export const exportFormCPdfAction = (formData) => async (dispatch) => {
+  dispatch({ type: TEMPLATE_FORM_C_PDF_GET_REQUEST });
+
+  try {
+    // Ensure formType is "Form C"
+    let formType;
+    if (formData instanceof FormData) {
+      formType = formData.get("formType");
+    } else {
+      formType = formData?.formType;
+    }
+
+    if (formType?.trim()?.toLowerCase() !== "form c") {
+      throw new Error("Invalid form type. This action is only for Form C.");
+    }
+
+    // API call: backend should return PDF as arraybuffer/blob
+    const response = await formCPDF(formData); // axios POST with responseType: 'arraybuffer'
+
+    // Create PDF Blob
+    const blob = new Blob([response.data], { type: "application/pdf" });
+
+    // Generate file name dynamically
+    const fileName = `Form-C_Data.pdf`;
+
+    // Trigger download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    // Dispatch success
+    dispatch({
+      type: TEMPLATE_FORM_C_PDF_GET_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    console.error("Form C PDF export error:", error);
+    dispatch({
+      type: TEMPLATE_FORM_C_PDF_GET_FAILURE,
+      payload: error?.response?.data?.message || error.message,
+    });
+    toast.error(error?.response?.data?.message || "Form C PDF export failed");
+  }
+};
+
+
+export const AttendanceDataStrides = (postBody) => async (dispatch) => {
+  dispatch({ type: REGI_INTIGRATE_REQUEST });
+
+  try {
+    const response = await stridesAttendanceData(postBody);
+    dispatch({ type: REGI_INTIGRATE_SUCCESS, payload: response.data });
+
+    // toast.success("Returns deleted successfully!");
+  } catch (error) {
+    dispatch({ type: REGI_INTIGRATE_FAILURE, payload: error.message });
+    // toast.error(error.message);
+  }
+};
+export const createRegiIntigrate = (postBody) => async (dispatch) => {
+  dispatch({ type: REGI_INTIGRATE_CREATE_REQUEST });
+
+  try {
+    const response = await regiIntigrateCreate(postBody);
+    dispatch({ type: REGI_INTIGRATE_CREATE_SUCCESS, payload: response.data });
+
+    // toast.success("Returns deleted successfully!");
+  } catch (error) {
+    dispatch({ type: REGI_INTIGRATE_CREATE_FAILURE, payload: error.message });
+    // toast.error(error.message);
+  }
+};
+// export const fetchAllRegiIntigrate = () => async (dispatch) => {
+//   dispatch({ type: REGI_INTIGRATE_GET_ALL_REQUEST });
+
+//   try {
+//     const response = await regiIntigrateFetchAll();
+//     dispatch({ type: REGI_INTIGRATE_GET_ALL_SUCCESS, payload: response.data });
+
+//     // toast.success("Returns deleted successfully!");
+//   } catch (error) {
+//     dispatch({ type: REGI_INTIGRATE_GET_ALL_FAILURE, payload: error.message });
+//     // toast.error(error.message);
+//   }
+// };
+
+export const fetchAllRegiIntigrate = () => async (dispatch) => {
+  dispatch({ type: REGI_INTIGRATE_GET_ALL_REQUEST });
+
+  await regiIntigrateFetchAll()
     .then((response) => {
-      dispatch({ type: BULK_FILE_SHARE_GET_SUCCESS, payload: response.data });
+      dispatch({
+        type: REGI_INTIGRATE_GET_ALL_SUCCESS,
+        payload: response.data,
+      });
       if (response.status === 200) {
+        // toast.success('Company Contractor Details is created Successfully!', {
+        //         position: "bottom-right",
+        //         hideProgressBar: false,
+        //         progress: undefined,
+        // });
       } else {
         dispatch({
-          type: BULK_FILE_SHARE_GET_FAILURE,
+          type: REGI_INTIGRATE_GET_ALL_FAILURE,
           payload: response.data,
         });
         toast.error(response.data, {
@@ -9724,7 +10455,7 @@ export const bulkZipsGetAll = () => async (dispatch) => {
     })
     .catch((error) => {
       dispatch({
-        type: BULK_FILE_SHARE_GET_FAILURE,
+        type: REGI_INTIGRATE_GET_ALL_FAILURE,
         payload: error.message,
       });
 
@@ -9734,57 +10465,4 @@ export const bulkZipsGetAll = () => async (dispatch) => {
         progress: undefined,
       });
     });
-
-};
-
-
-export const bulkFileShareDownload = (fileId, fileName) => async (dispatch) => {
-  dispatch({ type: BULK_FILE_SHARE_DOWNLOAD_REQUEST });
-
-  try {
-    const response = await downloadBulkFile(fileId);
-
-    // Extract filename from headers or fallback to passed fileName
-    let downloadedFileName =
-      response.headers["content-disposition"]
-        ?.split("filename=")[1]
-        ?.replace(/"/g, "") || fileName || "download.zip";
-
-    // Ensure .zip extension
-    if (!downloadedFileName.endsWith(".zip")) {
-      downloadedFileName += ".zip";
-    }
-
-    // Create blob
-    const blob = new Blob([response.data], { type: "application/zip" });
-    const url = window.URL.createObjectURL(blob);
-
-    // Create hidden link
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = downloadedFileName;
-    document.body.appendChild(link);
-    link.click();
-
-    link.remove();
-    window.URL.revokeObjectURL(url);
-
-    dispatch({
-      type: BULK_FILE_SHARE_DOWNLOAD_SUCCESS,
-      payload: { downloadedFileName },
-    });
-
-  } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message;
-
-    dispatch({
-      type: BULK_FILE_SHARE_DOWNLOAD_FAILURE,
-      payload: errorMessage,
-    });
-
-    toast.error(errorMessage, {
-      position: "bottom-right",
-      hideProgressBar: false,
-    });
-  }
 };

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
-// const URL = 'http://localhost:8000/api/admin';
-// const URL = 'http://192.168.1.8:7000/api/admin';
+// const URL = 'http://localhost:7000/api/admin';
+const URL = 'http://192.168.0.50:7000/api/admin';
+// const URL = 'http://192.168.1.76:9500/api/admin';
 
-const URL = 'https://backend.matrixhrtech.com/api/admin';
+// const URL = 'https://backend.matrixhrtech.com/api/admin';
+
 
 axios.defaults.withCredentials = true;
 ///api of users starts
@@ -424,14 +426,14 @@ export const gettingchecklistById = async (id) => {  //all users except logged i
     // alert(JSON.stringify(id)); return;
     return await axios.get(`${URL}/gettingchecklistById/${id}`, config);
 }
-export const checklistAllgetting = async (postbody) => {
+export const checklistAllgetting = async () => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/checklistAllgetting`, postbody, config);
+    return await axios.get(`${URL}/checklistAllgetting`, config);
 }
 export const checklistApprovegetting = async () => {
     const config = {
@@ -539,7 +541,7 @@ export const gettingAuditDetail = async (postBody) => {
     }
     //alert(JSON.stringify(postBody));return;
     // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
-    return await axios.post(`${URL}/gettingAuditDetail`, config);
+    return await axios.get(`${URL}/gettingAuditDetail`, config);
 }
 export const gettingOnGoingAuditDetail = async (postBody) => {
     const config = {
@@ -824,6 +826,17 @@ export const companyLUpdateById = async (data, id) => {
         }
     }
     return await axios.put(`${URL}/companyLUpdateById/${id}`, data, config);
+}
+export const companyUpdateById = async (data, id) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data'
+        }
+    }
+    return await axios.put(`${URL}/companyUpdateById/${id}`, data, config);
 }
 export const apporveCompanyL = async (data) => {
 
@@ -1156,63 +1169,120 @@ export const AuditUploadStatusValue = async (data) => {
     //alert('JSON.stringify(data)'); return;
     return await axios.post(`${URL}/AuditUploadStatusValue`, data, config);
 }
-export const DueDaysNotification = async (notifications) => {
+// export const DueDaysNotification = async(notifications) => {
+
+//     const config = {
+//         headers: {
+//             "Content-Type":"application/json",
+//             Authorization : `Bearer ${getToken()}`,
+//             // 'content-Type': 'multipart/form-data'
+
+//         }
+//     }
+//     // console.log("getToken",getToken);
+//     //alert('JSON.stringify(data)'); return;
+//     return await axios.get(`${URL}/gettingDueNotifications `,notifications,config);
+// }
+export const DueDaysNotification = async () => {
     const config = {
         headers: {
             "Content-Type": "application/json",
-            // "Authorization": `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OWQ0ZjI2MDljOTkyM2M5ZTdiOGY3MiIsImlhdCI6MTcyMTkwNzAzMywiZXhwIjoxNzIyMDc5ODMzfQ.Uc0ExXY4id5oEtIniSyYtcUbyfVZ31PgfFO4eioUjZo`
             Authorization: `Bearer ${getToken()}`,
-
-        },
-        params: notifications
+        }
     };
 
     try {
         const response = await axios.get(`${URL}/gettingDueNotifications`, config);
         return response;
     } catch (error) {
+        // Optionally handle errors here
         console.error('Error fetching due notifications:', error);
-        throw error;
+        throw error; // Re-throw the error if needed
     }
 };
+export const companyexecutiveEGet = async (data) => {
 
-export const fetchCompiledStatusCount = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-            // 'content-Type': 'multipart/form-data'
-        }
-    }
-    //alert(JSON.stringify(postBody));return;
-    // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
-    return await axios.post(`${URL}/CompiledStatusCountGet`, postBody, config);
-}
-export const FetchRegCount = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-            // 'content-Type': 'multipart/form-data'
-        }
-    }
-    //alert(JSON.stringify(postBody));return;
-    // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
-    return await axios.post(`${URL}/CompiledStatusCountRegGet`, postBody, config);
-}
-
-
-
-
-export const CalenderChecklistGet = async (postBody) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`
         }
     }
-    return await axios.post(`${URL}/CalenderChecklistgetting`, postBody, config);
+    return await axios.post(`${URL}/companyexecutiveEGet`, data, config);
 }
+
+export const auditFieldsUpdate = async (auditId, data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        }
+    };
+    return await axios.put(`${URL}/updateAuditFields/${auditId}`, data, config);
+};
+export const updateDueDates = async () => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getToken()}`, // Include authentication if required
+        }
+    };
+    return await axios.put(`${URL}/updateDueDates`, {}, config);
+};
+export const BranchesCreate = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data'
+
+        }
+    };
+    return await axios.post(`${URL}/createBranchRequest`, data, config);
+};
+
+export const AllBranchesGetting = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getAllBranches`, postBody, config); // Removed `postBody`
+};
+
+export const TableBranchesGetting = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/getBranchesTable`, config); // Removed `postBody`
+};
+export const BranchGetById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.get(`${URL}/getBranchById/${id}`, config); // Removed `postBody`
+};
+
+export const BranchUpdateById = async (data, id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+    };
+
+    console.log("API URL:", `${URL}/updateBranchById/${id}`);
+    console.log("FormData:", data);
+
+    return await axios.put(`${URL}/updateBranchById/${id}`, data, config);
+};
 export const CompanyBranchesGetting = async () => {
     const config = {
         headers: {
@@ -1221,77 +1291,6 @@ export const CompanyBranchesGetting = async () => {
         },
     };
     return await axios.get(`${URL}/gettingBranchesForCompany`, config); // Removed `postBody`
-};
-
-
-// export const RegionWiseDataGetting = async (region, fieldName) => {
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${getToken()}`,
-//       },
-//     };
-
-//     const url = `${URL}/getRegionsData?region=${encodeURIComponent(region)}&fieldName=${encodeURIComponent(fieldName)}`;
-
-//     return await axios.post(url, config); // Send the parameters in the query string
-//   };
-
-
-export const RegionWiseDataGetting = async (region, fieldName) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`, // Assuming the token is stored in localStorage or some other method
-        },
-    };
-
-    const url = `${URL}/getRegionsData`; // No need to append parameters to the URL anymore
-
-    // Send the parameters in the request body as JSON
-    const body = {
-        region: region,
-        fieldName: fieldName,
-    };
-
-    return await axios.post(url, body, config); // Send as POST request with the body data
-};
-
-
-export const DashboardBranchGetting = async (state, fieldName, license, region) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/getDashBranchData`; // URL without query parameters
-
-    const requestBody = {
-        state,
-        fieldName,
-        license,
-        region,
-    };
-
-    try {
-        const response = await axios.post(url, requestBody, config); // Use POST and pass body
-        // console.log("API Response:", response.data); // Log the response to verify
-        return response.data; // Ensure it returns the correct data
-    } catch (error) {
-        console.error("API Error:", error);
-        throw error; // Ensure any errors are thrown so they can be caught in the action
-    }
-};
-export const AllBranchesGetting = async (postBody,) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.post(`${URL}/getAllBranches`, postBody, config); // Removed `postBody`
 };
 export const BranchesGettingByCompany = async (data) => {
     const config = {
@@ -1354,237 +1353,6 @@ export const NoticeDeleteById = async (id) => {
     return await axios.delete(`${URL}/deleteNoticeById/${id}`, config);
 };
 
-export const getCompanyBranchByState = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-        }
-    }
-    // alert(id);return;
-    return await axios.post(`${URL}/gettingCompanyBranchByStateForCompanyLogin`, postBody, config);
-}
-export const noticeCompanyCount = async (region, branch, from, to) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`, // Assuming the token is stored in localStorage or some other method
-        },
-    };
-
-    const url = `${URL}/noticeCompanyCounts`; // No need to append parameters to the URL anymore
-
-    // Send the parameters in the request body as JSON
-    const body = {
-        region: region,
-        branch: branch,
-        from: from,
-        to: to,
-    };
-
-    return await axios.post(url, body, config); // Send as POST request with the body data
-};
-
-export const noticeCompanyCountsDetail = async (state, region, fieldName, branch, from, to) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/noticeCompanyCountsDetails`; // API Endpoint
-
-    const requestBody = {
-        state,
-        region,
-        fieldName,
-        branch,
-        from,
-        to,
-    };
-
-    try {
-        const response = await axios.post(url, requestBody, config);
-        return response.data;
-    } catch (error) {
-        console.error("API Error:", error);
-        throw error;
-    }
-};
-
-
-export const NoticeCompanyCountsdownload = async (payload) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getToken()}`, // Add the token for authorization
-        },
-        responseType: 'blob', // Ensures we get a Blob
-    };
-
-    try {
-        const response = await axios.post(`${URL}/downloadNoticeCompanyCountsDetails`, // Ensure this matches the backend route
-            payload,
-            config
-        );
-
-        return response.data;
-
-    } catch (error) {
-        console.error('Error downloading Excel file:', error);
-        throw error;
-    }
-};
-
-//   export const FetchCompliedCount = async ( state, branch, fromDate, toDate, risk) => {
-//     const config = {
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${getToken()}`
-//         }
-//     };
-//     try {
-//         const response = await axios.post(`${URL}/getCompiledStatusCountComp1`, postBody, config);
-//         // console.log('API Response:', response.data); // Log response data
-//         return response;
-//     } catch (error) {
-//         // console.error('API Error:', error); // Log error
-//         throw error;
-//     }
-// };
-
-export const FetchCompliedCount = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/CompiledStatusCountCompGet1`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        console.error("API Error:", error);
-        throw error;
-    }
-};
-export const FetchCompliedCountData = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/getAuditActRuleQuestions`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        // console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        // console.error("API Error:", error);
-        throw error;
-    }
-};
-export const FetchCompliedCountDataLCA = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/getAuditActRuleQuestionsLCA`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        // console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        // console.error("API Error:", error);
-        throw error;
-    }
-};
-export const FetchCompliedCountDataPA = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/getAuditActRuleQuestionsPA`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        // console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        // console.error("API Error:", error);
-        throw error;
-    }
-};
-
-
-export const FetchCompliedCountLCA = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/CompiledStatusCountCompGetLCA`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        console.error("API Error:", error);
-        throw error;
-    }
-};
-
-
-export const FetchCompliedCountPA = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-
-    const url = `${URL}/CompiledStatusCountCompGetPA`;
-
-    // console.log("Sending API Request with:", postBody); // Debugging log
-
-    try {
-        const response = await axios.post(url, postBody, config);
-        console.log("API Response:", response.data); // Debugging log
-        return response;
-    } catch (error) {
-        console.error("API Error:", error);
-        throw error;
-    }
-};
-
 export const getLabourContractAgreementName = async (postBody) => {
     const config = {
         headers: {
@@ -1605,21 +1373,120 @@ export const getPrincipleAgreementName = async (postBody) => {
     return await axios.post(`${URL}/getPrincipleAgreementName`, postBody, config); // Removed `postBody`
 };
 
+export const auditAllFilterLCA = async (body) => {
 
-export const getContractorNames = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    return await axios.post(`${URL}/auditAllFilterLCA`, body, config);
+}
+export const auditAllFilterPA = async (body) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    return await axios.post(`${URL}/auditAllFilterPA`, body, config);
+}
+
+// export const updateDueDates = async () => {
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${getToken()}`, // Include authentication if required
+//         }
+//     };
+//     return await axios.put(`${URL}/updateDueDates`, {}, config);
+// };
+
+export const gettingAuditDetailLCA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    //alert(JSON.stringify(postBody));return;
+    // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
+    return await axios.get(`${URL}/gettingAuditDetailLCA`, config);
+    // return await axios.get(`${URL}/gettingAuditDetail`, config);
+}
+
+export const gettingAuditDetailPA = async (postBody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    //alert(JSON.stringify(postBody));return;
+    // alert(`${URL}/gettingCompliancesFilter?state=${state}&created_at=${created_at}`);return;
+    return await axios.get(`${URL}/gettingAuditDetailPA`, config);
+    // return await axios.get(`${URL}/gettingAuditDetail`, config);
+}
+
+// export const auditFieldsUpdate = async (auditId, data) => {
+//     const config = {
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${getToken()}`,
+//         }
+//     };
+//     return await axios.put(`${URL}/updateAuditFields/${auditId}`, data, config);
+// };
+export const AuditUploadStatusValueLCA = async (data) => {
+
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
-        },
+            // 'content-Type': 'multipart/form-data'
+
+        }
+    }
+    //alert('JSON.stringify(data)'); return;
+    return await axios.post(`${URL}/AuditUploadStatusValueLCA`, data, config);
+}
+
+export const AuditUploadStatusValuePA = async (data) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data'
+
+        }
+    }
+    //alert('JSON.stringify(data)'); return;
+    return await axios.post(`${URL}/AuditUploadStatusValuePA`, data, config);
+}
+export const fileUploadInAuditQuestionLCA = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data'
+        }
     };
-    return await axios.post(`${URL}/getContractorNamesForCompanyLogin`, postBody, config); // Removed `postBody`
+    return await axios.put(`${URL}/fileUploadInAuditQuestionLCA`, data, config);
+};
+export const fileUploadInAuditQuestionPA = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data'
+        }
+    };
+    return await axios.put(`${URL}/fileUploadInAuditQuestionPA`, data, config);
 };
 
-
-
-
-// E-Library STARTS---------------------->>>
 
 
 
@@ -2628,27 +2495,42 @@ export const getMinimumWageById = async (id) => {
     return await axios.post(`${URL}/getMinimumWageById/${id}`, {}, config);
 };
 
-export const complianceOverView = async (postbody) => {
+export const createRemittanceTracker = async (postbody) => {
     const config = {
         headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'multipart/form-data',
         },
     };
-
-    // ✅ Correct usage: empty body, headers in third param
-    return await axios.post(`${URL}/complianceOverView`, postbody, config);
+    return await axios.post(`${URL}/createRemmitanceTracker`, postbody, config);
 };
-
 
 export const getAllRemittanceTrackers = async (postBody) => {
     const config = {
         headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
         },
     };
     return await axios.post(`${URL}/getAllRemmitanceTrackers`, postBody, config);
+};
+
+export const updateRemittanceTracker = async (data, id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    return await axios.post(`${URL}/updateRemmitanceTracker/${id}`, data, config);
+};
+
+export const deleteRemittanceTracker = async (id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/deleteRemmitanceTracker/${id}`, {}, config);
 };
 export const getRemmitanceTrackerById = async (id) => {
     const config = {
@@ -2661,16 +2543,105 @@ export const getRemmitanceTrackerById = async (id) => {
     return await axios.post(`${URL}/getRemmitanceTrackerById/${id}`, {}, config);
 };
 
-export const getAllReturnsTrackers = async (postBody) => {
+export const createRegisterComp = async (postbody) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.post(`${URL}/createRegisterComp `, postbody, config); // Using POST here
+};
+export const getAllRegisters = async (postbody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+
+    return await axios.post(`${URL}/getAllRegisters`, postbody, config);
+};
+// actLibraryService.js
+
+export const getRegisterById = (id) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
         },
     };
-    return await axios.post(`${URL}/getAllReturnsTrackers`, postBody, config);
+    return axios.post(`${URL}/getRegisterById/${id}`, {}, config); // {} body, headers 3rd param
 };
 
+
+export const updateRegisterById = async (data, id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            'content-type': 'multipart/form-data'
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.put(`${URL}/updateRegisterById/${id}`, data, config); // Using POST here
+};
+export const deleteRegisterById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+
+
+        },
+    };
+
+    // Send a POST request with the IDs in the body
+    return await axios.delete(`${URL}/deleteRegisterById/${id}`, config); // Using POST here
+};
+
+export const createReturnsTracker = async (postbody) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    return await axios.post(`${URL}/createReturnsTracker`, postbody, config);
+};
+
+export const getAllReturnsTrackers = async (params) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/getAllReturnsTrackers`, params, config);
+};
+
+export const updateReturnsTracker = async (data, id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    return await axios.post(`${URL}/updateReturnsTracker/${id}`, data, config);
+};
+
+export const deleteReturnsTracker = async (id) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+    };
+    return await axios.post(`${URL}/deleteReturnsTracker/${id}`, {}, config);
+};
 export const getReturnsTrackerById = async (id) => {
     const config = {
         headers: {
@@ -2682,72 +2653,28 @@ export const getReturnsTrackerById = async (id) => {
     return await axios.post(`${URL}/getReturnsTrackerById/${id}`, {}, config);
 };
 
-export const getAllRegisters = async (postBody) => {
+export const catGetComp = async () => {
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+    return await axios.get(`${URL}/catGetttingComp`, config);
+}
 
-    return await axios.post(`${URL}/getAllRegisters`, postBody, config);
-};
-
-export const overViewStatuses = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.post(`${URL}/overViewStatuses`, postBody, config);
-};
-export const companyLoginBranch = async () => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.get(`${URL}/companyLoginBranch`, config);
-};
-export const getPFTrackerforCompany = async (postBody) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.post(`${URL}/getPFTrackerforCompany`, postBody, config);
-};
-export const applicableCompliances = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.post(`${URL}/applicableCompliances`, postBody, config);
-};
-export const getBranchForLicensesDetails = async (postBody) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`,
-        },
-    };
-    return await axios.post(`${URL}/getBranchForLicensesDetails`, postBody, config);
-};
-export const downloadRegionBranchesExcel = async (postBody) => {
+export const getChecklistByCategory = async (postBody) => {
     const config = {
         headers: {
             // "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
-        },
-        responseType: "blob"
-    };
-    return await axios.post(`${URL}/downloadRegionBranchesExcel`, postBody, config);
-};
+            // 'content-Type': 'multipart/form-data',
 
-export const getAllBulkZips = async () => {
+        },
+    };
+    return await axios.post(`${URL}/getChecklistByCategory`, postBody, config);
+};
+export const deleteBranches = async (id) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -2756,31 +2683,214 @@ export const getAllBulkZips = async () => {
 
         },
     };
-    return await axios.get(`${URL}/getAllBulkZips`, config);
+    return await axios.post(`${URL}/deleteBranches/${id}`, {}, config);
 };
-// Correct your downloadBulkFile API function
-// export const downloadBulkFile = async (fileId) => {
-//     const config = {
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${getToken()}`,
-//         },
-//         responseType: 'blob' // Important for file downloads
-//     };
 
-//     return await axios.post(`${URL}/downloadBulkFile/${fileId}`,  config);
-//     // Remove the empty {} second parameter
-// };
-
-export const downloadBulkFile = async (fileId) => {
+export const getBranchRequests = async (data) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${getToken()}`,
             // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/getBranchRequests`, data, config);
+};
+export const getBranchRequestById = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/getBranchRequestById/${id}`, {}, config);
+};
+
+export const checkBranchNameExists = async (data) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/checkBranchNameExists`, data, config);
+};
+
+export const deleteBranchLicenseRequest = async (id) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/deleteBranchLicenseRequest/${id}`, {}, config);
+};
+export const exportForm13Templates = async () => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+        },
+        responseType: "blob", // 👈 important
+    };
+
+    return await axios.get(`${URL}/exportForm13Templates`, config);
+};
+export const exportForm13TemplatesPDF = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data',
 
         },
         responseType: "blob", // 👈 important
     };
-    return await axios.get(`${URL}/downloadBulkFile/${fileId}`, config);
+
+    // return await axios.get(`${URL}/exportForm13TemplatesPDF`, config);
+    return await axios.post(`${URL}/exportForm13TemplatesToPDF`, formData, config);
+};
+
+
+export const exportForm13TemplatesAuto = async (formData) => {
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`,
+            // 'Content-Type': 'multipart/form-data',
+            'content-Type': 'multipart/form-data',
+
+        },
+        responseType: "blob", // 👈 important for file download
+    };
+
+    return await axios.post(`${URL}/exportForm13TemplatesAuto`, formData, config);
+};
+
+export const generateFormFRegisters = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+        responseType: "blob", // Important for binary Excel download
+    };
+
+    return await axios.post(`${URL}/generateFormFRegisters`, formData, config);
+};
+
+export const generateFormFRegistersPDF = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data',
+
+        },
+        responseType: "blob", // 👈 important
+    };
+
+    // return await axios.get(`${URL}/exportForm13TemplatesPDF`, config);
+    return await axios.post(`${URL}/generateFormFRegistersPDF`, formData, config);
+};
+
+
+export const exportFormDExcel = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+        responseType: "blob", // Important for binary Excel download
+    };
+
+    return await axios.post(`${URL}/exportFormDExcel`, formData, config);
+};
+export const exportFormAExcel = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+        responseType: "blob", // Important for binary Excel download
+    };
+
+    return await axios.post(`${URL}/exportFormAExcel`, formData, config);
+};
+
+export const exportFormDPDF = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data',
+
+        },
+        responseType: "blob", // 👈 important
+    };
+
+    // return await axios.get(`${URL}/exportForm13TemplatesPDF`, config);
+    return await axios.post(`${URL}/exportFormDPDF`, formData, config);
+};
+export const formCExcel = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            "Content-Type": "multipart/form-data",
+        },
+        responseType: "blob", // Important for binary Excel download
+    };
+
+    return await axios.post(`${URL}/formCExcel`, formData, config);
+};
+
+export const formCPDF = async (formData) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'content-Type': 'multipart/form-data',
+
+        },
+        responseType: "blob", // 👈 important
+    };
+
+    // return await axios.get(`${URL}/exportForm13TemplatesPDF`, config);
+    return await axios.post(`${URL}/formCPDF`, formData, config);
+};
+
+
+export const stridesAttendanceData = async (formData) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/stridesAttendanceData`, formData, config);
+};
+export const regiIntigrateCreate = async (formData) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.post(`${URL}/regiIntigrateCreate`, formData, config);
+};
+export const regiIntigrateFetchAll = async () => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-Type': 'multipart/form-data',
+
+        },
+    };
+    return await axios.get(`${URL}/regiIntigrateFetchAll`,  config);
 };

@@ -1,138 +1,147 @@
-'use strict';
-import React from "react";
-import Navbar from "./components/navbar/Navbar";
-//auth user
-import Login from "./components/auth/Login";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Logout from "./components/auth/Logout";
-import DashbordTables from "./pages/Dashboard/DashbordTables";
-import Compliance from "./pages/Compliance/Compliances";
-import Audit from "./pages/Audit/Audit";
-// import Branch from "./pages/Branch/Branch";
-// import Company from "./pages/Company/Company";
-// import Category from  "./pages/Category/Category";
-import Checklist from "./pages/Checklist/Checklist";
-import Licsregs from "./pages/Licsregs/LisRegs";
-import Notifications from "./pages/Notifications/Notifications";
-import ELibrary from "./pages/ELibrary/ELibrary";
-import Companies from "./pages/Company/Companies";
-// import ElibraryEdit from './pages/ELibrary/ElibraryEdit';
-// import Companies from  "./pages/Company/Companiesdevendra";
-// import Users from "./pages/Users/Users";
-// import Replicate from "./pages/Audit/Replicate";
-import PrivateRoutes from './routes/PrivateRoutes';
-import PublicRoutes from './routes/PublicRoutes';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-tabs/style/react-tabs.css';
-import Notice from "./pages/Notice/Notice";
+import React, { useState, useEffect } from "react";
+import Preloader from "../src/components/Pre";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home/Home";
+import About from "./components/About/About";
+// import Projects from "./components/Projects/Projects";
+import Footer from "./components/Footer";
+// import Resume from "./components/Resume/ResumeNew";
+import Contact from "./components/Contact/Contact";
 
-import ViewElibrary from "./pages/NewELibrary/View/ViewElibrary";
-import CreateElibrary from "./pages/NewELibrary/Create/CreateElibrary";
+// ✅ Login (ALL logic inside Login.jsx)
+import Login from "./pages/services/Login/Login";
 
-import ActView from "./pages/NewELibrary/View/Act/ActView";
-import CompQAHubView from "./pages/NewELibrary/View/ComplianceQA/QandAHub/CompQAHubView";
-import HolidaysView from "./pages/NewELibrary/View/NationalHolidays/HolidaysView";
+// ✅ Services Pages
+import ComplianceMgmt from "./pages/services/ComplianceMgmt";
+import Payroll from "./pages/services/Payroll";
+import FactoryLicense from "./pages/services/FactoryLicense";
+import CLRA from "./pages/services/CLRA";
+import Audits from "./pages/services/Audits";
+import HRSharedServices from "./pages/services/HRSharedServices";
+import StatutoryReturns from "./pages/services/StatutoryReturns";
+import SocialSecurity from "./pages/services/SocialSecurity";
+import VendorCompliance from "./pages/services/VendorCompliance";
+import InspectionReadiness from "./pages/services/InspectionReadiness";
+import MultiStateCompliance from "./pages/services/MultiStateCompliance";
+import ComplianceTracking from "./pages/services/ComplianceTracking";
+import RiskManagement from "./pages/services/RiskManagement";
+import Demo from "./pages/services/demo/Demo";
+import ELibrary from "./pages/services/NewELibrary/View/ViewElibrary";
+import CreateElibrary from "./pages/services/NewELibrary/Create/CreateElibrary";
+import ActView from "./pages/services/NewELibrary/View/Act/ActView";
+import RulesView from "./pages/services/NewELibrary/View/Rules/RulesView";
+import LabourFormsView from "./pages/services/NewELibrary/View/LabourForms/LabourFormsView";
+import HolidaysView from "./pages/services/NewELibrary/View/NationalHolidays/HolidaysView";
+import LabourWelfareView from "./pages/services/NewELibrary/View/LabourWelfare/LabourWelfareView";
+import MinWagesView from "./pages/services/NewELibrary/View/MinimumWages/MinWagesView";
+import WH_LR from "./pages/services/NewELibrary/View/WH_LR/WH_LR";
+import PTView from "./pages/services/NewELibrary/View/PT/PTView";
+import PolicyTempView from "./pages/services/NewELibrary/View/PolicyTemplates/PolicyTempView";
+import LegalUpds from "./pages/services/NewELibrary/View/LegalUpdates/LegalUpds";
+import OthersView from "./pages/services/NewELibrary/View/Others/OthersView";
 
-import LabourFormsView from "./pages/NewELibrary/View/LabourForms/LabourFormsView";
-import LabourWelfareView from "./pages/NewELibrary/View/LabourWelfare/LabourWelfareView";
-import LegalUpds from "./pages/NewELibrary/View/LegalUpdates/LegalUpds";
+import CompOptions from "./pages/services/NewELibrary/View/ComplianceQA/CompOptions";
+import CompCatView from "./pages/services/NewELibrary/View/ComplianceQA/CompCategory/CompCatView";
+import CompQAHubView from "./pages/services/NewELibrary/View/ComplianceQA/QandAHub/CompQAHubView";
+import CompQATable from "./pages/services/NewELibrary/View/ComplianceQA/QandAHub/CompQATable";
 
-import MinWagesView from "./pages/NewELibrary/View/MinimumWages/MinWagesView";
-import PolicyTempView from "./pages/NewELibrary/View/PolicyTemplates/PolicyTempView";
-import PTView from "./pages/NewELibrary/View/PT/PTView";
+import HolidayElibraryStateDetails from "./pages/services/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
+import LabourWelfareState from "./pages/services/NewELibrary/View/LabourWelfare/LabourWelfareState";
+import MinWagesStateWise from "./pages/services/NewELibrary/View/MinimumWages/MinWagesStateWise";
+import WH_LR_State from "./pages/services/NewELibrary/View/WH_LR/WH_LR_State";
+import PTState from "./pages/services/NewELibrary/View/PT/PTState";
 
-import RulesView from "./pages/NewELibrary/View/Rules/RulesView";
-import WH_LR from "./pages/NewELibrary/View/WH_LR/WH_LR";
-import OthersView from "./pages/NewELibrary/View/Others/OthersView";
-import CompOptions from "./pages/NewELibrary/View/ComplianceQA/CompOptions";
-import CompCatView from "./pages/NewELibrary/View/ComplianceQA/CompCategory/CompCatView";
-import Formcreate from "./pages/HelpAndSupport/Formcreate";
-
-import HolidayElibraryStateDetails from "./pages/NewELibrary/View/NationalHolidays/HolidayElibraryStateDetails";
-import LabourWelfareState from "./pages/NewELibrary/View/LabourWelfare/LabourWelfareState";
-import MinWagesStateWise from "./pages/NewELibrary/View/MinimumWages/MinWagesStateWise";
-import WH_LR_State from "./pages/NewELibrary/View/WH_LR/WH_LR_State";
-import PTState from "./pages/NewELibrary/View/PT/PTState";
-import CompQATable from "./pages/NewELibrary/View/ComplianceQA/QandAHub/CompQATable";
-import BulkFileView from "./pages/BulkFileUploader/BulkFileView";
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
+import "./style.css";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import Typewriter from "typewriter-effect";
 
 function App() {
+  const [load, upadateLoad] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      upadateLoad(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <Router >
-      <Navbar />
-      <Routes>
+    <Router>
+      <Preloader load={load} />
+      <div className="App" id={load ? "no-scroll" : "scroll"}>
+        <Navbar />
+        <ScrollToTop />
 
-        <Route
-          path="/holiday-elibrary-state"
-          element={<HolidayElibraryStateDetails />}
-        />
+        <Routes>
+          {/* ================= MAIN PAGES ================= */}
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/project" element={<Projects />} /> */}
+          <Route path="/about" element={<About />} />
+          {/* <Route path="/resume" element={<Resume />} /> */}
+          <Route path="/contact" element={<Contact />} />
 
-        <Route exact path="/" element={<Login />} />
-        <Route path="/dashboard" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
-        <Route path="/dashboard" element={<PrivateRoutes><Dashboard /></PrivateRoutes>} />
-        {/* <Route path="/replicate" element={<Replicate />} />  */}
-        <Route path="/notice" element={<PrivateRoutes><Notice /></PrivateRoutes>} />
+          {/* ================= LOGIN & DASHBOARD (SAME COMPONENT) ================= */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard/:role" element={<Login />} />
 
-        {/* <Route path="/dashbordTables" element={<PrivateRoutes><DashbordTables /></PrivateRoutes>} /> */}
-        <Route path="/logout" element={<PrivateRoutes><Logout /></PrivateRoutes>} />
-        <Route path="/compliances" element={<PrivateRoutes><Compliance /></PrivateRoutes>} />
-        <Route path="/audit" element={<PrivateRoutes><Audit /></PrivateRoutes>} />
-        <Route path="/checklist" element={<PrivateRoutes><Checklist /></PrivateRoutes>} />
-        <Route path="/companies" element={<PrivateRoutes><Companies /></PrivateRoutes>} />
-        <Route path="/notification" element={<PrivateRoutes><Notifications /></PrivateRoutes>} />
-        <Route path="/elibrary" element={<PrivateRoutes><ELibrary /></PrivateRoutes>} />
-        {/* <Route path="/companies" element={<PrivateRoutes><ELibrary /></PrivateRoutes>} /> */}
-        <Route path="/licsregs" element={<PrivateRoutes><Licsregs /></PrivateRoutes>} />
-        {/* <Route path="/usercreate" element={<PrivateRoutes><Users /></PrivateRoutes>} /> */}
+          {/* ================= SERVICES ================= */}
+          <Route path="/services/compliance-mgmt" element={<ComplianceMgmt />} />
+          <Route path="/services/payroll" element={<Payroll />} />
+          <Route path="/services/factory-license" element={<FactoryLicense />} />
+          <Route path="/services/clra" element={<CLRA />} />
+          <Route path="/services/audits" element={<Audits />} />
+          <Route path="/services/hr-shared-services" element={<HRSharedServices />} />
+          <Route path="/services/statutory-returns" element={<StatutoryReturns />} />
+          <Route path="/services/social-security" element={<SocialSecurity />} />
+          <Route path="/services/vendor-compliance" element={<VendorCompliance />} />
+          <Route path="/services/inspection-readiness" element={<InspectionReadiness />} />
+          <Route path="/services/multi-state-compliance" element={<MultiStateCompliance />} />
+          <Route path="/services/compliance-tracking" element={<ComplianceTracking />} />
+          <Route path="/services/risk-management" element={<RiskManagement />} />
+         
+          {/* ================= FALLBACK ================= */}
+          <Route path="*" element={<Navigate to="/" />} />
+           <Route path="/demo" element={<Demo />} />
+          
+           {/* ===== ELIBRARY ===== */}
+        <Route path="/elibrary" element={<ELibrary />} />
+        
+<Route path="/services/elibrary/create" element={<CreateElibrary />} />
 
-        <Route path="/elibrary/View" element={<PrivateRoutes><ViewElibrary /></PrivateRoutes>} />
-        <Route path="/elibrary/Create" element={<PrivateRoutes><CreateElibrary /></PrivateRoutes>} />
+<Route path="/services/elibrary/acts" element={<ActView />} />
+<Route path="/services/elibrary/rules" element={<RulesView />} />
+<Route path="/services/elibrary/labour-forms" element={<LabourFormsView />} />
+<Route path="/services/elibrary/holidays" element={<HolidaysView />} />
+<Route path="/services/elibrary/labour-welfare" element={<LabourWelfareView />} />
+<Route path="/services/elibrary/minimum-wages" element={<MinWagesView />} />
+<Route path="/services/elibrary/working-hours" element={<WH_LR />} />
+<Route path="/services/elibrary/professional-tax" element={<PTView />} />
+<Route path="/services/elibrary/policy-templates" element={<PolicyTempView />} />
+<Route path="/services/elibrary/legal-updates" element={<LegalUpds />} />
+<Route path="/services/elibrary/compliance-qa" element={<CompOptions />} />
+<Route path="/services/elibrary/general" element={<OthersView />} />
 
-        <Route path="/elibrary/View/Acts" element={<PrivateRoutes><ActView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/National_&_Festival_Holidays" element={<PrivateRoutes><HolidaysView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Minimum_Wages" element={<PrivateRoutes><MinWagesView /></PrivateRoutes>} />
+<Route path="/services/elibrary/holidays/:state" element={<HolidayElibraryStateDetails />} />
+<Route path="/services/elibrary/labour-welfare/:state" element={<LabourWelfareState />} />
+<Route path="/services/elibrary/minimum-wages/:state" element={<MinWagesStateWise />} />
+<Route path="/services/elibrary/working-hours/:state" element={<WH_LR_State />} />
+<Route path="/services/elibrary/professional-tax/:state" element={<PTState />} />
 
-        <Route path="/elibrary/View/Rules" element={<PrivateRoutes><RulesView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Labour_Welfare_Fund" element={<PrivateRoutes><LabourWelfareView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Labour_Welfare_Fund/:stateName" element={<PrivateRoutes><LabourWelfareState /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Working_Hours_&_leave_Rules" element={<PrivateRoutes><WH_LR /></PrivateRoutes>} />
+<Route path="/services/elibrary/compliance-qa/category" element={<CompCatView />} />
+<Route path="/services/elibrary/compliance-qa/hub" element={<CompQAHubView />} />
+<Route path="/services/elibrary/compliance-qa/table" element={<CompQATable  />} />
+        </Routes>
 
-        <Route path="/elibrary/View/Labour_Forms" element={<PrivateRoutes><LabourFormsView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Professional_Tax" element={<PrivateRoutes><PTView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Compliance/Compliance_Q&A_Hub" element={<PrivateRoutes><CompQAHubView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Compliance/ComplianceCategory" element={<PrivateRoutes><CompCatView /></PrivateRoutes>} />
-
-        <Route path="/elibrary/View/Policy_Templates" element={<PrivateRoutes><PolicyTempView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Recent_Legal_Updates" element={<PrivateRoutes><LegalUpds /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Others" element={<PrivateRoutes><OthersView /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Compliance" element={<PrivateRoutes><CompOptions /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Compliance/:categoryId" element={<CompQATable />} />
-
-        <Route path="/HelpAndSupport/Form" element={<PrivateRoutes><Formcreate /></PrivateRoutes>} />
-        <Route path="/elibrary/View/National_&_Festival_Holidays/HolidayList" element={<PrivateRoutes><HolidayElibraryStateDetails /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Minimum_Wages/MinimumWagesList" element={<PrivateRoutes><MinWagesStateWise /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Working_Hours_&_leave_Rules/:stateName" element={<PrivateRoutes><WH_LR_State /></PrivateRoutes>} />
-        <Route path="/elibrary/View/Professional_Tax/:stateName" element={<PrivateRoutes><PTState /></PrivateRoutes>} />
-
-        <Route path="/file-sharing" element={<PrivateRoutes><BulkFileView /></PrivateRoutes>} />
-
-
-      </Routes>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+        <Footer />
+      </div>
     </Router>
   );
 }

@@ -1,14 +1,68 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap'); */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit&family=PT+Mono&display=swap");
+
+
+
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "PT Mono", monospace !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background: linear-gradient(135deg, #F5FAFF, #1b3879); */
+  /* background: #FFFFFF;
+background: -moz-linear-gradient(-45deg, #CCEBFD 0%, #013879 100%);
+background: -webkit-linear-gradient(-45deg, #CCEBFD 0%, #013879 100%);
+background: linear-gradient(135deg, #CCEBFD 0%, #013879 100%); */
+
+background: -moz-linear-gradient(-45deg, #013879 0%, #CCEBFD 100%);
+background: -webkit-linear-gradient(-45deg, #013879 0%, #CCEBFD 100%);
+background: linear-gradient(135deg, #013879 0%, #CCEBFD 100%);
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Base styles are already applied above */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px; /* Slightly smaller font on mobile */
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .home-content, .about-section, .project-section, .resume-section {
+    padding: 15px !important; /* reduce padding on smaller screens */
+  }
+
+  .project-card-view {
+    margin-bottom: 20px; /* add spacing between project cards */
+  }
+
+  .home-header h1,
+  .home-header .heading-name {
+    font-size: 1.8em; /* scale headings for smaller screens */
+  }
+
+  .home-about-body, .quote-card-view blockquote p {
+    font-size: 14px; /* readable text on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .home-header h1,
+  .home-header .heading-name {
+    font-size: 1.5em; 
+  }
+
+  .home-about-body, .quote-card-view blockquote p {
+    font-size: 13px;
+  }
+
+  .tech-icons-text {
+    font-size: 10px; /* make tech stack text smaller */
+  }
 }
