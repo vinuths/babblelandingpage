@@ -78,15 +78,18 @@ const LabourWelfareTable = ({ localPage, setLocalPage }) => {
             toast.error("Failed to update status");
         }
     };
+const handleStateClick = (stateName) => {
+    const item = data.find(el => el.stateData?.name === stateName);
+    if (item) {
+        navigate(
+            `/services/elibrary/labour-welfare/${encodeURIComponent(item.stateData.name)}`,
+            {
+                state: { stateId: item.stateData._id }
+            }
+        );
+    }
+};
 
-    const handleStateClick = (stateName) => {
-        const item = data.find(el => el.stateData?.name === stateName);
-        if (item) {
-            navigate(`/elibrary/View/Labour_Welfare_Fund/${item.stateData.name}`, {
-                state: item.stateData._id,
-            });
-        }
-    };
 
     const applicableStates = [...new Set(data.filter(item => item.applicability === true).map(item => item.stateData?.name))].sort();
     const notApplicableStates = [...new Set(data.filter(item => item.applicability === false).map(item => item.stateData?.name))].sort();

@@ -1,8 +1,8 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-// import { CgWebsite } from "react-icons/cg";
-// import { BsGithub } from "react-icons/bs";
+import { CgWebsite } from "react-icons/cg";
+import { BsGithub } from "react-icons/bs";
 
 function ProjectCards(props) {
   return (
@@ -33,8 +33,7 @@ function ProjectCards(props) {
             target="_blank"
             style={{ marginBottom: "5px" }} // spacing for stacked buttons on mobile
           >
-            {/* <BsGithub />  */}
-            &nbsp;
+            <BsGithub /> &nbsp;
             {props.isBlog ? "Blog" : "GitHub"}
           </Button>
         )}
@@ -47,8 +46,7 @@ function ProjectCards(props) {
             target="_blank"
             style={{ marginLeft: "10px", marginTop: "5px" }}
           >
-            {/* <CgWebsite /> */}
-             &nbsp; Demo
+            <CgWebsite /> &nbsp; Demo
           </Button>
         )}
       </Card.Body>

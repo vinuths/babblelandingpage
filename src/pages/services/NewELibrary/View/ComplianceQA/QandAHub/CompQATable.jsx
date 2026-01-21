@@ -67,7 +67,8 @@ const CompQATable = ({ localPage = 1, setLocalPage = () => { } }) => {
 
       <div className="backCon1">
         <div className="text-center mb-3">
-          <button onClick={() => navigate("/elibrary/View/Compliance")} className="back-button" style={{ position: 'relative', top: '55px' }}>
+          <button 
+          onClick={() => navigate("/services/elibrary/compliance-qa")} className="back-button" style={{ position: 'relative', top: '55px' }}>
             <ArrowBackIcon />
           </button>
 

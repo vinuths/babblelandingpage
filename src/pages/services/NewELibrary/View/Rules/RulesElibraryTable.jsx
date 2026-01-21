@@ -50,8 +50,8 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
             <div className="acts-header">
                 {/* 🔙 Back Button inside acts-header */}
                 <button
-                    onClick={() => navigate("/elibrary/View")}
-                    className="back-button"
+onClick={() => navigate(-1)}        
+            className="back-button"
                     style={{
                         background: "none",
                         border: "none",

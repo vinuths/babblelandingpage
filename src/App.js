@@ -134,10 +134,14 @@ function App() {
 <Route path="/services/elibrary/minimum-wages/:state" element={<MinWagesStateWise />} />
 <Route path="/services/elibrary/working-hours/:state" element={<WH_LR_State />} />
 <Route path="/services/elibrary/professional-tax/:state" element={<PTState />} />
+<Route path="/services/elibrary/compliance-qa" element={<CompOptions />} />
 
 <Route path="/services/elibrary/compliance-qa/category" element={<CompCatView />} />
 <Route path="/services/elibrary/compliance-qa/hub" element={<CompQAHubView />} />
-<Route path="/services/elibrary/compliance-qa/table" element={<CompQATable  />} />
+<Route 
+  path="/services/elibrary/View/Compliance/:categoryId" 
+  element={<CompQATable />} 
+/>
         </Routes>
 
         <Footer />

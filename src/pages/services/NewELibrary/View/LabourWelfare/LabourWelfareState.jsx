@@ -8,12 +8,13 @@ import {
     stateGets,
 } from "../../../../../store/actions/otherActions";
 import "./LabourWelfareStateCards.css";
+import { useParams } from "react-router-dom";
 
 const LabourWelfareState = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const stateId = location.state || {};
+    const stateId = location.state?.stateId || "";
 
     const { LabourWelfareStateInfo } = useSelector(
         (state) => state.labourWelfareLibraryStateWiseRed
@@ -22,6 +23,7 @@ const LabourWelfareState = () => {
 
     const [dataSource, setDataSource] = useState({});
     const [selectedState, setSelectedState] = useState(stateId || "");
+    const { state } = useParams(); // state name from URL
 
     useEffect(() => {
         dispatch(stateGets());
@@ -192,7 +194,7 @@ const LabourWelfareState = () => {
                                         )}
                                     </td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <td><strong>Note</strong></td>
                                     <td>{dataSource?.applicableData || "N/A"}</td>
                                 </tr>

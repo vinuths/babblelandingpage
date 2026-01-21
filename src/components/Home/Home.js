@@ -12,6 +12,10 @@ import serviceimage3 from "../../Assets/19197135.jpg"; // Adjust relative path f
 import ComplianceChatbot from "../ComplianceChatbot";
 import Carousel from "react-bootstrap/Carousel";
 import Cloud from "../../Assets/favicon.png"; 
+import compliancecalender from "../../Assets/compliancecalender .png"; // Adjust relative path from the component file
+import complianceoverview from "../../Assets/complianceoverview.png"; // Adjust relative path from the component file
+import registrationlicenses from "../../Assets/registrationlicenses.png"; // Adjust relative path from the component file
+import PFtracker from "../../Assets/PFtracker.png"; // Adjust relative path from the component file
 
 const heroTexts = [
   {
@@ -178,6 +182,24 @@ function Home() {
   const [loading, setLoading] = useState(true);
 const isScrollingRef = useRef(false);
 const snapTimeoutRef = useRef(null);
+
+const heroImages = [
+  homeLogo,
+  compliancecalender,
+  complianceoverview,
+  registrationlicenses,
+  PFtracker,
+];
+
+const [currentImage, setCurrentImage] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentImage((prev) => (prev + 1) % heroImages.length);
+  }, 5000); // 3 seconds
+
+  return () => clearInterval(interval);
+}, []);
 
   // AUTO-HERO SLIDE ROTATION
   useEffect(() => {
@@ -413,22 +435,17 @@ scrollSnapStop: "always",
   </div>
 </Col>
 
+<Col md={5} className="text-center position-relative">
+  <div className="hero-image-wrapper">
+    <img
+      src={heroImages[currentImage]}
+      alt="hero"
+      className="hero-image img-fluid"
+    />
+  </div>
+</Col>
 
-            <Col md={5} className="text-center">
-              <img
-                src={homeLogo}
-                alt="hero"
-                className="hero-image img-fluid"
-                style={{
-                  maxHeight: "750px", // slightly bigger
-                  width: "100%",
-                  objectFit: "cover",
-                  borderRadius: "20px",
-                  boxShadow: "0 15px 35px rgba(0,0,0,0.2)",
-                  animation: "float 4s ease-in-out infinite",
-                }}
-              />
-            </Col>
+
           </Row>
         </Container>
         
@@ -494,6 +511,45 @@ scrollSnapStop: "always",
             0%,100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
           }
+            .hero-image-wrapper {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #013879, #0d6efd);
+  padding: 6px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.hero-image {
+  width: 100%;
+  max-height: 750px;
+  object-fit: contain; /* 🔥 KEY FIX FOR BLUR */
+  border-radius: 18px;
+  background: #fff;
+
+  /* 🔥 Image clarity */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+
+  /* Smooth animation */
+  animation: float 5s ease-in-out infinite;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Hover effect */
+.hero-image-wrapper:hover .hero-image {
+  transform: scale(1.03);
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
         `}</style>
       </Container>
 

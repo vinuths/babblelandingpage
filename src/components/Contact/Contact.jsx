@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Particle from "../Particle";
-// import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 
 function Contact() {
   const [form, setForm] = useState({
@@ -51,7 +51,7 @@ function Contact() {
             textDecoration: "none",
           }}
         >
-          {/* <FaWhatsapp size={32} /> */}
+          <FaWhatsapp size={32} />
         </a>
 
         <Container fluid style={{ paddingBottom: "80px" }}>

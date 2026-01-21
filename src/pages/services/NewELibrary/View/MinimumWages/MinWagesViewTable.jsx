@@ -87,14 +87,12 @@ const MinWagesViewTable = () => {
                 style={{ minHeight: "40px" }}
             >
                 <button
-                    onClick={handleBack}
-                    className="back-button"
-                    style={{ position: 'relative', top: '-1px', left:'-220px' }}
-                    aria-label="Back"
-                >
-                    <ArrowBackIcon />
-                </button>
-
+                      onClick={() => navigate(-1)}         
+                      className="back-button"
+                           >
+                               <ArrowBackIcon />
+                           </button>
+                           
                 <h2 className="mb-0 fw-bold" style={{ color: "#013879" }}>
                     {!showTable
                         ? `Lists of Latest Minimum Wages in India ${selectedYear}`

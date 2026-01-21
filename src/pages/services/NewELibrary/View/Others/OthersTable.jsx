@@ -49,7 +49,7 @@ const OthersTable = ({ localPage, setLocalPage }) => {
   return (
     <>
       <div>
-        <button onClick={() => navigate("/elibrary/View")} className="back-button">
+        <button onClick={() => navigate(-1)} className="back-button">
           <ArrowBackIcon />
         </button>
       </div>

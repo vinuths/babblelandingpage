@@ -69,7 +69,7 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
                 {/* Header with Back Button */}
                 <div className="d-flex align-items-center justify-content-between mb-3">
                     <button
-                        onClick={() => navigate("/elibrary/View")}
+       onClick={() => navigate(-1)}         
                         className="back-button btn btn-link p-0"
                         style={{ fontSize: "24px" }}
                     >

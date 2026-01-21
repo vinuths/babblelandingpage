@@ -352,3 +352,10 @@
     color: #ffffff;
     border-color: #660099;
 }
+/* Acts / Celebrity page wrapper */
+.dashboard_wrapper {
+  min-height: calc(100vh - 130px); /* navbar + footer */
+  padding-top: 80px;   /* space below navbar */
+  padding-bottom: 70px; /* space above footer */
+  background-color: #f8f9fa;
+}

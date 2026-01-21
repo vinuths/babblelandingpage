@@ -35,7 +35,7 @@ const CompQACato = () => {
                     {compCategoryInfo?.map((cat) => (
                         <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={cat._id}>
                             <button
-                                onClick={() => navigate(`/elibrary/View/Compliance/${cat._id}`)}
+                                onClick={() => navigate(`/services/elibrary/View/Compliance/${cat._id}`)}
                                 style={{
                                     width: '100%',
                                     padding: '4px 2px',

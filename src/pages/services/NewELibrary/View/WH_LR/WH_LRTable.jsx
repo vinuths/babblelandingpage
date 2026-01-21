@@ -79,14 +79,15 @@ const WH_LRTable = ({ localPage, setLocalPage }) => {
     }
   };
 
-  const handleStateClick = (stateName) => {
-    const item = data.find((el) => el.stateData?.name === stateName);
-    if (item) {
-      navigate(`/elibrary/View/Working_Hours_&_leave_Rules/${item.stateData.name}`, {
-        state: item.stateData._id,
-      });
-    }
-  };
+const handleStateClick = (stateName) => {
+  const item = data.find((el) => el.stateData?.name === stateName);
+  if (!item) return;
+
+  navigate(`/services/elibrary/working-hours/${encodeURIComponent(item.stateData.name)}`, {
+    state: { stateId: item.stateData._id } // pass as object
+  });
+};
+
 
   const applicableStates = [...new Set(data.filter((item) => item.applicability === true).map((item) => item.stateData?.name))].sort();
   const notApplicableStates = [...new Set(data.filter((item) => item.applicability === false).map((item) => item.stateData?.name))].sort();

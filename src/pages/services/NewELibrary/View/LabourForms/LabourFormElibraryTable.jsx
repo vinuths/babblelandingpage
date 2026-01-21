@@ -60,8 +60,8 @@ const ActTable = ({ localPage, setLocalPage }) => {
         <div >
             {/* <div style={{ marginBottom: "20px" }}> */}
             <button
-                onClick={() => navigate("/elibrary/View")}
-                className="back-button"
+       onClick={() => navigate(-1)}         
+       className="back-button"
             >
                 <ArrowBackIcon />
             </button>

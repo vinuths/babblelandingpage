@@ -13,10 +13,13 @@ import { toast } from "react-toastify";
 import HolidayElibraryCreate from "./HolidayElibraryCreate";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useNavigate } from "react-router-dom";
+
 dayjs.extend(customParseFormat);
 
 
 const { RangePicker } = DatePicker;
+
 
 const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
     const dispatch = useDispatch();
@@ -45,6 +48,7 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
     const relodreport = () => {
         fetchData(localPage);
     };
+   const navigate = useNavigate();
 
     const fetchData = (page = localPage) => {
         const filters = {};
@@ -114,6 +118,12 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
         }
     };
 
+    const handleStateClick = (record) => {
+    navigate(`/services/elibrary/holidays/${record.stateData._id}`, {
+        state: { stateId: record.stateData._id, year: record.year }
+    });
+};
+
     const columns = [
         {
             title: "Sr. No.",
@@ -121,14 +131,21 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
             width: 80,
             render: (_, __, index) => (localPage - 1) * pageSize + index + 1,
         },
-        {
-            title: "State",
-            dataIndex: "stateData",
-            key: "state",
-            render: (stateData) => stateData?.name || "N/A",
-            width: 150,
+     {
+    title: "State",
+    dataIndex: "stateData",
+    key: "state",
+    render: (stateData, record) => (
+        <span
+            style={{ color: "#013879", cursor: "pointer", fontWeight: "bold" }}
+            onClick={() => handleStateClick(record)}
+        >
+            {stateData?.name || "N/A"}
+        </span>
+    ),
+    width: 150,
+},
 
-        },
         {
             title: "Year",
             dataIndex: "year",

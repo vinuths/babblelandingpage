@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { AiOutlineTwitter, AiFillInstagram } from "react-icons/ai";
-// import { FaLinkedinIn } from "react-icons/fa";
+import { AiOutlineTwitter, AiFillInstagram } from "react-icons/ai";
+import { FaLinkedinIn } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -67,13 +67,13 @@ function Footer() {
           <h4 style={{ color: "#ffffff", marginBottom: "15px" }}>Connect</h4>
           <div style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
             <SocialIcon href="https://x.com/MatrixHRService">
-              {/* <AiOutlineTwitter size={25} /> */}
+              <AiOutlineTwitter size={25} />
             </SocialIcon>
             <SocialIcon href="https://in.linkedin.com/company/matrix-hr-service">
-              {/* <FaLinkedinIn size={25} /> */}
+              <FaLinkedinIn size={25} />
             </SocialIcon>
             <SocialIcon href="https://www.instagram.com/matrixhrtech/">
-              {/* <AiFillInstagram size={25} /> */}
+              <AiFillInstagram size={25} />
             </SocialIcon>
           </div>
         </Col>

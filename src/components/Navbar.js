@@ -4,14 +4,14 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import { Link, useLocation } from "react-router-dom";
-// import {
-//   AiOutlineHome,
-//   AiOutlineFundProjectionScreen,
-//   AiOutlineUser,
-//   AiOutlineMail,
-// } from "react-icons/ai";
-// import { CgFileDocument } from "react-icons/cg";
-// import { AiOutlineLogin } from "react-icons/ai";
+import {
+  AiOutlineHome,
+  AiOutlineFundProjectionScreen,
+  AiOutlineUser,
+  AiOutlineMail,
+} from "react-icons/ai";
+import { CgFileDocument } from "react-icons/cg";
+import { AiOutlineLogin } from "react-icons/ai";
 
 import logo from "../Assets/Logo11.png"; // adjust relative path based on Navbar.js location
 
@@ -114,8 +114,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 onClick={() => updateExpanded(false)}
               >
-                {/* <AiOutlineHome /> */}
-                 Home
+                <AiOutlineHome /> Home
               </Nav.Link>
             </Nav.Item>
 
@@ -128,8 +127,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 onClick={() => updateExpanded(false)}
               >
-                {/* <AiOutlineUser /> */}
-                 About
+                <AiOutlineUser /> About
               </Nav.Link>
             </Nav.Item>
 
@@ -304,8 +302,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 onClick={() => updateExpanded(false)}
               >
-                {/* <CgFileDocument /> */}
-                 E-Library
+                <CgFileDocument /> E-Library
               </Nav.Link>
             </Nav.Item>
         
@@ -319,8 +316,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 onClick={() => updateExpanded(false)}
               > 
-                {/* <AiOutlineMail /> */}
-                 Contact Us
+                <AiOutlineMail /> Contact Us
               </Nav.Link>
            </Nav.Item>
 
@@ -334,8 +330,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 onClick={() => updateExpanded(false)}
               >
-                {/* <AiOutlineLogin /> */}
-                Member Login
+                <AiOutlineLogin />Member Login
               </Nav.Link>
             </Nav.Item>
 
@@ -345,8 +340,7 @@ function NavBar() {
                 to="/contact"
                 style={loginButtonStyle}
               >
-              {/* <AiOutlineLogin />  */}
-               Register
+              <AiOutlineLogin />  Register
               </Nav.Link>
             </Nav.Item>
 
