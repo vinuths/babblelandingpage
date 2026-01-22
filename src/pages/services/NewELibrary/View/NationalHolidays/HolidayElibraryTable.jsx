@@ -118,11 +118,7 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
         }
     };
 
-    const handleStateClick = (record) => {
-    navigate(`/services/elibrary/holidays/${record.stateData._id}`, {
-        state: { stateId: record.stateData._id, year: record.year }
-    });
-};
+
 
     const columns = [
         {
@@ -135,14 +131,7 @@ const HolidayElibraryTable = ({ localPage,setLocalPage }) => {
     title: "State",
     dataIndex: "stateData",
     key: "state",
-    render: (stateData, record) => (
-        <span
-            style={{ color: "#013879", cursor: "pointer", fontWeight: "bold" }}
-            onClick={() => handleStateClick(record)}
-        >
-            {stateData?.name || "N/A"}
-        </span>
-    ),
+    render: (stateData) => stateData?.name || "N/A",
     width: 150,
 },
 

@@ -56,7 +56,7 @@ const MinWagesViewTable = () => {
         setSelectedStateId(state._id);
         setShowTable(true);
         setSelectedState(state);
-        navigate("/elibrary/View/Minimum_Wages/MinimumWagesList", {
+        navigate("/services/elibrary/minimum-wages/${stateName}", {
             state: {
                 year: selectedYear,
                 stateId: state._id,

@@ -129,7 +129,7 @@ function App() {
 <Route path="/services/elibrary/compliance-qa" element={<CompOptions />} />
 <Route path="/services/elibrary/general" element={<OthersView />} />
 
-<Route path="/services/elibrary/holidays/:state" element={<HolidayElibraryStateDetails />} />
+<Route path="/services/elibrary/View/holidays/:state" element={<HolidayElibraryStateDetails />} />
 <Route path="/services/elibrary/labour-welfare/:state" element={<LabourWelfareState />} />
 <Route path="/services/elibrary/minimum-wages/:state" element={<MinWagesStateWise />} />
 <Route path="/services/elibrary/working-hours/:state" element={<WH_LR_State />} />

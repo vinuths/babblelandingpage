@@ -49,7 +49,7 @@ const HolidayElibraryCreate = () => {
         setSelectedStateId(state._id);
         setShowTable(true);
         setSelectedState(state);
-        navigate("/elibrary/View/National_&_Festival_Holidays/HolidayList", {
+        navigate("/services/elibrary/holidays/${stateName}", {
             state: {
                 year: selectedYear,
                 stateId: state._id,
