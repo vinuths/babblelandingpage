@@ -88,9 +88,9 @@ function ComplianceChatbot() {
               fontWeight: "600",
             }}
           >
-            Compliance Chatbot
-          </div>
-
+             Compliance Chatbot
+         </div>
+        
           {/* MESSAGES */}
           <div
             style={{
@@ -106,7 +106,7 @@ function ComplianceChatbot() {
                   textAlign: msg.from === "user" ? "right" : "left",
                   marginBottom: "10px",
                 }}
-              >
+              > 
                 <span
                   style={{
                     display: "inline-block",

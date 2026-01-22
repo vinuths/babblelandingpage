@@ -7,21 +7,28 @@
 
 .holiday-container1 {
     max-width: 1200px;
-    margin-left: 260px;
-    margin-top: 100px;
+    margin: 100px auto 0 auto;   /* CENTERED */
     background-color: white;
-    padding: 20px 25px 20px 25px;
+    padding: 20px 25px;
 }
+
 
 .headBack {
     display: flex;
-    gap: 300px;
+    align-items: center;
+    justify-content: space-between; /* instead of gap */
+    flex-wrap: wrap;
 }
+
 
 .stateFilter {
     display: flex;
-    gap: 600px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
+
 
 .stateFilter1 {
     display: flex;
@@ -69,10 +76,10 @@
     /* margin-bottom: 10px; */
     padding: 1px !important;
 }
-
 .holiDates {
     display: flex;
-    gap: 750px;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .state-card {
@@ -106,10 +113,13 @@
 }
 
 .headLine {
-    text-decoration: underline;
+    text-align: center;
+    width: 100%;
     color: #013879;
-
+    font-weight: bold;
+    text-decoration: underline;
 }
+
 
 .state-name {
     font-size: 18px;

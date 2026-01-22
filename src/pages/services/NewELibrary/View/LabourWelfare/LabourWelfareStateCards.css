@@ -22,13 +22,20 @@
   vertical-align: middle;
 }
 
-.headContain{
-    /* font-size: 2em; */
-    /* line-height: normal; */
-    /* margin-top: 0; */
-    color: #34495E;
-    border-bottom: 3px double #01234d;
+.headContain {
+    color: #013879;            /* Blue text */
+    font-weight: bold;          /* Bold */
+    font-size: 2em;             /* Big font size */
+    border-bottom: 3px double #01234d; /* Full-width underline */
+    margin: 0 auto 20px auto;   /* Space below and center block */
+    display: block;             /* Block-level element */
+    text-align: center;         /* Center the heading text */
+    width: 100%;                /* Full width for underline */
+    padding-bottom: 10px;       /* Space between text and underline */
 }
+
+
+
 .styled-table {
     width: 100%;
     border-collapse: collapse;

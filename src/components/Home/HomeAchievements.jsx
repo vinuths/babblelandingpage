@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 const achievementsData = [
-  { value: 50000, suffix: "+", label: "Compliance Delivered" },
-  { value: 15, suffix: "+", label: "Years Experience" },
+  { value: 50000, suffix: "+", label: "Licenses Delivered With Unwavering Precision" },
+  { value: 14, suffix: "+", label: "Years Of Excellence Success" },
   { value: 1000, suffix: "+", label: "Clients Served" },
   { value: 100, suffix: "+", label: "Expert Consultants" },
 ];
@@ -14,7 +14,7 @@ const HomeAchievements = () => {
     achievementsData.map(() => 0)
   );
   const ref = useRef();
-
+ 
   useEffect(() => {
     let observer;
     if (ref.current) {
@@ -69,7 +69,7 @@ backgroundColor: "#e2622a",
                 {counters[i].toLocaleString()}
                 {ach.suffix}
               </h3>
-              <p>{ach.label}</p>
+ <p style={{ color: "#ffffff" }}>{ach.label}</p>
             </Col>
           ))}
         </Row>

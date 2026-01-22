@@ -10,11 +10,6 @@ const auditTypes = [
     icon: "📝",
   },
   {
-    title: "Compliance Audits",
-    description: "Ensure adherence to regulatory and statutory requirements.",
-    icon: "⚖️",
-  },
-  {
     title: "Financial Audits",
     description: "Analyze financial statements for accuracy and risks.",
     icon: "🏦",

@@ -563,7 +563,7 @@ scrollSnapStop: "always",
     scrollSnapAlign: "start",
     scrollSnapStop: "always",
 
-  }}
+  }} 
 >
 
 
@@ -621,7 +621,7 @@ scrollSnapStop: "always",
     alignItems: "center",
     justifyContent: "center",
   }}
->
+> 
   <img
     src={service.image}
     alt={service.title}

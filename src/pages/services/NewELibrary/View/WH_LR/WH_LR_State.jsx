@@ -156,7 +156,7 @@ const WH_LR_State = () => {
 
 
     return (
-        <div className="container-fluid p-3 labour-container1">
+<div className="container py-4">
             <style>{`
         .styled-table {
           width: 100%;
@@ -188,6 +188,15 @@ const WH_LR_State = () => {
         }
       `}</style>
 
+ {/* INNER CENTERED CONTAINER */}
+    <div
+      style={{
+        maxWidth: "1200px",
+        margin: "100px auto 0",
+        backgroundColor: "#fff",
+        padding: "20px 25px",
+      }}
+        >
             <div className="d-flex align-items-center mb-3">
                 <button className="btn btn-light me-3" onClick={() => navigate(-1)}>
                     <ArrowBackIcon />
@@ -314,6 +323,7 @@ const WH_LR_State = () => {
                     </div>
                 </>
             )}
+        </div>
         </div>
     );
 };
