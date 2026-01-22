@@ -542,16 +542,20 @@ const MinWagesStateWise = () => {
 
 
                     </div>
-                    {minWagePeriodStateInfo?.length > 0 ? (
-                        <a
-                            className="btn btn-primary mb-3"
-                            href={minWageByIDInfo.doc}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            📄 View Document
-                        </a>
-                    ) : (null)}
+                  {minWagePeriodStateInfo?.length > 0 ? (
+    <a
+        className="btn btn-primary mb-3"
+        href={minWageByIDInfo.doc}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+            cssText: "background-color: #013879 !important; border-color: #013879 !important; color: #fff !important;"
+        }}
+    >
+        📄 View Document
+    </a>
+) : null}
+
                     {minWagePeriodStateInfo?.length > 0 ? (
                         <Table
                             columns={columns || []}

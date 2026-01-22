@@ -19,7 +19,7 @@ const CompQACato = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-1">
-                        <button onClick={() => navigate("/elibrary/View")} className="back-button" style={{ position: 'relative', top: '0px', marginLeft: '-10px' }}>
+                        <button onClick={() => navigate("/elibrary")} className="back-button" style={{ position: 'relative', top: '0px', marginLeft: '-10px' }}>
                             <ArrowBackIcon />
                         </button>
                     </div>

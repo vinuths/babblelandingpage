@@ -61,14 +61,15 @@
 #stateFilterLabour{
     width: 350px;
 }
-.docButton{
-    color: white !important;
-    text-decoration: none !important;
-    position: relative;
-    top: 8px;
+.docButton {
+  color: white !important;
+  text-decoration: none !important;
+
+  /* ✅ alignment fix */
+  position: static;
+  top: auto;
+  vertical-align: middle;
 }
-
-
 
 
 .state-container {
@@ -210,5 +211,17 @@
   .labour-welfare-details {
     overflow-x: auto;
   }
+}
+.docButton.btn-primary {
+  background-color: #013879 !important;
+  border-color: #013879 !important;
+  color: #fff !important;
+}
+
+.docButton.btn-primary:hover,
+.docButton.btn-primary:focus,
+.docButton.btn-primary:active {
+  background-color: #012f66 !important;
+  border-color: #012f66 !important;
 }
 
