@@ -119,7 +119,13 @@ const ELibrary = () => {
             <div
               key={idx}
               style={cardStyle}
-              onClick={() => navigate(item.path)}
+onClick={() => {
+  if (item.title === "Labour Forms" || item.title === "General") {
+    navigate("/contact");
+  } else {
+    navigate(item.path);
+  }
+}}
               onMouseEnter={cardHover}
               onMouseLeave={cardLeave}
             >
