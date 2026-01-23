@@ -13,7 +13,7 @@ const PTState = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const stateId = location.state || {};
+const stateId = location.state?.stateId || "";
 
     const { PTStateInfo } = useSelector(
         (state) => state.PTLibraryStateWiseRed
@@ -21,7 +21,7 @@ const PTState = () => {
     const { stateInfo } = useSelector((state) => state.getState);
 
     const [dataSource, setDataSource] = useState({});
-    const [selectedState, setSelectedState] = useState(stateId || "");
+const [selectedState, setSelectedState] = useState(stateId);
 
     useEffect(() => {
         dispatch(stateGets());

@@ -5,9 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 const licenseTypes = [
   { title: "Factory License", description: "License application, renewals and compliance tracking.", icon: "🏭" },
-  { title: "Trade License", description: "Mandatory license for commercial establishments.", icon: "📝" },
-  { title: "Shops & Establishments", description: "Registrations and renewals under S&E Act.", icon: "🏠" },
-  { title: "Building / Occupancy License", description: "Ensure compliance with local building norms.", icon: "⚖️" },
+  {
+  title: "Factory Plan Approval",
+  description: "Approval of factory building plans as mandated under the Factories Act.",
+  icon: "📝",
+},
+{
+  title: "PCB-CO & CE",
+  description: "Consent to Establish and Operate approvals from the Pollution Control Board.",
+  icon: "🏭",
+},
+{ title: "Building / Occupancy License", description: "Ensure compliance with local building norms.", icon: "⚖️" },
 ];
 
 const benefits = [

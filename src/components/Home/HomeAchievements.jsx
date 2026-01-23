@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 const achievementsData = [
-  { value: 50000, suffix: "+", label: "Licenses Delivered With Unwavering Precision" },
-  { value: 14, suffix: "+", label: "Years Of Excellence Success" },
-  { value: 1000, suffix: "+", label: "Clients Served" },
-  { value: 100, suffix: "+", label: "Expert Consultants" },
+  { value: 50000, suffix: "+", label: "Licenses Delivered With Precision" },
+  { value: 14, suffix: "+", label: "Years Of Compliance Expertise" },
+  { value: 1000, suffix: "+", label: "Trusted Clients Across Industries " },
+  { value: 100, suffix: "+", label: "Experts  Ensuring Exceptional Excellence" },
 ];
 
 const HomeAchievements = () => {

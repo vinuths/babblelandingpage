@@ -37,7 +37,7 @@ const heroTexts = [
       "Manage complex multi-state and multi-location compliance requirements with centralized governance and reporting.",
   },
   {
-    title: "Built for Indian Labour Law Compliance",
+    title: "End-to-End Labour Law Compliance",
     text: "Acts. Rules. Registers.",
     desc:
       "Manage PF, ESI, CLRA, Factory Act, payroll, and multi-state compliances through a single statutory governance platform.",
@@ -72,10 +72,10 @@ const heroTexts = [
   },
   // ✅ NEW SLIDE 9
   {
-    title: "Employee Compliance Tracking",
-    text: "Keep Teams Aligned",
+    title: "Multi Branch Compliance Tracking",
+    text: "All branches, one compliance view",
     desc:
-      "Track employee statutory compliances, leave records, and payroll-related obligations seamlessly.",
+      "Automated Branch Compliance Tracking for Licenses,Displays,Registers,Inspection And Notices",
   },
   // ✅ NEW SLIDE 10
   {

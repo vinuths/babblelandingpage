@@ -13,7 +13,7 @@ const WH_LR_State = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const stateId = location.state || {};
+const stateId = location.state?.stateId || "";
 
     const { WH_LRStateInfo } = useSelector(
         (state) => state.wH_LRLibraryStateWiseRed
@@ -21,7 +21,7 @@ const WH_LR_State = () => {
     const { stateInfo } = useSelector((state) => state.getState);
 
     const [dataSource, setDataSource] = useState({});
-    const [selectedState, setSelectedState] = useState(stateId || "");
+const [selectedState, setSelectedState] = useState(stateId);
 
     useEffect(() => {
         dispatch(stateGets());
