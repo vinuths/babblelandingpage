@@ -30,7 +30,7 @@ function Contact() {
       <div style={{ position: "relative", zIndex: 2 }}>
         {/* ===== WHATSAPP FLOATING BUTTON ===== */}
         <a
-          href="https://wa.me/919999999999?text=Hello%20Matrix%20HR%20Technologies,%20I%20would%20like%20to%20know%20more."
+          href="https://wa.me/9886599119?text=Hello%20Matrix%20HR%20Technologies,%20I%20would%20like%20to%20know%20more."
           target="_blank"
           rel="noreferrer"
           style={{

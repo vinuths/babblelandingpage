@@ -38,7 +38,7 @@ const FactoryLicense = () => {
           <p className="mb-4 text-white opacity-75" style={{ maxWidth: "700px", margin: "0 auto" }}>
             Ensuring that your factories meet all legal, safety, and environmental compliance standards efficiently.
           </p>
-
+  
           {/* ORANGE BUTTONS */}
           <button
             onClick={() => navigate("/contact")}
