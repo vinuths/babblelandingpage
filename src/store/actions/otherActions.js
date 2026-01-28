@@ -232,7 +232,7 @@ import {
   stridesAttendanceData,
   regiIntigrateCreate,
   regiIntigrateFetchAll,
-
+   ContactMailer,
 } from "../../routes/api";
 
 import { checklistAddInAudit as apiChecklistAddInAudit } from "../../routes/api";
@@ -960,6 +960,9 @@ import {
   REGI_INTIGRATE_GET_ALL_REQUEST,
   REGI_INTIGRATE_GET_ALL_SUCCESS,
   REGI_INTIGRATE_GET_ALL_FAILURE,
+  CONTACT_MAIL_REQUEST,
+  CONTACT_MAIL_SUCCESS,
+  CONTACT_MAIL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -10456,6 +10459,49 @@ export const fetchAllRegiIntigrate = () => async (dispatch) => {
     .catch((error) => {
       dispatch({
         type: REGI_INTIGRATE_GET_ALL_FAILURE,
+        payload: error.message,
+      });
+
+      toast.error(error.message, {
+        position: "bottom-right",
+        hideProgressBar: false,
+        progress: undefined,
+      });
+    });
+};
+
+export const contactMail = (postBody) => async (dispatch) => {
+  dispatch({ type: CONTACT_MAIL_REQUEST });
+
+  await ContactMailer(postBody)
+    .then((response) => {
+      dispatch({
+        type: CONTACT_MAIL_SUCCESS,
+        payload: response.data,
+      });
+
+      if (response.status === 200) {
+        toast.success("Submitted Successfully!", {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      } else {
+        dispatch({
+          type: CONTACT_MAIL_FAILURE,
+          payload: response.data,
+        });
+
+        toast.error(response.data, {
+          position: "bottom-right",
+          hideProgressBar: false,
+          progress: undefined,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: CONTACT_MAIL_FAILURE,
         payload: error.message,
       });
 

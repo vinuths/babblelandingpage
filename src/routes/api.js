@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/localStorage'
 // const URL = 'http://localhost:7000/api/admin';
-const URL = 'http://192.168.0.50:7000/api/admin';
+const URL = 'http://192.168.0.3:7000/api/admin';
 // const URL = 'http://192.168.1.76:9500/api/admin';
 
 // const URL = 'https://backend.matrixhrtech.com/api/admin';
@@ -2893,4 +2893,15 @@ export const regiIntigrateFetchAll = async () => {
         },
     };
     return await axios.get(`${URL}/regiIntigrateFetchAll`,  config);
+};
+
+export const ContactMailer = async (body) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  };
+
+  return await axios.post(`${URL}/ContactMailer`, body, config); // API endpoint for contact
 };

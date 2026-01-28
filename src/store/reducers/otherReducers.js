@@ -546,6 +546,9 @@ import {
         REGI_INTIGRATE_GET_ALL_REQUEST,
         REGI_INTIGRATE_GET_ALL_SUCCESS,
         REGI_INTIGRATE_GET_ALL_FAILURE,
+          CONTACT_MAIL_REQUEST,
+  CONTACT_MAIL_SUCCESS,
+  CONTACT_MAIL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
         switch (action.type) {
@@ -2862,4 +2865,26 @@ export const regiIntrigrateGetReducer = (state = regiIntrigrateInitialState, act
                 default:
                         return state;
         }
+};
+
+const contactInitialState = {
+  loading_CONTACT_MAIL: false,
+  data: null,
+  error: null,
+};
+
+export const contactReducer = (state = contactInitialState, action) => {
+  switch (action.type) {
+    case CONTACT_MAIL_REQUEST:
+      return { ...state, loading_CONTACT_MAIL: true, error: null };
+
+    case CONTACT_MAIL_SUCCESS:
+      return { ...state, loading_CONTACT_MAIL: false, data: action.payload };
+
+    case CONTACT_MAIL_FAILURE:
+      return { ...state, loading_CONTACT_MAIL: false, error: action.payload };
+
+    default:
+      return state;
+  }
 };

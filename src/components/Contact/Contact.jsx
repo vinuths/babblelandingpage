@@ -1,34 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import Particle from "../Particle";
 import { FaWhatsapp } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { HelpAndSupportMail } from "../../store/actions/otherActions";
+import Particle from "../Particle";
 
 function Contact() {
+  const dispatch = useDispatch();
+
+  // FORM STATE
   const [form, setForm] = useState({
     name: "",
+    organization: "LANDING-PAGE-ENQUIRY",
     email: "",
-    phone: "",
+    mobile: "",
     message: "",
   });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  // REDUX STATE
+  const contactState = useSelector((state) => state.contactState) || {};
+  const { loading_CONTACT_MAIL, data, error } = contactState;
 
+  // HANDLE INPUT CHANGE
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  // HANDLE FORM SUBMIT
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Thank you for contacting Matrix HR Technologies!");
-    setForm({ name: "", email: "", phone: "", message: "" });
+    dispatch(HelpAndSupportMail(form));
   };
 
-  const [hoverSend, setHoverSend] = useState(false);
+  // RESET FORM AFTER SUCCESS
+  useEffect(() => {
+    if (data) {
+      setForm({ name: "", email: "", mobile: "", message: "", organization: "LANDING-PAGE-ENQUIRY" });
+    }
+  }, [data]);
 
   return (
     <>
-      {/* ===== PARTICLE BACKGROUND ===== */}
       <Particle />
 
-      {/* ===== PAGE CONTENT ===== */}
       <div style={{ position: "relative", zIndex: 2 }}>
-        {/* ===== WHATSAPP FLOATING BUTTON ===== */}
+        {/* WHATSAPP FLOATING BUTTON */}
         <a
           href="https://wa.me/9886599119?text=Hello%20Matrix%20HR%20Technologies,%20I%20would%20like%20to%20know%20more."
           target="_blank"
@@ -56,7 +71,7 @@ function Contact() {
 
         <Container fluid style={{ paddingBottom: "80px" }}>
           <Container>
-            {/* Heading */}
+            {/* HEADING */}
             <Row className="justify-content-center" style={{ paddingTop: "120px" }}>
               <Col md={8} className="text-center">
                 <h1 style={{ color: "#fff", fontWeight: "700" }}>Contact Us</h1>
@@ -66,12 +81,33 @@ function Contact() {
               </Col>
             </Row>
 
-            {/* Form & Map Side by Side */}
+            {/* FORM + MAP */}
             <Row className="justify-content-center">
-              {/* Contact Form */}
+              {/* CONTACT FORM */}
               <Col md={6} style={{ marginBottom: "30px" }}>
-                <Container style={{ background: "#ffffff", padding: "30px", borderRadius: "12px" }}>
+                <Container
+                  style={{
+                    background: "#ffffff",
+                    padding: "30px",
+                    borderRadius: "12px",
+                  }}
+                >
                   <Form onSubmit={handleSubmit}>
+                    {/* SUCCESS MESSAGE */}
+                    {data && (
+                      <p style={{ color: "green", fontWeight: "600", marginBottom: "15px" }}>
+                        ✅ Message submitted successfully!
+                      </p>
+                    )}
+
+                    {/* ERROR MESSAGE */}
+                    {error && (
+                      <p style={{ color: "red", fontWeight: "600", marginBottom: "15px" }}>
+                        ❌ {error}
+                      </p>
+                    )}
+
+                    {/* NAME */}
                     <Form.Group className="mb-3">
                       <Form.Control
                         type="text"
@@ -83,6 +119,7 @@ function Contact() {
                       />
                     </Form.Group>
 
+                    {/* EMAIL */}
                     <Form.Group className="mb-3">
                       <Form.Control
                         type="email"
@@ -94,16 +131,18 @@ function Contact() {
                       />
                     </Form.Group>
 
+                    {/* PHONE */}
                     <Form.Group className="mb-3">
                       <Form.Control
-                        type="text"
+                        type="tel"
                         placeholder="Phone Number"
-                        name="phone"
-                        value={form.phone}
+                        name="mobile"
+                        value={form.mobile}
                         onChange={handleChange}
                       />
                     </Form.Group>
 
+                    {/* MESSAGE */}
                     <Form.Group className="mb-3">
                       <Form.Control
                         as="textarea"
@@ -116,10 +155,10 @@ function Contact() {
                       />
                     </Form.Group>
 
+                    {/* SUBMIT BUTTON */}
                     <button
                       type="submit"
-                      onMouseEnter={() => setHoverSend(true)}
-                      onMouseLeave={() => setHoverSend(false)}
+                      disabled={loading_CONTACT_MAIL}
                       style={{
                         width: "100%",
                         padding: "10px",
@@ -127,19 +166,19 @@ function Contact() {
                         fontWeight: "500",
                         fontSize: "1rem",
                         color: "#fff",
-                        backgroundColor: hoverSend ? "#b55b36" : "#d27147",
+                        backgroundColor: loading_CONTACT_MAIL ? "gray" : "#d27147",
                         border: "none",
-                        cursor: "pointer",
+                        cursor: loading_CONTACT_MAIL ? "not-allowed" : "pointer",
                         transition: "0.3s",
                       }}
                     >
-                      Send Message
+                      {loading_CONTACT_MAIL ? "Sending..." : "Send Message"}
                     </button>
                   </Form>
                 </Container>
               </Col>
 
-              {/* Map & Address */}
+              {/* MAP + ADDRESS */}
               <Col md={6} style={{ marginBottom: "30px" }}>
                 <div
                   style={{
@@ -157,7 +196,12 @@ function Contact() {
                     <iframe
                       title="Matrix HR Technologies Location"
                       src="https://www.google.com/maps?q=Matrix%20HR%20Technologies%20Bangalore&output=embed"
-                      style={{ width: "100%", height: "100%", border: 0, borderRadius: "12px" }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        border: 0,
+                        borderRadius: "12px",
+                      }}
                       loading="lazy"
                     />
                   </div>
@@ -165,8 +209,8 @@ function Contact() {
                   <div style={{ color: "#000" }}>
                     <h5 style={{ fontWeight: "bold" }}>Address</h5>
                     <p>
-                      Matrix HR Technologies, 320, Matrix Square, 7th Main Rd, BTM 2nd Stage, BTM Layout,
-                      Bengaluru, Karnataka 560076
+                      Matrix HR Technologies, 320, Matrix Square, 7th Main Rd,
+                      BTM 2nd Stage, BTM Layout, Bengaluru, Karnataka 560076
                     </p>
                   </div>
                 </div>
@@ -176,7 +220,6 @@ function Contact() {
         </Container>
       </div>
 
-      {/* PULSE ANIMATION */}
       <style>
         {`
           @keyframes pulse {
