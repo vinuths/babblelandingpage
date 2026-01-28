@@ -16,6 +16,7 @@ function Contact() {
     mobile: "",
     message: "",
   });
+const [showSuccess, setShowSuccess] = useState(false);
 
   // REDUX STATE
 const contactState = useSelector((state) => state.helpSupportState) || {};
@@ -32,17 +33,26 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
   };
 
   // RESET FORM AFTER SUCCESS
-  useEffect(() => {
-    if (success_HELP_MAIL) {
-      setForm({
-        name: "",
-        organization: "LANDING-PAGE-ENQUIRY",
-        email: "",
-        mobile: "",
-        message: "",
-      });
-    }
-  }, [success_HELP_MAIL]);
+ useEffect(() => {
+  if (success_HELP_MAIL) {
+    // Clear form
+    setForm({
+      name: "",
+      organization: "LANDING-PAGE-ENQUIRY",
+      email: "",
+      mobile: "",
+      message: "",
+    });
+
+    // Show success message
+    setShowSuccess(true);
+
+    // Hide success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+  }
+}, [success_HELP_MAIL]);
 
   return (
     <>
@@ -100,7 +110,7 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
                 >
                   <Form onSubmit={handleSubmit}>
                     {/* SUCCESS MESSAGE */}
-                    {success_HELP_MAIL && (
+{showSuccess && (
                       <p style={{ color: "green", fontWeight: "600", marginBottom: "15px" }}>
                         ✅ Message submitted successfully!
                       </p>
