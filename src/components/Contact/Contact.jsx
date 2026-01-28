@@ -18,8 +18,8 @@ function Contact() {
   });
 
   // REDUX STATE
-  const contactState = useSelector((state) => state.contactState) || {};
-  const { loading_CONTACT_MAIL, data, error } = contactState;
+const contactState = useSelector((state) => state.helpSupportState) || {};
+  const { loading_HELP_MAIL, success_HELP_MAIL, error } = contactState;
 
   // HANDLE INPUT CHANGE
   const handleChange = (e) =>
@@ -33,10 +33,16 @@ function Contact() {
 
   // RESET FORM AFTER SUCCESS
   useEffect(() => {
-    if (data) {
-      setForm({ name: "", email: "", mobile: "", message: "", organization: "LANDING-PAGE-ENQUIRY" });
+    if (success_HELP_MAIL) {
+      setForm({
+        name: "",
+        organization: "LANDING-PAGE-ENQUIRY",
+        email: "",
+        mobile: "",
+        message: "",
+      });
     }
-  }, [data]);
+  }, [success_HELP_MAIL]);
 
   return (
     <>
@@ -94,7 +100,7 @@ function Contact() {
                 >
                   <Form onSubmit={handleSubmit}>
                     {/* SUCCESS MESSAGE */}
-                    {data && (
+                    {success_HELP_MAIL && (
                       <p style={{ color: "green", fontWeight: "600", marginBottom: "15px" }}>
                         ✅ Message submitted successfully!
                       </p>
@@ -158,7 +164,7 @@ function Contact() {
                     {/* SUBMIT BUTTON */}
                     <button
                       type="submit"
-                      disabled={loading_CONTACT_MAIL}
+                      disabled={loading_HELP_MAIL}
                       style={{
                         width: "100%",
                         padding: "10px",
@@ -166,13 +172,13 @@ function Contact() {
                         fontWeight: "500",
                         fontSize: "1rem",
                         color: "#fff",
-                        backgroundColor: loading_CONTACT_MAIL ? "gray" : "#d27147",
+                        backgroundColor: loading_HELP_MAIL ? "gray" : "#d27147",
                         border: "none",
-                        cursor: loading_CONTACT_MAIL ? "not-allowed" : "pointer",
+                        cursor: loading_HELP_MAIL ? "not-allowed" : "pointer",
                         transition: "0.3s",
                       }}
                     >
-                      {loading_CONTACT_MAIL ? "Sending..." : "Send Message"}
+                      {loading_HELP_MAIL ? "Sending..." : "Send Message"}
                     </button>
                   </Form>
                 </Container>

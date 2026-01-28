@@ -185,7 +185,8 @@ import {
         templateFormFPdfReducer,
         regiIntrigrateReducer,
         regiIntrigrateGetReducer,
-         contactReducer,
+         
+         helpSupportReducer ,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -373,7 +374,8 @@ const reducer = combineReducers({
         templateFormFPdfReducer:templateFormFPdfReducer,
         regiIntrigrateRed: regiIntrigrateReducer,
         regiIntrigrateGetRed: regiIntrigrateGetReducer,
-        contactState: contactReducer,
+       
+        helpSupportState: helpSupportReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

@@ -549,6 +549,9 @@ import {
           CONTACT_MAIL_REQUEST,
   CONTACT_MAIL_SUCCESS,
   CONTACT_MAIL_FAILURE,
+  HELP_MAIL_REQUEST,
+  HELP_MAIL_SUCCESS,
+  HELP_MAIL_FAILURE,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
         switch (action.type) {
@@ -2867,22 +2870,39 @@ export const regiIntrigrateGetReducer = (state = regiIntrigrateInitialState, act
         }
 };
 
-const contactInitialState = {
-  loading_CONTACT_MAIL: false,
+const helpSupportInitialState = {
+  loading_HELP_MAIL: false,
   data: null,
   error: null,
+  success_HELP_MAIL: false,
 };
 
-export const contactReducer = (state = contactInitialState, action) => {
+export const helpSupportReducer = (state = helpSupportInitialState, action) => {
   switch (action.type) {
-    case CONTACT_MAIL_REQUEST:
-      return { ...state, loading_CONTACT_MAIL: true, error: null };
 
-    case CONTACT_MAIL_SUCCESS:
-      return { ...state, loading_CONTACT_MAIL: false, data: action.payload };
+    case HELP_MAIL_REQUEST:
+      return {
+        ...state,
+        loading_HELP_MAIL: true,
+        error: null,
+        success_HELP_MAIL: false,
+      };
 
-    case CONTACT_MAIL_FAILURE:
-      return { ...state, loading_CONTACT_MAIL: false, error: action.payload };
+    case HELP_MAIL_SUCCESS:
+      return {
+        ...state,
+        loading_HELP_MAIL: false,
+        data: action.payload,
+        success_HELP_MAIL: true,
+      };
+
+    case HELP_MAIL_FAILURE:
+      return {
+        ...state,
+        loading_HELP_MAIL: false,
+        error: action.payload,
+        success_HELP_MAIL: false,
+      };
 
     default:
       return state;
