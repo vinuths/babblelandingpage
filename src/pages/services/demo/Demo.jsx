@@ -1,82 +1,88 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Demo = () => {
   const navigate = useNavigate();
 
+  const buttonStyle = {
+    backgroundColor: "#d27147",
+    border: "none",
+    color: "#fff",
+    padding: "8px 22px",
+    fontWeight: "600",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "14px",
+    transition: "0.3s",
+  };
+
   return (
     <section
       style={{
-        background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
         minHeight: "100vh",
+        background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
+        display: "flex",
+        flexDirection: "column",
+        paddingTop: "140px", // ✅ same spacing like all pages
       }}
     >
-      {/* HERO SECTION */}
-      <Container
-        fluid
-        className="py-5"
-        style={{
-          background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
-        }}
-      >
-        <Container className="text-center py-5">
-          <h1 className="fw-bold mb-3 text-white">Product Demo</h1>
-          <p
-            className="mb-4 text-white opacity-75"
-            style={{ maxWidth: "700px", margin: "0 auto" }}
-          >
-            Watch how our platform simplifies compliance, payroll, and governance
-            through automation and accuracy.
-          </p>
+      {/* HERO CONTENT */}
+      <Container className="text-center">
+        <h1 className="fw-bold mb-3 text-white">
+          Product Demo
+        </h1>
 
-          {/* ORANGE BUTTONS */}
+        <p
+          className="text-white opacity-75 mb-4"
+          style={{
+            maxWidth: "720px",
+            margin: "0 auto",
+            fontSize: "15px",
+            lineHeight: "1.5",
+          }}
+        >
+          Watch how our platform simplifies compliance, payroll, and governance
+          through automation and accuracy.
+        </p>
+
+        {/* BUTTONS */}
+        <div className="d-flex justify-content-center gap-3 flex-wrap mb-4">
           <button
+            style={buttonStyle}
             onClick={() => navigate("/contact")}
-            style={{
-              backgroundColor: "#d27147",
-              border: "none",
-              color: "#fff",
-              padding: "10px 25px",
-              fontWeight: "600",
-              borderRadius: "8px",
-              cursor: "pointer",
-              marginRight: "12px",
-            }}
           >
             Book Demo
           </button>
-          <button
-            onClick={() => navigate("/")}
-            style={{
-              backgroundColor: "#d27147",
-              border: "none",
-              color: "#fff",
-              padding: "10px 25px",
-              fontWeight: "600",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
+
+          <button style={buttonStyle} onClick={() => navigate("/")}>
             Back to Home
           </button>
-        </Container>
+        </div>
       </Container>
 
-      {/* VIDEO SECTION */}
-      <Container className="py-5">
+      {/* VIDEO SECTION (PERFECT IN FIRST VIEWPORT) */}
+      <Container style={{ flex: "1 1 auto" }}>
         <Row className="justify-content-center">
-          <Col md={10} lg={8}>
+          <Col md={8} lg={6}>
             <div
               style={{
-                borderRadius: "16px",
+                borderRadius: "18px",
                 overflow: "hidden",
-                boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
-                background: "#ffffff", // white card like Audits page
+                boxShadow: "0 18px 45px rgba(0,0,0,0.35)",
+                background: "#fff",
+                height: "320px", // ✅ bigger + fits perfectly
               }}
             >
-              <video width="100%" controls>
+              <video
+                width="100%"
+                height="100%"
+                style={{
+                  objectFit: "cover", // ✅ full clean fit
+                  display: "block",
+                }}
+                controls
+              >
                 <source
                   src="/VIDEO-2025-05-29-11-14-23.mp4"
                   type="video/mp4"

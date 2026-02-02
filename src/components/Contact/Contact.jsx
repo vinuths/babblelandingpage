@@ -16,10 +16,10 @@ function Contact() {
     mobile: "",
     message: "",
   });
-const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // REDUX STATE
-const contactState = useSelector((state) => state.helpSupportState) || {};
+  const contactState = useSelector((state) => state.helpSupportState) || {};
   const { loading_HELP_MAIL, success_HELP_MAIL, error } = contactState;
 
   // HANDLE INPUT CHANGE
@@ -33,98 +33,125 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
   };
 
   // RESET FORM AFTER SUCCESS
- useEffect(() => {
-  if (success_HELP_MAIL) {
-    // Clear form
-    setForm({
-      name: "",
-      organization: "LANDING-PAGE-ENQUIRY",
-      email: "",
-      mobile: "",
-      message: "",
-    });
-
-    // Show success message
-    setShowSuccess(true);
-
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 3000);
-  }
-}, [success_HELP_MAIL]);
+  useEffect(() => {
+    if (success_HELP_MAIL) {
+      setForm({
+        name: "",
+        organization: "LANDING-PAGE-ENQUIRY",
+        email: "",
+        mobile: "",
+        message: "",
+      });
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    }
+  }, [success_HELP_MAIL]);
 
   return (
     <>
       <Particle />
 
-      <div style={{ position: "relative", zIndex: 2 }}>
-        {/* WHATSAPP FLOATING BUTTON */}
-        <a
-          href="https://wa.me/9886599119?text=Hello%20Matrix%20HR%20Technologies,%20I%20would%20like%20to%20know%20more."
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            position: "fixed",
-            bottom: "25px",
-            right: "25px",
-            width: "60px",
-            height: "60px",
-            backgroundColor: "#25D366",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 0 rgba(37, 211, 102, 0.6)",
-            animation: "pulse 2s infinite",
-            zIndex: 9999,
-            color: "#fff",
-            textDecoration: "none",
-          }}
-        >
-          <FaWhatsapp size={32} />
-        </a>
+      {/* WHATSAPP FLOATING BUTTON */}
+      <a
+        href="https://wa.me/9886599119?text=Hello%20Matrix%20HR%20Technologies,%20I%20would%20like%20to%20know%20more."
+        target="_blank"
+        rel="noreferrer"
+        style={{
+          position: "fixed",
+          bottom: "25px",
+          right: "25px",
+          width: "60px",
+          height: "60px",
+          backgroundColor: "#25D366",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 0 0 rgba(37, 211, 102, 0.6)",
+          animation: "pulse 2s infinite",
+          zIndex: 9999,
+          color: "#fff",
+          textDecoration: "none",
+        }}
+      >
+        <FaWhatsapp size={32} />
+      </a>
 
-        <Container fluid style={{ paddingBottom: "80px" }}>
-          <Container>
+      {/* FULL HEIGHT SECTION */}
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Container fluid style={{ padding: 0, height: "100%" }}>
+          <Container style={{ height: "100%" }}>
             {/* HEADING */}
-            <Row className="justify-content-center" style={{ paddingTop: "120px" }}>
+            <Row
+              className="justify-content-center"
+              style={{ paddingTop: "20px", paddingBottom: "20px" }}
+            >
               <Col md={8} className="text-center">
                 <h1 style={{ color: "#fff", fontWeight: "700" }}>Contact Us</h1>
-                <p style={{ color: "#fff", marginBottom: "40px" }}>
+                <p style={{ color: "#fff", marginBottom: "0" }}>
                   Let’s discuss how we can work together
                 </p>
               </Col>
             </Row>
 
-            {/* FORM + MAP */}
-            <Row className="justify-content-center">
+            {/* FORM + MAP SIDE BY SIDE */}
+            <Row
+              className="justify-content-center"
+              style={{
+                alignItems: "stretch",
+                height: "calc(100% - 80px)", // remaining height after heading
+              }}
+            >
               {/* CONTACT FORM */}
-              <Col md={6} style={{ marginBottom: "30px" }}>
-                <Container
+              <Col
+                md={6}
+                style={{
+                  marginBottom: "0",
+                  display: "flex",
+                }}
+              >
+                <div
                   style={{
                     background: "#ffffff",
-                    padding: "30px",
+                    padding: "20px",
                     borderRadius: "12px",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
                 >
-                  <Form onSubmit={handleSubmit}>
-                    {/* SUCCESS MESSAGE */}
-{showSuccess && (
-                      <p style={{ color: "green", fontWeight: "600", marginBottom: "15px" }}>
+                  <Form style={{ flex: 1 }} onSubmit={handleSubmit}>
+                    {showSuccess && (
+                      <p
+                        style={{
+                          color: "green",
+                          fontWeight: "600",
+                          marginBottom: "10px",
+                        }}
+                      >
                         ✅ Message submitted successfully!
                       </p>
                     )}
-
-                    {/* ERROR MESSAGE */}
                     {error && (
-                      <p style={{ color: "red", fontWeight: "600", marginBottom: "15px" }}>
+                      <p
+                        style={{
+                          color: "red",
+                          fontWeight: "600",
+                          marginBottom: "10px",
+                        }}
+                      >
                         ❌ {error}
                       </p>
                     )}
 
-                    {/* NAME */}
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                       <Form.Control
                         type="text"
                         placeholder="Your Name"
@@ -135,8 +162,7 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
                       />
                     </Form.Group>
 
-                    {/* EMAIL */}
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                       <Form.Control
                         type="email"
                         placeholder="Your Email"
@@ -147,8 +173,7 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
                       />
                     </Form.Group>
 
-                    {/* PHONE */}
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                       <Form.Control
                         type="tel"
                         placeholder="Phone Number"
@@ -158,20 +183,18 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
                       />
                     </Form.Group>
 
-                    {/* MESSAGE */}
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2" style={{ flex: 1 }}>
                       <Form.Control
                         as="textarea"
-                        rows={6}
                         placeholder="Your Message"
                         name="message"
                         value={form.message}
                         onChange={handleChange}
                         required
+                        style={{ height: "100%", resize: "none" }}
                       />
                     </Form.Group>
 
-                    {/* SUBMIT BUTTON */}
                     <button
                       type="submit"
                       disabled={loading_HELP_MAIL}
@@ -191,46 +214,41 @@ const contactState = useSelector((state) => state.helpSupportState) || {};
                       {loading_HELP_MAIL ? "Sending..." : "Send Message"}
                     </button>
                   </Form>
-                </Container>
-              </Col>
-
-              {/* MAP + ADDRESS */}
-              <Col md={6} style={{ marginBottom: "30px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    minHeight: "650px",
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                    background: "#f8f9fa",
-                    padding: "15px",
-                  }}
-                >
-                  <div style={{ flex: 1, marginBottom: "15px" }}>
-                    <iframe
-                      title="Matrix HR Technologies Location"
-                      src="https://www.google.com/maps?q=Matrix%20HR%20Technologies%20Bangalore&output=embed"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        border: 0,
-                        borderRadius: "12px",
-                      }}
-                      loading="lazy"
-                    />
-                  </div>
-
-                  <div style={{ color: "#000" }}>
-                    <h5 style={{ fontWeight: "bold" }}>Address</h5>
-                    <p>
-                      Matrix HR Technologies, 320, Matrix Square, 7th Main Rd,
-                      BTM 2nd Stage, BTM Layout, Bengaluru, Karnataka 560076
-                    </p>
-                  </div>
                 </div>
               </Col>
+
+              {/* MAP */}
+            {/* MAP */}
+<Col
+  md={6}
+  style={{
+    marginBottom: "0",
+    display: "flex",
+  }}
+>
+  <div
+    style={{
+      width: "100%",
+      borderRadius: "12px",
+      overflow: "hidden",
+      background: "#f0f0f0", // shows instantly before iframe loads
+      display: "flex",
+      flex: 1, // matches the height of the form
+    }}
+  >
+    <iframe
+      title="Matrix HR Technologies Location"
+      src="https://www.google.com/maps?q=Matrix%20HR%20Technologies%20Bangalore&output=embed"
+      style={{
+        width: "100%",
+        height: "100%",
+        border: 0,
+      }}
+      loading="lazy"
+    />
+  </div>
+</Col>
+
             </Row>
           </Container>
         </Container>
