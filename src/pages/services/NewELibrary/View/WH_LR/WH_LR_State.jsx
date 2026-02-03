@@ -197,14 +197,38 @@ const [selectedState, setSelectedState] = useState(stateId);
         padding: "20px 25px",
       }}
         >
-            <div className="d-flex align-items-center mb-3">
-                <button className="btn btn-light me-3" onClick={() => navigate(-1)}>
-                    <ArrowBackIcon />
-                </button>
-                <h4 className="fw-bold mb-0" style={{ color: '#013879' }}>
-                    Working Hours & Leave Rules for {dataSource?.state || "State"}
-                </h4>
-            </div>
+        <div
+  className="d-flex align-items-center mb-3"
+  style={{
+    justifyContent: "center", // center the whole block
+    gap: "10px",              // space between back button and heading
+    maxWidth: "800px",        // optional: constrain width
+    margin: "0 auto",         // center within container
+  }}
+>
+  <button
+    className="btn btn-light"
+    onClick={() => navigate(-1)}
+    style={{
+      marginRight: "10px",   // space between button and heading
+      minWidth: "45px",      // optional: consistent button size
+    }}
+  >
+    <ArrowBackIcon />
+  </button>
+
+  <h4
+    className="fw-bold mb-0"
+    style={{
+      color: "#013879",
+      textAlign: "left",      // heading text aligned slightly left
+      flex: 1,                // take remaining space
+    }}
+  >
+    Working Hours & Leave Rules for {dataSource?.state || "State"}
+  </h4>
+</div>
+
 
             {/* <p className="text-muted mb-3">
                 {dataSource?.description || "No description available."}

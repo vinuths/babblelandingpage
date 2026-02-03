@@ -10,6 +10,7 @@
     margin: 100px auto 0 auto;   /* CENTERED */
     background-color: white;
     padding: 20px 25px;
+    
 }
 
 
@@ -131,4 +132,23 @@
     font-size: 14px;
     font-weight: 500;
     color: inherit;
+}
+/* View Document Button */
+.view-doc-btn {
+  display: inline-block;
+  background-color: #013879;   /* Blue background */
+  border: 2px solid #013879;   /* Matching border */
+  color: white;                 /* White text */
+  padding: 10px 20px;           /* Button padding */
+  border-radius: 30px;          /* Rounded edges */
+  font-weight: 600;
+  text-decoration: none;        /* Remove underline */
+  transition: 0.3s ease;
+}
+
+.view-doc-btn:hover {
+  background-color: #012f66;   /* Darker blue on hover */
+  border-color: #012f66;
+  color: white;
+  transform: scale(1.05);      /* Slight grow effect */
 }

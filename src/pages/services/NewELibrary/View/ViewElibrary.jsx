@@ -41,24 +41,29 @@ const ELibrary = () => {
     e.target.style.backgroundColor = "#d27147";
   };
 
-  /* CARD STYLE - Reduced Size */
+  /* ✅ BIGGER CARD STYLE */
   const cardStyle = {
-    borderRadius: "14px",
+    borderRadius: "16px",
     background: "#ffffff",
     color: "#013879",
     cursor: "pointer",
-    padding: "14px",
+
+    /* ✅ Bigger card size */
+    padding: "22px",
+    minHeight: "140px",
+
+    /* ✅ Perfect 3 cards per row */
+    flex: "1 1 calc(33.333% - 25px)",
+    maxWidth: "300px",
+
     textAlign: "center",
-    flex: "1 1 calc(33.333% - 16px)",
-    maxWidth: "260px",
-    minHeight: "105px",
     boxSizing: "border-box",
     transition: "0.3s",
   };
 
   const cardHover = (e) => {
-    e.currentTarget.style.transform = "translateY(-5px)";
-    e.currentTarget.style.boxShadow = "0 8px 18px rgba(0,0,0,0.2)";
+    e.currentTarget.style.transform = "translateY(-6px)";
+    e.currentTarget.style.boxShadow = "0 10px 20px rgba(0,0,0,0.25)";
   };
 
   const cardLeave = (e) => {
@@ -72,11 +77,12 @@ const ELibrary = () => {
         minHeight: "100vh",
         background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
         paddingTop: "100px",
+        paddingBottom: "60px",
         boxSizing: "border-box",
       }}
     >
       {/* HERO SECTION */}
-      <div style={{ textAlign: "center", marginBottom: "35px" }}>
+      <div style={{ textAlign: "center", marginBottom: "40px" }}>
         <h1
           style={{
             color: "#fff",
@@ -120,15 +126,20 @@ const ELibrary = () => {
         </button>
       </div>
 
-      {/* ELIBRARY ITEMS (2 FULL ROWS VISIBLE) */}
-      <div style={{ textAlign: "center", marginBottom: "30px" }}>
+      {/* ✅ ELIBRARY ITEMS (2 ROWS FIT FIRST VIEW) */}
+      <div style={{ textAlign: "center", marginBottom: "50px" }}>
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "14px",
-            maxWidth: "950px",
+
+            /* ✅ More spacing between cards */
+            gap: "25px",
+
+            /* ✅ Controls row fit */
+            maxWidth: "1050px",
+
             margin: "0 auto",
           }}
         >
@@ -147,19 +158,18 @@ const ELibrary = () => {
               onMouseLeave={cardLeave}
             >
               {/* ICON */}
-              <div style={{ fontSize: "2.3rem", marginBottom: "8px" }}>
+              <div style={{ fontSize: "2.8rem", marginBottom: "12px" }}>
                 {item.icon}
               </div>
 
               {/* TITLE */}
-              <h5 style={{ fontWeight: "bold", fontSize: "16px", margin: 0 }}>
+              <h5 style={{ fontWeight: "bold", fontSize: "18px", margin: 0 }}>
                 {item.title}
               </h5>
             </div>
           ))}
         </div>
       </div>
-
       {/* DISCLAIMER SCROLL */}
       <div
         style={{

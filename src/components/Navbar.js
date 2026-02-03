@@ -103,7 +103,7 @@ function NavBar() {
     marginLeft: "12px",
     padding: "4px 12px",
     borderRadius: "16px",
-    background: "#d27147",
+    background: "#c74811",
     color: "#ffffffff",
     fontWeight: "600",
     fontSize: "0.85rem",

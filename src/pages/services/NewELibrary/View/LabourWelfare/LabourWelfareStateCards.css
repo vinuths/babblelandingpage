@@ -103,9 +103,9 @@
 }
 
 .state-table td {
-  padding: 0.5rem 1rem;
-  vertical-align: top;
-  white-space: nowrap;
+  white-space: normal !important;   /* ✅ Allow wrapping */
+  word-break: break-word;           /* ✅ Break long words */
+  overflow-wrap: anywhere;          /* ✅ Best fix */
 }
 
 .clickable {
@@ -130,7 +130,7 @@
   background-color: white;
   padding: 20px 25px;
   box-sizing: border-box;
-  width: calc(100% - 300px); /* Responsive width after left margin */
+  width: calc(100% - 500px); /* Responsive width after left margin */
   max-width: 100vw; /* Prevents overflow on right */
   overflow-x: hidden;
 }
@@ -163,11 +163,11 @@
 
 .styled-table th,
 .styled-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  word-wrap: break-word;
-  max-width: 250px;
+  white-space: normal !important;    /* ✅ Wrap text */
+  word-break: break-word !important; /* ✅ Break long word */
+  overflow-wrap: anywhere !important;/* ✅ Prevent overflow */
 }
+
 
 .styled-table th {
   background-color: #013879;
@@ -231,4 +231,25 @@
   background-color: #012f66 !important;
   border-color: #012f66 !important;
 }
+.labour-welfare-details {
+  width: 100%;
+  overflow-x: auto;   /* ✅ Safe on small screens */
+}
 
+
+/* MOBILE / SMALL SCREEN FIX */
+@media (max-width: 992px) { /* Tablets and small laptops */
+  .labour-container1 {
+    margin-left: 20px; /* smaller margin */
+    width: calc(100% - 40px); /* full width minus padding */
+  }
+}
+
+@media (max-width: 576px) { /* Mobile screens */
+  .labour-container1 {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: auto; /* take full available width */
+    padding: 15px;
+  }
+}

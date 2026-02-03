@@ -143,14 +143,12 @@ const PolicyTempTable = ({ localPage, setLocalPage }) => {
                                         <p>Created: <span style={{ color: 'red', fontStyle: 'italic' }}>{formatDateToInput(item.created_At)}</span></p>
                                     )}
 
-                                    <a
-                                        href={item.doc}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="download-btn"
-                                    >
-                                        Download ⬇
-                                    </a>
+                                   <button
+    className="download-btn"
+    onClick={() => navigate("/contact")}
+  >
+    Download ⬇
+  </button>
                                 </div>
                             </div>
                         );

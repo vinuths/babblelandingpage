@@ -153,14 +153,13 @@ const HolidayElibraryStateDetails = () => {
 
                 </div>
                 {dataSource?.doc && (
-                    <a
-                        className="btn btn-primary mb-3"
-                        href={dataSource.doc}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        📄 View Document
-                    </a>
+   <button
+  className="view-doc-btn"
+  onClick={() => navigate("/contact")}
+>
+  📄 View Document
+</button>
+
                 )}
             </div>
             {dataSource === null ? (

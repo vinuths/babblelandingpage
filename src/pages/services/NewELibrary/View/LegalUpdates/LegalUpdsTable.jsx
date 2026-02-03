@@ -140,14 +140,13 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
                                         <div className="col-5"></div>
                                         <div className="col-3" style={{ marginTop: '-10px' }}>
                                             {faq.doc && (
-                                                <a
-                                                    className="btn btn-primary"
-                                                    href={faq.doc}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    📄 View Document
-                                                </a>
+                                              <button
+  className="view-doc-btn"
+  onClick={() => navigate("/contact")}
+>
+  📄 View Document
+</button>
+
                                             )}
                                         </div>
                                     </div>

@@ -165,14 +165,13 @@ const LabourWelfareState = () => {
                                     <td><strong>Form</strong></td>
                                     <td>
                                         {dataSource?.form ? (
-                                            <a
-                                                className="btn btn-primary btn-sm docButton"
-                                                href={dataSource?.doc}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                📄 View Document
-                                            </a>
+                                <button
+  className="view-doc-btn mb-3"
+  onClick={() => navigate("/contact")}
+>
+  📄 View Document
+</button>
+
                                         ) : (
                                             "N/A"
                                         )}

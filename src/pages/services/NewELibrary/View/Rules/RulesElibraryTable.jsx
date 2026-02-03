@@ -46,33 +46,41 @@ const RulesElibraryTable = ({ localPage, setLocalPage }) => {
         isoDate ? moment(isoDate).format("DD-MM-YYYY") : "";
 
     return (
-        <div className="custom-act-container">
-            <div className="acts-header">
-                {/* 🔙 Back Button inside acts-header */}
-                <button
-onClick={() => navigate(-1)}        
-            className="back-button"
-                    style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: 0,
-                        fontSize: "16px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "10px",
-                        color: "#1890ff",
-                    }}
-                >
-                    <ArrowBackIcon style={{ marginRight: "5px" }} />
-                    Back
-                </button>
+      <div
+  className="custom-act-container"
+  style={{
+    marginTop: "40px", // <-- pushes the container slightly down
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start", // content sticks to top inside container
+  }}
+>
+  <div className="acts-header" style={{ marginTop: 0, paddingTop: 0 }}>
+    {/* 🔙 Back Button inside acts-header */}
+    <button
+      onClick={() => navigate(-1)}
+      className="back-button"
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        padding: 0,
+        fontSize: "16px",
+        display: "flex",
+        alignItems: "center",
+        marginBottom: "10px",
+        color: "#1890ff",
+      }}
+    >
+      <ArrowBackIcon style={{ marginRight: "5px" }} />
+      Back
+    </button>
 
-                <h2>Rules</h2>
-                <p>
-                    Labour Rules in India are detailed guidelines framed under Labour Acts or Codes to ensure proper implementation of labour laws. They cover procedures for registration, compliance, dispute resolution, and welfare provisions for both employers and employees.
-                </p>
-            </div>
+    <h2 style={{ marginTop: 0 }}>Rules</h2>
+    <p style={{ marginTop: "4px" }}>
+      Labour Rules in India are detailed guidelines framed under Labour Acts or Codes to ensure proper implementation of labour laws. They cover procedures for registration, compliance, dispute resolution, and welfare provisions for both employers and employees.
+    </p>
+  </div>
 
             <div className="filter-bar">
                 <div className="left-filters">
@@ -152,14 +160,12 @@ onClick={() => navigate(-1)}
                                         <p>Created: <span style={{ color: 'red', fontStyle: 'italic' }}>{formatDateToInput(item.created_At)}</span></p>
                                     )}
 
-                                    <a
-                                        href={item.doc}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="download-btn"
-                                    >
-                                        Download ⬇
-                                    </a>
+                                    <button
+    className="download-btn"
+    onClick={() => navigate("/contact")}
+  >
+    Download ⬇
+  </button>
                                 </div>
                             </div>
                         );

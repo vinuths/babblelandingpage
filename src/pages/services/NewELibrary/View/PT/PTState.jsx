@@ -165,16 +165,25 @@ const [selectedState, setSelectedState] = useState(stateId);
                                     <td><strong>Registration Form</strong></td>
                                     <td>{dataSource?.registrationForm || "N/A"}</td>
                                 </tr>
-                                <tr>
-                                    <td><strong>Registration Form File</strong></td>
-                                    <td>
-                                        {dataSource?.regFormDoc ? (
-                                            <a href={dataSource?.regFormDoc} target="_blank" rel="noreferrer">View Form</a>
-                                        ) : dataSource?.registrationForm ? (
-                                            <>{dataSource.registrationForm}</>
-                                        ) : "N/A"}
-                                    </td>
-                                </tr>
+                             <tr>
+  <td><strong>Registration Form File</strong></td>
+
+  <td>
+    {dataSource?.regFormDoc ? (
+      <button
+        className="return-btn"
+        onClick={() => navigate("/contact")}
+      >
+        View Form
+      </button>
+    ) : dataSource?.registrationForm ? (
+      <>{dataSource.registrationForm}</>
+    ) : (
+      "N/A"
+    )}
+  </td>
+</tr>
+
                                 <tr>
                                     <td><strong>Registration Process</strong></td>
                                     <td>{dataSource?.registrationProcess || "N/A"}</td>
@@ -205,10 +214,19 @@ const [selectedState, setSelectedState] = useState(stateId);
                                     <td><strong>Last Date of Remmitance</strong></td>
                                     <td>{dataSource?.lastDateRemittance || "N/A"}</td>
                                 </tr>
-                                <tr>
-                                    <td><strong>Return Form</strong></td>
-                                    <td><a href={dataSource?.doc} target="_blank" rel="noreferrer">Return Form</a></td>
-                                </tr>
+                               <tr>
+  <td><strong>Return Form</strong></td>
+
+  <td>
+    <button
+      className="return-btn"
+      onClick={() => navigate("/contact")}
+    >
+      Return Form
+    </button>
+  </td>
+</tr>
+
                             </tbody>
                         </table>
                     </div>

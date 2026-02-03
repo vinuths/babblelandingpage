@@ -522,18 +522,25 @@ const MinWagesStateWise = () => {
                         {minWagePeriodStateInfo?.length > 0 ? (
                             <div className="col-4 stateFilter1">
                                 <label htmlFor="periodFilter" className="myt fw-bold" >Period:</label>
-                                <select className="form-select"
-                                    value={selectedPeriod || ""}
-                                    onChange={handlePeriodChange}
-                                    style={{ width: '220px' }}
-                                >
-                                    {/* <option value="">Select Period</option> */}
-                                    {minWagePeriodStateInfo.map((period) => (
-                                        <option key={period._id} value={period._id}>
-                                            {period.period}
-                                        </option>
-                                    ))}
-                                </select>
+                                <select
+  className="form-select"
+  value={selectedPeriod || ""}
+  onChange={handlePeriodChange}
+  style={{
+    minWidth: '220px',      // ensures minimum width
+    maxWidth: '100%',       // prevents overflow
+    whiteSpace: 'nowrap',   // keeps text in one line
+    overflow: 'hidden',
+    textOverflow: 'ellipsis' // shows ... if text is too long
+  }}
+>
+  {minWagePeriodStateInfo.map((period) => (
+    <option key={period._id} value={period._id}>
+      {period.period}
+    </option>
+  ))}
+</select>
+
                             </div>
                         ) : (
                             // <p className="text-secondary mt-2" style={{ position: 'relative', top: '-8px', left: '10px', fontStyle: 'italic' }}>No data </p>
@@ -543,17 +550,13 @@ const MinWagesStateWise = () => {
 
                     </div>
                   {minWagePeriodStateInfo?.length > 0 ? (
-    <a
-        className="btn btn-primary mb-3"
-        href={minWageByIDInfo.doc}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-            cssText: "background-color: #013879 !important; border-color: #013879 !important; color: #fff !important;"
-        }}
-    >
-        📄 View Document
-    </a>
+ <button
+  className="view-doc-btn"
+  onClick={() => navigate("/contact")}
+>
+  📄 View Document
+</button>
+
 ) : null}
 
                     {minWagePeriodStateInfo?.length > 0 ? (
