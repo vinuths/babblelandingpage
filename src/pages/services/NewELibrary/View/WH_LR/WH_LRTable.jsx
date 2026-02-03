@@ -140,12 +140,18 @@ const handleStateClick = (stateName) => {
                 <ArrowBackIcon />
               </button>
             </div>
-            <div className="col-8 "
-            // style={{ position: 'relative', top: '0px', left: '40px' }}
-            >
-              <h3 className="mb-3 heads m-0">Working Hours & Leave Rules</h3>
+           <div
+  className="d-flex justify-content-center mb-3"
+  style={{ position: "relative" }}
+>
+  <div
+    className="col-8"
+    style={{ left: "20px" }} // slightly shift left
+  >
+    <h3 className="mb-3 heads m-0">Working Hours & Leave Rules</h3>
+  </div>
+</div>
 
-            </div>
           </div>
           
           <br />
