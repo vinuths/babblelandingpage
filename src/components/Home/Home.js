@@ -260,298 +260,429 @@ useEffect(() => {
 
   return (
     
-<section
-  style={{
-    position: "relative",
-    height: "100vh",
-    overflowY: "auto",
-    scrollSnapType: "y mandatory",
-  }}
->
+<section style={{ position: "relative", width: "100%" }}>
+
       {/* <Particle /> */}
       {/* Particle background removed to match HTML white design */}
 
       {/* ========== HERO ========== */}
-      <Container
-       id="hero-section" 
-        fluid
-        className="home-section"
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          paddingTop: "90px",
-          position: "relative",
-          zIndex: 2,
-          backgroundColor: "#ffffff", // White background
-          color: "#1f2937", // Dark text
-          scrollSnapAlign: "start",
-scrollSnapStop: "always",
-
-        }}
-      >
-        <Container>
-          <Row className="align-items-center">
-<Col md={7}>
-  {/* MATRIX HR – BRAND LINE (BIGGEST) */}
-  {/* <h1
-    style={{
-      fontSize: "3.2rem",
-      fontWeight: 900,
-      letterSpacing: "3px",
-      color: "#2F6DB5",
-      marginBottom: "18px",
-      textTransform: "uppercase",
-    }}
-  >
-    Matrix HR Technologies
-  </h1> */}
-{/* ===== BRAND LOGO HERO TEXT (EXACT LOGO STYLE) ===== */}
-<div
+    {/* ========== HERO ========== */}
+{/* ========== HERO SECTION ========== */}
+{/* ========== HERO SECTION ========== */}
+<section
   style={{
-    position: "relative",
-    display: "inline-block",
-    marginBottom: "32px",
+    width: "100%",
+    minHeight: "100vh",
+    backgroundColor: "#ffffff",
+    display: "flex",
+    alignItems: "center",
+    paddingTop: "110px",
+    paddingBottom: "60px",
   }}
 >
-  {/* CLOUD – positioned above end of MATRIX */}
-  <img
-    src={Cloud}
-    alt="Cloud"
-    style={{
-      width: "58px",
-      position: "absolute",
-      top: "-42px",
-      left: "138px",   // 👈 IMPORTANT: aligns above Matrix end
-      pointerEvents: "none",
-    }}
-  />
+  <Container>
+    <Row className="align-items-center">
 
-  <div
-    style={{
-      display: "flex",
-      alignItems: "baseline",
-    }}
-  >
-    <span
-      style={{
-        fontSize: "3.2rem",
-        fontWeight: 900,
-        color: "#366CB5",
-        lineHeight: "1",
-        marginRight: "8px",
-      }}
-    >
-      Matrix
-    </span>
+      {/* LEFT CONTENT */}
+      <Col md={7} style={{ marginBottom: "40px" }}>
 
-    <span
-      style={{
-        fontSize: "3.2rem",
-        fontWeight: 900,
-        color: "#CD6032",
-        lineHeight: "1",
-      }}
-    >
-      HR
-    </span>
-  </div>
-
- 
-  <div
-    style={{
-      fontSize: "1.05rem",
-      letterSpacing: "6px",
-      fontWeight: 700,
-      color: "#7FAED6",
-      marginTop: "6px",
-      marginLeft: "4px",
-    }}
-  >
-    TECHNOLOGIES
-  </div>
-</div>
-
-
-  {/* TITLE */}
-  <h2 
-    className="hero-title"
-    style={{
-      fontSize: "2.3rem",
-      lineHeight: "1.2",
-      fontWeight: 800,
-      marginBottom: "12px",
-    }}
-  >
-    {currentHero.title}
-  </h2>
-
-  {/* TEXT */}
-  <h3
-    className="hero-subtitle"
-    style={{
-      fontSize: "1.4rem",
-      color: "#2F6DB5",
-      marginBottom: "18px",
-      fontWeight: 600,
-    }}
-  >
-{currentHero.text}
-  </h3>
-
-  {/* DESCRIPTION */}
-  <p
-    className="hero-desc"
-    style={{
-      fontSize: "1rem",
-      maxWidth: "700px",
-      color: "#4b5563",
-      lineHeight: "1.7",
-    }}
-  >
-    {currentHero.desc}
-  </p>
-
-  <div className="mt-4 d-flex gap-3 flex-wrap">
-    <Button
-      as={Link}
-      to="/contact"
-      className="hero-btn-primary"
-      variant="none"
-      style={{ fontSize: "0.9rem" }}
-    >
-       Get Started Free
-    </Button>
-
-    <Button    
-      as={Link}
-      to="/demo"
-      className="hero-btn-outline"
-      variant="none"
-      style={{ fontSize: "0.9rem" }}
-    >
-      Watch Demo
-    </Button>
-  </div>
-</Col>
-
-<Col md={5} className="text-center position-relative">
-  <div className="hero-image-wrapper">
-    <img
-      src={heroImages[currentImage]}
-      alt="hero"
-      className="hero-image img-fluid"
-    />
-  </div>
-</Col>
-
-
-          </Row>
-        </Container>
-        
+        {/* ===== MATRIX HR BRAND BLOCK ===== */}
         <div
           style={{
-            position: "absolute",
-            bottom: "25px",
-            width: "100%",
-            textAlign: "center",
-            opacity: 0.6,
+            position: "relative",
+            display: "inline-block",
+            marginBottom: "30px",
           }}
-        ></div>
+        >
+          {/* CLOUD ICON */}
+          <img
+            src={Cloud}
+            alt="Cloud"
+            style={{
+              width: "55px",
+              position: "absolute",
+              top: "-38px",
+              left: "135px",
+              pointerEvents: "none",
+            }}
+          />
 
-        {/* HERO ANIMATIONS */}
-        <style>{`
-          .hero-title {
-            font-weight: 900;
-            animation: slideFade 0.8s ease forwards;
-          }
-          .hero-subtitle {
-            font-weight: 700;
-            animation: slideFade 1.2s ease forwards;
-          }
-          .hero-desc {
-            animation: slideFade 1.6s ease forwards;
-          }
-          .hero-btn-primary {
-            background: #2F6DB5;
-            border: 2px solid #2F6DB5;
-            color: #fff;
-            padding: 16px 38px;
-            border-radius: 30px;
-            font-weight: 600;
-            animation: slideFade 2.4s ease forwards;
-            transition: all 0.3s;
-          }
-          .hero-btn-primary:hover {
-            transform: scale(1.05);
-          }
-          .hero-btn-outline {
-            background: transparent;
-            border: 2px solid #2F6DB5;
-            color: #2F6DB5;
-            padding: 16px 38px;
-            border-radius: 30px;
-            font-weight: 600;
-            animation: slideFade 2.6s ease forwards;
-            transition: all 0.3s;
-          }
-          .hero-btn-outline:hover {
-            background: #2F6DB5;
-            color: #fff;
-            transform: scale(1.05);
-          }
-          .hero-image {
-            animation: float 4s ease-in-out infinite;
-          }
-          @keyframes slideFade {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes float {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-          }
-            .hero-image-wrapper {
-  position: relative;
-  border-radius: 22px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #013879, #0d6efd);
-  padding: 6px;
-  box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+          {/* MATRIX HR TEXT */}
+          <div style={{ display: "flex", alignItems: "baseline" }}>
+            <span
+              style={{
+                fontSize: "3.1rem",
+                fontWeight: 900,
+                color: "#366CB5",
+                marginRight: "8px",
+                lineHeight: "1",
+              }}
+            >
+              Matrix
+            </span>
+
+            <span
+              style={{
+                fontSize: "3.1rem",
+                fontWeight: 900,
+                color: "#CD6032",
+                lineHeight: "1",
+              }}
+            >
+              HR
+            </span>
+          </div>
+
+          {/* TECHNOLOGIES */}
+          <div
+            style={{
+              fontSize: "1rem",
+              letterSpacing: "6px",
+              fontWeight: 700,
+              color: "#7FAED6",
+              marginTop: "6px",
+              marginLeft: "4px",
+            }}
+          >
+            TECHNOLOGIES
+          </div>
+        </div>
+
+        {/* HERO TEXT */}
+        <h2
+          style={{
+            fontSize: "2.2rem",
+            fontWeight: 800,
+            marginBottom: "12px",
+          }}
+        >
+          {currentHero.title}
+        </h2>
+
+        <h3
+          style={{
+            fontSize: "1.35rem",
+            fontWeight: 650,
+            color: "#2F6DB5",
+            marginBottom: "18px",
+          }}
+        >
+          {currentHero.text}
+        </h3>
+
+        <p
+          style={{
+            fontSize: "1rem",
+            maxWidth: "650px",
+            color: "#4b5563",
+            lineHeight: "1.7",
+          }}
+        >
+          {currentHero.desc}
+        </p>
+
+        {/* BUTTONS */}
+        <div className="d-flex gap-3 flex-wrap mt-4">
+          <Button
+            as={Link}
+            to="/contact"
+            className="hero-btn-primary"
+            variant="none"
+          >
+            Get Started Free
+          </Button>
+
+          <Button
+            as={Link}
+            to="/demo"
+            className="hero-btn-outline"
+            variant="none"
+          >
+            Watch Demo
+          </Button>
+        </div>
+      </Col>
+
+      {/* RIGHT IMAGE */}
+      <Col md={5} className="text-center">
+        <div
+          style={{
+            maxWidth: "420px",
+            margin: "auto",
+            borderRadius: "22px",
+            padding: "6px",
+            background: "linear-gradient(135deg,#013879,#0d6efd)",
+            boxShadow: "0 20px 45px rgba(0,0,0,0.22)",
+          }}
+        >
+          <img
+            src={heroImages[currentImage]}
+            alt="hero"
+            style={{
+              width: "100%",
+              maxHeight: "400px",
+              objectFit: "contain",
+              borderRadius: "18px",
+              background: "#fff",
+              animation: "float 5s ease-in-out infinite",
+            }}
+          />
+        </div>
+      </Col>
+    </Row>
+  </Container>
+
+  {/* FLOAT ANIMATION */}
+  <style>{`
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 1.7rem !important;
+      }
+
+      h3 {
+        font-size: 1.1rem !important;
+      }
+
+      img {
+        max-height: 280px !important;
+      }
+
+      span {
+        font-size: 2.4rem !important;
+      }
+    }
+  `}</style>
+</section>
+
+
+
+  {/* ✅ FULL RESPONSIVE HERO CSS */}
+  <style>{`
+
+    /* HERO MAIN */
+    .hero-main {
+      overflow: hidden;
+    }
+
+    /* BRAND BLOCK */
+    .brand-block {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+
+    .cloud-icon {
+      width: 52px;
+      position: absolute;
+      top: -35px;
+      left: 135px;
+    }
+
+    .brand-text {
+      display: flex;
+      align-items: baseline;
+    }
+
+    .matrix {
+      font-size: 3.1rem;
+      font-weight: 900;
+      color: #366CB5;
+      margin-right: 8px;
+    }
+
+    .hr {
+      font-size: 3.1rem;
+      font-weight: 900;
+      color: #CD6032;
+    }
+
+    .tech-text {
+      font-size: 1rem;
+      letter-spacing: 5px;
+      font-weight: 700;
+      color: #7FAED6;
+      margin-top: 6px;
+    }
+
+    /* HERO TEXT */
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.35rem;
+      font-weight: 650;
+      color: #2F6DB5;
+      margin-bottom: 18px;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      max-width: 650px;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+
+    /* BUTTONS */
+    .hero-buttons {
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* IMAGE WRAPPER */
+    .hero-image-wrapper {
+      border-radius: 22px;
+      overflow: hidden;
+      padding: 6px;
+      background: linear-gradient(135deg, #013879, #0d6efd);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+      max-width: 420px;
+      margin: auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      max-height: 420px;   /* ✅ FIXED (not 750px) */
+      object-fit: contain;
+      border-radius: 18px;
+      background: white;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    /* FLOAT */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* ===================== MOBILE FIX ===================== */
+    @media (max-width: 768px) {
+
+      .hero-main {
+        padding-top: 90px !important;
+        text-align: center;
+      }
+
+      .hero-row {
+        flex-direction: column;
+      }
+
+      .matrix, .hr {
+        font-size: 2.4rem;
+      }
+
+      .hero-title {
+        font-size: 1.7rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .hero-desc {
+        font-size: 0.95rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-image-wrapper {
+        margin-top: 30px;
+        max-width: 320px;
+      }
+
+      .hero-image {
+        max-height: 280px;
+      }
+    }
+
+    /* ===================== SMALL LAPTOP FIX ===================== */
+    @media (max-height: 720px) {
+
+      .hero-main {
+        padding-top: 75px !important;
+        padding-bottom: 40px;
+      }
+
+      .hero-image {
+        max-height: 330px;
+      }
+    }
+ @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 1.7rem !important;
+      }
+
+      h3 {
+        font-size: 1.1rem !important;
+      }
+
+      img {
+        max-height: 280px !important;
+      }
+
+      span {
+        font-size: 2.4rem !important;
+      }
+    }
+      /* HERO BUTTONS */
+.hero-btn-primary {
+  background: #2F6DB5 !important;
+  border: 2px solid #2F6DB5 !important;
+  color: white !important;
+  padding: 14px 36px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 1rem;
+  transition: 0.3s ease;
 }
 
-.hero-image {
-  width: 100%;
-  max-height: 750px;
-  object-fit: contain; /* 🔥 KEY FIX FOR BLUR */
-  border-radius: 18px;
-  background: #fff;
-
-  /* 🔥 Image clarity */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-
-  /* Smooth animation */
-  animation: float 5s ease-in-out infinite;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+.hero-btn-primary:hover {
+  background: #1f4f8f !important;
+  transform: scale(1.05);
 }
 
-/* Hover effect */
-.hero-image-wrapper:hover .hero-image {
-  transform: scale(1.03);
+/* OUTLINE BUTTON */
+.hero-btn-outline {
+  background: transparent !important;
+  border: 2px solid #2F6DB5 !important;
+  color: #2F6DB5 !important;
+  padding: 14px 36px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 1rem;
+  transition: 0.3s ease;
 }
 
-/* Floating animation */
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0); }
+.hero-btn-outline:hover {
+  background: #2F6DB5 !important;
+  color: white !important;
+  transform: scale(1.05);
 }
 
-        `}</style>
-      </Container>
+  `}</style>
+
 
       {/* ========== SERVICES (FULL-PAGE SCROLL STYLE) ========== */}
 <section
