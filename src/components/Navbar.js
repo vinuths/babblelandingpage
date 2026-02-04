@@ -30,47 +30,77 @@ function NavBar() {
   }, []);
 
   // ✅ Media Query CSS Inside Component (Only for Navbar)
-  const responsiveStyles = `
-    @media (max-width: 1366px) {
-      .custom-navbar .nav-link {
-        font-size: 0.8rem !important;
-        padding: 5px 8px !important;
-        margin: 0 4px !important;
-      }
-
-      .custom-navbar .dropdown-toggle {
-        font-size: 0.8rem !important;
-        padding: 5px 8px !important;
-      }
-
-      /* ✅ Fix Login + Register Buttons */
-      .custom-navbar .login-btn {
-        margin-left: 6px !important;
-        padding: 4px 10px !important;
-        font-size: 0.8rem !important;
-        white-space: nowrap !important;
-      }
+ const responsiveStyles = `
+  @media (max-width: 1366px) {
+    .custom-navbar .nav-link {
+      font-size: 0.8rem !important;
+      padding: 5px 8px !important;
+      margin: 0 4px !important;
     }
 
-    @media (max-width: 1024px) {
-      .custom-navbar .nav-link {
-        font-size: 0.75rem !important;
-        margin: 0 2px !important;
-      }
-
-      .custom-navbar .login-btn {
-        margin-left: 4px !important;
-        padding: 4px 8px !important;
-        font-size: 0.75rem !important;
-      }
+    .custom-navbar .dropdown-toggle {
+      font-size: 0.8rem !important;
+      padding: 5px 8px !important;
     }
-  `;
+
+    .custom-navbar .login-btn {
+      margin-left: 6px !important;
+      padding: 4px 10px !important;
+      font-size: 0.8rem !important;
+      white-space: nowrap !important;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .custom-navbar .nav-link {
+      font-size: 0.75rem !important;
+      margin: 0 2px !important;
+    }
+
+    .custom-navbar .login-btn {
+      margin-left: 4px !important;
+      padding: 4px 8px !important;
+      font-size: 0.75rem !important;
+    }
+  }
+
+  /* ✅ REMOVE DROPDOWN ARROW */
+  .custom-navbar .dropdown-toggle::after {
+    display: none !important;
+  }
+/* ✅ ALL NAV LINKS HOVER (TEXT WHITE) */
+.custom-navbar .nav-link:hover {
+  color: #ffffff !important;   /* ✅ Keep text white */
+  background: rgba(162, 89, 255, 0.15) !important;
+  box-shadow: 0 0 8px rgba(162, 89, 255, 0.6) !important;
+  border-bottom: 2px solid #ffffff !important; /* white underline */
+  border-radius: 8px !important;
+}
+
+/* ✅ SERVICES DROPDOWN HOVER (TEXT WHITE) */
+.custom-navbar .dropdown-toggle:hover {
+  color: #ffffff !important;   /* ✅ Keep text white */
+  background: rgba(162, 89, 255, 0.15) !important;
+box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
+  border-bottom: 2px solid #ffffff !important;
+  border-radius: 8px !important;
+}
+
+
+  /* ✅ REMOVE WHITE OUTLINE ON CLICK */
+  .custom-navbar .dropdown-toggle:focus,
+  .custom-navbar .dropdown-toggle:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+`;
+
 
   // ✅ Updated linkStyle for smaller navbar items + hover purple effect
   const linkStyle = (path) => ({
     color:
       location.pathname === path || hoveredPath === path
-        ? "#a259ff"
+        ? "#013879"
         : "#ffffff",
     fontWeight: location.pathname === path ? "600" : "500",
     margin: "0 8px",
@@ -88,7 +118,7 @@ function NavBar() {
       hoveredPath === path ? "0 0 8px rgba(162,89,255,0.6)" : "none",
     borderBottom:
       hoveredPath === path
-        ? "2px solid #a259ff"
+        ? "2px solid #013879"
         : "2px solid transparent",
   });
 
@@ -184,7 +214,7 @@ function NavBar() {
                 onMouseLeave={() => setHoveredPath(null)}
                 style={{
                   color:
-                    hoveredPath === "/services" ? "#a259ff" : "#ffffff",
+                    hoveredPath === "/services" ? "#013879" : "#ffffff",
                   fontWeight: "500",
                   fontSize: "0.85rem",
                   background:
