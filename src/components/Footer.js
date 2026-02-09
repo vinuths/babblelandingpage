@@ -81,12 +81,13 @@ function Footer() {
 
       {/* COPYRIGHT */}
       <Row>
-        <Col xs={12} className="text-center mt-3">
-          <p style={{ color: "#cccccc", fontSize: "13px", marginBottom: 0 }}>
-            © Matrix Compliance. All rights reserved.
-          </p>
-        </Col>
-      </Row>
+  <Col xs={12} className="text-center mt-3">
+    <p style={{ color: "#cccccc", fontSize: "13px", marginBottom: 0 }}>
+      ©{new Date().getFullYear()} Matrix HR Technologies. All rights reserved.
+    </p>
+  </Col>
+</Row>
+
     </Container>
   );
 }

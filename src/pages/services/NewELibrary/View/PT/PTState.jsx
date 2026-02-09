@@ -249,7 +249,7 @@ const [selectedState, setSelectedState] = useState(stateId);
                                         <tr key={rate._id || idx}>
                                             <td>{idx + 1}</td>
                                             <td>{rate.salary || "N/A"}</td>
-                                            <td>₹ {rate.ptAmount || "N/A"}</td>
+                                            <td> {rate.ptAmount || "N/A"}</td>
                                             <td>{rate.remarks || ""}</td>
                                         </tr>
                                     ))
