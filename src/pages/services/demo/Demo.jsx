@@ -26,16 +26,17 @@ const Demo = () => {
                 background: "#000",
               }}
             >
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/y7xKdtL18GQ?rel=0"
-                title="Product Demo"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ display: "block" }}
-              />
+             <iframe
+  width="100%"
+  height="100%"
+  src="https://www.youtube.com/embed/8A8yxbEeH90"
+  title="Product Demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+  style={{ display: "block" }}
+/>
+
             </div>
           </Col>
         </Row>
