@@ -127,7 +127,7 @@ function App() {
 <Route path="/services/elibrary/policy-templates" element={<PolicyTempView />} />
 <Route path="/services/elibrary/legal-updates" element={<LegalUpds />} />
 <Route path="/services/elibrary/compliance-qa" element={<CompOptions />} />
-<Route path="/services/elibrary/general" element={<OthersView />} />
+<Route path="/services/elibrary/View/LabourCodes" element={<OthersView />} />
 
 <Route path="/services/elibrary/View/holidays/:state" element={<HolidayElibraryStateDetails />} />
 <Route path="/services/elibrary/labour-welfare/:state" element={<LabourWelfareState />} />

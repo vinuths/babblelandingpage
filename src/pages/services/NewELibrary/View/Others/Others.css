@@ -1,8 +1,8 @@
-.act-part {
-  white-space: pre-wrap;         /* preserves line breaks and wraps text */
-  word-break: break-word;        /* breaks long words if needed */
-  overflow: hidden;              /* hides overflow */
-  max-width: 100%;               /* ensures it stays inside the card */
+/* .act-part {
+  white-space: pre-wrap;         
+  word-break: break-word;        
+  overflow: hidden;             
+  max-width: 100%;              
   font-size: 13px;
   color: #4a5568;
   margin: 0;
@@ -20,4 +20,364 @@
 
 .toggle-link:hover {
   text-decoration: underline;
+} */
+
+
+/* Others.css */
+
+:root {
+  --primary-color: #013879;
+  --primary-light: rgba(1, 56, 121, 0.1);
+  --primary-hover: #002b5e;
+  --text-primary: #2c3e50;
+  --text-secondary: #5a6a7a;
+  --border-color: #e2e8f0;
+  --background-hover: #f8fafc;
+  --white: #e8f1fa;
+}
+
+/* Back Button
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  margin-bottom: 24px;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--primary-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-color);
+  transform: translateX(-4px);
+} */
+
+/* Main Container */
+/* .custom-act-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+} */
+
+/* Header Section */
+/* .acts-header {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255,255,255,0.8) 100%);
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+} */
+
+.acts-header h2 {
+  color: var(--primary-color);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.acts-header p {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Code List Styling */
+.acts-header ul {
+  margin: 16px 0 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  list-style: none;
+}
+
+.acts-header li {
+  position: relative;
+  padding: 12px 16px 12px 32px;
+  background-color: var(--white);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.acts-header li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(1, 56, 121, 0.15);
+}
+
+.acts-header li::before {
+  content: "•";
+  position: absolute;
+  left: 12px;
+  color: var(--primary-color);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+/* .left-filters,
+.center-filters,
+.right-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 200px;
+} */
+
+.filter-bar label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.state-select {
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: var(--white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23013879' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.state-select:hover {
+  border-color: var(--primary-color);
+}
+
+.state-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Table Styles */
+.MuiPaper-root {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+}
+
+.MuiTableHead-root .MuiTableRow-root {
+  background-color: var(--primary-light);
+}
+
+.MuiTableCell-head {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  border-bottom: 2px solid var(--primary-color) !important;
+  padding: 16px !important;
+}
+
+.MuiTableCell-body {
+  color: var(--text-primary) !important;
+  font-size: 13px !important;
+  /* padding: 16px !important; */
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.MuiTableRow-root:hover {
+  background-color: var(--background-hover) !important;
+}
+
+/* Icon Buttons */
+.MuiIconButton-root {
+  color: var(--primary-color) !important;
+  transition: all 0.2s ease !important;
+}
+
+.MuiIconButton-root:hover {
+  background-color: var(--primary-light) !important;
+}
+
+/* Document Links */
+.MuiTableCell-body a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.MuiTableCell-body a:hover {
+  background-color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* Rules Section */
+.MuiCollapse-root .MuiBox-root {
+  background-color: var(--background-hover);
+  border-radius: 8px;
+  padding: 0px 20px 20px 20px !important;
+  margin: 10px !important;
+}
+
+.MuiCollapse-root h6 {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Nested Table */
+.MuiCollapse-root .MuiTableHead-root .MuiTableRow-root {
+  background-color: var(--white);
+}
+
+.MuiCollapse-root .MuiTableCell-head {
+  color: var(--text-secondary) !important;
+  font-size: 12px !important;
+  padding: 12px !important;
+}
+
+.MuiCollapse-root .MuiTableCell-body {
+  padding: 12px !important;
+}
+
+/* Pagination */
+.pagination-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding: 16px;
+  background-color: var(--white);
+  border-top: 1px solid var(--border-color);
+}
+
+.ant-pagination {
+  display: flex;
+  gap: 8px;
+}
+
+.ant-pagination-item {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.ant-pagination-item a {
+  color: var(--text-primary) !important;
+}
+
+.ant-pagination-item:hover {
+  border-color: var(--primary-color) !important;
+}
+
+.ant-pagination-item-active {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.ant-pagination-item-active a {
+  color: var(--white) !important;
+}
+
+.ant-pagination-prev button,
+.ant-pagination-next button {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-pagination-prev:hover button,
+.ant-pagination-next:hover button {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+/* Loading and Empty States */
+.MuiTableCell-body[align="center"] {
+  padding: 48px !important;
+  color: var(--text-secondary) !important;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .custom-act-container {
+    padding: 16px;
+  }
+
+  .acts-header {
+    padding: 16px;
+  }
+
+  .acts-header h2 {
+    font-size: 24px;
+  }
+
+  .acts-header ul {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .left-filters,
+  .center-filters,
+  .right-filters {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .pagination-bar {
+    justify-content: center;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .back-button,
+  .filter-bar,
+  .pagination-bar,
+  .MuiIconButton-root {
+    display: none !important;
+  }
+
+  .custom-act-container {
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .MuiTableHead-root .MuiTableRow-root {
+    background-color: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

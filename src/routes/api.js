@@ -2905,3 +2905,17 @@ export const ContactMailer = async (body) => {
 
   return await axios.post(`${URL}/ContactMailer`, body, config); // API endpoint for contact
 };
+
+export const getLabourCodes = async () => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+            // 'content-type': 'multipart/form-data'
+
+        }
+    }
+    //alert(JSON.stringify(data)); return;
+    return await axios.get(`${URL}/getLabourCodes`, config);
+}

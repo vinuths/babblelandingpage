@@ -187,6 +187,7 @@ import {
         regiIntrigrateGetReducer,
          
          helpSupportReducer ,
+         labourCodesGetReducer,
 } from './reducers/otherReducers';  // imporeting auth user reducers
 
 const reducer = combineReducers({
@@ -376,6 +377,7 @@ const reducer = combineReducers({
         regiIntrigrateGetRed: regiIntrigrateGetReducer,
        
         helpSupportState: helpSupportReducer,
+         labourCodesGetRed: labourCodesGetReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : "";

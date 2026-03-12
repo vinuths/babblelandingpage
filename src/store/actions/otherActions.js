@@ -233,6 +233,7 @@ import {
   regiIntigrateCreate,
   regiIntigrateFetchAll,
    ContactMailer,
+   getLabourCodes,
 } from "../../routes/api";
 
 import { checklistAddInAudit as apiChecklistAddInAudit } from "../../routes/api";
@@ -963,6 +964,9 @@ import {
   CONTACT_MAIL_REQUEST,
   CONTACT_MAIL_SUCCESS,
   CONTACT_MAIL_FAILURE,
+  LABOUR_CODES_GET_REQUEST,
+  LABOUR_CODES_GET_SUCCESS,
+  LABOUR_CODES_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const categoryCreate = (postbody) => async (dispatch) => {
   dispatch({ type: CATEGORY_REQUEST });
@@ -10511,4 +10515,19 @@ export const contactMail = (postBody) => async (dispatch) => {
         progress: undefined,
       });
     });
+};
+
+export const labourCodesGet = () => async (dispatch) => {
+  dispatch({ type: LABOUR_CODES_GET_REQUEST });
+  try {
+    const response = await getLabourCodes();
+    dispatch({ type: LABOUR_CODES_GET_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: LABOUR_CODES_GET_FAIL, payload: error.message });
+    toast.error(error.message, {
+      position: "bottom-right",
+      hideProgressBar: false,
+      progress: undefined,
+    });
+  }
 };

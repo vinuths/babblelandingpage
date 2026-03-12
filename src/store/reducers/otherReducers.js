@@ -552,6 +552,9 @@ import {
   HELP_MAIL_REQUEST,
   HELP_MAIL_SUCCESS,
   HELP_MAIL_FAILURE,
+   LABOUR_CODES_GET_REQUEST,
+  LABOUR_CODES_GET_SUCCESS,
+  LABOUR_CODES_GET_FAIL,
 } from "../actiontypes/otherConstants";
 export const auditorReducer = (state = {}, action) => {
         switch (action.type) {
@@ -2908,3 +2911,20 @@ export const helpSupportReducer = (state = helpSupportInitialState, action) => {
       return state;
   }
 };
+
+export const labourCodesGetReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LABOUR_CODES_GET_REQUEST:
+      return { ...state, loading: true, error: null };
+    case LABOUR_CODES_GET_SUCCESS:
+      return {
+        ...state, loading: false,
+        data: action.payload.data || [],
+        //  pagination: action.payload.pagination || {}
+      };
+    case LABOUR_CODES_GET_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}

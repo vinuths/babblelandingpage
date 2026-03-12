@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import FormGroup from '@mui/material/FormGroup';    // default import
-import { styled } from '@mui/material/styles';      // styled from styles
+import { FormGroup, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { generalUpdateLibraryCreate, generalUpdateLibraryUpdate } from '../../../../../store/actions/otherActions';
+import { generalUpdateLibraryCreate, generalUpdateLibraryUpdate } from '../../../../store/actions/otherActions';
 
 const OthersCreate = ({ addOrEdit, recordForEdit, setLocalPage }) => {
     const dispatch = useDispatch();
@@ -98,11 +97,11 @@ const OthersCreate = ({ addOrEdit, recordForEdit, setLocalPage }) => {
                     <form className="row g-3" onSubmit={handleSubmit} encType="multipart/form-data">
                         {!recordForEdit ? (
                             <h2 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '40px' }}>
-                                Create New General E-Library
+                                Create New Labour Codes E-Library
                             </h2>
                         ) : (
                             <h2 style={{ color: '#013879', fontWeight: '700', textAlign: 'center', marginBottom: '40px' }}>
-                                Edit General E-Library
+                                Edit Labour Codes E-Library
                             </h2>
                         )}
                     
