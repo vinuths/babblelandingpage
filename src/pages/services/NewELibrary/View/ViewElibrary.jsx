@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const libraryItems = [
   { title: "Acts", path: "/services/elibrary/acts", icon: "📜" },
@@ -72,143 +73,161 @@ const ELibrary = () => {
   };
 
   return (
-    <section
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
-        paddingTop: "100px",
-        paddingBottom: "60px",
-        boxSizing: "border-box",
-      }}
-    >
-      {/* HERO SECTION */}
-      <div style={{ textAlign: "center", marginBottom: "40px" }}>
-        <h1
-          style={{
-            color: "#fff",
-            fontWeight: "bold",
-            marginBottom: "15px",
-            fontSize: "34px",
-          }}
-        >
-          E-Library
-        </h1>
+    <>
+      <Helmet>
+        <title>Compliance E-Library | Labour Law Forms | Matrix HR Tech</title>
 
-        <p
-          style={{
-            color: "#fff",
-            opacity: 0.85,
-            maxWidth: "700px",
-            margin: "0 auto 25px",
-            fontSize: "15px",
-          }}
-        >
-          Access all your HR compliance resources, templates, and training
-          materials in one place.
-        </p>
+        <meta
+          name="description"
+          content="Access compliance e-library with labour law forms, acts, rules and compliance documents for HR professionals."
+        />
 
-        <button
-          style={buttonStyle}
-          onMouseEnter={buttonHover}
-          onMouseLeave={buttonLeave}
-          onClick={() => navigate("/contact")}
-        >
-          Request Access
-        </button>
+        <meta
+          name="keywords"
+          content="compliance elibrary, labour law forms, compliance forms India, HR compliance documents"
+        />
 
-        <button
-          style={buttonStyle}
-          onMouseEnter={buttonHover}
-          onMouseLeave={buttonLeave}
-          onClick={() => navigate("/")}
-        >
-          Back to Home
-        </button>
-      </div>
+        <link rel="canonical" href="https://matrixhrtech.com/elibrary" />
+      </Helmet>
 
-      {/* ✅ ELIBRARY ITEMS (2 ROWS FIT FIRST VIEW) */}
-      <div style={{ textAlign: "center", marginBottom: "50px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-
-            /* ✅ More spacing between cards */
-            gap: "25px",
-
-            /* ✅ Controls row fit */
-            maxWidth: "1050px",
-
-            margin: "0 auto",
-          }}
-        >
-          {libraryItems.map((item, idx) => (
-            <div
-              key={idx}
-              style={cardStyle}
-              onClick={() => {
-                if (item.title === "Labour Forms" || item.title === "General") {
-                  navigate("/contact");
-                } else {
-                  navigate(item.path);
-                }
-              }}
-              onMouseEnter={cardHover}
-              onMouseLeave={cardLeave}
-            >
-              {/* ICON */}
-              <div style={{ fontSize: "2.8rem", marginBottom: "12px" }}>
-                {item.icon}
-              </div>
-
-              {/* TITLE */}
-              <h5 style={{ fontWeight: "bold", fontSize: "18px", margin: 0 }}>
-                {item.title}
-              </h5>
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* DISCLAIMER SCROLL */}
-      <div
+      <section
         style={{
-          width: "100%",
-          height: "52px",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          borderTop: "1px solid rgba(255,255,255,0.3)",
-          marginTop: "30px",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #013879 0%, #CCEBFD 100%)",
+          paddingTop: "100px",
+          paddingBottom: "60px",
+          boxSizing: "border-box",
         }}
       >
-        <p
+        {/* HERO SECTION */}
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <h1
+            style={{
+              color: "#fff",
+              fontWeight: "bold",
+              marginBottom: "15px",
+              fontSize: "34px",
+            }}
+          >
+            E-Library
+          </h1>
+
+          <p
+            style={{
+              color: "#fff",
+              opacity: 0.85,
+              maxWidth: "700px",
+              margin: "0 auto 25px",
+              fontSize: "15px",
+            }}
+          >
+            Access all your HR compliance resources, templates, and training
+            materials in one place.
+          </p>
+
+          <button
+            style={buttonStyle}
+            onMouseEnter={buttonHover}
+            onMouseLeave={buttonLeave}
+            onClick={() => navigate("/contact")}
+          >
+            Request Access
+          </button>
+
+          <button
+            style={buttonStyle}
+            onMouseEnter={buttonHover}
+            onMouseLeave={buttonLeave}
+            onClick={() => navigate("/")}
+          >
+            Back to Home
+          </button>
+        </div>
+
+        {/* ✅ ELIBRARY ITEMS (2 ROWS FIT FIRST VIEW) */}
+        <div style={{ textAlign: "center", marginBottom: "50px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+
+              /* ✅ More spacing between cards */
+              gap: "25px",
+
+              /* ✅ Controls row fit */
+              maxWidth: "1050px",
+
+              margin: "0 auto",
+            }}
+          >
+            {libraryItems.map((item, idx) => (
+              <div
+                key={idx}
+                style={cardStyle}
+                onClick={() => {
+                  if (item.title === "Labour Forms" || item.title === "General") {
+                    navigate("/contact");
+                  } else {
+                    navigate(item.path);
+                  }
+                }}
+                onMouseEnter={cardHover}
+                onMouseLeave={cardLeave}
+              >
+                {/* ICON */}
+                <div style={{ fontSize: "2.8rem", marginBottom: "12px" }}>
+                  {item.icon}
+                </div>
+
+                {/* TITLE */}
+                <h5 style={{ fontWeight: "bold", fontSize: "18px", margin: 0 }}>
+                  {item.title}
+                </h5>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* DISCLAIMER SCROLL */}
+        <div
           style={{
-            whiteSpace: "nowrap",
-            paddingLeft: "100%",
-            animation: "scrollText 35s linear infinite",
-            fontSize: "9.5px",
-            color: "#ffffff",
-            letterSpacing: "0.4px",
-            margin: 0,
+            width: "100%",
+            height: "52px",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            borderTop: "1px solid rgba(255,255,255,0.3)",
+            marginTop: "30px",
           }}
         >
-          <strong>Disclaimer:</strong> The content published on this website is
-          provided by <strong>Matrix HR Technologies Pvt. Ltd.</strong> for
-          informational purposes only.
-        </p>
-      </div>
+          <p
+            style={{
+              whiteSpace: "nowrap",
+              paddingLeft: "100%",
+              animation: "scrollText 35s linear infinite",
+              fontSize: "9.5px",
+              color: "#ffffff",
+              letterSpacing: "0.4px",
+              margin: 0,
+            }}
+          >
+            <strong>Disclaimer:</strong> The content published on this website is
+            provided by <strong>Matrix HR Technologies Pvt. Ltd.</strong> for
+            informational purposes only.
+          </p>
+        </div>
 
-      {/* SCROLL ANIMATION */}
-      <style>
-        {`
+        {/* SCROLL ANIMATION */}
+        <style>
+          {`
           @keyframes scrollText {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
           }
         `}
-      </style>
-    </section>
+        </style>
+      </section>
+    </>
   );
 };
 
