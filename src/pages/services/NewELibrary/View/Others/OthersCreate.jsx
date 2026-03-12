@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormGroup, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { generalUpdateLibraryCreate, generalUpdateLibraryUpdate } from '../../../../store/actions/otherActions';
+import { generalUpdateLibraryCreate, generalUpdateLibraryUpdate } from '../../../../../store/actions/otherActions';
 
 const OthersCreate = ({ addOrEdit, recordForEdit, setLocalPage }) => {
     const dispatch = useDispatch();
