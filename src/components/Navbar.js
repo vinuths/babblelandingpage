@@ -63,28 +63,36 @@ function NavBar() {
       font-size: 0.75rem !important;
     }
   }
+/* Make Services dropdown hover same as other links */
+.custom-navbar .dropdown-toggle {
+  color: #ffffff !important;          /* default text white */
+  background: transparent !important;  /* default background */
+  border-radius: 8px;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+}
 
+.custom-navbar .dropdown-toggle:hover,
+.custom-navbar .dropdown-toggle:focus,
+.custom-navbar .dropdown-toggle:active {
+  color: #013879 !important;         /* text blue on hover */
+  background: #ffffff !important;    /* white background on hover */
+  box-shadow: 0 0 8px rgba(162, 89, 255, 0.6) !important;
+  border-bottom: 2px solid #013879 !important;
+  outline: none !important;
+}
   /* ✅ REMOVE DROPDOWN ARROW */
   .custom-navbar .dropdown-toggle::after {
     display: none !important;
   }
 /* ✅ ALL NAV LINKS HOVER (TEXT WHITE) */
 .custom-navbar .nav-link:hover {
-  color: #ffffff !important;   /* ✅ Keep text white */
-  background: rgba(162, 89, 255, 0.15) !important;
-  box-shadow: 0 0 8px rgba(162, 89, 255, 0.6) !important;
-  border-bottom: 2px solid #ffffff !important; /* white underline */
+  color: #013879 !important;   /* text becomes blue */
+  background: #ffffff !important;  /* white background */
   border-radius: 8px !important;
 }
 
-/* ✅ SERVICES DROPDOWN HOVER (TEXT WHITE) */
-.custom-navbar .dropdown-toggle:hover {
-  color: #ffffff !important;   /* ✅ Keep text white */
-  background: rgba(162, 89, 255, 0.15) !important;
-box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
-  border-bottom: 2px solid #ffffff !important;
-  border-radius: 8px !important;
-}
+
 
 
   /* ✅ REMOVE WHITE OUTLINE ON CLICK */
@@ -112,14 +120,8 @@ box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
     fontSize: "0.85rem",
     padding: "6px 10px",
     borderRadius: "8px",
-    background:
-      hoveredPath === path ? "rgba(162,89,255,0.15)" : "transparent",
-    boxShadow:
-      hoveredPath === path ? "0 0 8px rgba(162,89,255,0.6)" : "none",
-    borderBottom:
-      hoveredPath === path
-        ? "2px solid #013879"
-        : "2px solid transparent",
+  
+ 
   });
 
   // ✅ Updated dropdown item style
@@ -127,7 +129,7 @@ box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
     fontSize: "0.85rem",
     padding: "4px 10px",
   };
-
+                                                                                               
   // ✅ Updated login button style
   const loginButtonStyle = {
     marginLeft: "12px",
@@ -207,24 +209,16 @@ box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
               </Nav.Item>
 
               {/* ✅ SERVICES DROPDOWN */}
-              <NavDropdown
-                title="Services"
-                id="services-dropdown"
-                onMouseEnter={() => setHoveredPath("/services")}
-                onMouseLeave={() => setHoveredPath(null)}
-                style={{
-                  color:
-                    hoveredPath === "/services" ? "#013879" : "#ffffff",
-                  fontWeight: "500",
-                  fontSize: "0.85rem",
-                  background:
-                    hoveredPath === "/services"
-                      ? "rgba(162,89,255,0.15)"
-                      : "transparent",
-                  borderRadius: "8px",
-                  padding: "6px 10px",
-                }}
-              >
+        <NavDropdown
+  title="Services"
+  id="services-dropdown"
+  
+  as={Link}
+  to="/services"       // Optional: if you want clickable main link
+  style={linkStyle("/services")}
+  onMouseEnter={() => setHoveredPath("/services")}
+  onMouseLeave={() => setHoveredPath(null)}
+>
                 <NavDropdown.Item
                   as={Link}
                   to="/services/compliance-mgmt"
@@ -376,7 +370,7 @@ box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
               </Nav.Item>
 
               {/* ✅ LOGIN BUTTON */}
-              <Nav.Item>
+<Nav.Item style={{ marginLeft: "32px" }}>
                 <Nav.Link
                   as={Link}
                   to="/login"
@@ -391,16 +385,17 @@ box-shadow: 0 0 8px rgba(1, 56, 121, 0.8) !important;
               </Nav.Item>
 
               {/* ✅ REGISTER BUTTON */}
-              <Nav.Item>
-                <Nav.Link
-                  as={Link}
-                  to="/contact"
-                  style={loginButtonStyle}
-                  className="login-btn"
-                >
-                  <AiOutlineLogin /> Register
-                </Nav.Link>
-              </Nav.Item>
+            {/* ✅ REGISTER BUTTON */}
+<Nav.Item style={{ marginLeft: "32px" }}>
+  <Nav.Link
+    as={Link}
+    to="/contact"
+    style={loginButtonStyle}
+    className="login-btn"
+  >
+    <AiOutlineLogin /> Register
+  </Nav.Link>
+</Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>

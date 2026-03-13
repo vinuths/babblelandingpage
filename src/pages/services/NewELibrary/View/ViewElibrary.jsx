@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 const libraryItems = [
   { title: "Acts", path: "/services/elibrary/acts", icon: "📜" },
   { title: "Rules", path: "/services/elibrary/rules", icon: "📄" },
-  { title: "Labour Forms", path: "/contact", icon: "🧾" }, // Request access page
+  { title: "Labour Code", path: "/services/elibrary/View/LabourCodes", icon: "📚" }, // This goes to content page
   { title: "National Holidays", path: "/services/elibrary/holidays", icon: "📅" },
   { title: "Labour Welfare Fund", path: "/services/elibrary/labour-welfare", icon: "🏦" },
   { title: "Minimum Wages", path: "/services/elibrary/minimum-wages", icon: "💰" },
@@ -14,7 +14,7 @@ const libraryItems = [
   { title: "Compliance Q&A", path: "/services/elibrary/compliance-qa", icon: "❓" },
   { title: "Policy Templates", path: "/services/elibrary/policy-templates", icon: "📂" },
   { title: "Legal Updates", path: "/services/elibrary/legal-updates", icon: "📰" },
-  { title: "Labour Code", path: "/services/elibrary/View/LabourCodes", icon: "📚" }, // This goes to content page
+  { title: "Labour Forms", path: "/contact", icon: "🧾" }, // Request access page
 ];
 
 const ELibrary = () => {
