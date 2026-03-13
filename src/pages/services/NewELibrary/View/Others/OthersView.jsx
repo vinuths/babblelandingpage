@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { generalUpdateLibraryPaginatedGet } from "../../../../store/actions/otherActions";
+import { generalUpdateLibraryPaginatedGet } from "../../../../../store/actions/otherActions";
 import OthersTable from './OthersTable';
 import OthersCreate from './OthersCreate';
 

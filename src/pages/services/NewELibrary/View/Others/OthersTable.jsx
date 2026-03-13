@@ -4,7 +4,7 @@ import {
   generalUpdateLibraryPaginatedGet,
   labourCodesGet,
   stateGets,
-} from "../../../../store/actions/otherActions";
+} from "../../../../../store/actions/otherActions";
 
 import { Pagination } from "antd";
 import "antd/dist/reset.css";
