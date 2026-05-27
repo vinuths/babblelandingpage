@@ -191,7 +191,7 @@ const LegalUpdsTable = ({ localPage, setLocalPage }) => {
                                 className={
                                     "faq " + (faq.open ? "open" : "")
                                 }
-                                key={faq._id}
+                  A              key={faq._id}
                                 onClick={() => toggleFAQ(index)}
                             >
 

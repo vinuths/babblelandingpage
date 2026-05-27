@@ -73,20 +73,39 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   color: #000000;
-  padding: 0 8px;
-  line-height: 1.6;
+  padding: 0 12px;
+  line-height: 1.8;
   font-style: italic;
   font-size: 14px;
+  margin-top: 0;
+
+  word-break: break-word;
+  white-space: pre-line;
 }
 
 .faq.open .faq-answer {
-  max-height: 1000px;
   opacity: 1;
-  margin-top: 10px;
+
+  /* fixed height with scroll */
+  max-height: 450px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 15px 12px;
+  margin-top: 12px;
 }
 
+.faq-answer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.faq-answer::-webkit-scrollbar-thumb {
+  background: #013879;
+  border-radius: 10px;
+}
 .state-badgeQA {
   display: inline-block;
   color: white;
