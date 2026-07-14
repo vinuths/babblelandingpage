@@ -15,6 +15,7 @@ function Contact() {
     email: "",
     mobile: "",
     message: "",
+    website: "",
   });
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -41,6 +42,7 @@ function Contact() {
         email: "",
         mobile: "",
         message: "",
+        website: "",
       });
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
@@ -194,6 +196,24 @@ function Contact() {
                         style={{ height: "100%", resize: "none" }}
                       />
                     </Form.Group>
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "-9999px",
+                        opacity: 0,
+                        pointerEvents: "none",
+                      }}
+                      aria-hidden="true"
+                    >
+                      <Form.Control
+                        type="text"
+                        name="website"
+                        autoComplete="off"
+                        tabIndex="-1"
+                        value={form.website}
+                        onChange={handleChange}
+                      />
+                    </div>
 
                     <button
                       type="submit"
@@ -218,36 +238,36 @@ function Contact() {
               </Col>
 
               {/* MAP */}
-            {/* MAP */}
-<Col
-  md={6}
-  style={{
-    marginBottom: "0",
-    display: "flex",
-  }}
->
-  <div
-    style={{
-      width: "100%",
-      borderRadius: "12px",
-      overflow: "hidden",
-      background: "#f0f0f0", // shows instantly before iframe loads
-      display: "flex",
-      flex: 1, // matches the height of the form
-    }}
-  >
-    <iframe
-      title="Matrix HR Technologies Location"
-      src="https://www.google.com/maps?q=Matrix%20HR%20Technologies%20Bangalore&output=embed"
-      style={{
-        width: "100%",
-        height: "100%",
-        border: 0,
-      }}
-      loading="lazy"
-    />
-  </div>
-</Col>
+              {/* MAP */}
+              <Col
+                md={6}
+                style={{
+                  marginBottom: "0",
+                  display: "flex",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    borderRadius: "12px",
+                    overflow: "hidden",
+                    background: "#f0f0f0", // shows instantly before iframe loads
+                    display: "flex",
+                    flex: 1, // matches the height of the form
+                  }}
+                >
+                  <iframe
+                    title="Matrix HR Technologies Location"
+                    src="https://www.google.com/maps?q=Matrix%20HR%20Technologies%20Bangalore&output=embed"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: 0,
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+              </Col>
 
             </Row>
           </Container>
